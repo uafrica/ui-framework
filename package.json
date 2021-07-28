@@ -1,0 +1,89 @@
+{
+  "name": "uafrica-ui-framework",
+  "version": "1.0.4",
+  "description": "A custom set of UI components used by uAfrica.com, based on TailwindCSS and Headless UI",
+  "license": "MIT",
+  "repository": "uafrica/ui-framework",
+  "bugs": {
+    "url": "https://github.com/uafrica/ui-framework/issues",
+    "email": "project@hostname.com"
+  },
+  "homepage": "https://github.com/uafrica/ui-framework#readme",
+  "author": {
+    "name": "Cornel Rautenbach",
+    "email": "cornel@uafrica.com",
+    "url": "http://cornelrautenbach.com"
+  },
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "react-scripts eject",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "1.2.35",
+    "@fortawesome/free-solid-svg-icons": "5.15.3",
+    "@fortawesome/react-fontawesome": "^0.1.14",
+    "@headlessui/react": "^1.3.0",
+    "@popperjs/core": "^2.9.2",
+    "@tailwindcss/forms": "^0.3.3",
+    "autoprefixer": "9.8.6",
+    "lodash": "4.17.21",
+    "moment": "2.29.1",
+    "node-sass": "^4.14.1",
+    "postcss": "7.0.36",
+    "react": "16.14.0",
+    "react-content-loader": "6.0.3",
+    "react-contextmenu": "^2.14.0",
+    "react-dom": "16.13.1",
+    "react-infinite-scroll-component": "6.1.0",
+    "react-popper": "^2.2.5",
+    "react-router-dom": "5.2.0",
+    "react-table-6": "6.11.0",
+    "react-table-hoc-draggable-columns": "^1.3.2",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.14.5",
+    "@babel/plugin-syntax-class-properties": "^7.12.13",
+    "@craco/craco": "^6.2.0",
+    "@types/node": "15.0.3",
+    "@types/react": "17.0.5",
+    "@types/react-dom": "17.0.5",
+    "@types/react-router-dom": "5.1.7",
+    "eslint-config-prettier": "8.3.0",
+    "react-scripts": "4.0.1",
+    "eslint-plugin-prettier": "3.4.0",
+    "prettier": "2.3.0",
+    "pretty-quick": "3.1.0",
+    "typescript": "4.2.4",
+    "husky": "^6.0.0",
+    "eslint-plugin-react-perf": "^3.3.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "keywords": [
+    "uafrica",
+    "framework",
+    "react",
+    "tailwindcss",
+    "headless-ui"
+  ],
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
