@@ -128,25 +128,5 @@ class Confirm extends React.Component {
   }
 }
 
-Confirm.propTypes = {
-  body: PropTypes.node.isRequired,
-  buttonText: PropTypes.node,
-  cancelText: PropTypes.node,
-  className: PropTypes.string,
-  disabled: PropTypes.bool,
-  confirmButtonVariant: PropTypes.string,
-  confirmText: PropTypes.node,
-  dialogClassName: PropTypes.string,
-  keyboard: PropTypes.bool,
-  backdrop: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  enforceFocus: PropTypes.bool,
-  onConfirm: PropTypes.func.isRequired,
-  onClose: PropTypes.func,
-  onCancel: PropTypes.func,
-  showCancelButton: PropTypes.bool.isRequired,
-  title: PropTypes.node.isRequired,
-  visible: PropTypes.bool
-};
-
 export { Confirm };
 export default Confirm;

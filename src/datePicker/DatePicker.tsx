@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Manager, Reference, Popper } from "react-popper";
 import { DatePickerCtx, useDatePickerCtx } from "./DatePickerContext";
 import moment from "moment";
-import { Input } from "../Input";
+import { Input } from "../.";
 
 // Interface
 interface IDatePicker {

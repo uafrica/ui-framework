@@ -1,20 +1,19 @@
 {
   "name": "uafrica-ui-framework",
-  "version": "1.0.4",
+  "version": "1.0.8",
   "description": "A custom set of UI components used by uAfrica.com, based on TailwindCSS and Headless UI",
   "license": "MIT",
   "repository": "uafrica/ui-framework",
   "bugs": {
     "url": "https://github.com/uafrica/ui-framework/issues",
-    "email": "project@hostname.com"
+    "email": "cornel@uafrica.com"
   },
-  "homepage": "https://github.com/uafrica/ui-framework#readme",
   "author": {
     "name": "Cornel Rautenbach",
     "email": "cornel@uafrica.com",
     "url": "http://cornelrautenbach.com"
   },
-  "main": "src/index.ts",
+  "main": "src/index.tsx",
   "scripts": {
     "start": "craco start",
     "build": "craco build",
@@ -46,8 +45,6 @@
     "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-class-properties": "^7.14.5",
-    "@babel/plugin-syntax-class-properties": "^7.12.13",
     "@craco/craco": "^6.2.0",
     "@types/node": "15.0.3",
     "@types/react": "17.0.5",
@@ -74,16 +71,9 @@
     "tailwindcss",
     "headless-ui"
   ],
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ]
 }
