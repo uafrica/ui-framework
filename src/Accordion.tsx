@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Transition } from "@headlessui/react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Confirm } from ".";
+import { Confirm } from "./Confirm";
 
 // Interface
 interface IAccordion {
@@ -36,7 +36,6 @@ function Accordion(props: IAccordion) {
                 onConfirm={() => {
                   onDelete();
                 }}
-                size="sm"
                 title="Delete item?"
                 body="Are you sure you want to delete the item?"
                 confirmText="Delete"

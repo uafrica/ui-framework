@@ -17,13 +17,12 @@ import { InfoButton } from "./InfoButton";
 import { Table } from "./Table";
 import { Confirm } from "./Confirm";
 import { Label, LabelWithValue } from "./Label";
-import SavePanel from "./SavePanel";
+import { SavePanel } from "./SavePanel";
 import Switch from "./Switch";
 import Accordion from "./Accordion";
 import ResponsiveRow from "./ResponsiveRow";
 import { DatePicker } from "./datePicker/DatePicker";
-import ScrollToTop from "./ScrollToTop";
-import TextAreaEditable from "./TextAreaEditable";
+import { TextAreaEditable } from "./TextAreaEditable";
 import CopyText from "./CopyText";
 import SkeletonLoader from "./SkeletonLoaders";
 import { SavingOverlay } from "./SavingOverlay";
@@ -37,7 +36,6 @@ export {
   PageHeading,
   CopyText,
   SectionHeading,
-  ScrollToTop,
   Button,
   Card,
   DatePicker,

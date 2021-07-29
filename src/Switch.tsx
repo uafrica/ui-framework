@@ -1,5 +1,5 @@
 import { Switch as HeadlessSwitch } from "@headlessui/react";
-import { InfoButton } from ".";
+import { InfoButton } from "./InfoButton";
 
 interface IProps {
   checked: boolean;

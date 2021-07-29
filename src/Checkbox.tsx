@@ -1,4 +1,4 @@
-import { InfoButton } from ".";
+import { InfoButton } from "./InfoButton";
 
 interface IProps {
   key?: any;

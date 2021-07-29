@@ -1,7 +1,9 @@
 import { useRef, useState } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { InfoButton, Input, Label } from ".";
+import { InfoButton } from "./InfoButton";
+import { Input } from "./Input";
+import { Label } from "./Label";
 
 const defaultContainerClass = "mt-4";
 

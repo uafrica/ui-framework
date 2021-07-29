@@ -1,4 +1,5 @@
-import { PageHeading, SectionHeading } from ".";
+import { PageHeading } from "./PageHeading";
+import { SectionHeading } from "./SectionHeading";
 
 // Interface
 interface IProps {

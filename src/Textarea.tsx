@@ -1,4 +1,5 @@
-import { InfoButton, Label } from ".";
+import { InfoButton } from "./InfoButton";
+import { Label } from "./Label";
 
 const defaultContainerClass = "mt-3 max-w-sm";
 

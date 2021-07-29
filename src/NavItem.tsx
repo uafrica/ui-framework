@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
@@ -23,19 +22,18 @@ function NavItem(props: IProps) {
   }
 
   return (
-    <Link to={item.path} id={"nav_" + item.displayName.replaceAll(" ", "_").toLowerCase()}>
-      <div
-        className={
-          "text-gray-700 hover:bg-gray-100 hover:text-gray-900 group flex items-center px-2 py-1.5 rounded-md mb-1 " +
-          bgClass
-        }
-      >
-        <div className="w-4 mr-2 text-center">
-          <FontAwesomeIcon icon={item.icon} size="xs" />{" "}
-        </div>
-        {props.isNavbarCollapsed ? " " : item.displayName}
+    <div
+      id={"nav_" + item.displayName.replaceAll(" ", "_").toLowerCase()}
+      className={
+        "text-gray-700 hover:bg-gray-100 hover:text-gray-900 group flex items-center px-2 py-1.5 rounded-md mb-1 " +
+        bgClass
+      }
+    >
+      <div className="w-4 mr-2 text-center">
+        <FontAwesomeIcon icon={item.icon} size="xs" />{" "}
       </div>
-    </Link>
+      {props.isNavbarCollapsed ? " " : item.displayName}
+    </div>
   );
 }
 

@@ -1,6 +1,8 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { InfoButton, Label, Message } from ".";
+import { InfoButton } from "./InfoButton";
+import { Label } from "./Label";
+import { Message } from "./Message";
 
 const defaultContainerClass = "mt-4 max-w-sm";
 
