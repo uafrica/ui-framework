@@ -26,6 +26,7 @@ interface IBase {
   labelClassName?: string;
   className?: string;
   containerClassName?: string;
+  noMargin?: boolean;
   id?: string;
   value?: any;
   info?: any;
@@ -48,6 +49,7 @@ function GroupedSelect(props: IGroupedSelect) {
     placeholder,
     value,
     optionGroups,
+    noMargin,
     className,
     multiSelection,
     containerClassName,
@@ -188,11 +190,16 @@ function GroupedSelect(props: IGroupedSelect) {
     return true;
   });
 
+  let _containerClassName = defaultContainerClass;
+  if (noMargin) {
+    _containerClassName = "";
+  }
+  if (containerClassName) {
+    _containerClassName = containerClassName;
+  }
+
   return (
-    <div
-      className={containerClassName ? containerClassName : defaultContainerClass}
-      onClick={(e: any) => e.stopPropagation()}
-    >
+    <div className={_containerClassName} onClick={(e: any) => e.stopPropagation()}>
       <Popover>
         {label && (
           <Label className={labelClassName}>
