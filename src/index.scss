@@ -1,0 +1,25 @@
+/* SAVE PANEL */
+.save-panel {
+  width: calc(100% - 15em);
+}
+
+@media (max-width: 450px) {
+  .save-panel {
+    left: 0px;
+    width: 100%;
+  }
+}
+
+.spinning {
+  animation: spinLoader 1s infinite linear;
+}
+
+@keyframes spinLoader {
+  from {
+    transform: scale(1) rotate(0deg);
+  }
+
+  to {
+    transform: scale(1) rotate(360deg);
+  }
+}

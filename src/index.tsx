@@ -26,6 +26,7 @@ import { TextAreaEditable } from "./TextAreaEditable";
 import CopyText from "./CopyText";
 import SkeletonLoader from "./SkeletonLoaders";
 import { SavingOverlay } from "./SavingOverlay";
+import "./index.scss";
 
 const DownloadButton = Button.Download;
 

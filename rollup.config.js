@@ -2,6 +2,9 @@ import typescript from "rollup-plugin-typescript2";
 import commonjs from "rollup-plugin-commonjs";
 import external from "rollup-plugin-peer-deps-external";
 import resolve from "rollup-plugin-node-resolve";
+import scss from "rollup-plugin-scss";
+import postcss from "postcss";
+import autoprefixer from "autoprefixer";
 
 import pkg from "./package.json";
 
@@ -24,6 +27,10 @@ export default {
   plugins: [
     external(),
     resolve(),
+    scss({
+      processor: () => postcss([autoprefixer()]),
+      outputStyle: "compressed"
+    }),
     typescript({
       rollupCommonJSResolveHack: true,
       exclude: "**/__tests__/**",
