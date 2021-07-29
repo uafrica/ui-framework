@@ -1,6 +1,6 @@
 {
   "name": "uafrica-ui-framework",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "A custom set of UI components used by uAfrica.com, based on TailwindCSS and Headless UI",
   "license": "MIT",
   "repository": "uafrica/ui-framework",

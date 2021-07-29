@@ -17,7 +17,7 @@ import { InfoButton } from "./InfoButton";
 import { Table } from "./Table";
 import { Confirm } from "./Confirm";
 import { Label, LabelWithValue } from "./Label";
-import { SavePanel } from "./SavePanel";
+import { SavePanel, SavePanelContainer } from "./SavePanel";
 import Switch from "./Switch";
 import Accordion from "./Accordion";
 import ResponsiveRow from "./ResponsiveRow";
@@ -64,5 +64,6 @@ export {
   ResponsiveRow,
   GroupedSelect,
   LabelWithValue,
-  TextAreaEditable
+  TextAreaEditable,
+  SavePanelContainer
 };

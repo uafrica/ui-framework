@@ -8,14 +8,19 @@ interface ISectionHeading {
   toggleEditMode?: any;
   hideEditMode?: boolean;
   center?: boolean;
+  marginTop?: boolean; // Used if two sections are below each other
 }
 
 function SectionHeading(props: ISectionHeading) {
-  let { children, icon, iconColor, toggleEditMode, hideEditMode, center } = props;
+  let { children, icon, iconColor, toggleEditMode, hideEditMode, center, marginTop } = props;
 
   return (
     <div
-      className={"flex flex-row space-x-4 mb-4 items-center " + (center ? "justify-center" : "")}
+      className={
+        "flex flex-row space-x-4 mb-4 items-center " +
+        (center ? "justify-center" : "") +
+        (marginTop ? " mt-8" : "")
+      }
     >
       {icon && (
         <div

@@ -27,7 +27,7 @@ function LabelWithValue(props: ILabelWithValue) {
   let { label, value } = props;
 
   return (
-    <div className="flex flex-row space-x-2">
+    <div className="flex flex-row space-x-2 pt-2">
       <label className={labelBaseClass}>{label}</label>
       <div>{value}</div>
     </div>

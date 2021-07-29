@@ -1,6 +1,23 @@
 import { Button } from "./Button";
 
-function SavePanel(props: any) {
+// Interface
+interface ISavePanel {
+  somethingChanged: boolean;
+  saveError?: any;
+  savingChanges: boolean;
+  saved?: boolean;
+  saveDisabledText?: string;
+  saveText?: string;
+  className?: string;
+  cancelChanges?: any;
+  saveChanges: any;
+}
+
+interface ISavePanelContainer {
+  children: any;
+}
+
+function SavePanel(props: ISavePanel) {
   const {
     somethingChanged,
     saveError,
@@ -43,4 +60,8 @@ function SavePanel(props: any) {
   );
 }
 
-export { SavePanel };
+function SavePanelContainer(props: ISavePanelContainer) {
+  return <div className="mb-20">{props.children}</div>;
+}
+
+export { SavePanel, SavePanelContainer };
