@@ -8,7 +8,7 @@ interface ISmallMediumModalProps {
   show: boolean;
   children: any;
   onHide?: any;
-  title?: string;
+  title?: any;
   icon?: IconProp;
   closeButton: boolean;
   disableClickOutsideToClose?: boolean;
@@ -73,7 +73,7 @@ function Base(props: IBaseProps) {
           >
             <div
               className={
-                "inline-block align-bottom bg-white rounded-lg p-6 text-left overflow-hidden shadow-xl transform transition-all sm:my-16 sm:align-top sm:p-6 " +
+                "uafrica-modal inline-block align-bottom bg-white rounded-lg p-6 text-left overflow-hidden shadow-xl transform transition-all sm:my-16 sm:align-top sm:p-6 " +
                 (className ? className : "")
               }
             >

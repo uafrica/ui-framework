@@ -13,6 +13,7 @@ interface IDatePicker {
   label?: string;
   placeholder?: string;
   dateFormat?: string;
+  containerClass?: string;
   maxDate?: Date; // todo implement
   showTimeSelect?: boolean; // todo implement
   onChange: (date: Date) => void;
@@ -50,7 +51,7 @@ export const inputStyle = {
 
 // Implementation
 function DatePicker(props: IDatePicker) {
-  let { selected, label, placeholder, dateFormat, onChange } = props;
+  let { selected, label, placeholder, dateFormat, containerClass, onChange } = props;
 
   let date = new Date();
   if (selected) {
@@ -71,7 +72,9 @@ function DatePicker(props: IDatePicker) {
                 value={formattedDate(dateFormat, date)}
                 readOnly
                 label={label}
+                containerClass={containerClass}
                 placeholder={placeholder}
+                appendIcon="caret-down"
               />
             </div>
           )}

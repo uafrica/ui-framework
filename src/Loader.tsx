@@ -14,6 +14,10 @@ function Page(props: ILoader) {
   return <BaseLoader spinnerClassName="h-12 w-12" containerClassName="mt-32" {...props} />;
 }
 
+function Modal(props: ILoader) {
+  return <BaseLoader spinnerClassName="h-12 w-12" containerClassName="mt-4" {...props} />;
+}
+
 function Inline(props: ILoader) {
   return <BaseLoader spinnerClassName="h-6 w-6" containerClassName="mt-2 mr-2 ml-2" {...props} />;
 }
@@ -39,7 +43,8 @@ function BaseLoader(props: IBaseLoader) {
 
 const Loader = {
   Page,
-  Inline
+  Inline,
+  Modal
 };
 
 export { Loader };

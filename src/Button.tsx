@@ -194,7 +194,7 @@ function BaseButton(props: IButtonBaseProps) {
 
   if (isLoading) {
     iconToShow = "sync";
-    iconClass = "spinning";
+    iconClass = "button-loader-spinning";
   }
 
   let textToShow = isLoading && loadingTitle ? loadingTitle + "..." : title;
