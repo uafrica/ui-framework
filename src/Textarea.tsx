@@ -51,7 +51,7 @@ function Textarea(props: ITextarea) {
   } = props;
 
   return (
-    <div className={defaultContainerClass ? defaultContainerClass : fieldClassName} id={fieldId}>
+    <div className={fieldClassName ? fieldClassName : defaultContainerClass} id={fieldId}>
       <div className="flex justify-between">
         {label && (
           <div>

@@ -11,7 +11,7 @@ interface ISmallMediumModalProps {
   title?: string;
   icon?: IconProp;
   closeButton: boolean;
-  disableClickOutsideToClose?:boolean;
+  disableClickOutsideToClose?: boolean;
 }
 
 interface IBaseProps extends ISmallMediumModalProps {
@@ -44,7 +44,7 @@ function Base(props: IBaseProps) {
         className="fixed z-10 inset-0 overflow-y-auto mx-0 sm:mx-20"
         initialFocus={refDiv}
         open={show}
-        onClose={!disableClickOutsideToClose && props.onHide ? props.onHide : () => {}} 
+        onClose={!disableClickOutsideToClose && props.onHide ? props.onHide : () => {}}
       >
         <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
           <Transition.Child
@@ -87,18 +87,20 @@ function Base(props: IBaseProps) {
                   </div>
                 )}
                 <div className="mt-4 text-center sm:mt-0 sm:text-left w-full">
-                  <Dialog.Title className="text-lg leading-6 font-bold mb-4 text-gray-900">
-                    {title && title}
+                  {(title || closeButton) && (
+                    <Dialog.Title className="text-lg leading-6 font-bold mb-4 text-gray-900">
+                      {title && title}
 
-                    {closeButton && (
-                      <FontAwesomeIcon
-                        icon="times"
-                        size="sm"
-                        className="float-right cursor-pointer hover:text-gray-900 text-gray-700"
-                        onClick={props.onHide}
-                      />
-                    )}
-                  </Dialog.Title>
+                      {closeButton && (
+                        <FontAwesomeIcon
+                          icon="times"
+                          size="sm"
+                          className="float-right cursor-pointer hover:text-gray-900 text-gray-700"
+                          onClick={props.onHide}
+                        />
+                      )}
+                    </Dialog.Title>
+                  )}
                   <div className="mt-2" ref={refDiv}>
                     {props.children}
                   </div>
