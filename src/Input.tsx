@@ -4,8 +4,6 @@ import { InfoButton } from "./InfoButton";
 import { Label } from "./Label";
 import { Message } from "./Message";
 
-const defaultContainerClass = "mt-4 max-w-sm";
-
 const inputBaseClass = "shadow-sm block w-full  border-gray-300 rounded-md";
 const inputContainerBaseClass = "relative rounded-m";
 
@@ -13,8 +11,9 @@ const inputContainerBaseClass = "relative rounded-m";
 interface IInputProps {
   inputFieldClassName?: string;
   label?: string;
-  htmlFor?: string;
+  labelInline?: boolean;
   labelClassName?: string;
+  htmlFor?: string;
   register?: any;
   name?: string;
   defaultValue?: any;
@@ -34,7 +33,7 @@ interface IInputProps {
   reference?: any;
   placeholder?: string;
   id?: string;
-  containerClass?: string;
+  containerClassName?: string;
   errorMessage?: string;
   autoFocus?: any;
   optional?: boolean; // displays the text "optional" next to the label
@@ -84,7 +83,8 @@ function Input(props: IInputProps) {
     onChange,
     onFocus,
     onBlur,
-    containerClass,
+    containerClassName,
+    labelInline,
     autoFocus,
     onKeyPress,
     onKeyUp,
@@ -125,11 +125,21 @@ function Input(props: IInputProps) {
     />
   );
 
+  let _containerClassName = "mt-4 max-w-sm";
+
+  if (labelInline) {
+    _containerClassName = "flex flex-row items-center space-x-4";
+  }
+
+  if (containerClassName) {
+    _containerClassName = containerClassName;
+  }
+
   return (
-    <div className={containerClass ? containerClass : defaultContainerClass}>
+    <div className={_containerClassName}>
       {label && label.length > 0 && (
         <div className="flex justify-between">
-          <Label htmlFor={htmlFor} className={labelClassName}>
+          <Label htmlFor={htmlFor} className={labelClassName} noMargin={labelInline}>
             {label} {!optional && required && " *"}
             {info && <InfoButton>{info}</InfoButton>}
           </Label>

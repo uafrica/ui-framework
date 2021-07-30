@@ -5,8 +5,6 @@ import { InfoButton } from "./InfoButton";
 import { Input } from "./Input";
 import { Label } from "./Label";
 
-const defaultContainerClass = "mt-4";
-
 // Interface
 interface ISelect extends IBase {
   options: any;
@@ -23,6 +21,7 @@ interface IOptionGroup {
 
 interface IBase {
   label?: any;
+  labelInline?: boolean;
   labelClassName?: string;
   className?: string;
   containerClassName?: string;
@@ -49,6 +48,7 @@ function GroupedSelect(props: IGroupedSelect) {
     placeholder,
     value,
     optionGroups,
+    labelInline,
     noMargin,
     className,
     multiSelection,
@@ -190,10 +190,12 @@ function GroupedSelect(props: IGroupedSelect) {
     return true;
   });
 
-  let _containerClassName = defaultContainerClass;
-  if (noMargin) {
+  let _containerClassName = "mt-4";
+
+  if (noMargin || labelInline) {
     _containerClassName = "";
   }
+
   if (containerClassName) {
     _containerClassName = containerClassName;
   }
@@ -201,62 +203,64 @@ function GroupedSelect(props: IGroupedSelect) {
   return (
     <div className={_containerClassName} onClick={(e: any) => e.stopPropagation()}>
       <Popover>
-        {label && (
-          <Label className={labelClassName}>
-            {label} {info && <InfoButton>{info}</InfoButton>}
-          </Label>
-        )}
+        <div className={labelInline ? "flex flex-row items-center space-x-4" : ""}>
+          {label && (
+            <Label className={labelClassName} noMargin={labelInline}>
+              {label} {info && <InfoButton>{info}</InfoButton>}
+            </Label>
+          )}
 
-        {/* Button that is clicked on to open the dropdown */}
-        <div className={"relative " + (className ? className : "w-56")}>
-          <div onClick={(e: any) => e.stopPropagation()}>
-            <Popover.Button
-              // @ts-ignore
-              ref={buttonRef}
-              disabled={disabled}
-              className="bg-white relative border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-pointer disabled:cursor-default w-56"
-              id={id}
-            >
-              <span className="block truncate">
-                {labelWithValue ? labelWithValue : placeholder}
-              </span>
-              <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                <FontAwesomeIcon
-                  icon="caret-down"
-                  className="h-5 w-5 text-gray-400"
-                  aria-hidden="true"
-                />
-              </span>
-            </Popover.Button>
-          </div>
-
-          <Transition
-            enter="transition duration-100 ease-out z-20"
-            enterFrom="transform scale-95 opacity-0"
-            enterTo="transform scale-100 opacity-100"
-            leave="transition duration-75 ease-out"
-            leaveFrom="transform scale-100 opacity-100"
-            leaveTo="transform scale-95 opacity-0"
-          >
-            <Popover.Panel className="absolute z-10 mt-1">
-              <div className="overflow-hidden z-10 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 px-4 pb-2 bg-white w-72">
-                {!noSearch && (
-                  <Input
-                    appendIcon="search"
-                    value={searchTerm}
-                    onChange={(e: any) => setSearchTerm(e.target.value)}
+          {/* Button that is clicked on to open the dropdown */}
+          <div className={"relative " + (className ? className : "w-56")}>
+            <div onClick={(e: any) => e.stopPropagation()}>
+              <Popover.Button
+                // @ts-ignore
+                ref={buttonRef}
+                disabled={disabled}
+                className="bg-white relative border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-pointer disabled:cursor-default w-56"
+                id={id}
+              >
+                <span className="block truncate">
+                  {labelWithValue ? labelWithValue : placeholder}
+                </span>
+                <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                  <FontAwesomeIcon
+                    icon="caret-down"
+                    className="h-5 w-5 text-gray-400"
+                    aria-hidden="true"
                   />
-                )}
-                <div className={"mt-2 mb-2 max-h-52 overflow-y-auto"}>
-                  {allOptionsSearched.length === 0 && <div className="pl-2 mt-2">No options</div>}
-                  {optionGroups.map((optionGroup: IOptionGroup) => {
-                    return renderOptionGroup(optionGroup);
-                  })}
+                </span>
+              </Popover.Button>
+            </div>
+
+            <Transition
+              enter="transition duration-100 ease-out z-20"
+              enterFrom="transform scale-95 opacity-0"
+              enterTo="transform scale-100 opacity-100"
+              leave="transition duration-75 ease-out"
+              leaveFrom="transform scale-100 opacity-100"
+              leaveTo="transform scale-95 opacity-0"
+            >
+              <Popover.Panel className="absolute z-10 mt-1">
+                <div className="overflow-hidden z-10 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 px-4 pb-2 bg-white w-72">
+                  {!noSearch && (
+                    <Input
+                      appendIcon="search"
+                      value={searchTerm}
+                      onChange={(e: any) => setSearchTerm(e.target.value)}
+                    />
+                  )}
+                  <div className={"mt-2 mb-2 max-h-52 overflow-y-auto"}>
+                    {allOptionsSearched.length === 0 && <div className="pl-2 mt-2">No options</div>}
+                    {optionGroups.map((optionGroup: IOptionGroup) => {
+                      return renderOptionGroup(optionGroup);
+                    })}
+                  </div>
+                  {buttons && <div className="-ml-1 border-t border-gray-200 pt-1">{buttons}</div>}
                 </div>
-                {buttons && <div className="-ml-1">{buttons}</div>}
-              </div>
-            </Popover.Panel>
-          </Transition>
+              </Popover.Panel>
+            </Transition>
+          </div>
         </div>
       </Popover>
     </div>
