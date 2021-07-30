@@ -32,7 +32,7 @@ function BaseLoader(props: IBaseLoader) {
     >
       <div
         className={
-          "loader ease-linear rounded-full border-6 border-t-6 border-blue-100 " +
+          "loader ease-linear rounded-full border-6 border-t-6 border-primary-100 " +
           (props.spinnerClassName ? props.spinnerClassName : "h-8 w-8")
         }
       />

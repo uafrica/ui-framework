@@ -53,7 +53,7 @@ function Checkbox(props: IProps) {
       {label && (labelLeft || (!labelLeft && !labelRight)) && labelEl}
       <input
         type="checkbox"
-        className={"text-blue border-gray-300 rounded " + (className ? className : "")}
+        className={"text-primary border-gray-300 rounded " + (className ? className : "")}
         checked={checked}
         id={fieldId}
         onChange={onChange}

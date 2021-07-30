@@ -59,7 +59,7 @@ function Primary(props: IButtonProps) {
     <BaseButton
       {...props}
       buttonTypeClassNames={
-        "items-center justify-center px-5 py-2 border border-transparent leading-4 font-medium rounded-full text-white bg-blue hover:bg-blue-dark"
+        "items-center justify-center px-5 py-2 border border-transparent leading-4 font-medium rounded-full text-white bg-primary hover:bg-primary-dark"
       }
       type="submit"
     />
@@ -71,7 +71,7 @@ function Secondary(props: IButtonProps) {
     <BaseButton
       {...props}
       buttonTypeClassNames={
-        "inline-flex items-center justify-center px-5 py-2 border border-blue leading-4 font-medium rounded-full text-blue bg-white hover:bg-blue hover:text-white focus:outline-none"
+        "inline-flex items-center justify-center px-5 py-2 border border-primary leading-4 font-medium rounded-full text-primary bg-white hover:bg-primary hover:text-white focus:outline-none"
       }
     />
   );
@@ -82,7 +82,7 @@ function Tertiary(props: IButtonProps) {
     <BaseButton
       {...props}
       buttonTypeClassNames={
-        "inline-flex items-center justify-center px-5 py-2 border border-gray-900 leading-4 font-medium rounded-md text-gray-99 bg-white hover:text-blue hover:border-blue focus:outline-none"
+        "inline-flex items-center justify-center px-5 py-2 border border-gray-900 leading-4 font-medium rounded-md text-gray-99 bg-white hover:text-primary hover:border-primary focus:outline-none"
       }
     />
   );
@@ -136,7 +136,7 @@ function Cancel(props: IButtonProps) {
 }
 
 function Link(props: ILinkProps) {
-  return <BaseLink {...props} color={props.color ? props.color : "blue"} />;
+  return <BaseLink {...props} color={props.color ? props.color : "primary"} />;
 }
 
 function LinkDanger(props: ILinkProps) {

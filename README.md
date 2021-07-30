@@ -4,8 +4,9 @@ A custom set of React UI components used by uAfrica.com, based on TailwindCSS an
 
 To add the framework to your project (assuming that your project is using Create React App):
 
-1. `yarn add uafrica-ui-framework tailwindcss@npm:@tailwindcss/postcss7-compat postcss@^7 autoprefixer@^9 @craco/craco`
-2. Add the following to the top of your main SCSS file:
+1. `yarn add uafrica-ui-framework`
+2. `yarn add -D @craco/craco`
+3. Add the following to the top of your main SCSS file:
 
 ```
 @tailwind base;
@@ -13,20 +14,20 @@ To add the framework to your project (assuming that your project is using Create
 @tailwind utilities;
 ```
 
-3. Add the following to your `index.js` file
+4. Add the following to your `index.js` file
 
 ```
 import "uafrica-ui-framework/build/index.css";
 ```
 
-4. Replace your npm scripts (in package.json) with:
+5. Replace your npm scripts (in package.json) with:
 
 ```
 "start": "craco start",
 "build": "craco build",
 ```
 
-5. Add a file named `craco.config.js` to the root of your project containing:
+6. Add a file named `craco.config.js` to the root of your project containing:
 
 ```
 module.exports = {
@@ -38,7 +39,7 @@ module.exports = {
 };
 ```
 
-6. Add a file named `tailwind.config.js` to the root of your project containing:
+7. Add a file named `tailwind.config.js` to the root of your project containing:
 
 ```
 const colors = require("tailwindcss/colors");
@@ -119,6 +120,14 @@ module.exports = {
         dark: "#0060C7",
         100: "rgb(214, 236, 255)",
         500: "#0076fa"
+      },
+      primary: {
+        ...colors.primary,
+        light: "#D6ECFF",
+        DEFAULT: "#007BFF",
+        dark: "#0060C7",
+        100: "rgb(214, 236, 255)",
+        500: "#0076fa"
       }
     }
   },
@@ -126,8 +135,11 @@ module.exports = {
     extend: {
       opacity: ["disabled"]
     }
-  }
+  },
+  plugins: [require("@tailwindcss/forms")]
 };
 ```
+
+8. Change the colors of primary to your appropriate primary color
 
 For some background on how it was compiled follow https://www.pluralsight.com/guides/react-typescript-module-create

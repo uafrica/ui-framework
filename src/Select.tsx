@@ -135,7 +135,7 @@ function GroupedSelect(props: IGroupedSelect) {
                 </span>
 
                 {selected ? (
-                  <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-blue-600">
+                  <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-primary-600">
                     <FontAwesomeIcon icon="check" className="h-5 w-5" aria-hidden="true" />
                   </span>
                 ) : null}

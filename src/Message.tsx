@@ -67,7 +67,7 @@ function BaseMessage(props: IBaseMessageProps) {
     color = "yellow";
     icon = "exclamation-circle";
   } else if (variant === "info") {
-    color = "blue";
+    color = "primary";
   }
 
   return (

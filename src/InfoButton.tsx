@@ -22,7 +22,7 @@ function InfoButton(props: IInfoButton) {
       <Menu as="div" className="relative text-left">
         {({ open }) => (
           <>
-            <Menu.Button className="flex items-center justify-center w-full bg-white font-medium text-blue hover:bg-blue-50 focus:outline-none rounded-full">
+            <Menu.Button className="flex items-center justify-center w-full bg-white font-medium text-primary hover:bg-primary-50 focus:outline-none rounded-full">
               <FontAwesomeIcon icon="info-circle" className={className ? className : ""} />
             </Menu.Button>
 
