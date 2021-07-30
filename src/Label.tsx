@@ -32,7 +32,7 @@ function LabelWithValue(props: ILabelWithValue) {
   let { label, value, noMargin } = props;
 
   return (
-    <div className={"flex flex-row space-x-2" + (noMargin ? "" : "pt-2")}>
+    <div className={"flex flex-row space-x-2 " + (noMargin ? "" : " pt-2")}>
       <label className={labelBaseClass + (noMargin ? "" : " mb-2 ")}>{label}</label>
       <div>{value}</div>
     </div>
