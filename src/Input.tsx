@@ -4,7 +4,7 @@ import { InfoButton } from "./InfoButton";
 import { Label } from "./Label";
 import { Message } from "./Message";
 
-const inputBaseClass = "shadow-sm block w-full  border-gray-300 rounded-md";
+const inputBaseClass = "shadow-sm block w-full border-gray-300 rounded-md";
 const inputContainerBaseClass = "relative rounded-m";
 
 // Interfaces
@@ -42,12 +42,10 @@ interface IInputProps {
 
   info?: any;
   inputFieldId?: string;
-  prependIcon?: any;
-  prependIconClassName?: string;
-  prependIconId?: string;
   appendIcon?: IconProp;
   appendIconId?: string;
   appendText?: string;
+  prependText?: string;
   inputFieldStyle?: any;
   inputId?: string;
 }
@@ -63,9 +61,6 @@ function Input(props: IInputProps) {
     readOnly,
     inputFieldStyle,
     placeholder,
-    prependIcon,
-    prependIconClassName,
-    prependIconId,
     register,
     reference,
     type,
@@ -82,6 +77,7 @@ function Input(props: IInputProps) {
     errorMessage,
     onChange,
     onFocus,
+    prependText,
     onBlur,
     containerClassName,
     labelInline,
@@ -121,7 +117,9 @@ function Input(props: IInputProps) {
       min={min}
       max={max}
       autoComplete={autoComplete}
-      className={inputBaseClass + (appendIcon ? " pr-10 " : "")}
+      className={
+        inputBaseClass + (appendIcon || appendText ? " pr-10 " : "") + (prependText ? " pl-7 " : "")
+      }
     />
   );
 
@@ -146,20 +144,19 @@ function Input(props: IInputProps) {
           {optional && <span className="text-gray-500">Optional</span>}
         </div>
       )}
-      {prependIcon || appendIcon || appendText ? (
+      {prependText || appendIcon || appendText ? (
         <div className={inputFieldClassName} id={inputFieldId} style={inputFieldStyle}>
-          {prependIcon && (prependIconClassName || prependIconId) ? (
-            <span className={prependIconClassName} id={prependIconId}>
-              {prependIcon}
-            </span>
-          ) : (
-            prependIcon
-          )}
           <div
             className={
               inputContainerBaseClass + " " + (inputFieldClassName ? inputFieldClassName : "w-xs")
             }
           >
+            {prependText && (
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none ">
+                <span className="text-gray-500 sm:text-sm">{prependText}</span>
+              </div>
+            )}
+
             {InputElement}
             {appendIcon && (
               <div

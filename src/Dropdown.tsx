@@ -10,6 +10,8 @@ interface IDropdown {
   icon?: IconProp;
   noBackground?: boolean;
   id?: string;
+  style?: string;
+  widthClass?: string; // tailwind w-X class e.g. w-56
 }
 
 interface IMenuItem {
@@ -21,7 +23,9 @@ interface IMenuItem {
 
 // Implementation
 function DropdownMenu(props: IDropdown) {
-  let { title, icon, noBackground, id } = props;
+  let { title, icon, noBackground, id, widthClass } = props;
+
+  widthClass = widthClass ? widthClass : "w-72";
 
   return (
     <Menu as="div" className="relative inline-block text-left">
@@ -59,7 +63,10 @@ function DropdownMenu(props: IDropdown) {
           >
             <Menu.Items
               static
-              className="z-10 origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none"
+              className={
+                "z-10 origin-top-right absolute right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none " +
+                widthClass
+              }
             >
               {props.children}
             </Menu.Items>

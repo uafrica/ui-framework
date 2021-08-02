@@ -7,6 +7,7 @@ interface IProps {
   label?: any;
   labelClassName?: string;
   htmlFor?: string;
+  hoverTitle?: string;
   info?: string;
   className?: string;
   id?: string;
@@ -33,7 +34,8 @@ function Checkbox(props: IProps) {
     onChange,
     key,
     labelLeft,
-    labelRight
+    labelRight,
+    hoverTitle
   } = props;
 
   const labelEl = (
@@ -52,6 +54,7 @@ function Checkbox(props: IProps) {
     >
       {label && (labelLeft || (!labelLeft && !labelRight)) && labelEl}
       <input
+        title={hoverTitle}
         type="checkbox"
         className={"text-primary border-gray-300 rounded " + (className ? className : "")}
         checked={checked}

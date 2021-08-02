@@ -15,6 +15,7 @@ interface ISavePanel {
 
 interface ISavePanelContainer {
   children: any;
+  inModal?: boolean;
 }
 
 function SavePanel(props: ISavePanel) {
@@ -61,7 +62,7 @@ function SavePanel(props: ISavePanel) {
 }
 
 function SavePanelContainer(props: ISavePanelContainer) {
-  return <div className="mb-20">{props.children}</div>;
+  return <div className={props.inModal ? "" : "mb-20"}>{props.children}</div>;
 }
 
 export { SavePanel, SavePanelContainer };

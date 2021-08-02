@@ -11,6 +11,7 @@ import { Input } from "../Input";
 interface IDatePicker {
   selected: Date;
   label?: string;
+  labelInline?: boolean;
   placeholder?: string;
   dateFormat?: string;
   containerClassName?: string;
@@ -51,7 +52,8 @@ export const inputStyle = {
 
 // Implementation
 function DatePicker(props: IDatePicker) {
-  let { selected, label, placeholder, dateFormat, containerClassName, onChange } = props;
+  let { selected, label, labelInline, placeholder, dateFormat, containerClassName, onChange } =
+    props;
 
   let date = new Date();
   if (selected) {
@@ -72,6 +74,7 @@ function DatePicker(props: IDatePicker) {
                 value={formattedDate(dateFormat, date)}
                 readOnly
                 label={label}
+                labelInline={labelInline}
                 containerClassName={containerClassName}
                 placeholder={placeholder}
                 appendIcon="caret-down"
