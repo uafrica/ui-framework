@@ -23,7 +23,6 @@ import Switch from "./Switch";
 import Accordion from "./Accordion";
 import ResponsiveRow from "./ResponsiveRow";
 import { DatePicker } from "./datePicker/DatePicker";
-import { TextAreaEditable } from "./TextAreaEditable";
 import CopyText from "./CopyText";
 import SkeletonLoader from "./SkeletonLoaders";
 import { SavingOverlay } from "./SavingOverlay";
@@ -66,7 +65,6 @@ export {
   ResponsiveRow,
   GroupedSelect,
   LabelWithValue,
-  TextAreaEditable,
   SavePanelContainer,
   IconWithBackground
 };
