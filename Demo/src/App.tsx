@@ -1,4 +1,5 @@
-import { Button, PageActionsPanel, Select } from "../../src/index";
+import CornelScratchPad from "CornelScratchPad";
+import { Button, Input, PageActionsPanel, Select } from "../../src/index";
 
 function App() {
   return (
@@ -14,6 +15,10 @@ function App() {
           { label: "Option 2", value: 2 }
         ]}
       />
+
+      <Input label="Name" />
+
+      <CornelScratchPad />
     </div>
   );
 }

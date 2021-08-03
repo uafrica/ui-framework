@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Popover, Transition } from "@headlessui/react";
+import { Popover } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { InfoButton } from "./InfoButton";
 import { Input } from "./Input";
@@ -26,6 +26,8 @@ interface IBase {
   className?: string;
   containerClassName?: string;
   noMargin?: boolean;
+  popoverWidth?: string;
+  buttonWidth?: string;
   id?: string;
   value?: any;
   info?: any;
@@ -49,11 +51,13 @@ function GroupedSelect(props: IGroupedSelect) {
     disabled,
     id,
     placeholder,
+    popoverWidth,
     value,
     optionGroups,
     labelInline,
     noMargin,
     className,
+    buttonWidth,
     multiSelection,
     containerClassName,
     info,
@@ -206,6 +210,11 @@ function GroupedSelect(props: IGroupedSelect) {
     _containerClassName = containerClassName;
   }
 
+  let _buttonWidth = "w-56";
+  if (buttonWidth) {
+    _buttonWidth = buttonWidth;
+  }
+
   return (
     <div className={_containerClassName} onClick={(e: any) => e.stopPropagation()}>
       <Popover>
@@ -217,7 +226,7 @@ function GroupedSelect(props: IGroupedSelect) {
           )}
 
           {/* Button that is clicked on to open the dropdown */}
-          <div className={"relative " + (className ? className : "w-56")}>
+          <div className={"relative " + (className ? className : "") + _buttonWidth}>
             <div
               onClick={(e: any) => {
                 e.stopPropagation();
@@ -230,7 +239,7 @@ function GroupedSelect(props: IGroupedSelect) {
                 // @ts-ignore
                 ref={buttonRef}
                 disabled={disabled}
-                className="bg-white relative border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-pointer disabled:cursor-default w-full"
+                className="bg-white relative border border-gray-300 rounded-md shadow-sm pl-3 pr-6 py-2 text-left cursor-pointer disabled:cursor-default w-full"
                 id={id}
               >
                 <span className="block truncate">
@@ -246,36 +255,33 @@ function GroupedSelect(props: IGroupedSelect) {
               </Popover.Button>
             </div>
 
-            <Transition
-              enter="transition duration-100 ease-out z-20"
-              enterFrom="transform scale-95 opacity-0"
-              enterTo="transform scale-100 opacity-100"
-              leave="transition duration-75 ease-out"
-              leaveFrom="transform scale-100 opacity-100"
-              leaveTo="transform scale-95 opacity-0"
-            >
-              <Popover.Panel className="absolute z-10 mt-1">
-                <div className="overflow-hidden z-10 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 px-4 pb-2 bg-white w-72">
-                  {!noSearch && (
-                    <Input
-                      autoFocus
-                      onBlur={onSearchBlur}
-                      onFocus={onSearchFocus}
-                      appendIcon="search"
-                      value={searchTerm}
-                      onChange={(e: any) => setSearchTerm(e.target.value)}
-                    />
-                  )}
-                  <div className={"mt-2 mb-2 max-h-52 overflow-y-auto"}>
-                    {allOptionsSearched.length === 0 && <div className="pl-2 mt-2">No options</div>}
-                    {optionGroups.map((optionGroup: IOptionGroup) => {
-                      return renderOptionGroup(optionGroup);
-                    })}
-                  </div>
-                  {buttons && <div className="-ml-1 border-t border-gray-200 pt-1">{buttons}</div>}
+            <Popover.Panel className="absolute z-10 mt-1">
+              <div
+                className={
+                  "overflow-hidden z-10 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 px-4 pb-2 bg-white " +
+                  (popoverWidth ? popoverWidth : "w-72")
+                }
+              >
+                {!noSearch && (
+                  <Input
+                    autoFocus
+                    containerClassName="mt-4 w-full"
+                    onBlur={onSearchBlur}
+                    onFocus={onSearchFocus}
+                    appendIcon="search"
+                    value={searchTerm}
+                    onChange={(e: any) => setSearchTerm(e.target.value)}
+                  />
+                )}
+                <div className={"mt-2 mb-2 max-h-52 overflow-y-auto"}>
+                  {allOptionsSearched.length === 0 && <div className="pl-2 mt-2">No options</div>}
+                  {optionGroups.map((optionGroup: IOptionGroup) => {
+                    return renderOptionGroup(optionGroup);
+                  })}
                 </div>
-              </Popover.Panel>
-            </Transition>
+                {buttons && <div className="-ml-1 border-t border-gray-200 pt-1">{buttons}</div>}
+              </div>
+            </Popover.Panel>
           </div>
           {!label && info && <InfoButton>{info}</InfoButton>}
         </div>

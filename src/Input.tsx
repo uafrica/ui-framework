@@ -1,15 +1,15 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Select } from "./Select";
 import { InfoButton } from "./InfoButton";
 import { Label } from "./Label";
 import { Message } from "./Message";
 
 const inputBaseClass = "shadow-sm block w-full border-gray-300 rounded-md";
-const inputContainerBaseClass = "relative rounded-m";
+const inputContainerBaseClass = "relative rounded-m w-full ";
 
 // Interfaces
 interface IInputProps {
-  inputFieldClassName?: string;
   label?: string;
   labelInline?: boolean;
   labelClassName?: string;
@@ -45,6 +45,7 @@ interface IInputProps {
   appendIcon?: IconProp;
   appendIconId?: string;
   appendText?: string;
+  appendSelectProps?: any;
   prependText?: string;
   inputFieldStyle?: any;
   inputId?: string;
@@ -56,7 +57,6 @@ function Input(props: IInputProps) {
     label,
     htmlFor,
     labelClassName,
-    inputFieldClassName,
     inputFieldId,
     readOnly,
     inputFieldStyle,
@@ -89,12 +89,12 @@ function Input(props: IInputProps) {
     max,
     autoComplete,
     info,
-    required
+    required,
+    appendSelectProps
   } = props;
 
   type = type ? type : "text";
   labelClassName = labelClassName ? labelClassName : "";
-  inputFieldClassName = inputFieldClassName ? inputFieldClassName : "";
 
   const InputElement = (
     <input
@@ -144,44 +144,35 @@ function Input(props: IInputProps) {
           {optional && <span className="text-gray-500">Optional</span>}
         </div>
       )}
-      {prependText || appendIcon || appendText ? (
-        <div className={inputFieldClassName} id={inputFieldId} style={inputFieldStyle}>
-          <div
-            className={
-              inputContainerBaseClass + " " + (inputFieldClassName ? inputFieldClassName : "w-xs")
-            }
-          >
-            {prependText && (
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none ">
-                <span className="text-gray-500 sm:text-sm">{prependText}</span>
-              </div>
-            )}
+      <div className="flex flex-row items-center w-full" id={inputFieldId} style={inputFieldStyle}>
+        <div className={inputContainerBaseClass}>
+          {prependText && (
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none ">
+              <span className="text-gray-500 sm:text-sm">{prependText}</span>
+            </div>
+          )}
 
-            {InputElement}
-            {appendIcon && (
-              <div
-                className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-400"
-                id={appendIconId}
-              >
-                <FontAwesomeIcon icon={appendIcon} size="sm" />
-              </div>
-            )}
-            {appendText && (
-              <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-400">
-                {appendText}
-              </div>
-            )}
-          </div>
-        </div>
-      ) : (
-        <div
-          className={
-            inputContainerBaseClass + " " + (inputFieldClassName ? inputFieldClassName : "w-xs")
-          }
-        >
           {InputElement}
+          {appendIcon && (
+            <div
+              className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-400"
+              id={appendIconId}
+            >
+              <FontAwesomeIcon icon={appendIcon} size="sm" />
+            </div>
+          )}
+          {appendText && (
+            <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-400">
+              {appendText}
+            </div>
+          )}
         </div>
-      )}
+        {appendSelectProps && (
+          <div className="-ml-2">
+            <Select {...appendSelectProps} noMargin />
+          </div>
+        )}
+      </div>
       {validationError &&
         (errorMessage ? (
           <Message.Error>{errorMessage}</Message.Error>
