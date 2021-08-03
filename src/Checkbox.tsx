@@ -38,7 +38,9 @@ function Checkbox(props: IProps) {
 
   const labelEl = (
     <label
-      className={"text-base flex items-center " + (labelClassName ? labelClassName : "")}
+      className={
+        "text-base flex items-center cursor-pointer " + (labelClassName ? labelClassName : "")
+      }
       htmlFor={htmlFor}
     >
       {label}

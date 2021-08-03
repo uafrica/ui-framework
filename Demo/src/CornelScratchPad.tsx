@@ -1,4 +1,4 @@
-import { Input, SkeletonLoader } from "../../src";
+import { Input, SkeletonLoader, Switch } from "../../src";
 
 function CornelScratchPad() {
   return (
@@ -15,6 +15,12 @@ function CornelScratchPad() {
             { label: "Option 2", value: 2 }
           ]
         }}
+      />
+      <Switch
+        label="Toggle me on"
+        info="This won't work without state mgt"
+        checked={false}
+        onChange={() => {}}
       />
       <SkeletonLoader.ShipmentLoader />
     </div>

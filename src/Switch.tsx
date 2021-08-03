@@ -12,7 +12,7 @@ export default function Switch(props: IProps) {
   let { checked, label, info } = props;
 
   return (
-    <>
+    <div className="flex flex-row space-x-4 items-center">
       <HeadlessSwitch
         checked={checked}
         onChange={props.onChange}
@@ -58,8 +58,8 @@ export default function Switch(props: IProps) {
           </span>
         </span>
       </HeadlessSwitch>
-      {label && <span className="ml-4">{label}</span>}
+      {label && <div>{label}</div>}
       {info && <InfoButton>{info}</InfoButton>}
-    </>
+    </div>
   );
 }
