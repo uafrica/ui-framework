@@ -1,5 +1,3 @@
-import { useRef } from "react";
-import { Dialog } from "@headlessui/react";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -36,19 +34,13 @@ function Base(props: IBaseProps) {
 
   if (!show) return null;
 
-  let refDiv = useRef(null); // needed for focus trap: https://github.com/tailwindlabs/headlessui/issues/265
-
   return (
-    <Dialog
-      as="div"
-      static
-      className="fixed z-10 inset-0 overflow-y-auto mx-0 sm:mx-20"
-      initialFocus={refDiv}
-      open={true}
-      onClose={!disableClickOutsideToClose && props.onHide ? props.onHide : () => {}}
-    >
+    <div className="fixed z-10 inset-0 overflow-y-auto mx-0 sm:mx-20">
       <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-60 transition-opacity" />
+        <div
+          className="uafrica-modal-overlay fixed inset-0 bg-black bg-opacity-60 transition-opacity"
+          onClick={!disableClickOutsideToClose && props.onHide ? props.onHide : () => {}}
+        />
 
         <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
           &#8203;
@@ -70,7 +62,7 @@ function Base(props: IBaseProps) {
             )}
             <div className="mt-4 text-center sm:mt-0 sm:text-left w-full">
               {(title || closeButton) && (
-                <Dialog.Title className="text-lg leading-6 font-bold mb-4 text-gray-900">
+                <div className="text-lg leading-6 font-bold mb-4 text-gray-900">
                   {title && title}
 
                   {closeButton && (
@@ -81,16 +73,14 @@ function Base(props: IBaseProps) {
                       onClick={props.onHide}
                     />
                   )}
-                </Dialog.Title>
+                </div>
               )}
-              <div className="mt-2" ref={refDiv}>
-                {props.children}
-              </div>
+              <div className="mt-2">{props.children}</div>
             </div>
           </div>
         </div>
       </div>
-    </Dialog>
+    </div>
   );
 }
 

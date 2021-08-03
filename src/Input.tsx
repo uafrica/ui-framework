@@ -99,10 +99,10 @@ function Input(props: IInputProps) {
   let inputClasses = prependText ? " pl-7 " : "";
 
   if (appendIcon || appendText) {
-    if (appendText && appendText.length > 5) {
+    if (appendText && appendText.length > 4) {
       inputClasses += " pr-20";
     } else {
-      inputClasses += " pr-10";
+      inputClasses += " pr-12";
     }
   }
 
