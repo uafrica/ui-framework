@@ -3,14 +3,11 @@ import { BrowserRouter } from "react-router-dom";
 
 import "../../src/index.scss";
 import "index.scss";
-
-import { Button } from "../../src/index";
+import App from "App";
 
 ReactDOM.render(
   <BrowserRouter>
-    <div>
-      <Button.Primary title="Test" />
-    </div>
+    <App />
   </BrowserRouter>,
   document.getElementById("root")
 );
