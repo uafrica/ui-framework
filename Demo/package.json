@@ -19,14 +19,14 @@
   "dependencies": {
     "@popperjs/core": "^2.9.2",
     "@tailwindcss/forms": "^0.3.3",
-    "autoprefixer": "9.8.6",
-    "postcss": "7.0.36",
     "react": "16.14.0",
     "react-dom": "16.13.1",
     "react-router-dom": "5.2.0",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   },
   "devDependencies": {
+    "autoprefixer": "9.8.6",
+    "postcss": "7.0.36",
     "@craco/craco": "^6.2.0",
     "@types/node": "15.0.3",
     "@types/react": "17.0.5",
