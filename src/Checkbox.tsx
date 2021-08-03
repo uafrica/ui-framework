@@ -14,6 +14,7 @@ interface IProps {
   checked?: boolean;
   center?: boolean;
   disabled?: boolean;
+  noPadding?: boolean;
   labelLeft?: boolean;
   labelRight?: boolean;
 }
@@ -33,7 +34,8 @@ function Checkbox(props: IProps) {
     key,
     labelLeft,
     labelRight,
-    hoverTitle
+    hoverTitle,
+    noPadding
   } = props;
 
   const labelEl = (
@@ -54,7 +56,9 @@ function Checkbox(props: IProps) {
       onClick={onClick}
       key={key}
       className={
-        "py-2 px-1 items-center flex space-x-4 cursor-pointer " + (center ? "justify-center " : "")
+        (noPadding ? "" : "py-2 px-1 ") +
+        " items-center flex space-x-4 cursor-pointer " +
+        (center ? "justify-center " : "")
       }
     >
       {label && (labelLeft || (!labelLeft && !labelRight)) && labelEl}

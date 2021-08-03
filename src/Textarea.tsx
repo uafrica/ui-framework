@@ -8,7 +8,7 @@ interface ITextarea {
   label?: any;
   labelClassName?: string;
   htmlFor?: string;
-  fieldClassName?: string;
+  containerClassName?: string;
   fieldId?: string;
   className?: string;
   info?: string;
@@ -31,7 +31,7 @@ interface ITextarea {
 // Implementation
 function Textarea(props: ITextarea) {
   let {
-    fieldClassName,
+    containerClassName,
     fieldId,
     label,
     labelClassName,
@@ -51,7 +51,7 @@ function Textarea(props: ITextarea) {
   } = props;
 
   return (
-    <div className={fieldClassName ? fieldClassName : defaultContainerClass} id={fieldId}>
+    <div className={containerClassName ? containerClassName : defaultContainerClass} id={fieldId}>
       <div className="flex justify-between">
         {label && (
           <div>
