@@ -5,9 +5,6 @@ import { InfoButton } from "./InfoButton";
 import { Label } from "./Label";
 import { Message } from "./Message";
 
-const inputBaseClass = "shadow-sm block w-full border-gray-300 rounded-md";
-const inputContainerBaseClass = "relative rounded-m w-full ";
-
 // Interfaces
 interface IInputProps {
   label?: string;
@@ -37,7 +34,6 @@ interface IInputProps {
   errorMessage?: string;
   autoFocus?: any;
   optional?: boolean; // displays the text "optional" next to the label
-  required?: boolean; // displays the text "*" next to the label
   readOnly?: boolean;
 
   info?: any;
@@ -89,7 +85,6 @@ function Input(props: IInputProps) {
     max,
     autoComplete,
     info,
-    required,
     appendSelectProps
   } = props;
 
@@ -127,7 +122,7 @@ function Input(props: IInputProps) {
       min={min}
       max={max}
       autoComplete={autoComplete}
-      className={inputBaseClass + inputClasses}
+      className={"shadow-sm block w-full border-gray-300 rounded-md " + inputClasses}
     />
   );
 
@@ -146,14 +141,14 @@ function Input(props: IInputProps) {
       {label && label.length > 0 && (
         <div className="flex justify-between">
           <Label htmlFor={htmlFor} className={labelClassName} noMargin={labelInline}>
-            {label} {!optional && required && " *"}
+            {label}
             {info && <InfoButton>{info}</InfoButton>}
           </Label>
           {optional && <span className="text-gray-500">Optional</span>}
         </div>
       )}
       <div className="flex flex-row items-center w-full" id={inputFieldId} style={inputFieldStyle}>
-        <div className={inputContainerBaseClass}>
+        <div className={"relative rounded-m w-full"}>
           {prependText && (
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none ">
               <span className="text-gray-500 sm:text-sm">{prependText}</span>
