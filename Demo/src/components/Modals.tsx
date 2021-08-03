@@ -29,7 +29,7 @@ function Modals() {
     <div className="mt-5">
       <PageActionsPanel title="Modals page">
         {[{title: "Small modal", size: setSmallModal }, {title: "Medium modal", size: setMediumModal }, {title: "Large modal", size: setLargeModal }].map((size: any) => (
-          <Button.Primary title={`${size.title}`} onClick={()=>size.size(true)}/>
+          <Button.Primary key={size.title} title={`${size.title}`} onClick={()=>size.size(true)}/>
         ))}
       </PageActionsPanel>
       <Modal.Medium show={mediumModal} closeButton onHide={()=>setMediumModal(false)} title="Medium modal" disableClickOutsideToClose>
