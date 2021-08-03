@@ -6,6 +6,7 @@ function CornelScratchPad() {
       <Input
         prependText="R"
         label="Price"
+        labelInline
         appendSelectProps={{
           popoverWidth: "w-96",
           buttonWidth: "w-24",

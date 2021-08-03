@@ -83,7 +83,7 @@ function Confirm(props: IProps) {
   ) : null;
 
   return (
-    <div onClick={onButtonClick}>
+    <div onClick={onButtonClick} className="flex items-center">
       {children}
       <Modal.Small show={isOpen} onHide={onClose} title={title} closeButton>
         {body}
