@@ -39,7 +39,10 @@ function Checkbox(props: IProps) {
   } = props;
 
   const labelEl = (
-    <label className={"text-base " + (labelClassName ? labelClassName : "")} htmlFor={htmlFor}>
+    <label
+      className={"text-base flex items-center " + (labelClassName ? labelClassName : "")}
+      htmlFor={htmlFor}
+    >
       {label}
       {info && <InfoButton>{info}</InfoButton>}
     </label>

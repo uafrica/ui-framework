@@ -30,6 +30,9 @@ interface IBase {
   value?: any;
   info?: any;
   onChange?: (value: any) => void;
+  onClick?: () => void;
+  onSearchBlur?: () => void;
+  onSearchFocus?: () => void;
   disabled?: boolean;
   noSearch?: boolean;
   placeholder?: any;
@@ -57,6 +60,9 @@ function GroupedSelect(props: IGroupedSelect) {
     buttons,
     onDelete,
     onChange,
+    onClick,
+    onSearchBlur,
+    onSearchFocus,
     noSearch
   } = props;
 
@@ -212,12 +218,19 @@ function GroupedSelect(props: IGroupedSelect) {
 
           {/* Button that is clicked on to open the dropdown */}
           <div className={"relative " + (className ? className : "w-56")}>
-            <div onClick={(e: any) => e.stopPropagation()}>
+            <div
+              onClick={(e: any) => {
+                e.stopPropagation();
+                if (onClick) {
+                  onClick();
+                }
+              }}
+            >
               <Popover.Button
                 // @ts-ignore
                 ref={buttonRef}
                 disabled={disabled}
-                className="bg-white relative border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-pointer disabled:cursor-default w-56"
+                className="bg-white relative border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-pointer disabled:cursor-default w-full"
                 id={id}
               >
                 <span className="block truncate">
@@ -245,6 +258,9 @@ function GroupedSelect(props: IGroupedSelect) {
                 <div className="overflow-hidden z-10 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 px-4 pb-2 bg-white w-72">
                   {!noSearch && (
                     <Input
+                      autoFocus
+                      onBlur={onSearchBlur}
+                      onFocus={onSearchFocus}
                       appendIcon="search"
                       value={searchTerm}
                       onChange={(e: any) => setSearchTerm(e.target.value)}
@@ -261,6 +277,7 @@ function GroupedSelect(props: IGroupedSelect) {
               </Popover.Panel>
             </Transition>
           </div>
+          {!label && info && <InfoButton>{info}</InfoButton>}
         </div>
       </Popover>
     </div>
