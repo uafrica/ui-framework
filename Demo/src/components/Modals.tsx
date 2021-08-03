@@ -1,6 +1,16 @@
 import { Button, Modal, PageActionsPanel } from "../../../src";
 import { useState } from "react";
 
+const props = {
+  show: "boolean",
+  children: "any",
+  "onHide?": "any",
+  "title?": "any",
+  "icon?": "IconProp",
+  closeButton: "boolean",
+  "disableClickOutsideToClose?": "boolean",
+}
+
 function Modals() {
   const [smallModal, setSmallModal] = useState<boolean>(false)
   const [mediumModal, setMediumModal] = useState<boolean>(false)
@@ -14,7 +24,6 @@ function Modals() {
       size(false)
       setLoading(false)
     }, time)
-    // setMediumLoading(false)
   }
   return (
     <div className="mt-5">
@@ -25,16 +34,16 @@ function Modals() {
       </PageActionsPanel>
       <Modal.Medium show={mediumModal} closeButton onHide={()=>setMediumModal(false)} title="Medium modal" disableClickOutsideToClose>
         <div>
-          This is a medium modal
+          {JSON.stringify(props, null, 2)}
         </div>
         <Modal.ButtonsPanel>
           <Button.Cancel title="Cancel" onClick={()=>setMediumModal(false)} />
           <Button.Primary title="Save" loadingTitle="Saving" isLoading={loading} onClick={()=>onCloseModal(1500, setMediumModal)} />
         </Modal.ButtonsPanel>
       </Modal.Medium>
-      <Modal.Small show={smallModal} closeButton onHide={()=>setSmallModal(false)} title="Small modal">
+      <Modal.Small show={smallModal} closeButton={false} onHide={()=>setSmallModal(false)} title="Small modal">
         <div>
-          This is a small modal
+          {JSON.stringify(props, null, 2)}
         </div>
         <Modal.ButtonsPanel>
           <Button.Cancel title="Cancel" onClick={()=>setSmallModal(false)} />
@@ -43,7 +52,7 @@ function Modals() {
       </Modal.Small>
       <Modal.Large show={largeModal} closeButton onHide={()=>setLargeModal(false)} title="Small modal">
         <div>
-          This is a small modal
+          {JSON.stringify(props, null, 2)}
         </div>
         <Modal.ButtonsPanel>
           <Button.Cancel title="Cancel" onClick={()=>setLargeModal(false)} />
