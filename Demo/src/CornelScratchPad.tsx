@@ -1,4 +1,4 @@
-import { Input } from "../../src";
+import { Input, SkeletonLoader } from "../../src";
 
 function CornelScratchPad() {
   return (
@@ -16,6 +16,7 @@ function CornelScratchPad() {
           ]
         }}
       />
+      <SkeletonLoader.ShipmentLoader />
     </div>
   );
 }

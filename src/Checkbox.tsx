@@ -11,7 +11,6 @@ interface IProps {
   info?: string;
   className?: string;
   id?: string;
-  onChange?: any;
   checked?: boolean;
   center?: boolean;
   disabled?: boolean;
@@ -31,7 +30,6 @@ function Checkbox(props: IProps) {
     id,
     center,
     checked,
-    onChange,
     key,
     labelLeft,
     labelRight,
@@ -53,7 +51,9 @@ function Checkbox(props: IProps) {
       id={id}
       onClick={onClick}
       key={key}
-      className={"py-2 px-1 items-center flex space-x-4 " + (center ? "justify-center " : "")}
+      className={
+        "py-2 px-1 items-center flex space-x-4 cursor-pointer " + (center ? "justify-center " : "")
+      }
     >
       {label && (labelLeft || (!labelLeft && !labelRight)) && labelEl}
       <input
@@ -62,7 +62,7 @@ function Checkbox(props: IProps) {
         className={"text-primary border-gray-300 rounded " + (className ? className : "")}
         checked={checked}
         id={fieldId}
-        onChange={onChange}
+        onChange={() => {}}
       />
 
       {label && labelRight && labelEl}

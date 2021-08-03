@@ -96,6 +96,16 @@ function Input(props: IInputProps) {
   type = type ? type : "text";
   labelClassName = labelClassName ? labelClassName : "";
 
+  let inputClasses = prependText ? " pl-7 " : "";
+
+  if (appendIcon || appendText) {
+    if (appendText && appendText.length > 5) {
+      inputClasses += " pr-20";
+    } else {
+      inputClasses += " pr-10";
+    }
+  }
+
   const InputElement = (
     <input
       autoFocus={autoFocus}
@@ -117,9 +127,7 @@ function Input(props: IInputProps) {
       min={min}
       max={max}
       autoComplete={autoComplete}
-      className={
-        inputBaseClass + (appendIcon || appendText ? " pr-10 " : "") + (prependText ? " pl-7 " : "")
-      }
+      className={inputBaseClass + inputClasses}
     />
   );
 
