@@ -1,0 +1,56 @@
+{
+  "name": "uafrica-ui-framework-demo",
+  "version": "1.0.0",
+  "description": "A demo of the UI components used by uAfrica.com, based on TailwindCSS and Headless UI",
+  "license": "BSD-3-Clause",
+  "repository": "uafrica/ui-framework",
+  "bugs": {
+    "url": "https://github.com/uafrica/ui-framework/issues",
+    "email": "cornel@uafrica.com"
+  },
+  "author": {
+    "name": "Cornel Rautenbach",
+    "email": "cornel@uafrica.com",
+    "url": "http://cornelrautenbach.com"
+  },
+  "scripts": {
+    "start": "craco start"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.9.2",
+    "@tailwindcss/forms": "^0.3.3",
+    "autoprefixer": "9.8.6",
+    "postcss": "7.0.36",
+    "react": "16.14.0",
+    "react-dom": "16.13.1",
+    "react-router-dom": "5.2.0",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
+  },
+  "devDependencies": {
+    "@craco/craco": "^6.2.0",
+    "@types/node": "15.0.3",
+    "@types/react": "17.0.5",
+    "@types/react-dom": "17.0.5",
+    "@types/react-router-dom": "5.1.7",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-prettier": "3.4.0",
+    "eslint-plugin-react-perf": "^3.3.0",
+    "prettier": "2.3.0",
+    "pretty-quick": "3.1.0",
+    "react-scripts": "4.0.1",
+    "sass": "^1.36.0",
+    "typescript": "4.2.4"
+  },
+  "keywords": [
+    "uafrica",
+    "framework",
+    "react",
+    "tailwindcss",
+    "headless-ui"
+  ],
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ]
+}
