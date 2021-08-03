@@ -39,10 +39,10 @@ function DropdownMenu(props: IDropdown) {
               id={id}
               className={
                 "inline-flex justify-center w-full px-4 py-2 font-medium  focus:outline-none " +
-                ("text-" + color + "-700") +
+                ("text-" + color + " ") +
                 (noBackground
-                  ? "hover:text-" + color + "-900 font-bold"
-                  : "hover:bg-gray-50 border-gray-300 shadow-sm rounded-full border bg-white")
+                  ? " hover:text-" + color + "-700 font-bold"
+                  : " hover:bg-gray-50 border-gray-300 shadow-sm rounded-full border bg-white")
               }
             >
               {icon && <FontAwesomeIcon icon={icon} className="h-5 w-5" aria-hidden="true" />}
