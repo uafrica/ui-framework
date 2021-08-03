@@ -12,6 +12,10 @@ To add the framework to your project (assuming that your project is using Create
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html {
+  font-size: 0.875rem;
+}
 ```
 
 4. Add the following to your `index.js` file
