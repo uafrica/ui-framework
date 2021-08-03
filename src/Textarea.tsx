@@ -25,7 +25,7 @@ interface ITextarea {
   validationError?: any;
   errorMessage?: any;
   fixed?: boolean;
-  areaStyles?: any;
+  rows?: any;
 }
 
 // Implementation
@@ -46,7 +46,7 @@ function Textarea(props: ITextarea) {
     onChange,
     infoButton,
     errorMessage,
-    areaStyles,
+    rows,
     optional
   } = props;
 
@@ -66,11 +66,11 @@ function Textarea(props: ITextarea) {
         className="mt-2 shadow-sm block w-full border border-gray-300 rounded-md"
         id={id}
         value={value}
+        rows={rows ? rows : 4}
         name={name}
         defaultValue={defaultValue}
         placeholder={placeholder}
         onChange={onChange}
-        style={areaStyles}
         ref={register}
       />
       {validationError &&
