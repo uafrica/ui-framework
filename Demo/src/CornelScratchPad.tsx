@@ -1,4 +1,4 @@
-import { Input, Modal, SkeletonLoader, Switch } from "../../src";
+import { Input, SkeletonLoader, Switch, Textarea } from "../../src";
 
 function CornelScratchPad() {
   return (
@@ -25,10 +25,12 @@ function CornelScratchPad() {
         checked={false}
         onChange={() => {}}
       />
-      <SkeletonLoader.ShipmentLoader />
-      <Modal.Medium title="A modal!" closeButton show={true}>
+      {/* <Modal.Medium title="A modal!" closeButton show={true}>
         Some content here
-      </Modal.Medium>
+    </Modal.Medium> */}
+
+      <Textarea label="Description" info="Testing all the styles here" optional />
+      <SkeletonLoader.ShipmentLoader />
     </div>
   );
 }

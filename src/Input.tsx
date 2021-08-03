@@ -37,7 +37,6 @@ interface IInputProps {
   errorMessage?: string;
   autoFocus?: any;
   optional?: boolean; // displays the text "optional" next to the label
-  required?: boolean; // displays the text "*" next to the label
   readOnly?: boolean;
 
   info?: any;
@@ -89,7 +88,6 @@ function Input(props: IInputProps) {
     max,
     autoComplete,
     info,
-    required,
     appendSelectProps
   } = props;
 
@@ -146,7 +144,7 @@ function Input(props: IInputProps) {
       {label && label.length > 0 && (
         <div className="flex justify-between">
           <Label htmlFor={htmlFor} className={labelClassName} noMargin={labelInline}>
-            {label} {!optional && required && " *"}
+            {label}
             {info && <InfoButton>{info}</InfoButton>}
           </Label>
           {optional && <span className="text-gray-500">Optional</span>}

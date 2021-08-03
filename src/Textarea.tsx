@@ -55,9 +55,9 @@ function Textarea(props: ITextarea) {
       <div className="flex justify-between">
         {label && (
           <div>
-            <Label className={labelClassName}>{label}</Label>
-            {!optional && " *"}
-            {info && <InfoButton>{info}</InfoButton>}
+            <Label className={labelClassName}>
+              {label} {info && <InfoButton>{info}</InfoButton>}
+            </Label>
           </div>
         )}
         {optional && <span className="text-gray-500">Optional</span>}
