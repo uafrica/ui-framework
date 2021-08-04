@@ -27,7 +27,7 @@ function Modals() {
       </PageActionsPanel>
       <Modal.Medium show={mediumModal} closeButton onHide={()=>setMediumModal(false)} title="Medium modal" disableClickOutsideToClose>
         <div>
-          <ReactJson src={ModalInterface} collapsed={false} />
+          <ReactJson src={ModalInterface} collapsed={false} displayDataTypes={false} />
           <p>View the{" "}
             <a style={{color: "blue"}} href="https://github.com/uafrica/ui-framework/blob/main/src/Modal.tsx" target="_blank">Modal</a>{" "}
             here
@@ -41,7 +41,7 @@ function Modals() {
       <Modal.Small show={smallModal} closeButton={false} onHide={()=>setSmallModal(false)} title="Small modal">
         <div>
           <div>
-            <ReactJson src={ModalInterface} collapsed={false} />
+            <ReactJson src={ModalInterface} collapsed={false} displayDataTypes={false} />
             <p>View the{" "}
               <a style={{color: "blue"}} href="https://github.com/uafrica/ui-framework/blob/main/src/Modal.tsx" target="_blank">Modal</a>{" "}
               here
@@ -53,10 +53,10 @@ function Modals() {
           <Button.Primary title="Save" loadingTitle="Saving" isLoading={loading} onClick={()=>onCloseModal(1500, setSmallModal)} />
         </Modal.ButtonsPanel>
       </Modal.Small>
-      <Modal.Large show={largeModal} closeButton onHide={()=>setLargeModal(false)} title="Small modal">
+      <Modal.Large show={largeModal} closeButton onHide={()=>setLargeModal(false)} title="Large modal">
         <div>
           <div>
-            <ReactJson src={ModalInterface} collapsed={false} />
+            <ReactJson src={ModalInterface} collapsed={false} displayDataTypes={false} />
             <p>View the{" "}
               <a style={{color: "blue"}} href="https://github.com/uafrica/ui-framework/blob/main/src/Modal.tsx" target="_blank">Modal</a>{" "}
               here
