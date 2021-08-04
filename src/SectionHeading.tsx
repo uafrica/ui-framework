@@ -5,6 +5,7 @@ interface ISectionHeading {
   children: any;
   icon?: IconProp;
   iconColor?: string;
+  editIconColor?: string;
   toggleEditMode?: any;
   hideEditMode?: boolean;
   center?: boolean;
@@ -12,7 +13,16 @@ interface ISectionHeading {
 }
 
 function SectionHeading(props: ISectionHeading) {
-  let { children, icon, iconColor, toggleEditMode, hideEditMode, center, marginTop } = props;
+  let {
+    children,
+    icon,
+    iconColor,
+    editIconColor,
+    toggleEditMode,
+    hideEditMode,
+    center,
+    marginTop
+  } = props;
 
   return (
     <div
@@ -40,7 +50,11 @@ function SectionHeading(props: ISectionHeading) {
 
       <h2 className="text-lg font-bold text-gray-900 mt-1 flex items-center">{children}</h2>
       {toggleEditMode && !hideEditMode && (
-        <FontAwesomeIcon icon="pencil-alt" className="mt-1" onClick={() => toggleEditMode()} />
+        <FontAwesomeIcon
+          icon="pencil-alt"
+          className={"mt-1 " + (editIconColor ? editIconColor : "text-primary")}
+          onClick={() => toggleEditMode()}
+        />
       )}
     </div>
   );
