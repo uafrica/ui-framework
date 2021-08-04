@@ -1,9 +1,11 @@
 import TabsPage from "./components/Tabs";
 // import { Button, Input, PageActionsPanel, Select } from "../../src/index";
+// import CornelScratchPad from "./CornelScratchPad";
 
 function App() {
   return (
     <div className="p-8">
+      {/*<CornelScratchPad />*/}
       <TabsPage />
       {/*<PageActionsPanel title="Demo page">*/}
       {/*  <Button.Primary title="A button related to the page" />*/}

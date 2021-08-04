@@ -2,6 +2,7 @@ import { PageHeading, Tabs } from "../../../src";
 import { useEffect, useState, useRef } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import Modals from "./Modals";
+import Forms from "./Forms";
 
 function TabsPage() {
   const history = useHistory();
@@ -39,7 +40,7 @@ function TabsPage() {
       <PageHeading>uAfrica UI Component playground</PageHeading>
       <Tabs.Primary activeTabID={activeTabID} onSelect={(tabID: string) => onTabSelected(tabID)}>
         <Tabs.Tab tabID={"forms"} title={"Forms"}>
-          <div>This is the tab information</div>
+          <Forms />
         </Tabs.Tab>
         <Tabs.Tab tabID={"dialog"} title={"Modals"}>
           <Modals />
