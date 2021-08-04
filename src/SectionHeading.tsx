@@ -40,7 +40,11 @@ function SectionHeading(props: ISectionHeading) {
 
       <h2 className="text-lg font-bold text-gray-900 mt-1 flex items-center">{children}</h2>
       {toggleEditMode && !hideEditMode && (
-        <FontAwesomeIcon icon="pencil-alt" className="mt-1" onClick={() => toggleEditMode()} />
+        <FontAwesomeIcon
+          icon="pencil-alt"
+          className="mt-1 text-primary"
+          onClick={() => toggleEditMode()}
+        />
       )}
     </div>
   );
