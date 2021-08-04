@@ -23,7 +23,12 @@ function Tab(props: ITab) {
 }
 
 function Primary(props: ITabs) {
-  let children = props.children.filter((child: any) => child && child.props);
+  let children = props.children;
+  if (!Array.isArray(props.children)) {
+    children = [props.children];
+  }
+
+  children = children.filter((child: any) => child && child.props);
   let activeTab = children.filter((child: any) => props.activeTabID === child.props.tabID);
 
   return (
@@ -58,7 +63,12 @@ function Primary(props: ITabs) {
 }
 
 function Secondary(props: ITabs) {
-  let children = props.children.filter((child: any) => child && child.props);
+  let children = props.children;
+  if (!Array.isArray(props.children)) {
+    children = [props.children];
+  }
+
+  children = children.filter((child: any) => child && child.props);
   let activeTab = children.filter((child: any) => props.activeTabID === child.props.tabID);
 
   return (
