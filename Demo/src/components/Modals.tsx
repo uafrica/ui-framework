@@ -1,15 +1,8 @@
 import { Button, Modal, PageActionsPanel } from "../../../src";
 import { useState } from "react";
+import ReactJson from "react-json-view";
 
-const props = {
-  show: "boolean",
-  children: "any",
-  "onHide?": "any",
-  "title?": "any",
-  "icon?": "IconProp",
-  closeButton: "boolean",
-  "disableClickOutsideToClose?": "boolean",
-}
+import ModalInterface from '../interfaces/modal.interface.json'
 
 function Modals() {
   const [smallModal, setSmallModal] = useState<boolean>(false)
@@ -34,7 +27,11 @@ function Modals() {
       </PageActionsPanel>
       <Modal.Medium show={mediumModal} closeButton onHide={()=>setMediumModal(false)} title="Medium modal" disableClickOutsideToClose>
         <div>
-          {JSON.stringify(props, null, 2)}
+          <ReactJson src={ModalInterface} collapsed={false} />
+          <p>View the{" "}
+            <a style={{color: "blue"}} href="https://github.com/uafrica/ui-framework/blob/main/src/Modal.tsx" target="_blank">Modal</a>{" "}
+            here
+          </p>
         </div>
         <Modal.ButtonsPanel>
           <Button.Cancel title="Cancel" onClick={()=>setMediumModal(false)} />
@@ -43,7 +40,13 @@ function Modals() {
       </Modal.Medium>
       <Modal.Small show={smallModal} closeButton={false} onHide={()=>setSmallModal(false)} title="Small modal">
         <div>
-          {JSON.stringify(props, null, 2)}
+          <div>
+            <ReactJson src={ModalInterface} collapsed={false} />
+            <p>View the{" "}
+              <a style={{color: "blue"}} href="https://github.com/uafrica/ui-framework/blob/main/src/Modal.tsx" target="_blank">Modal</a>{" "}
+              here
+            </p>
+          </div>
         </div>
         <Modal.ButtonsPanel>
           <Button.Cancel title="Cancel" onClick={()=>setSmallModal(false)} />
@@ -52,7 +55,13 @@ function Modals() {
       </Modal.Small>
       <Modal.Large show={largeModal} closeButton onHide={()=>setLargeModal(false)} title="Small modal">
         <div>
-          {JSON.stringify(props, null, 2)}
+          <div>
+            <ReactJson src={ModalInterface} collapsed={false} />
+            <p>View the{" "}
+              <a style={{color: "blue"}} href="https://github.com/uafrica/ui-framework/blob/main/src/Modal.tsx" target="_blank">Modal</a>{" "}
+              here
+            </p>
+          </div>
         </div>
         <Modal.ButtonsPanel>
           <Button.Cancel title="Cancel" onClick={()=>setLargeModal(false)} />

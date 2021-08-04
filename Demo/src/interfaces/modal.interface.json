@@ -1,0 +1,9 @@
+{
+  "show": "boolean",
+  "children": "any",
+  "onHide?": "any",
+  "title?": "any",
+  "icon?": "IconProp",
+  "closeButton": "boolean",
+  "disableClickOutsideToClose?": "boolean"
+}

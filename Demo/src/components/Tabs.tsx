@@ -12,7 +12,7 @@ function TabsPage() {
 
   useEffect(() => {
     {
-      activeTabID ? setActiveTabID(activeTabID) : setActiveTabID("introduction");
+      activeTabID ? setActiveTabID(activeTabID) : setActiveTabID("dialog");
     }
   }, []);
 
