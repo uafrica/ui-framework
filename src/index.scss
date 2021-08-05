@@ -9,10 +9,10 @@
     max-height: calc(100vh - 160px);
   }
   .save-panel {
-    width: calc(100%);
+    width: calc(100% + 3rem);
     margin-left: -1.5rem;
     margin-right: -1.5rem;
-    margin-bottom: 0.5em;
+    margin-bottom: -1em;
   }
 }
 
