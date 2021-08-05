@@ -5,7 +5,7 @@ interface ISectionHeading {
   children: any;
   icon?: IconProp;
   iconColor?: string;
-  editIconColor?: string;
+  editIconClassName?: string;
   toggleEditMode?: any;
   hideEditMode?: boolean;
   center?: boolean;
@@ -17,7 +17,7 @@ function SectionHeading(props: ISectionHeading) {
     children,
     icon,
     iconColor,
-    editIconColor,
+    editIconClassName,
     toggleEditMode,
     hideEditMode,
     center,
@@ -52,7 +52,7 @@ function SectionHeading(props: ISectionHeading) {
       {toggleEditMode && !hideEditMode && (
         <FontAwesomeIcon
           icon="pencil-alt"
-          className={"mt-1 " + (editIconColor ? editIconColor : "text-primary")}
+          className={editIconClassName ? editIconClassName : "mt-1 text-primary cursor-pointer"}
           onClick={() => toggleEditMode()}
         />
       )}
