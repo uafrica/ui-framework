@@ -51,7 +51,7 @@ function Base(props: IBaseProps) {
             (className ? className : "")
           }
         >
-          <div className="sm:flex sm:items-start overflow-y-auto content">
+          <div className="sm:flex sm:items-start overflow-auto content">
             {icon && (
               <div
                 className="
@@ -75,9 +75,7 @@ function Base(props: IBaseProps) {
                   )}
                 </div>
               )}
-              <div className="mt-2">
-                {props.children}
-              </div>
+              <div className="mt-2">{props.children}</div>
             </div>
           </div>
         </div>
