@@ -35,7 +35,7 @@ function Base(props: IBaseProps) {
   if (!show) return null;
 
   return (
-    <div className="fixed z-10 inset-0 overflow-y-auto mx-0 sm:mx-20">
+    <div className="fixed z-30 inset-0 mx-0 sm:mx-20">
       <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div
           className="uafrica-modal-overlay fixed inset-0 bg-black bg-opacity-60 transition-opacity"
@@ -47,11 +47,11 @@ function Base(props: IBaseProps) {
         </span>
         <div
           className={
-            "uafrica-modal inline-block align-bottom bg-white rounded-lg p-6 text-left shadow-xl transform transition-all sm:my-16 sm:align-top sm:p-6 " +
+            "uafrica-modal inline-block align-bottom bg-white rounded-lg text-left shadow-xl transform transition-all sm:my-16 sm:align-top " +
             (className ? className : "")
           }
         >
-          <div className="sm:flex sm:items-start">
+          <div className="sm:flex sm:items-start overflow-auto content p-6">
             {icon && (
               <div
                 className="
