@@ -37,7 +37,7 @@ function SavePanel(props: ISavePanel) {
       }
     >
       {saveError && (
-        <div className="inline-error" style={{ marginRight: "10px" }}>
+        <div className="inline-error ml-2" style={{ marginRight: "10px" }}>
           {saveError}
         </div>
       )}
