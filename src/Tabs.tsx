@@ -1,3 +1,4 @@
+import React from "react";
 import { InfoButton } from "./InfoButton";
 
 // Interface
@@ -19,7 +20,7 @@ interface ITabs {
 // Implementation
 function Tab(props: ITab) {
   let { children } = props;
-  return <div>{children}</div>;
+  return <div key={props.tabID}>{children}</div>;
 }
 
 function Primary(props: ITabs) {
@@ -48,7 +49,7 @@ function Primary(props: ITabs) {
                   " cursor-pointer group inline-flex items-center py-3 px-1 border-b-2 font-bold"
                 }
               >
-                <span className={child.props.className}>
+                <span className={"flex flex-row space-x-4 items-center " + child.props.className}>
                   {child.props.title}{" "}
                   {child.props.info && <InfoButton>{child.props.info}</InfoButton>}
                 </span>
@@ -56,7 +57,7 @@ function Primary(props: ITabs) {
             ))}
           </nav>
         </div>
-        {activeTab}
+        <React.Fragment key={props.activeTabID}>{activeTab}</React.Fragment>
       </div>
     </div>
   );
@@ -87,7 +88,7 @@ function Secondary(props: ITabs) {
                 " cursor-pointer px-3 py-2 font-medium rounded-md"
               }
             >
-              <span className={child.props.className}>
+              <span className={"flex flex-row space-x-4 items-center " + child.props.className}>
                 {child.props.title}{" "}
                 {child.props.info && <InfoButton>{child.props.info}</InfoButton>}
               </span>
@@ -95,7 +96,7 @@ function Secondary(props: ITabs) {
           ))}
         </nav>
       </div>
-      {activeTab}
+      <React.Fragment key={props.activeTabID}>{activeTab}</React.Fragment>
     </div>
   );
 }
