@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import Modals from "./Modals";
 import Forms from "./Forms";
+import CornelScratchPad from "CornelScratchPad";
 
 function TabsPage() {
   const history = useHistory();
@@ -44,6 +45,9 @@ function TabsPage() {
         </Tabs.Tab>
         <Tabs.Tab tabID={"dialog"} title={"Modals"}>
           <Modals />
+        </Tabs.Tab>
+        <Tabs.Tab tabID={"cornel"} title={"Cornel's scratchpad"}>
+          <CornelScratchPad />
         </Tabs.Tab>
       </Tabs.Primary>
     </>
