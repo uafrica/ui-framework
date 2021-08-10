@@ -34,7 +34,7 @@ function Modals() {
         show={mediumModal}
         closeButton
         onHide={() => setMediumModal(false)}
-        title="Medium modal"
+        title="Medium modal (with interface)"
         disableClickOutsideToClose
       >
         <div>
@@ -87,7 +87,7 @@ function Modals() {
         show={largeModal}
         closeButton
         onHide={() => setLargeModal(false)}
-        title="Large modal"
+        title="Large modal (with code example)"
       >
         <div>
           <pre>

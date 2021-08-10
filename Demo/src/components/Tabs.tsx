@@ -13,9 +13,9 @@ function TabsPage() {
 
   useEffect(() => {
     {
-      activeTabID ? setActiveTabID(activeTabID) : setActiveTabID("dialog");
+      activeTabID ? setActiveTabID(activeTabID) : setActiveTabID("forms");
     }
-  }, []);
+  });
 
   useEffect(() => {
     if (location.search !== prevLocation) {
@@ -44,12 +44,6 @@ function TabsPage() {
         </Tabs.Tab>
         <Tabs.Tab tabID={"dialog"} title={"Modals"}>
           <Modals />
-        </Tabs.Tab>
-        <Tabs.Tab tabID={"pages"} title={"Page Layout"}>
-          <div>This is the page layouts</div>
-        </Tabs.Tab>
-        <Tabs.Tab tabID={"buttons"} title={"Buttons"}>
-          <div>Buttons</div>
         </Tabs.Tab>
       </Tabs.Primary>
     </>
