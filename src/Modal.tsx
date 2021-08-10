@@ -47,11 +47,11 @@ function Base(props: IBaseProps) {
         </span>
         <div
           className={
-            "uafrica-modal inline-block align-bottom bg-white rounded-lg p-6 text-left shadow-xl transform transition-all sm:my-16 sm:align-top sm:p-6 " +
+            "uafrica-modal inline-block align-bottom bg-white rounded-lg text-left shadow-xl transform transition-all sm:my-16 sm:align-top" +
             (className ? className : "")
           }
         >
-          <div className="sm:flex sm:items-start overflow-auto content">
+          <div className="sm:flex sm:items-start overflow-auto content p-6">
             {icon && (
               <div
                 className="
