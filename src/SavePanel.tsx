@@ -42,9 +42,11 @@ function SavePanel(props: ISavePanel) {
         </div>
       )}
       {!savingChanges && props.cancelChanges && (
-        <Button.Cancel id="cancel_button" title="Cancel" onClick={props.cancelChanges} />
+        <div className="ml-2">
+          <Button.Cancel id="cancel_button" title="Cancel" onClick={props.cancelChanges} />
+        </div>
       )}
-      <div className="flex flex-row space-x-4 flex-grow-0 ml-auto">
+      <div className="flex flex-row space-x-4 flex-grow-0 ml-auto mr-2">
         <Button.Primary
           className="sm:w-auto w-full"
           id="save_button"
