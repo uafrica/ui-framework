@@ -25,16 +25,16 @@
     "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   },
   "devDependencies": {
-    "autoprefixer": "9.8.6",
-    "postcss": "7.0.36",
     "@craco/craco": "^6.2.0",
     "@types/node": "15.0.3",
     "@types/react": "17.0.5",
     "@types/react-dom": "17.0.5",
     "@types/react-router-dom": "5.1.7",
+    "autoprefixer": "9.8.6",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-prettier": "3.4.0",
     "eslint-plugin-react-perf": "^3.3.0",
+    "postcss": "7.0.36",
     "prettier": "2.3.0",
     "pretty-quick": "3.1.0",
     "react-scripts": "4.0.1",
