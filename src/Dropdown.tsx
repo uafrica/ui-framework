@@ -88,7 +88,11 @@ function DropdownMenu(props: IDropdown) {
 
 function ContextMenu(props: IDropdown) {
   return (
-    <Menu as="div" className="relative inline-block text-left">
+    <Menu
+      as="div"
+      id={props.id ? props.id : "context_menu"}
+      className="relative inline-block text-left"
+    >
       <Transition
         show={true}
         as={Fragment}
