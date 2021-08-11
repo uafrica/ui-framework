@@ -73,7 +73,7 @@ function DropdownMenu(props: IDropdown) {
             <Menu.Items
               static
               className={
-                "z-10 origin-top-right absolute right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none " +
+                "z-10 origin-top-right absolute right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none " +
                 widthClass
               }
             >
@@ -87,12 +87,12 @@ function DropdownMenu(props: IDropdown) {
 }
 
 function ContextMenu(props: IDropdown) {
+  let { id, widthClass } = props;
+
+  widthClass = widthClass ? widthClass : "w-72";
+
   return (
-    <Menu
-      as="div"
-      id={props.id ? props.id : "context_menu"}
-      className="relative inline-block text-left"
-    >
+    <Menu as="div" id={id ? id : "context_menu"} className="relative inline-block text-left">
       <Transition
         show={true}
         as={Fragment}
@@ -105,7 +105,10 @@ function ContextMenu(props: IDropdown) {
       >
         <Menu.Items
           static
-          className="z-10 origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none"
+          className={
+            "z-10 origin-top-right absolute right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none " +
+            widthClass
+          }
         >
           {props.children}
         </Menu.Items>
@@ -124,7 +127,7 @@ function MenuItem(props: IMenuItem) {
           <div
             className={
               "group flex items-center px-4 py-2 cursor-pointer font-semibold " +
-              (active ? "bg-gray-100 text-gray-900" : "text-gray-700")
+              (active ? "bg-gray-100 text-gray-900" : "text-black")
             }
             onClick={() => {
               document.body.click();
@@ -134,7 +137,7 @@ function MenuItem(props: IMenuItem) {
             {icon && (
               <FontAwesomeIcon
                 icon={icon}
-                className="mr-3 h-5 w-5 text-gray-500 group-hover:text-gray-900"
+                className="mr-3 h-5 w-5 text-black group-hover:text-gray-900"
                 aria-hidden="true"
               />
             )}

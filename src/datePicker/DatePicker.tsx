@@ -80,7 +80,7 @@ function DatePicker(props: IDatePicker) {
             <div className="flex" ref={ref}>
               <Input
                 onFocus={() => ctxValue.showCalendar()}
-                value={formattedDate(dateFormat, date)}
+                value={selected ? formattedDate(dateFormat, date) : ""}
                 readOnly
                 label={label}
                 labelInline={labelInline}
