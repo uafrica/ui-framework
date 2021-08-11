@@ -6,6 +6,7 @@ import { Manager, Reference, Popper } from "react-popper";
 import { DatePickerCtx, useDatePickerCtx } from "./DatePickerContext";
 import moment from "moment";
 import { Input } from "../Input";
+import { Label } from "../Label";
 
 // Interface
 interface IDatePicker {
@@ -16,7 +17,7 @@ interface IDatePicker {
   dateFormat?: string;
   containerClassName?: string;
   maxDate?: Date; // todo implement
-  showTimeSelect?: boolean; // todo implement
+  showTimeSelect?: boolean;
   onChange: (date: Date) => void;
 }
 
@@ -52,8 +53,16 @@ export const inputStyle = {
 
 // Implementation
 function DatePicker(props: IDatePicker) {
-  let { selected, label, labelInline, placeholder, dateFormat, containerClassName, onChange } =
-    props;
+  let {
+    selected,
+    label,
+    labelInline,
+    placeholder,
+    dateFormat,
+    containerClassName,
+    onChange,
+    showTimeSelect
+  } = props;
 
   let date = new Date();
   if (selected) {
@@ -61,7 +70,7 @@ function DatePicker(props: IDatePicker) {
   }
 
   const popupNode = useRef<HTMLElement>();
-  const ctxValue = useDatePickerCtx(date, onChange, popupNode);
+  const ctxValue = useDatePickerCtx(date, onChange, Boolean(showTimeSelect), popupNode);
 
   return (
     <DatePickerCtx.Provider value={ctxValue}>
@@ -128,6 +137,68 @@ const Calendar: React.FC<CalendarProps> = React.forwardRef<HTMLDivElement, Calen
   }
 );
 
+const TimeSelection: React.FC<{}> = _ => {
+  const {
+    selectHours,
+    selectMinutes,
+    time: { hours, minutes }
+  } = useContext(DatePickerCtx);
+  return (
+    <div className="mt-1 text-center">
+      <div>
+        <b>Time</b>
+      </div>
+      <div className="flex flex-row justify-center time-picker">
+        <div style={{ width: "55px" }}>
+          <Input
+            label=""
+            labelInline={true}
+            type="number"
+            step={1}
+            min={0}
+            max={23}
+            value={hours}
+            placeholder="hh"
+            onChange={(e: any) => {
+              let hours = e.target.value;
+              if (hours < 0) {
+                hours = 0;
+              } else if (hours > 23) {
+                hours = 23;
+              }
+              selectHours(hours);
+            }}
+          />
+        </div>
+        <div className="mt-2 pl-2">
+          <Label>:</Label>
+        </div>
+        <div style={{ width: "55px" }}>
+          <Input
+            label=""
+            labelInline={true}
+            type="number"
+            step={1}
+            min={0}
+            max={59}
+            value={minutes}
+            placeholder="mm"
+            onChange={(e: any) => {
+              let minutes = e.target.value;
+              if (minutes < 0) {
+                minutes = 0;
+              } else if (minutes > 59) {
+                minutes = 59;
+              }
+              selectMinutes(minutes);
+            }}
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const DateSelection: React.FC<{}> = _ => {
   const {
     nextMonth,
@@ -136,7 +207,8 @@ const DateSelection: React.FC<{}> = _ => {
     viewYears,
     selectDate,
     visible: { month, year },
-    isSelectedDate
+    isSelectedDate,
+    showTimeSelect
   } = useContext(DatePickerCtx);
 
   const dates = [];
@@ -161,50 +233,53 @@ const DateSelection: React.FC<{}> = _ => {
   }
 
   return (
-    <div
-      className="text-gray-800"
-      style={{
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr 1fr",
-        gridTemplateRows: "2rem auto",
-        alignItems: "stretch"
-      }}
-    >
-      <button className={buttonClassName} onClick={() => prevMonth()}>
-        <FontAwesomeIcon icon="chevron-left" className="stroke-current" />
-      </button>
-
-      <button
-        className={`${buttonClassName} font-semibold`}
-        style={{ gridColumn: "2/5" }}
-        onClick={() => viewMonths()}
+    <div>
+      <div
+        className="text-gray-800"
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr 1fr",
+          gridTemplateRows: "2rem auto",
+          alignItems: "stretch"
+        }}
       >
-        {monthNames[month]}
-      </button>
+        <button className={buttonClassName} onClick={() => prevMonth()}>
+          <FontAwesomeIcon icon="chevron-left" className="stroke-current" />
+        </button>
 
-      <button
-        className={`${buttonClassName} font-semibold`}
-        style={{ gridColumn: "5/7" }}
-        onClick={() => viewYears()}
-      >
-        {year}
-      </button>
-
-      <button className={buttonClassName} onClick={() => nextMonth()}>
-        <FontAwesomeIcon icon="chevron-right" className="stroke-current" />
-      </button>
-
-      {daysOfWeekNames.map(day => (
-        <div
-          key={(200 + day).toString()}
-          className="p-1 font-semibold"
-          style={{ textAlign: "center" }}
+        <button
+          className={`${buttonClassName} font-semibold`}
+          style={{ gridColumn: "2/5" }}
+          onClick={() => viewMonths()}
         >
-          {day[0]}
-        </div>
-      ))}
+          {monthNames[month]}
+        </button>
 
-      {dates}
+        <button
+          className={`${buttonClassName} font-semibold`}
+          style={{ gridColumn: "5/7" }}
+          onClick={() => viewYears()}
+        >
+          {year}
+        </button>
+
+        <button className={buttonClassName} onClick={() => nextMonth()}>
+          <FontAwesomeIcon icon="chevron-right" className="stroke-current" />
+        </button>
+
+        {daysOfWeekNames.map(day => (
+          <div
+            key={(200 + day).toString()}
+            className="p-1 font-semibold"
+            style={{ textAlign: "center" }}
+          >
+            {day[0]}
+          </div>
+        ))}
+
+        {dates}
+      </div>
+      {showTimeSelect && <TimeSelection />}
     </div>
   );
 };
