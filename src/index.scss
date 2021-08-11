@@ -17,6 +17,18 @@
   }
 }
 
+.time-picker {
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+}
+
 @media (max-width: 450px) {
   .save-panel {
     left: 0px;

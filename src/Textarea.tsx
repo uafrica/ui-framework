@@ -60,7 +60,7 @@ function Textarea(props: ITextarea) {
             </Label>
           </div>
         )}
-        {optional && <span className="text-gray-500">Optional</span>}
+        {optional && <span className="text-gray-500">(Optional)</span>}
       </div>
       <textarea
         className="mt-2 shadow-sm block w-full border border-gray-300 rounded-md"

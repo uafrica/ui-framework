@@ -6,10 +6,15 @@ interface MonthYear {
   month: number;
   year: number;
 }
+interface Time {
+  hours: number;
+  minutes: number;
+}
 
 interface DatePickerContextType {
   date: Date | null;
   visible: MonthYear;
+  time: Time;
   view: ViewState;
   nextMonth: () => void;
   prevMonth: () => void;
@@ -17,12 +22,15 @@ interface DatePickerContextType {
   prevYear: () => void;
   nextDecade: () => void;
   prevDecade: () => void;
+  selectMinutes: (m: number) => void;
+  selectHours: (h: number) => void;
   selectMonth: (m: number) => void;
   selectYear: (y: number) => void;
   selectDate: (d: number) => void;
   viewMonths: () => void;
   viewYears: () => void;
   isVisible: boolean;
+  showTimeSelect: boolean;
   showCalendar: () => void;
   toggleCalendar: () => void;
   isSelectedDate: (d: number) => boolean;
@@ -34,6 +42,7 @@ export const DatePickerCtx = createContext<DatePickerContextType>({
     month: 0,
     year: 1970
   },
+  time: { hours: 0, minutes: 0 },
   view: "date",
   nextMonth: () => {},
   prevMonth: () => {},
@@ -41,6 +50,8 @@ export const DatePickerCtx = createContext<DatePickerContextType>({
   prevYear: () => {},
   nextDecade: () => {},
   prevDecade: () => {},
+  selectMinutes: () => {},
+  selectHours: () => {},
   selectMonth: () => {},
   selectYear: () => {},
   selectDate: () => {},
@@ -49,17 +60,23 @@ export const DatePickerCtx = createContext<DatePickerContextType>({
   isVisible: false,
   showCalendar: () => {},
   toggleCalendar: () => {},
-  isSelectedDate: () => false
+  isSelectedDate: () => false,
+  showTimeSelect: false
 });
 
 export function useDatePickerCtx(
   date: Date,
   onChange: (d: Date) => void,
+  showTimeSelect: boolean,
   ref: React.MutableRefObject<HTMLElement | undefined>
 ): DatePickerContextType {
   const [monthYear, setMonthYear] = useState<MonthYear>({
     month: date?.getMonth() ?? new Date().getMonth(),
     year: date?.getFullYear() ?? new Date().getFullYear()
+  });
+  const [time, setTime] = useState<Time>({
+    hours: date?.getHours() ?? new Date().getHours(),
+    minutes: date?.getMinutes() ?? new Date().getMinutes()
   });
 
   const [view, setView] = useState<ViewState>("date");
@@ -67,8 +84,14 @@ export function useDatePickerCtx(
   const [isVisible, setVisible] = useState<boolean>(false);
 
   const selectDate = (d: number) => {
-    onChange(new Date(monthYear.year, monthYear.month, d));
-    setVisible(false);
+    if (showTimeSelect) {
+      onChange(new Date(monthYear.year, monthYear.month, d, time.hours, time.minutes));
+    } else {
+      onChange(new Date(monthYear.year, monthYear.month, d));
+    }
+    if (!showTimeSelect) {
+      setVisible(false);
+    }
   };
 
   const isSelectedDate = (d: number): boolean => {
@@ -80,6 +103,21 @@ export function useDatePickerCtx(
       return true;
     }
     return false;
+  };
+
+  const selectMinutes = (m: number) => {
+    setTime(state => ({ ...state, minutes: m }));
+    let newDate = date;
+    newDate.setHours(time.hours);
+    newDate.setMinutes(m);
+    onChange(new Date(newDate));
+  };
+  const selectHours = (h: number) => {
+    setTime(state => ({ ...state, hours: h }));
+    let newDate = date;
+    newDate.setHours(h);
+    newDate.setMinutes(time.minutes);
+    onChange(new Date(newDate));
   };
 
   const selectMonth = (m: number) => {
@@ -114,6 +152,7 @@ export function useDatePickerCtx(
   return {
     date,
     visible: monthYear,
+    time: time,
     view,
     nextMonth: () =>
       setMonthYear(state =>
@@ -131,6 +170,8 @@ export function useDatePickerCtx(
     prevYear: () => setMonthYear(state => ({ ...state, year: state.year - 1 })),
     nextDecade: () => setMonthYear(state => ({ ...state, year: state.year + 12 })),
     prevDecade: () => setMonthYear(state => ({ ...state, year: state.year - 12 })),
+    selectMinutes,
+    selectHours,
     selectMonth,
     selectYear,
     selectDate,
@@ -139,6 +180,7 @@ export function useDatePickerCtx(
     isVisible,
     showCalendar: () => setVisible(true),
     toggleCalendar: () => setVisible(state => !state),
-    isSelectedDate
+    isSelectedDate,
+    showTimeSelect
   };
 }
