@@ -1,5 +1,14 @@
-import { DatePicker, InfoButton, Input, PageHeading, SectionHeading, Switch } from "../../../src";
-import { useState } from "react";
+import {
+  DatePicker,
+  InfoButton,
+  Input,
+  PageHeading,
+  SectionHeading,
+  Switch,
+  Select,
+  Dropdown
+} from "../../../src";
+import { useEffect, useState } from "react";
 
 function Forms() {
   const [inlineInput, setInlineInput] = useState<boolean>(true);
@@ -12,6 +21,29 @@ function Forms() {
   const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
   const [showInputInterface, setShowInputInterface] = useState<boolean>(false);
   const [showInputCode, setShowInputCode] = useState<boolean>(false);
+  const [selectCode, setSelectCode] = useState<boolean>(false);
+  const [dropdownCode, setDropdownCode] = useState<boolean>(false);
+
+  // select components
+  const [selectionOne, setSelectionOne] = useState<Array<{ label: string; value: string }>>([]);
+  const [selectedOne, setSelectedOne] = useState<{ label: string; value: string }>();
+
+  const setSelectionOptions = () => {
+    setTimeout(() => {
+      return setSelectionOne([
+        { label: "one", value: "oneVal" },
+        { label: "two", value: "twoVal" },
+        {
+          label: "three",
+          value: "threeVal"
+        }
+      ]);
+    }, 500);
+  };
+
+  useEffect(() => {
+    setSelectionOptions();
+  }, []);
 
   // Render methods
   const InputPrice = () => (
@@ -96,6 +128,109 @@ function Forms() {
       />
     );
   };
+
+  const SelectAndDropdown = () => (
+    <div className="flex">
+      <div className="my-4 w-1/2">
+        <Select
+          options={selectionOne}
+          value={selectedOne}
+          onChange={(val: { label: string; value: string }) => setSelectedOne(val)}
+          label="Select one"
+          labelInline
+          placeholder="Single select"
+        />
+        <div className="mt-5">
+          <Switch
+            checked={selectCode}
+            onChange={() => setSelectCode(!selectCode)}
+            label="Show select code"
+          />
+        </div>
+
+        {selectCode && (
+          <div className="my-4 w-3/4">
+            <pre>
+              <code>{`<div className="my-4">
+   <Select
+     options={selectionOne}
+     value={selectedOne}
+     onChange={(val: { label: string; value: string }) => 
+            setSelectedOne(val)}
+     label="Select one"
+     labelInline
+     placeholder="Single select"
+   />
+</div>`}</code>
+            </pre>
+          </div>
+        )}
+      </div>
+      <div className="my-4">
+        <Dropdown.Menu icon="cog" title="dropdown options">
+          <Dropdown.MenuItem
+            icon="plus"
+            title="Option 1"
+            onClick={() => alert("Option 1 selected")}
+          />
+          <Dropdown.MenuItem
+            icon="search"
+            title="Option 2"
+            onClick={() => alert("Option 2 selected")}
+          />
+          <Dropdown.MenuItem
+            icon="truck"
+            title="Option 3"
+            onClick={() => alert("Option 3 selected")}
+          />
+          <Dropdown.MenuItem
+            icon="money-bill"
+            title="Option 4"
+            onClick={() => alert("Option 4 selected")}
+          />
+        </Dropdown.Menu>
+
+        <div>
+          <div className="mt-5">
+            <Switch
+              checked={dropdownCode}
+              onChange={() => setDropdownCode(!dropdownCode)}
+              label="Show dropdown code"
+            />
+          </div>
+
+          {dropdownCode && (
+            <div className="my-4">
+              <pre>
+                <code>{`<Dropdown.Menu icon="cog" title="dropdown options">
+    <Dropdown.MenuItem
+       icon="plus"
+       title="Option 1"
+       onClick={() => alert("Option 1 selected")}
+     />
+     <Dropdown.MenuItem
+       icon="search"
+       title="Option 2"
+       onClick={() => alert("Option 2 selected")}
+     />
+     <Dropdown.MenuItem
+       icon="truck"
+       title="Option 3"
+       onClick={() => alert("Option 3 selected")}
+     />
+     <Dropdown.MenuItem
+       icon="money-bill"
+       title="Option 4"
+       onClick={() => alert("Option 4 selected")}
+     />
+</Dropdown.Menu>`}</code>
+              </pre>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <div className="mt-5">
@@ -184,10 +319,13 @@ function Forms() {
         </div>
       )}
 
-      <div className="flex gap-10 mt-5">
+      <div className="flex gap-10 my-4">
         {datePickerInput(fromDate, setFromDate, "From")}
         {datePickerInput(toDate, setToDate, "To")}
       </div>
+      <SectionHeading>Select and dropdown components</SectionHeading>
+      <hr />
+      <SelectAndDropdown />
     </div>
   );
 }
