@@ -144,7 +144,7 @@ function Input(props: IInputProps) {
             {label}
             {info && <InfoButton>{info}</InfoButton>}
           </Label>
-          {optional && <span className="text-gray-500">Optional</span>}
+          {optional && <span className="text-gray-500">(Optional)</span>}
         </div>
       )}
       <div className="flex flex-row items-center w-full" id={inputFieldId} style={inputFieldStyle}>
