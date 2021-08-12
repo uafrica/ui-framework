@@ -1,3 +1,4 @@
+import { Message } from "./Message";
 import { InfoButton } from "./InfoButton";
 import { Label } from "./Label";
 
@@ -81,9 +82,9 @@ function Textarea(props: ITextarea) {
       />
       {validationError &&
         (errorMessage && validationError.type === "required" ? (
-          <div className="error">{errorMessage}</div>
+          <Message.Error>{errorMessage}</Message.Error>
         ) : (
-          <div className="error p-0">{validationError.message}</div>
+          <Message.Error>{validationError.message}</Message.Error>
         ))}
       {infoButton && { infoButton }}
     </div>
