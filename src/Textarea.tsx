@@ -19,6 +19,8 @@ interface ITextarea {
   disabled?: boolean;
   optional?: boolean;
   onChange?: any;
+  onFocus?: any;
+  onBlur?: any;
   placeholder?: string;
   infoButton?: any;
   register?: any;
@@ -44,6 +46,8 @@ function Textarea(props: ITextarea) {
     placeholder,
     validationError,
     onChange,
+    onFocus,
+    onBlur,
     infoButton,
     errorMessage,
     rows,
@@ -71,6 +75,8 @@ function Textarea(props: ITextarea) {
         defaultValue={defaultValue}
         placeholder={placeholder}
         onChange={onChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
         ref={register}
       />
       {validationError &&
