@@ -231,7 +231,15 @@ function ButtonsPanel(props: IButtonsPanelProps) {
   let { noMargin, children, center, left } = props;
   let align = "justify-between";
 
-  if (!Array.isArray(children) || children.length === 1) {
+  let nonEmptyChildren = [];
+
+  if (Array.isArray(children)) {
+    nonEmptyChildren = children.filter((child: any) => {
+      return child;
+    });
+  }
+
+  if (!Array.isArray(children) || nonEmptyChildren.length === 1) {
     align = "justify-end";
   }
 
