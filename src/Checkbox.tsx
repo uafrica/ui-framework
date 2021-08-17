@@ -54,6 +54,7 @@ function Checkbox(props: IProps) {
   );
 
   return (
+    <div className="flex items-start">
     <div
       id={id}
       onClick={disabled ? null : onClick}
@@ -78,8 +79,10 @@ function Checkbox(props: IProps) {
         onChange={() => {}}
       />
 
-      {label && labelRight && labelEl}
+        {label && labelRight && labelEl}
+      </div>
     </div>
+          </div>
   );
 }
 
