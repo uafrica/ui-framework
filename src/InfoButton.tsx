@@ -28,7 +28,7 @@ function InfoButton(props: IInfoButton) {
   const ctxValue = useInfoButtonCtx(popupNode);
 
   return (
-    <div className="relative text-left ml-4 z-10">
+    <div className="relative text-left ml-4">
       <InfoButtonCtx.Provider value={ctxValue}>
         <Manager>
           <Reference>
