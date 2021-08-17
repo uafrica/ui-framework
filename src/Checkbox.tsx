@@ -55,34 +55,33 @@ function Checkbox(props: IProps) {
 
   return (
     <div className="flex items-start">
-    <div
-      id={id}
-      onClick={disabled ? null : onClick}
-      key={key}
-      className={
-        (noPadding ? "" : "py-2 px-1 ") +
-        " items-center flex space-x-4 cursor-pointer " +
-        (center ? "justify-center " : "")
-      }
-    >
-      {label && (labelLeft || (!labelLeft && !labelRight)) && labelEl}
-      <input
-        title={hoverTitle}
-        type="checkbox"
+      <div
+        id={id}
+        onClick={disabled ? null : onClick}
+        key={key}
         className={
-          (disabled ? "text-gray-500 " : "text-primary ") +
-          " border-gray-300 rounded " +
-          (className ? className : "")
+          (noPadding ? "" : "py-2 px-1 ") +
+          " items-center flex space-x-4 cursor-pointer " +
+          (center ? "justify-center " : "")
         }
-        checked={checked}
-        id={fieldId}
-        onChange={() => {}}
-      />
+      >
+        {label && (labelLeft || (!labelLeft && !labelRight)) && labelEl}
+        <input
+          title={hoverTitle}
+          type="checkbox"
+          className={
+            (disabled ? "text-gray-500 " : "text-primary ") +
+            " border-gray-300 rounded " +
+            (className ? className : "")
+          }
+          checked={checked}
+          id={fieldId}
+          onChange={() => {}}
+        />
 
         {label && labelRight && labelEl}
       </div>
     </div>
-          </div>
   );
 }
 
