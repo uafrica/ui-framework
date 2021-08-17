@@ -1,57 +1,120 @@
-import { Fragment } from "react";
+import React, { useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Menu, Transition } from "@headlessui/react";
+import { Manager, Reference, Popper } from "react-popper";
+import { createContext, useEffect, useState, ReactNode } from "react";
+import { createPortal } from "react-dom";
 
-// Interface
 interface IInfoButton {
-  placement?: string;
+  placement?:
+    | "auto"
+    | "bottom-start"
+    | "bottom-end"
+    | "top-start"
+    | "top-end"
+    | "top"
+    | "bottom"
+    | "left"
+    | "right";
   children: any;
   className?: string;
 }
 
 function InfoButton(props: IInfoButton) {
-  let { children, className, placement } = props;
-
-  let placementClass = "left-0 ";
-  if (placement === "bottom-left") {
-    placementClass = " right-0 ";
+  let { placement, children, className } = props;
+  if (!placement) {
+    placement = "auto";
   }
+  const popupNode = useRef<HTMLElement>();
+  const ctxValue = useInfoButtonCtx(popupNode);
 
   return (
-    <div className="ml-4">
-      <Menu as="div" className="relative text-left">
-        {({ open }) => (
-          <>
-            <Menu.Button className="flex items-center justify-center w-full bg-white font-medium text-primary hover:bg-primary-50 focus:outline-none rounded-full">
-              <FontAwesomeIcon icon="info-circle" className={className ? className : ""} />
-            </Menu.Button>
-
-            <Transition
-              show={Boolean(open)}
-              as={Fragment}
-              enter="transition ease-out duration-100"
-              enterFrom="transform opacity-0 scale-95"
-              enterTo="transform opacity-100 scale-100"
-              leave="transition ease-in duration-75"
-              leaveFrom="transform opacity-100 scale-100"
-              leaveTo="transform opacity-0 scale-95"
-            >
-              <Menu.Items
-                static
-                className={
-                  "z-50 origin-top-right absolute " +
-                  placementClass +
-                  " font-normal p-4 w-80 rounded-md shadow-md bg-white divide-y ring-1 ring-black ring-opacity-5 divide-gray-100 focus:outline-none"
-                }
+    <div className="relative text-left ml-4 z-10">
+      <InfoButtonCtx.Provider value={ctxValue}>
+        <Manager>
+          <Reference>
+            {({ ref }) => (
+              <div
+                className="flex items-center justify-center w-full bg-white font-medium text-primary hover:bg-primary-50 focus:outline-none rounded-full cursor-pointer"
+                ref={ref}
+                onClick={(e: any) => {
+                  e.stopPropagation();
+                  ctxValue.showInfo();
+                }}
               >
-                {children}
-              </Menu.Items>
-            </Transition>
-          </>
-        )}
-      </Menu>
+                <FontAwesomeIcon icon="info-circle" className={className ? className : ""} />
+              </div>
+            )}
+          </Reference>
+          <Portal>
+            <Popper placement={placement} innerRef={node => (popupNode.current = node)}>
+              {({ ref, style }) =>
+                ctxValue.isVisible ? (
+                  <div
+                    className={
+                      "info-popover z-50 origin-top-right absolute font-normal p-4 w-80 rounded-md shadow-md bg-white divide-y ring-1 ring-black ring-opacity-5 divide-gray-100 focus:outline-none"
+                    }
+                    style={style}
+                    ref={ref}
+                  >
+                    {children}
+                  </div>
+                ) : null
+              }
+            </Popper>
+          </Portal>
+        </Manager>
+      </InfoButtonCtx.Provider>
     </div>
   );
 }
 
 export { InfoButton };
+
+function Portal(props: { children: ReactNode }) {
+  let { children } = props;
+  let [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
+  return createPortal(children, document.body);
+}
+
+interface InfoButtonContextType {
+  isVisible: boolean;
+  showInfo: () => void;
+}
+
+const InfoButtonCtx = createContext<InfoButtonContextType>({
+  isVisible: false,
+  showInfo: () => {}
+});
+
+export function useInfoButtonCtx(
+  ref: React.MutableRefObject<HTMLElement | undefined>
+): InfoButtonContextType {
+  const [isVisible, setVisible] = useState<boolean>(false);
+
+  useEffect(() => {
+    function mouseDownListener(e: MouseEvent) {
+      let targetAsNode = e.target;
+      // @ts-ignore
+      if (ref.current && !ref.current.contains(targetAsNode)) {
+        setVisible(false);
+      }
+    }
+
+    if (isVisible) {
+      document.addEventListener("mousedown", mouseDownListener);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", mouseDownListener);
+    };
+  }, [isVisible]);
+
+  return {
+    isVisible,
+    showInfo: () => setVisible(true)
+  };
+}
