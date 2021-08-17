@@ -35,13 +35,16 @@ function Checkbox(props: IProps) {
     labelLeft,
     labelRight,
     hoverTitle,
-    noPadding
+    noPadding,
+    disabled
   } = props;
 
   const labelEl = (
     <label
       className={
-        "text-base flex items-center cursor-pointer " + (labelClassName ? labelClassName : "")
+        (disabled ? "text-gray-500 " : "text-base ") +
+        " flex items-center cursor-pointer " +
+        (labelClassName ? labelClassName : "")
       }
       htmlFor={htmlFor}
     >
@@ -53,7 +56,7 @@ function Checkbox(props: IProps) {
   return (
     <div
       id={id}
-      onClick={onClick}
+      onClick={disabled ? null : onClick}
       key={key}
       className={
         (noPadding ? "" : "py-2 px-1 ") +
@@ -65,7 +68,11 @@ function Checkbox(props: IProps) {
       <input
         title={hoverTitle}
         type="checkbox"
-        className={"text-primary border-gray-300 rounded " + (className ? className : "")}
+        className={
+          (disabled ? "text-gray-500 " : "text-primary ") +
+          " border-gray-300 rounded " +
+          (className ? className : "")
+        }
         checked={checked}
         id={fieldId}
         onChange={() => {}}
