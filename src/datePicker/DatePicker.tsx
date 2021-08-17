@@ -243,12 +243,15 @@ const DateSelection: React.FC<{}> = _ => {
           alignItems: "stretch"
         }}
       >
-        <button className={buttonClassName} onClick={() => prevMonth()}>
+        <button
+          className="hover:bg-gray-200 rounded p-1 flex align-center justify-center focus:outline-none items-center"
+          onClick={() => prevMonth()}
+        >
           <FontAwesomeIcon icon="chevron-left" className="stroke-current" />
         </button>
 
         <button
-          className={`${buttonClassName} font-semibold`}
+          className={`hover:bg-gray-200 rounded p-1 flex align-center justify-center focus:outline-none items-center font-semibold`}
           style={{ gridColumn: "2/5" }}
           onClick={() => viewMonths()}
         >
@@ -256,14 +259,17 @@ const DateSelection: React.FC<{}> = _ => {
         </button>
 
         <button
-          className={`${buttonClassName} font-semibold`}
+          className={`hover:bg-gray-200 rounded p-1 flex align-center justify-center focus:outline-none items-center font-semibold`}
           style={{ gridColumn: "5/7" }}
           onClick={() => viewYears()}
         >
           {year}
         </button>
 
-        <button className={buttonClassName} onClick={() => nextMonth()}>
+        <button
+          className="hover:bg-gray-200 rounded p-1 flex align-center justify-center focus:outline-none items-center"
+          onClick={() => nextMonth()}
+        >
           <FontAwesomeIcon icon="chevron-right" className="stroke-current" />
         </button>
 
@@ -306,7 +312,9 @@ const MonthSelection: React.FC<{}> = _ => {
       </div>
 
       {monthNames.map((month, index) => (
-        <CalendarButton onClick={() => selectMonth(index)}>{month.substring(0, 3)}</CalendarButton>
+        <CalendarButton key="month" onClick={() => selectMonth(index)}>
+          {month.substring(0, 3)}
+        </CalendarButton>
       ))}
     </div>
   );
@@ -348,9 +356,6 @@ const YearSelection: React.FC<{}> = _ => {
   );
 };
 
-const buttonClassName =
-  "hover:bg-gray-200 rounded p-1 flex align-center justify-center focus:outline-none";
-
 const CalendarButton: React.FC<{
   chevron?: "right" | "left";
   className?: string;
@@ -367,7 +372,7 @@ const CalendarButton: React.FC<{
 
   return (
     <button
-      className={`${buttonClassName} ${props.className}`}
+      className={`hover:bg-gray-200 rounded p-1 flex align-center justify-center focus:outline-none items-center ${props.className}`}
       style={props.style}
       onClick={props.onClick}
     >

@@ -61,8 +61,9 @@ function Checkbox(props: IProps) {
         key={key}
         className={
           (noPadding ? "" : "py-2 px-1 ") +
-          " items-center flex space-x-4 cursor-pointer " +
-          (center ? "justify-center " : "")
+          " items-center flex space-x-4 " +
+          (center ? " justify-center " : "") +
+          (disabled ? "" : " cursor-pointer ")
         }
       >
         {label && (labelLeft || (!labelLeft && !labelRight)) && labelEl}
