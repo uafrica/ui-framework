@@ -1,4 +1,4 @@
-import { Input, SkeletonLoader, Switch, Textarea } from "../../src";
+import { Checkbox, Input, SkeletonLoader, Switch, Textarea } from "../../src";
 
 function CornelScratchPad() {
   return (
@@ -24,6 +24,14 @@ function CornelScratchPad() {
         info="This won't work without state mgt"
         checked={false}
         onChange={() => {}}
+      />
+
+      <Checkbox
+        label="Tick me"
+        info="This won't work without state mgt"
+        checked={false}
+        onClick={() => {}}
+        labelRight
       />
       {/* <Modal.Medium title="A modal!" closeButton show={true}>
         Some content here
