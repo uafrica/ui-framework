@@ -126,7 +126,7 @@ const Calendar: React.FC<CalendarProps> = React.forwardRef<HTMLDivElement, Calen
 
     return (
       <div
-        className="bg-white relative shadow-lg max-w-xs w-64 p-2 rounded-lg mt-1 z-20 ring-1 ring-black ring-opacity-5"
+        className="bg-white z-30 relative shadow-lg max-w-xs w-64 p-2 rounded-lg mt-1 z-20 ring-1 ring-black ring-opacity-5"
         ref={ref}
         data-placement={props.placement}
         style={props.style}
