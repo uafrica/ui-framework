@@ -1,7 +1,8 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { createContext, useRef } from "react";
+import ReactDOM from "react-dom";
 
-// Interface
 interface ISmallMediumModalProps {
   show: boolean;
   children: any;
@@ -16,72 +17,93 @@ interface IBaseProps extends ISmallMediumModalProps {
   className?: string;
 }
 
-// Implementation
-function Small(props: ISmallMediumModalProps) {
-  return <Base {...props} className="sm:max-w-lg sm:w-full" />;
-}
+export const ModalContext = createContext({});
 
-function Medium(props: ISmallMediumModalProps) {
-  return <Base {...props} className="sm:max-w-4xl sm:w-full" />;
-}
+export const hostElementId = "modal-host";
 
-function Large(props: ISmallMediumModalProps) {
-  return <Base {...props} className="sm:max-w-full sm:w-full" />;
-}
+const isBrowser = () =>
+  !!(typeof window !== "undefined" && window.document && window.document.createElement);
 
-function Base(props: IBaseProps) {
-  let { show, title, icon, className, closeButton, disableClickOutsideToClose } = props;
+const Base = ({
+  show,
+  onHide,
+  children,
+  className,
+  icon,
+  title,
+  closeButton,
+  disableClickOutsideToClose,
+  ...props
+}: IBaseProps) => {
+  const ref = useRef(null);
+  if (!show) {
+    return null;
+  }
+  const hostElement = document.getElementById(hostElementId);
 
-  if (!show) return null;
+  const content = (
+    <ModalContext.Provider value={{ onHide, parentRef: ref }}>
+      <div
+        className="uafrica-modal-overlay fixed inset-0 bg-black bg-opacity-60 transition-opacity"
+        onClick={!disableClickOutsideToClose && onHide ? onHide : () => {}}
+      />
+      <div
+        className={
+          "uafrica-modal bg-white fixed top-0 left-1/2 transform -translate-x-1/2 rounded-lg text-left shadow-xl pb-4 " +
+          className
+        }
+        ref={ref}
+        {...props}
+      >
+        <div className="overflow-auto content p-6 pb-0 pt-4">
+          {icon && (
+            <div className="h-12 w-12 rounded-full bg-red-100 sm:mr-4 sm:h-10 sm:w-10">
+              <FontAwesomeIcon icon={icon} />
+            </div>
+          )}
+          <div className="mt-4 text-center sm:mt-0 sm:text-left w-full">
+            {(title || closeButton) && (
+              <div className="text-lg leading-6 font-bold mb-4 text-gray-900">
+                {title && title}
 
-  return (
-    <div className="fixed z-30 inset-0 mx-0 sm:mx-20">
-      <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <div
-          className="uafrica-modal-overlay fixed inset-0 bg-black bg-opacity-60 transition-opacity"
-          onClick={!disableClickOutsideToClose && props.onHide ? props.onHide : () => {}}
-        />
-
-        <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
-          &#8203;
-        </span>
-        <div
-          className={
-            "uafrica-modal inline-block align-bottom bg-white rounded-lg text-left shadow-xl transform transition-all sm:my-16 sm:align-top " +
-            (className ? className : "")
-          }
-        >
-          <div className="sm:flex sm:items-start overflow-auto content p-6">
-            {icon && (
-              <div
-                className="
-                   h-12 w-12 rounded-full bg-red-100 sm:mr-4 sm:h-10 sm:w-10"
-              >
-                <FontAwesomeIcon icon={icon} />
+                {closeButton && (
+                  <FontAwesomeIcon
+                    icon="times"
+                    size="sm"
+                    className="float-right cursor-pointer hover:text-gray-900 text-gray-700"
+                    onClick={onHide}
+                  />
+                )}
               </div>
             )}
-            <div className="mt-4 text-center sm:mt-0 sm:text-left w-full">
-              {(title || closeButton) && (
-                <div className="text-lg leading-6 font-bold mb-4 text-gray-900">
-                  {title && title}
-
-                  {closeButton && (
-                    <FontAwesomeIcon
-                      icon="times"
-                      size="sm"
-                      className="float-right cursor-pointer hover:text-gray-900 text-gray-700"
-                      onClick={props.onHide}
-                    />
-                  )}
-                </div>
-              )}
-              <div className="mt-2">{props.children}</div>
-            </div>
+            <div className="mt-2">{children}</div>
           </div>
         </div>
       </div>
-    </div>
+    </ModalContext.Provider>
   );
+
+  if (hostElement && isBrowser()) {
+    return ReactDOM.createPortal(content, hostElement);
+  }
+
+  console.warn('Could not find "<Modal.Host />" node.\n Switched to inline rendering mode.');
+  return content;
+};
+
+function Host(props: any) {
+  return <div {...props} id={hostElementId} />;
+}
+function Small(props: ISmallMediumModalProps) {
+  return <Base {...props} className="  sm:w-full md:w-1/4 mt-20" />;
+}
+
+function Medium(props: ISmallMediumModalProps) {
+  return <Base {...props} className="  sm:w-full md:w-1/2 mt-20" />;
+}
+
+function Large(props: ISmallMediumModalProps) {
+  return <Base {...props} className="  sm:w-full md:w-11/12 mt-14" />;
 }
 
 function ButtonsPanel(props: any) {
@@ -92,7 +114,8 @@ const Modal = {
   ButtonsPanel,
   Small,
   Medium,
-  Large
+  Large,
+  Host
 };
 
 export { Modal };

@@ -255,7 +255,7 @@ function GroupedSelect(props: IGroupedSelect) {
               </Popover.Button>
             </div>
 
-            <Popover.Panel className="absolute z-10 mt-1">
+            <Popover.Panel className="absolute z-30 mt-1">
               <div
                 className={
                   "overflow-hidden z-10 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 px-4 pb-2 bg-white " +
