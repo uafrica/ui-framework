@@ -1,4 +1,4 @@
-import { Checkbox, Input, SkeletonLoader, Switch, Textarea } from "../../src";
+import { Checkbox, DatePicker, Input, SkeletonLoader, Switch, Textarea } from "../../src";
 
 function CornelScratchPad() {
   return (
@@ -32,6 +32,16 @@ function CornelScratchPad() {
         checked={false}
         onClick={() => {}}
         labelRight
+      />
+
+      <DatePicker
+        label="Month"
+        placeholder="Month"
+        dateFormat={"yyyy-MM"}
+        selected={new Date()}
+        onChange={date => {
+          console.log(date);
+        }}
       />
       {/* <Modal.Medium title="A modal!" closeButton show={true}>
         Some content here
