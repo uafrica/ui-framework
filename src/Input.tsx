@@ -22,7 +22,7 @@ interface IInputProps {
   onBlur?: any;
   onKeyPress?: any;
   onKeyUp?: any;
-  step?: number;
+  step?: any;
   min?: number;
   max?: number;
   autoComplete?: any;
