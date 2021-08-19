@@ -36,17 +36,14 @@ function SavePanel(props: ISavePanel) {
         (className ? className : "")
       }
     >
-      {saveError && (
-        <div className="inline-error ml-2" style={{ marginRight: "10px" }}>
-          {saveError}
-        </div>
-      )}
       {!savingChanges && props.cancelChanges && (
         <div className="ml-2">
           <Button.Cancel id="cancel_button" title="Cancel" onClick={props.cancelChanges} />
         </div>
       )}
-      <div className="flex flex-row space-x-4 flex-grow-0 ml-auto mr-2">
+      <div className="flex flex-row space-x-4 flex-grow-0 ml-auto mr-2  items-center justify-center ">
+        {saveError && <div className="inline-error mr-2 mt-2 ">{saveError}</div>}
+
         <Button.Primary
           className="sm:w-auto w-full"
           id="save_button"
