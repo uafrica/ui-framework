@@ -1,9 +1,10 @@
-import { useRef, useState } from "react";
+import { createContext, useEffect, useRef, useState } from "react";
 import { Popover } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { InfoButton } from "./InfoButton";
 import { Input } from "./Input";
 import { Label } from "./Label";
+import { Manager, Popper, Reference } from "react-popper";
 
 // Interface
 interface ISelect extends IBase {
@@ -71,6 +72,8 @@ function GroupedSelect(props: IGroupedSelect) {
   } = props;
 
   const buttonRef = useRef();
+  const popupNode = useRef<HTMLElement>();
+  const ctxValue = useGroupedSelectCtx(popupNode);
 
   // State for searching
   let [searchTerm, setSearchTerm] = useState<string>("");
@@ -215,6 +218,7 @@ function GroupedSelect(props: IGroupedSelect) {
     _buttonWidth = buttonWidth;
   }
 
+  let placement = "bottom-start";
   return (
     <div className={_containerClassName} onClick={(e: any) => e.stopPropagation()}>
       <Popover>
@@ -226,64 +230,89 @@ function GroupedSelect(props: IGroupedSelect) {
           )}
 
           {/* Button that is clicked on to open the dropdown */}
-          <div className={"relative " + (className ? className : "") + _buttonWidth}>
-            <div
-              onClick={(e: any) => {
-                e.stopPropagation();
-                if (onClick) {
-                  onClick();
-                }
-              }}
-            >
-              <Popover.Button
-                // @ts-ignore
-                ref={buttonRef}
-                disabled={disabled}
-                className="bg-white relative border border-gray-300 rounded-md shadow-sm pl-3 pr-6 py-2 text-left cursor-pointer disabled:cursor-default w-full"
-                id={id}
-              >
-                <span className="block truncate">
-                  {labelWithValue ? labelWithValue : placeholder}
-                </span>
-                <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                  <FontAwesomeIcon
-                    icon="caret-down"
-                    className="h-5 w-5 text-gray-400"
-                    aria-hidden="true"
-                  />
-                </span>
-              </Popover.Button>
-            </div>
-
-            <Popover.Panel className="absolute z-30 mt-1">
-              <div
-                className={
-                  "overflow-hidden z-10 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 px-4 pb-2 bg-white " +
-                  (popoverWidth ? popoverWidth : "w-72")
-                }
-              >
-                {!noSearch && (
-                  <Input
-                    autoFocus
-                    containerClassName="mt-4 w-full"
-                    onBlur={onSearchBlur}
-                    onFocus={onSearchFocus}
-                    appendIcon="search"
-                    value={searchTerm}
-                    onChange={(e: any) => setSearchTerm(e.target.value)}
-                  />
+          <GroupedSelectCtx.Provider value={ctxValue}>
+            <Manager>
+              <Reference>
+                {({ ref }) => (
+                  <div className="flex flex-row">
+                    <div
+                      ref={ref}
+                      className={"relative " + (className ? className : "") + _buttonWidth}
+                    >
+                      <div
+                        onClick={(e: any) => {
+                          e.stopPropagation();
+                          ctxValue.showSelect();
+                          if (onClick) {
+                            onClick();
+                          }
+                        }}
+                      >
+                        <div
+                          // @ts-ignore
+                          ref={buttonRef}
+                          disabled={disabled}
+                          className="bg-white relative border border-gray-300 rounded-md shadow-sm pl-3 pr-6 py-2 text-left cursor-pointer disabled:cursor-default w-full"
+                          id={id}
+                        >
+                          <span className="block truncate">
+                            {labelWithValue ? labelWithValue : placeholder}
+                          </span>
+                          <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                            <FontAwesomeIcon
+                              icon="caret-down"
+                              className="h-5 w-5 text-gray-400"
+                              aria-hidden="true"
+                            />
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="mt-3">{!label && info && <InfoButton>{info}</InfoButton>}</div>
+                  </div>
                 )}
-                <div className={"mt-2 mb-2 max-h-52 overflow-y-auto"}>
-                  {allOptionsSearched.length === 0 && <div className="pl-2 mt-2">No options</div>}
-                  {optionGroups.map((optionGroup: IOptionGroup) => {
-                    return renderOptionGroup(optionGroup);
-                  })}
-                </div>
-                {buttons && <div className="-ml-1 border-t border-gray-200 pt-1">{buttons}</div>}
-              </div>
-            </Popover.Panel>
-          </div>
-          {!label && info && <InfoButton>{info}</InfoButton>}
+              </Reference>
+              <Popper placement={placement} innerRef={node => (popupNode.current = node)}>
+                {({ ref, style }) =>
+                  ctxValue.isVisible ? (
+                    <div
+                      style={style}
+                      ref={ref}
+                      className={
+                        "overflow-hidden z-30 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 px-4 pb-2 bg-white " +
+                        (popoverWidth ? popoverWidth : "w-72")
+                      }
+                    >
+                      {!noSearch && (
+                        <Input
+                          autoFocus
+                          containerClassName="mt-4 w-full"
+                          onBlur={onSearchBlur}
+                          onFocus={onSearchFocus}
+                          appendIcon="search"
+                          value={searchTerm}
+                          onChange={(e: any) => setSearchTerm(e.target.value)}
+                        />
+                      )}
+                      <div className={"mt-2 mb-2 max-h-52 overflow-y-auto"}>
+                        {allOptionsSearched.length === 0 && (
+                          <div className="pl-2 mt-2">No options</div>
+                        )}
+                        {optionGroups.map((optionGroup: IOptionGroup) => {
+                          return renderOptionGroup(optionGroup);
+                        })}
+                      </div>
+                      {buttons && (
+                        <div className="-ml-1 border-t border-gray-200 pt-1">{buttons}</div>
+                      )}
+                    </div>
+                  ) : null
+                }
+              </Popper>
+
+              <Popover.Panel className="absolute z-30 mt-1"></Popover.Panel>
+            </Manager>
+          </GroupedSelectCtx.Provider>
         </div>
       </Popover>
     </div>
@@ -303,3 +332,41 @@ function Select(props: ISelect) {
 }
 
 export { Select, GroupedSelect };
+
+interface GroupedSelectContextType {
+  isVisible: boolean;
+  showSelect: () => void;
+}
+
+const GroupedSelectCtx = createContext<GroupedSelectContextType>({
+  isVisible: false,
+  showSelect: () => {}
+});
+
+function useGroupedSelectCtx(
+  ref: React.MutableRefObject<HTMLElement | undefined>
+): GroupedSelectContextType {
+  const [isVisible, setVisible] = useState<boolean>(false);
+
+  useEffect(() => {
+    function mouseDownListener(e: MouseEvent) {
+      let targetAsNode: any = e.target;
+      if (ref.current && !ref.current.contains(targetAsNode)) {
+        setVisible(false);
+      }
+    }
+
+    if (isVisible) {
+      document.addEventListener("mousedown", mouseDownListener);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", mouseDownListener);
+    };
+  }, [isVisible]);
+
+  return {
+    isVisible,
+    showSelect: () => setVisible(true)
+  };
+}
