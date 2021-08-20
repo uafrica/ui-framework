@@ -44,6 +44,12 @@
 }
 
 @media (max-width: 450px) {
+  .uafrica-modal {
+    .content {
+      max-height: calc(100vh - 180px) !important;
+      max-width: calc(98vw) !important;
+    }
+  }
   .save-panel {
     left: 0px;
     width: 100%;
