@@ -52,7 +52,7 @@ function PageActionsPanel(props: IProps) {
   let { title } = props;
 
   return (
-    <div className="flex justify-between items-center">
+    <div className="page-actions-panel flex justify-between items-center z-30">
       {title && <PageHeading>{title}</PageHeading>}
       <div className="ml-auto flex flex-row space-x-4 items-center">{props.children}</div>
     </div>

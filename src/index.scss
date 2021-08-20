@@ -5,6 +5,7 @@
 }
 
 .uafrica-modal {
+  padding-top: 1rem;
   .content {
     max-height: calc(100vh - 80px) !important;
     max-width: calc(95vw) !important;
@@ -14,6 +15,19 @@
     margin-left: -1.5rem;
     margin-right: -1.5rem;
     bottom: 0 !important;
+  }
+  .page-actions-panel {
+    background-color: white;
+    position: fixed !important;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    width: calc(100%);
+    margin-top: 1rem;
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+    top: 0 !important;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    min-height: 40px;
   }
 }
 

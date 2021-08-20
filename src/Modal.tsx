@@ -49,13 +49,13 @@ const Base = ({
       />
       <div
         className={
-          "uafrica-modal bg-white fixed top-0 left-1/2 transform -translate-x-1/2 rounded-lg text-left shadow-xl pb-4 " +
+          "uafrica-modal bg-white fixed top-0 left-1/2 transform -translate-x-1/2 rounded-lg text-left shadow-xl pb-4 pt-4 " +
           className
         }
         ref={ref}
         {...props}
       >
-        <div className="overflow-auto content p-6 pb-0 pt-4">
+        <div className="overflow-auto content p-6 pb-0 pt-0 ">
           {icon && (
             <div className="h-12 w-12 rounded-full bg-red-100 sm:mr-4 sm:h-10 sm:w-10">
               <FontAwesomeIcon icon={icon} />
@@ -63,7 +63,7 @@ const Base = ({
           )}
           <div className="mt-4 text-center sm:mt-0 sm:text-left w-full">
             {(title || closeButton) && (
-              <div className="text-lg leading-6 font-bold mb-4 text-gray-900">
+              <div className="page-actions-panel flex justify-between items-center z-30 text-lg font-bold text-gray-900">
                 {title && title}
 
                 {closeButton && (
@@ -76,7 +76,7 @@ const Base = ({
                 )}
               </div>
             )}
-            <div className="mt-2">{children}</div>
+            <div className={title || closeButton ? "mt-12" : "mt-2"}>{children}</div>
           </div>
         </div>
       </div>
@@ -95,11 +95,11 @@ function Host(props: any) {
   return <div {...props} id={hostElementId} />;
 }
 function Small(props: ISmallMediumModalProps) {
-  return <Base {...props} className="  sm:w-full md:w-1/4 mt-20" />;
+  return <Base {...props} className="  sm:w-full md:w-1/4 mt-14" />;
 }
 
 function Medium(props: ISmallMediumModalProps) {
-  return <Base {...props} className="  sm:w-full md:w-1/2 mt-20" />;
+  return <Base {...props} className="  sm:w-full md:w-1/2 mt-14" />;
 }
 
 function Large(props: ISmallMediumModalProps) {
