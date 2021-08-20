@@ -1,5 +1,3 @@
-const labelBaseClass = "font-semibold text-gray-900 mr-2 flex items-center";
-
 // Interface
 interface ILabel {
   children?: any;
@@ -21,7 +19,12 @@ function Label(props: ILabel) {
   return (
     <label
       htmlFor={htmlFor}
-      className={labelBaseClass + (noMargin ? "" : " mb-2 ") + " " + (className ? className : "")}
+      className={
+        "font-semibold text-gray-900 mr-2 flex items-center text-left " +
+        (noMargin ? "" : " mb-2 ") +
+        " " +
+        (className ? className : "")
+      }
     >
       {children}
     </label>
@@ -32,9 +35,16 @@ function LabelWithValue(props: ILabelWithValue) {
   let { label, value, noMargin } = props;
 
   return (
-    <div className={"flex flex-row space-x-2 " + (noMargin ? "" : " pt-2")}>
-      <label className={labelBaseClass + (noMargin ? "" : " mb-2 ")}>{label}</label>
-      <div>{value}</div>
+    <div className={"flex flex-row space-x-2 flex-wrap " + (noMargin ? "" : " pt-2")}>
+      <label
+        className={
+          "font-semibold text-gray-900 mr-2 flex items-center text-left " +
+          (noMargin ? "" : " mb-2 ")
+        }
+      >
+        {label}
+      </label>
+      <div className="text-left">{value}</div>
     </div>
   );
 }
