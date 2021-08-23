@@ -94,6 +94,10 @@ function GroupedSelect(props: IGroupedSelect) {
     } else {
       // @ts-ignore
       buttonRef.current?.click();
+
+      if (newValue === value) {
+        newValue = undefined;
+      }
     }
 
     onChange && onChange(newValue);
@@ -324,7 +328,7 @@ function GroupedSelect(props: IGroupedSelect) {
                           return renderOptionGroup(optionGroup);
                         })}
                       </div>
-                      {buttons && (
+                      {buttons && buttons.length > 0 && (
                         <div className="-ml-1 border-t border-gray-200 pt-1">{buttons}</div>
                       )}
                     </div>

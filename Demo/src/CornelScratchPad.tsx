@@ -5,6 +5,7 @@ function CornelScratchPad() {
   let [checkboxTicked, setCheckboxTicked] = useState(false);
   let [switchTicked, setSwitchTicked] = useState(false);
   let [selectValue, setSelectValue] = useState([]);
+  let [multiSelectValue, setMultiSelectValue] = useState([]);
 
   return (
     <div>
@@ -27,9 +28,21 @@ function CornelScratchPad() {
       <div className="my-4">
         <Select
           placeholder="Select an option"
-          multiSelection
           value={selectValue}
           onChange={(newValue: any) => setSelectValue(newValue)}
+          options={[
+            { label: "Option 1", value: 1 },
+            { label: "Option 2", value: 2 }
+          ]}
+        />
+      </div>
+
+      <div className="my-4">
+        <Select
+          placeholder="Multiselect"
+          value={multiSelectValue}
+          multiSelection
+          onChange={(newValue: any) => setMultiSelectValue(newValue)}
           options={[
             { label: "Option 1", value: 1 },
             { label: "Option 2", value: 2 }
