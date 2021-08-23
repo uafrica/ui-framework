@@ -3,21 +3,31 @@ import { InfoButton } from "./InfoButton";
 
 interface IProps {
   checked: boolean;
+  disabled?: boolean;
   onChange: any;
   label?: string;
   info?: string;
 }
 
 export default function Switch(props: IProps) {
-  let { checked, label, info } = props;
+  let { checked, label, info, disabled } = props;
 
   return (
-    <div className="flex flex-row space-x-4 items-center">
+    <div
+      className="flex flex-row space-x-4 items-center"
+      onClick={() => {
+        if (!disabled) {
+          props.onChange();
+        }
+      }}
+    >
       <HeadlessSwitch
         checked={checked}
-        onChange={props.onChange}
+        onChange={() => {}}
+        disabled={disabled}
         className={
-          "hover:border-primary relative inline-flex flex-shrink-0 h-6.5 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200  " +
+          " relative inline-flex flex-shrink-0 h-6.5 w-11 border-2 border-transparent rounded-full transition-colors ease-in-out duration-200  " +
+          (disabled ? "pointer-events-none " : " hover:border-primary cursor-pointer ") +
           (checked ? "bg-primary" : "bg-gray-200")
         }
       >
@@ -58,7 +68,7 @@ export default function Switch(props: IProps) {
           </span>
         </span>
       </HeadlessSwitch>
-      {label && <div>{label}</div>}
+      {label && <div className={disabled ? "" : "cursor-pointer"}>{label}</div>}
       {info && <InfoButton>{info}</InfoButton>}
     </div>
   );

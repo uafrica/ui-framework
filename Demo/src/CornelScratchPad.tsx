@@ -25,10 +25,19 @@ function CornelScratchPad() {
       </div>
       <Switch
         label="Toggle me on"
-        info="This won't work without state mgt"
         checked={switchTicked}
         onChange={() => setSwitchTicked(!switchTicked)}
       />
+
+      <div className="my-4">
+        <Switch
+          label="Disabled"
+          disabled
+          info="I should not be clickable"
+          checked={switchTicked}
+          onChange={() => setSwitchTicked(!switchTicked)}
+        />
+      </div>
 
       <Checkbox
         label="Tick me"
