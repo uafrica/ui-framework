@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { Checkbox, DatePicker, Input, SkeletonLoader, Switch, Textarea } from "../../src";
+import { Checkbox, DatePicker, Input, Select, SkeletonLoader, Switch, Textarea } from "../../src";
 
 function CornelScratchPad() {
   let [checkboxTicked, setCheckboxTicked] = useState(false);
   let [switchTicked, setSwitchTicked] = useState(false);
+  let [selectValue, setSelectValue] = useState([]);
 
   return (
     <div>
-      <div className="max-w-md my-4">
+      <div className="max-w-sm my-4">
         <Input
           prependText="R"
           label="Price"
@@ -23,6 +24,19 @@ function CornelScratchPad() {
           }}
         />
       </div>
+      <div className="my-4">
+        <Select
+          placeholder="Select an option"
+          multiSelection
+          value={selectValue}
+          onChange={(newValue: any) => setSelectValue(newValue)}
+          options={[
+            { label: "Option 1", value: 1 },
+            { label: "Option 2", value: 2 }
+          ]}
+        />
+      </div>
+
       <Switch
         label="Toggle me on"
         checked={switchTicked}

@@ -5,6 +5,7 @@ import { InfoButton } from "./InfoButton";
 import { Input } from "./Input";
 import { Label } from "./Label";
 import { Manager, Popper, Reference } from "react-popper";
+import { Button } from "./Button";
 
 // Interface
 interface ISelect extends IBase {
@@ -216,6 +217,27 @@ function GroupedSelect(props: IGroupedSelect) {
   let _buttonWidth = "w-56";
   if (buttonWidth) {
     _buttonWidth = buttonWidth;
+  }
+
+  // Select all buttons
+  if (!buttons) {
+    buttons = [];
+  }
+
+  if (multiSelection) {
+    let allSelected = flattenedOptions.length === value.length;
+    buttons.push(
+      <Button.Link
+        title={allSelected ? "Deselect all" : "Select all"}
+        onClick={() => {
+          if (allSelected) {
+            onChange && onChange([]);
+          } else {
+            onChange && onChange(flattenedOptions.map(option => option.value));
+          }
+        }}
+      />
+    );
   }
 
   let placement = "bottom-start";
