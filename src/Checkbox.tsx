@@ -42,8 +42,8 @@ function Checkbox(props: IProps) {
   const labelEl = (
     <label
       className={
-        (disabled ? "text-gray-500 " : "text-base ") +
-        " flex items-center cursor-pointer " +
+        (disabled ? "text-gray-500 " : "text-base cursor-pointer ") +
+        " flex items-center " +
         (labelClassName ? labelClassName : "")
       }
       htmlFor={htmlFor}
@@ -71,7 +71,8 @@ function Checkbox(props: IProps) {
           title={hoverTitle}
           type="checkbox"
           className={
-            (disabled ? "text-gray-500 " : "text-primary ") +
+            "focus:ring-0 " +
+            (disabled ? "text-gray-500 " : "text-primary hover:border-primary cursor-pointer ") +
             " border-gray-300 rounded " +
             (className ? className : "")
           }

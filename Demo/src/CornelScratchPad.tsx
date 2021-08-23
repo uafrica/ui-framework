@@ -1,6 +1,10 @@
+import { useState } from "react";
 import { Checkbox, DatePicker, Input, SkeletonLoader, Switch, Textarea } from "../../src";
 
 function CornelScratchPad() {
+  let [checkboxTicked, setCheckboxTicked] = useState(false);
+  let [switchTicked, setSwitchTicked] = useState(false);
+
   return (
     <div>
       <div className="max-w-md my-4">
@@ -22,15 +26,23 @@ function CornelScratchPad() {
       <Switch
         label="Toggle me on"
         info="This won't work without state mgt"
-        checked={false}
-        onChange={() => {}}
+        checked={switchTicked}
+        onChange={() => setSwitchTicked(!switchTicked)}
       />
 
       <Checkbox
         label="Tick me"
-        info="This won't work without state mgt"
-        checked={false}
-        onClick={() => {}}
+        checked={checkboxTicked}
+        onClick={() => setCheckboxTicked(!checkboxTicked)}
+        labelRight
+      />
+
+      <Checkbox
+        label="I'm disabled"
+        disabled
+        info="I should not be clickable"
+        checked={checkboxTicked}
+        onClick={() => setCheckboxTicked(!checkboxTicked)}
         labelRight
       />
 

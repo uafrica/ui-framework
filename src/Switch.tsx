@@ -17,8 +17,8 @@ export default function Switch(props: IProps) {
         checked={checked}
         onChange={props.onChange}
         className={
-          "relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200  " +
-          (checked ? "bg-primary-600" : "bg-gray-200")
+          "hover:border-primary relative inline-flex flex-shrink-0 h-6.5 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200  " +
+          (checked ? "bg-primary" : "bg-gray-200")
         }
       >
         <span className="sr-only">Use setting</span>
