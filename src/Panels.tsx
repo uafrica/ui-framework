@@ -28,7 +28,7 @@ function TableActionsPanel(props: IProps) {
   return (
     <div className={"flex justify-between mt-2 items-center py-2" + (className ? className : "")}>
       <div className="text-sm">{title}</div>
-      <div className="ml-auto flex flex-gap-x-1 flex-grow-0">{props.children}</div>
+      <div className="ml-auto flex flex-wrap flex-gap-x-1 flex-grow-0">{props.children}</div>
     </div>
   );
 }
@@ -43,7 +43,7 @@ function SectionActionsPanel(props: ISectionActionsPanel) {
           {title}
         </SectionHeading>
       )}
-      <div className="ml-auto flex flex-row space-x-4 flex-grow-0">{props.children}</div>
+      <div className="ml-auto flex flex-wrap flex-row space-x-4 flex-grow-0">{props.children}</div>
     </div>
   );
 }
@@ -54,7 +54,9 @@ function PageActionsPanel(props: IProps) {
   return (
     <div className="page-actions-panel flex justify-between flex-col md:flex-row items-start md:items-center z-30 pb-4">
       {title && <PageHeading>{title}</PageHeading>}
-      <div className="-ml-3 md:ml-auto flex flex-row space-x-4 items-center">{props.children}</div>
+      <div className="-ml-3 md:ml-auto flex flex-wrap flex-row space-x-4 items-center">
+        {props.children}
+      </div>
     </div>
   );
 }
@@ -63,7 +65,9 @@ function FiltersPanel(props: IFiltersPanel) {
   let { className, children } = props;
 
   return (
-    <div className={"flex flex-row space-x-4 " + (className ? className : "")}>{children}</div>
+    <div className={"flex flex-wrap flex-row space-x-4 " + (className ? className : "")}>
+      {children}
+    </div>
   );
 }
 

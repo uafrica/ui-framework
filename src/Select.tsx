@@ -72,7 +72,6 @@ function GroupedSelect(props: IGroupedSelect) {
     noSearch
   } = props;
 
-  const buttonRef = useRef();
   const popupNode = useRef<HTMLElement>();
   const ctxValue = useGroupedSelectCtx(popupNode);
 
@@ -82,6 +81,8 @@ function GroupedSelect(props: IGroupedSelect) {
   // Happens when an item is selected
   function onSelectToggle(_value: any) {
     let newValue = _value;
+
+    // Multi select
     if (multiSelection) {
       newValue = JSON.parse(JSON.stringify(value));
 
@@ -91,10 +92,10 @@ function GroupedSelect(props: IGroupedSelect) {
       } else {
         newValue.push(_value);
       }
-    } else {
+    }
+    // Single select
+    else {
       // @ts-ignore
-      buttonRef.current?.click();
-
       if (newValue === value) {
         newValue = undefined;
       }
@@ -142,6 +143,9 @@ function GroupedSelect(props: IGroupedSelect) {
               <div
                 onClick={() => {
                   onSelectToggle(option.value);
+                  if (!multiSelection) {
+                    ctxValue.hideSelect();
+                  }
                 }}
                 className={
                   "flex-1 cursor-pointer select-none relative py-2 pl-2 pr-9 hover:bg-gray-100 rounded-md mt-1 truncate " +
@@ -224,14 +228,13 @@ function GroupedSelect(props: IGroupedSelect) {
   }
 
   // Select all buttons
-  if (!buttons) {
-    buttons = [];
-  }
+  let selectAllButton: any;
 
   if (multiSelection) {
     let allSelected = flattenedOptions.length === value.length;
-    buttons.push(
+    selectAllButton = (
       <Button.Link
+        key="select-deselect"
         title={allSelected ? "Deselect all" : "Select all"}
         onClick={() => {
           if (allSelected) {
@@ -260,7 +263,9 @@ function GroupedSelect(props: IGroupedSelect) {
             <Manager>
               <Reference>
                 {({ ref }) => (
-                  <div className="flex flex-row">
+                  <div
+                    className="flex flex-row" // @ts-ignore
+                  >
                     <div
                       ref={ref}
                       className={"relative " + (className ? className : "") + _buttonWidth}
@@ -268,6 +273,9 @@ function GroupedSelect(props: IGroupedSelect) {
                       <div
                         onClick={(e: any) => {
                           e.stopPropagation();
+
+                          if (disabled) return;
+
                           ctxValue.showSelect();
                           if (onClick) {
                             onClick();
@@ -275,9 +283,6 @@ function GroupedSelect(props: IGroupedSelect) {
                         }}
                       >
                         <div
-                          // @ts-ignore
-                          ref={buttonRef}
-                          disabled={disabled}
                           className="bg-white relative border border-gray-300 rounded-md shadow-sm pl-3 pr-6 py-2 text-left cursor-pointer disabled:cursor-default w-full"
                           id={id}
                         >
@@ -298,7 +303,18 @@ function GroupedSelect(props: IGroupedSelect) {
                   </div>
                 )}
               </Reference>
-              <Popper placement={placement} innerRef={node => (popupNode.current = node)}>
+              <Popper
+                placement={placement}
+                innerRef={node => (popupNode.current = node)}
+                modifiers={[
+                  {
+                    name: "offset",
+                    options: {
+                      offset: [0, 5]
+                    }
+                  }
+                ]}
+              >
                 {({ ref, style }) =>
                   ctxValue.isVisible ? (
                     <div
@@ -320,6 +336,11 @@ function GroupedSelect(props: IGroupedSelect) {
                           onChange={(e: any) => setSearchTerm(e.target.value)}
                         />
                       )}
+                      {selectAllButton && (
+                        <div className="-ml-1 border-t border-gray-200 pt-1 -mb-2">
+                          {selectAllButton}
+                        </div>
+                      )}
                       <div className={"mt-2 mb-2 max-h-52 overflow-y-auto"}>
                         {allOptionsSearched.length === 0 && (
                           <div className="pl-2 mt-2">No options</div>
@@ -336,7 +357,7 @@ function GroupedSelect(props: IGroupedSelect) {
                 }
               </Popper>
 
-              <Popover.Panel className="absolute z-30 mt-1"></Popover.Panel>
+              <Popover.Panel className="absolute z-30" />
             </Manager>
           </GroupedSelectCtx.Provider>
         </div>
@@ -362,11 +383,13 @@ export { Select, GroupedSelect };
 interface GroupedSelectContextType {
   isVisible: boolean;
   showSelect: () => void;
+  hideSelect: () => void;
 }
 
 const GroupedSelectCtx = createContext<GroupedSelectContextType>({
   isVisible: false,
-  showSelect: () => {}
+  showSelect: () => {},
+  hideSelect: () => {}
 });
 
 function useGroupedSelectCtx(
@@ -393,6 +416,7 @@ function useGroupedSelectCtx(
 
   return {
     isVisible,
-    showSelect: () => setVisible(true)
+    showSelect: () => setVisible(true),
+    hideSelect: () => setVisible(false)
   };
 }
