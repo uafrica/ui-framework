@@ -349,7 +349,7 @@ function GroupedSelect(props: IGroupedSelect) {
                           return renderOptionGroup(optionGroup);
                         })}
                       </div>
-                      {buttons && buttons.length > 0 && (
+                      {buttons && (
                         <div className="-ml-1 border-t border-gray-200 pt-1">{buttons}</div>
                       )}
                     </div>
