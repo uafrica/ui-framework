@@ -126,18 +126,16 @@ function Input(props: IInputProps) {
     />
   );
 
-  let _containerClassName = "mt-4 max-w-sm";
-
-  if (labelInline) {
-    _containerClassName = "flex flex-row items-center space-x-4";
-  }
-
-  if (containerClassName) {
-    _containerClassName = containerClassName;
-  }
-
   return (
-    <div className={_containerClassName}>
+    <div
+      className={
+        containerClassName
+          ? containerClassName
+          : labelInline
+          ? "flex flex-row items-center space-x-4"
+          : "mt-4 max-w-sm"
+      }
+    >
       {label && label.length > 0 && (
         <div className="flex justify-between">
           <Label htmlFor={htmlFor} className={labelClassName} noMargin={labelInline}>

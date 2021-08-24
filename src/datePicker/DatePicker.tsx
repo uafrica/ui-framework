@@ -77,23 +77,37 @@ function DatePicker(props: IDatePicker) {
       <Manager>
         <Reference>
           {({ ref }) => (
-            <div className="flex" ref={ref}>
-              <Input
-                onFocus={() => ctxValue.showCalendar()}
-                value={selected ? formattedDate(dateFormat, date) : ""}
-                readOnly
-                label={label}
-                labelInline={labelInline}
-                containerClassName={containerClassName}
-                placeholder={placeholder}
-                appendIcon="caret-down"
-              />
-            </div>
+            <Input
+              reference={ref}
+              onFocus={() => ctxValue.showCalendar()}
+              value={selected ? formattedDate(dateFormat, date) : ""}
+              readOnly
+              label={label}
+              labelInline={labelInline}
+              containerClassName={containerClassName}
+              placeholder={placeholder}
+              appendIcon="caret-down"
+            />
           )}
         </Reference>
-        <Popper placement="bottom-start" innerRef={node => (popupNode.current = node)}>
+        <Popper
+          placement="bottom-start"
+          innerRef={node => (popupNode.current = node)}
+          modifiers={[
+            {
+              name: "offset",
+              options: {
+                offset: [0, 5]
+              }
+            }
+          ]}
+        >
           {({ ref, style, placement }) =>
-            ctxValue.isVisible ? <Calendar placement={placement} style={style} ref={ref} /> : null
+            ctxValue.isVisible ? (
+              <div>
+                <Calendar placement={placement} style={style} ref={ref} />
+              </div>
+            ) : null
           }
         </Popper>
       </Manager>
@@ -126,7 +140,7 @@ const Calendar: React.FC<CalendarProps> = React.forwardRef<HTMLDivElement, Calen
 
     return (
       <div
-        className="bg-white z-30 relative shadow-lg max-w-xs w-64 p-2 rounded-lg mt-1 ring-1 ring-black ring-opacity-5"
+        className="bg-white z-30 relative shadow-lg max-w-xs w-64 p-2 rounded-lg ring-1 ring-black ring-opacity-5"
         ref={ref}
         data-placement={props.placement}
         style={props.style}

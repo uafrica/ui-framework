@@ -43,7 +43,9 @@ function SectionActionsPanel(props: ISectionActionsPanel) {
           {title}
         </SectionHeading>
       )}
-      <div className="ml-auto flex flex-wrap flex-row space-x-4 flex-grow-0">{props.children}</div>
+      <div className="ml-auto flex flex-wrap flex-row space-x-0 sm:space-x-4 space-y-4 sm:space-y-0 flex-grow-0">
+        {props.children}
+      </div>
     </div>
   );
 }
@@ -54,7 +56,7 @@ function PageActionsPanel(props: IProps) {
   return (
     <div className="page-actions-panel flex justify-between flex-col md:flex-row items-start md:items-center z-30 pb-4">
       {title && <PageHeading>{title}</PageHeading>}
-      <div className="-ml-3 md:ml-auto flex flex-wrap flex-row space-x-4 items-center">
+      <div className="-ml-3 md:ml-auto flex flex-wrap flex-row space-x-0 sm:space-x-4 space-y-4 sm:space-y-0 items-center">
         {props.children}
       </div>
     </div>
@@ -65,7 +67,12 @@ function FiltersPanel(props: IFiltersPanel) {
   let { className, children } = props;
 
   return (
-    <div className={"flex flex-wrap flex-row space-x-4 " + (className ? className : "")}>
+    <div
+      className={
+        "flex flex-wrap flex-row space-x-0 sm:space-x-4 space-y-4 sm:space-y-0 " +
+        (className ? className : "")
+      }
+    >
       {children}
     </div>
   );
