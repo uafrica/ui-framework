@@ -1,5 +1,14 @@
 import { useState } from "react";
-import { Checkbox, DatePicker, Input, Select, SkeletonLoader, Switch, Textarea } from "../../src";
+import {
+  Checkbox,
+  DatePicker,
+  Input,
+  Select,
+  SkeletonLoader,
+  Switch,
+  Textarea,
+  Button
+} from "../../src";
 
 function CornelScratchPad() {
   let [checkboxTicked, setCheckboxTicked] = useState(false);
@@ -47,6 +56,7 @@ function CornelScratchPad() {
             { label: "Option 1", value: 1 },
             { label: "Option 2", value: 2 }
           ]}
+          buttons={<Button.Link title="Save current filters" onClick={() => {}} />}
         />
       </div>
 
