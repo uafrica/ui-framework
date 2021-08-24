@@ -337,7 +337,7 @@ function GroupedSelect(props: IGroupedSelect) {
                         />
                       )}
                       {selectAllButton && (
-                        <div className="-ml-1 border-t border-gray-200 pt-1 -mb-2">
+                        <div className="-ml-1 border-b border-gray-200 pt-1 -mb-2">
                           {selectAllButton}
                         </div>
                       )}
