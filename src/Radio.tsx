@@ -25,23 +25,28 @@ interface IRadioGroupProps {
 }
 
 function Button(props: IRadioButtonProps) {
-  let {
-    label,
-    onChange,
-    checked,
-    disabled,
-    labelClassName,
-    className,
-    labelLeft,
-    labelRight,
-    name
-  } = props;
+  let { label, onChange, disabled, labelClassName, className, labelLeft, labelRight, name } = props;
+
+  function selectOption() {
+    var list = document.querySelectorAll(`input[name='${name}']`);
+    list.forEach((item: any) => {
+      if (item.value === label) {
+        item.checked = true;
+        onChange(item.value);
+      } else {
+        item.checked = false;
+      }
+    });
+  }
 
   function renderLabel(option: string) {
     return (
       <label
+        onClick={() => {
+          selectOption();
+        }}
         className={
-          (disabled ? "text-gray-500 " : "text-base ") +
+          (disabled ? "text-gray-500 " : "text-base cursor-pointer ") +
           " flex items-center " +
           (labelClassName ? labelClassName : "")
         }
@@ -65,7 +70,6 @@ function Button(props: IRadioButtonProps) {
             (className ? className : "")
           }
           disabled={disabled}
-          checked={checked}
           id={label}
           name={name}
           value={label}
