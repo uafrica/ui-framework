@@ -6,7 +6,8 @@ import {
   SectionHeading,
   Switch,
   Select,
-  Dropdown
+  Dropdown,
+  Radio
 } from "../../../src";
 import { useEffect, useState } from "react";
 
@@ -21,6 +22,8 @@ function Forms() {
   const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
   const [showInputInterface, setShowInputInterface] = useState<boolean>(false);
   const [showInputCode, setShowInputCode] = useState<boolean>(false);
+  const [showRadioButtonCode, setShowRadioButtonCode] = useState<boolean>(false);
+  const [showRadioGroupCode, setShowRadioGroupCode] = useState<boolean>(false);
   const [selectCode, setSelectCode] = useState<boolean>(false);
   const [dropdownCode, setDropdownCode] = useState<boolean>(false);
 
@@ -326,6 +329,93 @@ function Forms() {
       <SectionHeading>Select and dropdown components</SectionHeading>
       <hr />
       <SelectAndDropdown />
+
+      <SectionHeading>Radio buttons and groups</SectionHeading>
+      <hr />
+      <div className="mt-4">
+        <Radio.Button
+          name="radio.button"
+          labelRight={true}
+          label="Right label radio button"
+          onChange={(value: any) => {
+            console.log(value);
+          }}
+        />
+        <Radio.Button
+          name="radio.button"
+          labelLeft={true}
+          label="Left label radio button"
+          onChange={(value: any) => {
+            console.log(value);
+          }}
+        />
+
+        <div className="mt-5">
+          <Switch
+            checked={showRadioButtonCode}
+            onChange={() => setShowRadioButtonCode(!showRadioButtonCode)}
+            label="Toggle radio button code example"
+          />
+        </div>
+        {showRadioButtonCode && (
+          <div className="mt-5 w-2/5">
+            <pre>
+              <code>{`
+              <Radio.Button
+                name="radio.button"
+                labelRight={true}
+                label="Right label radio button"
+                onChange={(value: any) => {
+                  console.log(value);
+                }}
+              />
+              <Radio.Button
+                name="radio.button"
+                labelLeft={true}
+                label="Left label radio button"
+                onChange={(value: any) => {
+                  console.log(value);
+                }}
+              />`}</code>
+            </pre>
+          </div>
+        )}
+      </div>
+      <div className="mt-4">
+        <Radio.Group
+          name="radio.group"
+          labelRight={true}
+          options={["One", "Two", "Three"]}
+          onChange={(option: string) => {
+            console.log("Radio group selected ", option);
+          }}
+          title="Radio group"
+        />
+
+        <div className="mt-5">
+          <Switch
+            checked={showRadioGroupCode}
+            onChange={() => setShowRadioGroupCode(!showRadioGroupCode)}
+            label="Toggle radio group code example"
+          />
+        </div>
+        {showRadioGroupCode && (
+          <div className="mt-5 w-2/5">
+            <pre>
+              <code>{`
+              <Radio.Group
+                name="radio.group"
+                labelRight={true}
+                options={["One", "Two", "Three"]}
+                onChange={(option: string) => {
+                   console.log("Radio group selected ", option);
+                  }}
+                  title="Radio group"
+               />`}</code>
+            </pre>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

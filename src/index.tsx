@@ -12,6 +12,7 @@ import { Dropdown } from "./Dropdown";
 import { Modal } from "./Modal";
 import { Select, GroupedSelect } from "./Select";
 import { Checkbox } from "./Checkbox";
+import { Radio } from "./Radio";
 import { IconWithBackground } from "./IconWithBackground";
 import { Textarea } from "./Textarea";
 import { InfoButton } from "./InfoButton";
@@ -59,6 +60,7 @@ export {
   Dropdown,
   Label,
   Checkbox,
+  Radio,
   InfoButton,
   Textarea,
   Table,
