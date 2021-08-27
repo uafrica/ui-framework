@@ -7,7 +7,13 @@ import { Input } from "./Input";
 import { NavItem, NavItemDivider } from "./NavItem";
 import { Loader } from "./Loader";
 import { Tabs } from "./Tabs";
-import { PageActionsPanel, SectionActionsPanel, TableActionsPanel, FiltersPanel } from "./Panels";
+import {
+  PageActionsPanel,
+  SectionActionsPanel,
+  TableActionsPanel,
+  FiltersPanel,
+  ModalActionsPanel
+} from "./Panels";
 import { Dropdown } from "./Dropdown";
 import { Modal } from "./Modal";
 import { Select, GroupedSelect } from "./Select";
@@ -54,6 +60,7 @@ export {
   Loader,
   Tabs,
   PageActionsPanel,
+  ModalActionsPanel,
   SectionActionsPanel,
   DownloadButton,
   Dropdown,

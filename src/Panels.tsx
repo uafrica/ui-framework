@@ -26,9 +26,16 @@ function TableActionsPanel(props: IProps) {
   let { title, className } = props;
 
   return (
-    <div className={"flex justify-between mt-2 items-center py-2" + (className ? className : "")}>
+    <div
+      className={
+        "flex flex-col-reverse xs:flex-row justify-between mt-2 items-start xs:items-center py-2" +
+        (className ? className : "")
+      }
+    >
       <div className="text-sm">{title}</div>
-      <div className="ml-auto flex flex-wrap flex-gap-x-1 flex-grow-0">{props.children}</div>
+      <div className="xs:ml-auto flex flex-wrap flex-gap-x-1 flex-grow-0 mb-4 xs:mb-0">
+        {props.children}
+      </div>
     </div>
   );
 }
@@ -54,9 +61,22 @@ function PageActionsPanel(props: IProps) {
   let { title } = props;
 
   return (
-    <div className="page-actions-panel flex justify-between flex-col md:flex-row items-start md:items-center z-30 pb-4">
+    <div className="ua-page-actions-panel flex justify-between flex-col md:flex-row items-start md:items-center z-30 xs:pb-4">
       {title && <PageHeading>{title}</PageHeading>}
-      <div className="-ml-3 md:ml-auto flex flex-wrap flex-row space-x-0 sm:space-x-4 space-y-4 sm:space-y-0 items-center">
+      <div className="ua-page-actions-panel-children flex ml-0 xs:ml-auto xs:flex-row flex-col-reverse space-x-0 xs:space-x-4 items-start xs:items-center ">
+        {props.children}
+      </div>
+    </div>
+  );
+}
+
+function ModalActionsPanel(props: IProps) {
+  let { title } = props;
+
+  return (
+    <div className="ua-modal-actions-panel flex justify-between flex-col md:flex-row items-start md:items-center z-30 xs:pb-4">
+      {title && <PageHeading>{title}</PageHeading>}
+      <div className="flex ml-0 xs:ml-auto flex-row space-x-0 space-x-4 items-center ">
         {props.children}
       </div>
     </div>
@@ -69,8 +89,7 @@ function FiltersPanel(props: IFiltersPanel) {
   return (
     <div
       className={
-        "flex flex-wrap flex-row space-x-0 sm:space-x-4 space-y-4 sm:space-y-0 " +
-        (className ? className : "")
+        "ua-filters-panel flex flex-wrap flex-row items-center " + (className ? className : "")
       }
     >
       {children}
@@ -78,4 +97,10 @@ function FiltersPanel(props: IFiltersPanel) {
   );
 }
 
-export { TableActionsPanel, SectionActionsPanel, PageActionsPanel, FiltersPanel };
+export {
+  TableActionsPanel,
+  SectionActionsPanel,
+  PageActionsPanel,
+  FiltersPanel,
+  ModalActionsPanel
+};
