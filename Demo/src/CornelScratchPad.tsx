@@ -7,7 +7,8 @@ import {
   SkeletonLoader,
   Switch,
   Textarea,
-  Button
+  Button,
+  Dropdown
 } from "../../src";
 
 function CornelScratchPad() {
@@ -106,6 +107,22 @@ function CornelScratchPad() {
     </Modal.Medium> */}
 
       <Textarea label="Description" info="Testing all the styles here" optional />
+
+      <div className="float-right">
+        <Dropdown.Menu color="blue" title="Dropdown menu" noBackground widthClass="w-96">
+          <Dropdown.MenuItem
+            icon="download"
+            onClick={() => {
+              alert("Downloading.... Not really though...");
+            }}
+            title="Download"
+          />
+          <Dropdown.MenuItemContainer>
+            <div>Some other div</div>
+          </Dropdown.MenuItemContainer>
+        </Dropdown.Menu>
+      </div>
+
       <SkeletonLoader.ShipmentLoader />
     </div>
   );

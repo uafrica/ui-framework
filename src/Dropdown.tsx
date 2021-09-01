@@ -21,10 +21,15 @@ interface IMenuItem {
   onClick: any;
   id?: string;
 }
+
 interface IMenuHeading {
   title: string;
   icon?: IconProp;
   id?: string;
+}
+
+interface IMenuItemContainer {
+  children: any;
 }
 
 // Implementation
@@ -148,6 +153,11 @@ function MenuItem(props: IMenuItem) {
     </div>
   );
 }
+
+function MenuItemContainer(props: IMenuItemContainer) {
+  return <Menu.Item>{props.children}</Menu.Item>;
+}
+
 function MenuHeading(props: IMenuHeading) {
   let { title, icon, id } = props;
 
@@ -176,6 +186,7 @@ function MenuHeading(props: IMenuHeading) {
 }
 
 const Dropdown = {
+  MenuItemContainer,
   MenuItem,
   MenuHeading,
   Menu: DropdownMenu,
