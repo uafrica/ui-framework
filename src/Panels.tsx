@@ -81,7 +81,7 @@ function ModalActionsPanel(props: IProps) {
         <div>{title && <PageHeading>{title}</PageHeading>}</div>
         <div>
           {onClose && (
-            <div className="visible md:invisible" onClick={onClose}>
+            <div className="block md:hidden" onClick={onClose}>
               <Button.Close onClick={onClose} />
             </div>
           )}
@@ -90,7 +90,7 @@ function ModalActionsPanel(props: IProps) {
       <div className="flex flex-row  space-x-4 items-center w-full md:w-auto justify-center flex-wrap pt-2">
         {props.children}
         {onClose && (
-          <div className="invisible md:visible" onClick={onClose}>
+          <div className="hidden md:block" onClick={onClose}>
             <Button.Close onClick={onClose} />
           </div>
         )}
