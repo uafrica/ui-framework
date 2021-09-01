@@ -1,5 +1,6 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Button } from "./Button";
 import { createContext, useRef } from "react";
 import ReactDOM from "react-dom";
 
@@ -66,14 +67,7 @@ const Base = ({
               <div className="ua-modal-actions-panel flex justify-between items-center z-30 text-lg font-bold text-gray-900 text-left pb-4">
                 {title && title}
 
-                {closeButton && (
-                  <FontAwesomeIcon
-                    icon="times"
-                    size="sm"
-                    className="float-right cursor-pointer hover:text-gray-900 text-gray-700"
-                    onClick={onHide}
-                  />
-                )}
+                {closeButton && <Button.Close onClick={onHide} />}
               </div>
             )}
 

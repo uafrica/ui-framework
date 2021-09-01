@@ -1,3 +1,4 @@
+import { Button } from "./Button";
 import { PageHeading } from "./PageHeading";
 import { SectionHeading } from "./SectionHeading";
 
@@ -6,6 +7,7 @@ interface IProps {
   children?: any;
   title?: any;
   className?: string;
+  onClose?: any;
 }
 
 interface ISectionActionsPanel {
@@ -71,13 +73,27 @@ function PageActionsPanel(props: IProps) {
 }
 
 function ModalActionsPanel(props: IProps) {
-  let { title } = props;
+  let { title, onClose } = props;
 
   return (
-    <div className="ua-modal-actions-panel flex justify-between flex-col md:flex-row items-start md:items-center z-30 xs:pb-4">
-      {title && <PageHeading>{title}</PageHeading>}
-      <div className="flex ml-0 xs:ml-auto flex-row space-x-0 space-x-4 items-center ">
+    <div className="ua-modal-actions-panel flex justify-between flex-col md:flex-row items-start md:items-center z-30 pb-4">
+      <div className="flex justify-between w-full md:w-auto items-center">
+        <div>{title && <PageHeading>{title}</PageHeading>}</div>
+        <div>
+          {onClose && (
+            <div className="visible md:invisible" onClick={onClose}>
+              <Button.Close onClick={onClose} />
+            </div>
+          )}
+        </div>
+      </div>
+      <div className="flex flex-row  space-x-4 items-center w-full md:w-auto justify-center flex-wrap pt-2">
         {props.children}
+        {onClose && (
+          <div className="invisible md:visible" onClick={onClose}>
+            <Button.Close onClick={onClose} />
+          </div>
+        )}
       </div>
     </div>
   );

@@ -276,6 +276,18 @@ function Download(props: { isDownloading: boolean; download: any; downloadType: 
   );
 }
 
+function Close(props: IButtonProps) {
+  return (
+    <div className="text-lg leading-6 font-bold  text-gray-900" {...props}>
+      <FontAwesomeIcon
+        icon="times"
+        size="sm"
+        className="float-right cursor-pointer hover:text-gray-900 text-gray-700"
+      />
+    </div>
+  );
+}
+
 const Button = {
   Primary,
   Secondary,
@@ -286,7 +298,8 @@ const Button = {
   LinkDanger,
   ButtonsPanel,
   Icon,
-  Download
+  Download,
+  Close
 };
 
 export { Button };
