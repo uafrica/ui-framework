@@ -18,6 +18,7 @@ interface IInputProps {
   validationError?: any;
   type?: string;
   onChange?: any;
+  onClick?: any;
   onFocus?: any;
   onBlur?: any;
   onKeyPress?: any;
@@ -72,6 +73,7 @@ function Input(props: IInputProps) {
     disabled,
     errorMessage,
     onChange,
+    onClick,
     onFocus,
     prependText,
     onBlur,
@@ -113,6 +115,7 @@ function Input(props: IInputProps) {
       readOnly={readOnly}
       disabled={disabled}
       onChange={onChange}
+      onClick={onClick}
       onFocus={onFocus}
       placeholder={placeholder}
       onKeyPress={onKeyPress}
