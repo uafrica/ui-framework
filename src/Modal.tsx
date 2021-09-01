@@ -63,7 +63,7 @@ const Base = ({
           )}
           <div className="mt-4 text-center sm:mt-0 sm:text-left w-full">
             {(title || closeButton) && (
-              <div className="ua-modal-actions-panel flex justify-between items-center z-30 text-lg font-bold text-gray-900">
+              <div className="ua-modal-actions-panel flex justify-between items-center z-30 text-lg font-bold text-gray-900 text-left pb-4">
                 {title && title}
 
                 {closeButton && (
@@ -77,7 +77,7 @@ const Base = ({
               </div>
             )}
 
-            <div className={title || closeButton ? "mt-14" : "mt-24 md:mt-20"}>{children}</div>
+            <div className={title || closeButton ? "mt-20" : "mt-24 md:mt-20"}>{children}</div>
           </div>
         </div>
       </div>
@@ -96,15 +96,15 @@ function Host(props: any) {
   return <div {...props} id={hostElementId} />;
 }
 function Small(props: ISmallMediumModalProps) {
-  return <Base {...props} className="  sm:w-full md:w-1/4 mt-14" />;
+  return <Base {...props} className="w-11/12 md:w-1/4 mt-14" />;
 }
 
 function Medium(props: ISmallMediumModalProps) {
-  return <Base {...props} className="  sm:w-full md:w-1/2 mt-14" />;
+  return <Base {...props} className="w-11/12 md:w-1/2 mt-14" />;
 }
 
 function Large(props: ISmallMediumModalProps) {
-  return <Base {...props} className="  sm:w-full md:w-11/12 mt-14" />;
+  return <Base {...props} className="w-11/12 mt-14" />;
 }
 
 function ButtonsPanel(props: any) {
