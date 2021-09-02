@@ -304,6 +304,7 @@ function GroupedSelect(props: IGroupedSelect) {
                 )}
               </Reference>
               <Popper
+                // @ts-ignore
                 placement={placement}
                 innerRef={node => (popupNode.current = node)}
                 modifiers={[

@@ -102,7 +102,11 @@ function Large(props: ISmallMediumModalProps) {
 }
 
 function ButtonsPanel(props: any) {
-  return <div className="mt-10 flex justify-between w-full">{props.children}</div>;
+  return (
+    <div className="mt-10 flex flex-col-reverse sm:flex-row justify-between space-y-4 sm:space-y-0 space-y-reverse">
+      {props.children}
+    </div>
+  );
 }
 
 const Modal = {

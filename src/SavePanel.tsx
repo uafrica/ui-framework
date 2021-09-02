@@ -36,25 +36,33 @@ function SavePanel(props: ISavePanel) {
         (className ? className : "")
       }
     >
-      {!savingChanges && props.cancelChanges && (
-        <div className="ml-2">
-          <Button.Cancel id="cancel_button" title="Cancel" onClick={props.cancelChanges} />
+      <div className="flex flex-col-reverse sm:flex-row justify-between w-full ">
+        {!savingChanges && props.cancelChanges && (
+          <div className="ml-2 mr-2 sm:mr-0 mt-4 sm:mt-0">
+            <Button.Cancel
+              id="cancel_button"
+              title="Cancel"
+              onClick={props.cancelChanges}
+              className="w-full"
+            />
+          </div>
+        )}
+        <div className="flex flex-col sm:flex-row sm:space-x-4 mr-2 ml-2 sm:ml-0 justify-end mt-4 sm:mt-0 space-y-4 sm:space-y-0">
+          {saveError && (
+            <div className="inline-error flex flex-wrap self-center text-center">{saveError}</div>
+          )}
+          <Button.Primary
+            className="sm:w-auto w-full"
+            id="save_button"
+            onClick={props.saveChanges}
+            disabled={savingChanges || !somethingChanged || Boolean(saveDisabledText)}
+            hoverTitle={saveDisabledText}
+            isLoading={savingChanges}
+            title={saved && !somethingChanged ? "Saved" : saveText ? saveText : "Save"}
+            icon={saved && !somethingChanged ? "check" : undefined}
+            loadingTitle="Saving"
+          />
         </div>
-      )}
-      <div className="flex flex-row space-x-4 flex-grow-0 ml-auto mr-2  items-center justify-center ">
-        {saveError && <div className="inline-error mr-2 mt-2 ">{saveError}</div>}
-
-        <Button.Primary
-          className="sm:w-auto w-full"
-          id="save_button"
-          onClick={props.saveChanges}
-          disabled={savingChanges || !somethingChanged || Boolean(saveDisabledText)}
-          hoverTitle={saveDisabledText}
-          isLoading={savingChanges}
-          title={saved && !somethingChanged ? "Saved" : saveText ? saveText : "Save"}
-          icon={saved && !somethingChanged ? "check" : undefined}
-          loadingTitle="Saving"
-        />
       </div>
     </div>
   );
