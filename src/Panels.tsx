@@ -46,13 +46,15 @@ function SectionActionsPanel(props: ISectionActionsPanel) {
   let { title, className, toggleEditMode, hideEditMode } = props;
 
   return (
-    <div className={"flex justify-between " + (className ? className : "")}>
+    <div className={"flex justify-between flex-col sm:flex-row " + (className ? className : "")}>
       {title && (
         <SectionHeading toggleEditMode={toggleEditMode} hideEditMode={hideEditMode}>
           {title}
         </SectionHeading>
       )}
-      <div className="ml-auto flex flex-wrap flex-row space-x-0 sm:space-x-4 space-y-4 sm:space-y-0 flex-grow-0">
+      <div
+        className="ml-auto flex flex-wrap flex-row space-x-0 sm:space-x-4 space-y-4 sm:space-y-0 flex-grow-0 w-full md:w-auto justify-end items-center"
+      >
         {props.children}
       </div>
     </div>
