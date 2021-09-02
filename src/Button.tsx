@@ -254,7 +254,7 @@ function ButtonsPanel(props: IButtonsPanelProps) {
   return (
     <div
       className={
-        "flex w-full flex-col-reverse xs:flex-row gap-y-4 xs:gap-y-0 " +
+        "flex w-full flex-col-reverse xs:flex-row space-y-4 xs:space-y-0 space-y-reverse " +
         align +
         (noMargin ? "" : " mt-6")
       }
