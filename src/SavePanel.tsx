@@ -36,7 +36,12 @@ function SavePanel(props: ISavePanel) {
         (className ? className : "")
       }
     >
-      <div className="flex flex-col-reverse sm:flex-row justify-between w-full ">
+      <div
+        className={
+          "flex flex-col-reverse sm:flex-row  w-full " +
+          (!(!savingChanges && props.cancelChanges) ? "justify-end" : "justify-between")
+        }
+      >
         {!savingChanges && props.cancelChanges && (
           <div className="ml-2 mr-2 sm:mr-0 mt-4 sm:mt-0">
             <Button.Cancel
