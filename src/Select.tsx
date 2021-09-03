@@ -251,7 +251,7 @@ function GroupedSelect(props: IGroupedSelect) {
   return (
     <div className={_containerClassName} onClick={(e: any) => e.stopPropagation()}>
       <Popover>
-        <div className={labelInline ? "flex flex-row items-center space-x-4" : ""}>
+        <div className={labelInline ? "flex flex-row items-center" : ""}>
           {label && (
             <Label className={labelClassName} noMargin={labelInline}>
               {label} {info && <InfoButton>{info}</InfoButton>}
@@ -327,42 +327,41 @@ function GroupedSelect(props: IGroupedSelect) {
               >
                 {({ ref, style }) =>
                   ctxValue.isVisible ? (
-                    <div ref={ref}>
-                      <div
-                        style={style}
-                        className={
-                          "overflow-hidden z-30 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 px-4 pb-2 bg-white " +
-                          (popoverWidth ? popoverWidth : "w-72")
-                        }
-                      >
-                        {!noSearch && (
-                          <Input
-                            inputId="ui-framework-search"
-                            containerClassName="mt-4 w-full"
-                            onBlur={onSearchBlur}
-                            onFocus={onSearchFocus}
-                            appendIcon="search"
-                            value={searchTerm}
-                            onChange={(e: any) => setSearchTerm(e.target.value)}
-                          />
-                        )}
-                        {selectAllButton && (
-                          <div className="-ml-1 border-b border-gray-200 pt-1 -mb-2">
-                            {selectAllButton}
-                          </div>
-                        )}
-                        <div className={"mt-2 mb-2 max-h-52 overflow-y-auto"}>
-                          {allOptionsSearched.length === 0 && (
-                            <div className="pl-2 mt-2">No options</div>
-                          )}
-                          {optionGroups.map((optionGroup: IOptionGroup) => {
-                            return renderOptionGroup(optionGroup);
-                          })}
+                    <div
+                      style={style}
+                      ref={ref}
+                      className={
+                        "overflow-hidden z-30 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 px-4 pb-2 bg-white " +
+                        (popoverWidth ? popoverWidth : "w-72")
+                      }
+                    >
+                      {!noSearch && (
+                        <Input
+                          inputId="ui-framework-search"
+                          containerClassName="mt-4 w-full"
+                          onBlur={onSearchBlur}
+                          onFocus={onSearchFocus}
+                          appendIcon="search"
+                          value={searchTerm}
+                          onChange={(e: any) => setSearchTerm(e.target.value)}
+                        />
+                      )}
+                      {selectAllButton && (
+                        <div className="-ml-1 border-b border-gray-200 pt-1 -mb-2">
+                          {selectAllButton}
                         </div>
-                        {buttons && (
-                          <div className="-ml-1 border-t border-gray-200 pt-1">{buttons}</div>
+                      )}
+                      <div className={"mt-2 mb-2 max-h-52 overflow-y-auto"}>
+                        {allOptionsSearched.length === 0 && (
+                          <div className="pl-2 mt-2">No options</div>
                         )}
+                        {optionGroups.map((optionGroup: IOptionGroup) => {
+                          return renderOptionGroup(optionGroup);
+                        })}
                       </div>
+                      {buttons && (
+                        <div className="-ml-1 border-t border-gray-200 pt-1">{buttons}</div>
+                      )}
                     </div>
                   ) : null
                 }
