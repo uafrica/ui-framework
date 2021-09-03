@@ -280,6 +280,15 @@ function GroupedSelect(props: IGroupedSelect) {
                           if (onClick) {
                             onClick();
                           }
+
+                          setTimeout(() => {
+                            try {
+                              // @ts-ignore
+                              document.getElementById("ui-framework-search").focus();
+                            } catch (e) {
+                              console.log(e);
+                            }
+                          }, 10);
                         }}
                       >
                         <div
@@ -328,7 +337,7 @@ function GroupedSelect(props: IGroupedSelect) {
                       >
                         {!noSearch && (
                           <Input
-                            autoFocus
+                            inputId="ui-framework-search"
                             containerClassName="mt-4 w-full"
                             onBlur={onSearchBlur}
                             onFocus={onSearchFocus}

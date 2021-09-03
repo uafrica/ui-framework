@@ -88,7 +88,7 @@ function DropdownMenu(props: IDropdown) {
   return (
     <DropdownMenuCtx.Provider value={ctxValue}>
       <Manager>
-        <div className="relative inline-block text-left">
+        <div className="relative inline-block text-left cursor-pointer">
           <Reference>
             {({ ref }) => (
               <div
