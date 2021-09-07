@@ -71,6 +71,14 @@
   }
 }
 
+@media (max-height: 500px) {
+  .uafrica-modal {
+    .content {
+      max-height: calc(100vh) !important;
+    }
+  }
+}
+
 /* LOADERS */
 .loader {
   border-top-color: #3498db !important;
