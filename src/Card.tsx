@@ -12,7 +12,8 @@ function Card(props: IProps) {
   return (
     <div
       className={
-        "xs:shadow-lg rounded-md bg-white mt-3 mb-2 border-gray-100 border " +
+        "xs:shadow-md rounded-md bg-white mt-3 mb-2 border-gray-100  " +
+        (className.includes("border") ? "" : "border ") +
         (width ? " mx-2 inline-block p-2 xs:p-6 " : " p-4 xs:p-6 block ") +
         className +
         (mediumWidth ? "w-full sm:w-" + mediumWidth : "")
