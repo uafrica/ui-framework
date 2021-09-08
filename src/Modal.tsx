@@ -90,15 +90,15 @@ function Host(props: any) {
   return <div {...props} id={hostElementId} />;
 }
 function Small(props: ISmallMediumModalProps) {
-  return <Base {...props} className="w-11/12 md:w-1/4 mt-14" />;
+  return <Base {...props} className=" mt-14 small-modal" />;
 }
 
 function Medium(props: ISmallMediumModalProps) {
-  return <Base {...props} className="w-11/12 md:w-1/2 mt-14" />;
+  return <Base {...props} className=" mt-14 medium-modal" />;
 }
 
 function Large(props: ISmallMediumModalProps) {
-  return <Base {...props} className="w-11/12 mt-14" />;
+  return <Base {...props} className=" mt-14 large-modal" />;
 }
 
 function ButtonsPanel(props: any) {
