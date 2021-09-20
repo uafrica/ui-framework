@@ -14,7 +14,7 @@ export default function Switch(props: IProps) {
 
   return (
     <div
-      className="flex flex-row space-x-4 items-center"
+      className="u-vertical-center flex-row space-x-4"
       onClick={() => {
         if (!disabled) {
           props.onChange();
@@ -40,7 +40,7 @@ export default function Switch(props: IProps) {
         >
           <span
             className={
-              "absolute inset-0 h-full w-full flex items-center justify-center transition-opacity " +
+              "absolute inset-0 h-full w-full u-center transition-opacity " +
               (checked ? "opacity-0 ease-out duration-100" : "opacity-100 ease-in duration-200")
             }
             aria-hidden="true"
@@ -57,7 +57,7 @@ export default function Switch(props: IProps) {
           </span>
           <span
             className={
-              "absolute inset-0 h-full w-full flex items-center justify-center transition-opacity " +
+              "absolute inset-0 h-full w-full u-center transition-opacity " +
               (checked ? "opacity-100 ease-in duration-200" : "opacity-0 ease-out duration-100")
             }
             aria-hidden="true"

@@ -130,7 +130,7 @@ function DropdownMenu(props: IDropdown) {
                   ref={ref}
                   style={style}
                   className={
-                    "z-10 origin-top-right absolute right-0 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none " +
+                    "z-10 origin-top-right absolute right-0 rounded-md shadow-lg bg-white u-black-ring focus:outline-none " +
                     widthClass
                   }
                 >
@@ -165,7 +165,7 @@ function ContextMenu(props: IDropdown) {
         <Menu.Items
           static
           className={
-            "z-10 origin-top-right absolute right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none " +
+            "z-10 origin-top-right absolute right-0 mt-2 rounded-md shadow-lg bg-white u-black-ring focus:outline-none " +
             widthClass
           }
         >
@@ -185,7 +185,7 @@ function MenuItem(props: IMenuItem) {
         {({ active }) => (
           <div
             className={
-              "group flex items-center px-4 py-2 cursor-pointer font-semibold " +
+              "group u-vertical-center px-4 py-2 cursor-pointer font-semibold " +
               (active ? "bg-gray-100 text-gray-900" : "text-black")
             }
             onClick={() => {
@@ -221,7 +221,7 @@ function MenuHeading(props: IMenuHeading) {
         {() => (
           <div
             className={
-              "group flex items-center px-4 py-2 cursor-pointer font-semibold text-gray-700"
+              "group flex u-vertical-center px-4 py-2 cursor-pointer font-semibold text-gray-700"
             }
           >
             {icon && (

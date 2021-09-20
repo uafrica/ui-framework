@@ -43,7 +43,7 @@ function Checkbox(props: IProps) {
     <label
       className={
         (disabled ? "text-gray-500 " : "text-base cursor-pointer ") +
-        " flex items-center " +
+        " u-vertical-center " +
         (labelClassName ? labelClassName : "")
       }
       htmlFor={htmlFor}
@@ -61,7 +61,7 @@ function Checkbox(props: IProps) {
         key={key}
         className={
           (noPadding ? "" : "py-2 px-1 ") +
-          " items-center flex space-x-4 " +
+          " u-vertical-center space-x-4 " +
           (center ? " justify-center " : "") +
           (disabled ? "" : " cursor-pointer ")
         }

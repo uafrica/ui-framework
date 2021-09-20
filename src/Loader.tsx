@@ -24,12 +24,7 @@ function Inline(props: ILoader) {
 
 function BaseLoader(props: IBaseLoader) {
   return (
-    <div
-      className={
-        "flex justify-center items-center " +
-        (props.containerClassName ? props.containerClassName : "")
-      }
-    >
+    <div className={"u-center " + (props.containerClassName ? props.containerClassName : "")}>
       <div
         className={
           "loader ease-linear rounded-full border-6 border-t-6 border-primary-100 " +

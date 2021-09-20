@@ -20,7 +20,7 @@ function Label(props: ILabel) {
     <label
       htmlFor={htmlFor}
       className={
-        "font-semibold text-gray-900 mr-2 flex items-center text-left " +
+        "u-label-text " +
         (noMargin ? "" : " mb-2 ") +
         " " +
         (className ? className : "")
@@ -38,7 +38,7 @@ function LabelWithValue(props: ILabelWithValue) {
     <div className={"flex flex-row space-x-2 flex-wrap " + (noMargin ? "" : " pt-2")}>
       <label
         className={
-          "font-semibold text-gray-900 mr-2 flex items-center text-left " +
+          "u-label-text " +
           (noMargin ? "" : " mb-2 ")
         }
       >

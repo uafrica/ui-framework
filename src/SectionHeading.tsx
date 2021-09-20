@@ -27,7 +27,7 @@ function SectionHeading(props: ISectionHeading) {
   return (
     <div
       className={
-        "flex flex-row space-x-4 mb-4 items-center " +
+        "u-vertical-center flex-row space-x-4 mb-4 " +
         (center ? "justify-center" : "") +
         (marginTop ? " mt-8" : "")
       }
@@ -35,7 +35,7 @@ function SectionHeading(props: ISectionHeading) {
       {icon && (
         <div
           className={
-            "rounded-full items-center flex justify-center h-8 w-8 bg-" +
+            "rounded-full u-center h-8 w-8 bg-" +
             (iconColor ? iconColor : "black") +
             "-100"
           }
@@ -48,7 +48,7 @@ function SectionHeading(props: ISectionHeading) {
         </div>
       )}
 
-      <h2 className="text-lg font-bold text-gray-900 mt-1 flex items-center">{children}</h2>
+      <h2 className="text-lg font-bold text-gray-900 mt-1 u-vertical-center ">{children}</h2>
       {toggleEditMode && !hideEditMode && (
         <FontAwesomeIcon
           icon="pencil-alt"

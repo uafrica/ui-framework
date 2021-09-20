@@ -59,7 +59,7 @@ function Primary(props: IButtonProps) {
     <BaseButton
       {...props}
       buttonTypeClassNames={
-        "items-center justify-center px-5 py-2 border border-transparent leading-4 font-medium rounded-full text-white bg-primary hover:bg-primary-dark"
+        "u-button border-transparent text-white bg-primary hover:bg-primary-dark"
       }
       type="submit"
     />
@@ -71,7 +71,7 @@ function Secondary(props: IButtonProps) {
     <BaseButton
       {...props}
       buttonTypeClassNames={
-        "inline-flex items-center justify-center px-5 py-2 border border-primary leading-4 font-medium rounded-full text-primary bg-white hover:bg-primary hover:text-white focus:outline-none"
+        "u-button border-primary text-primary bg-white hover:bg-primary hover:text-white "
       }
     />
   );
@@ -82,7 +82,7 @@ function Tertiary(props: IButtonProps) {
     <BaseButton
       {...props}
       buttonTypeClassNames={
-        "inline-flex items-center justify-center px-5 py-2 border border-gray-900 leading-4 font-medium rounded-md text-gray-99 bg-white hover:text-primary hover:border-primary focus:outline-none"
+        "u-button border-gray-900 text-gray-99 bg-white hover:text-primary hover:border-primary "
       }
     />
   );
@@ -92,9 +92,7 @@ function Danger(props: IButtonProps) {
   return (
     <BaseButton
       {...props}
-      buttonTypeClassNames={
-        "items-center justify-center px-5 py-2 border border-transparent leading-4 font-medium rounded-full text-white bg-red hover:bg-red-dark"
-      }
+      buttonTypeClassNames={"u-button border-transparent text-white bg-red hover:bg-red-dark"}
     />
   );
 }
@@ -108,7 +106,7 @@ function Icon(props: IButtonProps) {
       {...props}
       iconSize={props.iconSize ? props.iconSize : "lg"}
       buttonTypeClassNames={
-        "items-center justify-center p-2 border border-transparent leading-4 font-medium rounded-full text-" +
+        "u-button border-transparent text-" +
         color +
         " bg-" +
         bgColor +
@@ -129,7 +127,7 @@ function Cancel(props: IButtonProps) {
       {...props}
       title={title}
       buttonTypeClassNames={
-        "inline-flex items-center justify-center px-5 py-2 border border-gray-300 shadow-sm leading-4 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50 focus:outline-none"
+        "u-button justify-center border-gray-300 text-gray-700 bg-white hover:bg-gray-50 "
       }
     />
   );
@@ -254,7 +252,7 @@ function ButtonsPanel(props: IButtonsPanelProps) {
   return (
     <div
       className={
-        "flex w-full flex-col-reverse xs:flex-row space-y-4 xs:space-y-0 space-y-reverse " +
+        " w-full u-reverse-flex-col-to-row " +
         align +
         (noMargin ? "" : " mt-6")
       }

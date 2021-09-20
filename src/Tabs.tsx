@@ -88,7 +88,7 @@ function Secondary(props: ITabs) {
                 " cursor-pointer px-3 py-2 font-medium rounded-md"
               }
             >
-              <span className={"flex flex-row space-x-4 items-center " + child.props.className}>
+              <span className={"u-vertical-center flex-row space-x-4 " + child.props.className}>
                 {child.props.title}{" "}
                 {child.props.info && <InfoButton>{child.props.info}</InfoButton>}
               </span>

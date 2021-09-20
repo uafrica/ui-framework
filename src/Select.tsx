@@ -157,13 +157,13 @@ function GroupedSelect(props: IGroupedSelect) {
                 </span>
 
                 {selected ? (
-                  <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-primary-600">
+                  <span className="absolute inset-y-0 right-0 u-vertical-center pr-4 text-primary-600">
                     <FontAwesomeIcon icon="check" className="h-5 w-5" aria-hidden="true" />
                   </span>
                 ) : null}
               </div>
               {onDelete && !option.disableDelete && (
-                <span className="flex items-center p-2 text-red hover:text-red-700 cursor-pointer">
+                <span className="u-vertical-center p-2 text-red hover:text-red-700 cursor-pointer">
                   <FontAwesomeIcon
                     icon="trash"
                     title="Delete"
@@ -298,7 +298,7 @@ function GroupedSelect(props: IGroupedSelect) {
                           <span className="block truncate">
                             {labelWithValue ? labelWithValue : placeholder}
                           </span>
-                          <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                          <span className="absolute inset-y-0 right-0 u-vertical-center pr-2 pointer-events-none">
                             <FontAwesomeIcon
                               icon="caret-down"
                               className="h-5 w-5 text-gray-400"
@@ -331,7 +331,7 @@ function GroupedSelect(props: IGroupedSelect) {
                       style={style}
                       ref={ref}
                       className={
-                        "overflow-hidden z-30 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 px-4 pb-2 bg-white " +
+                        "overflow-hidden z-30 rounded-lg shadow-lg u-black-ring px-4 pb-2 bg-white " +
                         (popoverWidth ? popoverWidth : "w-72")
                       }
                     >

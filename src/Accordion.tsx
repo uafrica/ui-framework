@@ -27,7 +27,7 @@ function Accordion(props: IAccordion) {
       <div className="w-full p-2 mx-auto bg-white rounded-2xl">
         <div
           onClick={() => setOpen(!open)}
-          className="cursor-pointer flex w-full space-x-4 px-4 py-2 text-md items-center font-bold text-left text-primary-900 bg-primary-100 rounded-lg hover:bg-primary-200 focus:outline-none focus-visible:ring focus-visible:ring-primary-500 focus-visible:ring-opacity-75"
+          className="cursor-pointer u-vertical-center w-full space-x-4 px-4 py-2 text-md font-bold text-left text-primary-900 bg-primary-100 rounded-lg hover:bg-primary-200 focus:outline-none focus-visible:ring focus-visible:ring-primary-500 focus-visible:ring-opacity-75"
         >
           <span className="w-full">{title}</span>
           <div className="flex space-x-4">

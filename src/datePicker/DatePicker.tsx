@@ -140,7 +140,7 @@ const Calendar: React.FC<CalendarProps> = React.forwardRef<HTMLDivElement, Calen
 
     return (
       <div
-        className="bg-white z-30 relative shadow-lg max-w-xs w-64 p-2 rounded-lg ring-1 ring-black ring-opacity-5"
+        className="bg-white z-30 relative shadow-lg max-w-xs w-64 p-2 rounded-lg u-black-ring"
         ref={ref}
         data-placement={props.placement}
         style={props.style}
@@ -162,7 +162,7 @@ const TimeSelection: React.FC<{}> = _ => {
       <div>
         <b>Time</b>
       </div>
-      <div className="flex flex-row justify-center time-picker">
+      <div className="u-horizontal-center flex-row time-picker">
         <div style={{ width: "55px" }}>
           <Input
             label=""
@@ -258,14 +258,14 @@ const DateSelection: React.FC<{}> = _ => {
         }}
       >
         <button
-          className="hover:bg-gray-200 rounded p-1 flex align-center justify-center focus:outline-none items-center"
+          className="hover:bg-gray-200 rounded p-1 u-horizontal-center align-center focus:outline-none items-center"
           onClick={() => prevMonth()}
         >
           <FontAwesomeIcon icon="chevron-left" className="stroke-current" />
         </button>
 
         <button
-          className={`hover:bg-gray-200 rounded p-1 flex align-center justify-center focus:outline-none items-center font-semibold`}
+          className={`hover:bg-gray-200 rounded p-1 u-horizontal-center align-center  focus:outline-none items-center font-semibold`}
           style={{ gridColumn: "2/5" }}
           onClick={() => viewMonths()}
         >
@@ -273,7 +273,7 @@ const DateSelection: React.FC<{}> = _ => {
         </button>
 
         <button
-          className={`hover:bg-gray-200 rounded p-1 flex align-center justify-center focus:outline-none items-center font-semibold`}
+          className={`hover:bg-gray-200 rounded p-1 u-horizontal-center align-center focus:outline-none items-center font-semibold`}
           style={{ gridColumn: "5/7" }}
           onClick={() => viewYears()}
         >
@@ -281,7 +281,7 @@ const DateSelection: React.FC<{}> = _ => {
         </button>
 
         <button
-          className="hover:bg-gray-200 rounded p-1 flex align-center justify-center focus:outline-none items-center"
+          className="hover:bg-gray-200 rounded p-1 u-horizontal-center align-center focus:outline-none items-center"
           onClick={() => nextMonth()}
         >
           <FontAwesomeIcon icon="chevron-right" className="stroke-current" />
@@ -386,7 +386,7 @@ const CalendarButton: React.FC<{
 
   return (
     <button
-      className={`hover:bg-gray-200 rounded p-1 flex align-center justify-center focus:outline-none items-center ${props.className}`}
+      className={`hover:bg-gray-200 rounded p-1 u-horizontal-center align-center focus:outline-none items-center ${props.className}`}
       style={props.style}
       onClick={props.onClick}
     >

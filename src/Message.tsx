@@ -70,6 +70,12 @@ function BaseMessage(props: IBaseMessageProps) {
     color = "primary";
   }
 
+  
+
+
+
+
+
   return (
     <div
       className={
@@ -82,7 +88,7 @@ function BaseMessage(props: IBaseMessageProps) {
         (shadow ? " shadow-lg " : "")
       }
     >
-      <div className="flex items-center">
+      <div className="u-vertical-center">
         {icon && (
           <FontAwesomeIcon
             className={"mr-3 h-5 w-5 text-" + color + "-400"}

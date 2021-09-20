@@ -135,7 +135,7 @@ function Input(props: IInputProps) {
         containerClassName
           ? containerClassName
           : labelInline
-          ? "flex flex-row items-center space-x-4"
+          ? "u-vertical-center flex-row space-x-4"
           : "mt-4 max-w-sm"
       }
     >
@@ -148,28 +148,21 @@ function Input(props: IInputProps) {
           {optional && <span className="text-gray-500">(Optional)</span>}
         </div>
       )}
-      <div className="flex flex-row items-center w-full" id={inputFieldId} style={inputFieldStyle}>
+      <div className="u-vertical-center flex-row w-full" id={inputFieldId} style={inputFieldStyle}>
         <div className={"relative rounded-m w-full"}>
           {prependText && (
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none ">
+            <div className="absolute inset-y-0 left-0 pl-3 u-vertical-center pointer-events-none ">
               <span className="text-gray-500 sm:text-sm">{prependText}</span>
             </div>
           )}
 
           {InputElement}
           {appendIcon && (
-            <div
-              className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-400"
-              id={appendIconId}
-            >
+            <div className="u-input-icon" id={appendIconId}>
               <FontAwesomeIcon icon={appendIcon} size="sm" />
             </div>
           )}
-          {appendText && (
-            <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-400">
-              {appendText}
-            </div>
-          )}
+          {appendText && <div className="u-input-icon">{appendText}</div>}
         </div>
         {appendSelectProps && (
           <div className="-ml-2">
