@@ -125,7 +125,12 @@ function Input(props: IInputProps) {
       min={min}
       max={max}
       autoComplete={autoComplete}
-      className={"shadow-sm block w-full border-gray-300 rounded-md " + inputClasses}
+      className={
+        "shadow-sm block w-full border-gray-300 rounded-md " +
+        inputClasses +
+        " " +
+        (disabled ? " bg-gray-100" : "")
+      }
     />
   );
 
@@ -173,7 +178,7 @@ function Input(props: IInputProps) {
         </div>
         {appendSelectProps && (
           <div className="-ml-2">
-            <Select {...appendSelectProps} noMargin />
+            <Select {...appendSelectProps} noMargin disabled />
           </div>
         )}
       </div>
