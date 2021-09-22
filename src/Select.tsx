@@ -148,11 +148,11 @@ function GroupedSelect(props: IGroupedSelect) {
                   }
                 }}
                 className={
-                  "flex-1 cursor-pointer select-none relative py-2 pl-2 pr-9 hover:bg-gray-100 rounded-md mt-1 truncate " +
+                  "flex-1 cursor-pointer select-none relative py-2 pl-2 pr-9 hover:bg-gray-100 rounded-md mt-1  " +
                   (selected ? "bg-gray-100" : "text-gray-900")
                 }
               >
-                <span className={"block truncate " + (selected ? "font-semibold" : "font-normal")}>
+                <span className={"flex flex-wrap " + (selected ? "font-semibold" : "font-normal")}>
                   {option.label}
                 </span>
 
