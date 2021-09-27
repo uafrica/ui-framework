@@ -1,3 +1,41 @@
+@layer components {
+  // common utility patterns
+  .u-button {
+    @apply inline-flex justify-center items-center px-5 py-2 border leading-4 font-medium rounded-full shadow-sm focus:outline-none;
+  }
+
+  .u-input-icon {
+    @apply absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-400;
+  }
+
+  .u-label-text {
+    @apply font-semibold text-gray-900 mr-2 flex items-center text-left;
+  }
+
+  .u-panel {
+    @apply flex justify-between flex-col md:flex-row items-start md:items-center z-30;
+  }
+
+  .u-horizontal-center {
+    @apply flex justify-center;
+  }
+  .u-vertical-center {
+    @apply flex items-center;
+  }
+  .u-center {
+    @apply flex items-center justify-center;
+  }
+
+  .u-black-ring {
+    @apply ring-1 ring-black ring-opacity-5;
+  }
+
+  .u-reverse-flex-col-to-row {
+    // content displayed in column in reverse order on xs screens. on sm and larger display content in normal order in row
+    @apply flex flex-col-reverse sm:flex-row space-y-4 sm:space-y-0 space-y-reverse space-x-0 sm:space-x-4;
+  }
+}
+
 /* SAVE PANEL */
 .save-panel {
   width: calc(100% - 15em);

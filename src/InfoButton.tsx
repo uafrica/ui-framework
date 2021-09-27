@@ -34,7 +34,7 @@ function InfoButton(props: IInfoButton) {
           <Reference>
             {({ ref }) => (
               <div
-                className="flex items-center justify-center w-full bg-white font-medium text-primary hover:bg-primary-50 focus:outline-none rounded-full cursor-pointer"
+                className="u-center w-full bg-white font-medium text-primary hover:bg-primary-50 focus:outline-none rounded-full cursor-pointer"
                 ref={ref}
                 onClick={(e: any) => {
                   e.stopPropagation();
@@ -51,7 +51,7 @@ function InfoButton(props: IInfoButton) {
                 ctxValue.isVisible ? (
                   <div
                     className={
-                      "info-popover z-50 origin-top-right absolute font-normal p-4 w-80 rounded-md shadow-md bg-white divide-y ring-1 ring-black ring-opacity-5 divide-gray-100 focus:outline-none"
+                      "info-popover z-50 origin-top-right absolute font-normal p-4 w-80 rounded-md shadow-md bg-white divide-y u-black-ring divide-gray-100 focus:outline-none"
                     }
                     style={style}
                     ref={ref}

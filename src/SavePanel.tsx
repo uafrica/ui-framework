@@ -32,7 +32,7 @@ function SavePanel(props: ISavePanel) {
   return (
     <div
       className={
-        "save-panel z-20 py-4 px-4 shadow-inner fixed bottom-0 bg-white justify-between flex items-center " +
+        "save-panel z-20 py-4 px-4 shadow-inner fixed bottom-0 bg-white justify-between u-vertical-center " +
         (className ? className : "")
       }
     >

@@ -13,7 +13,7 @@ function IconWithBackground(props: IIconWithBackground) {
   return (
     <div
       className={
-        "rounded-full items-center flex justify-center h-8 w-8 bg-" +
+        "rounded-full u-center h-8 w-8 bg-" +
         (color ? color : "black") +
         "-100"
       }

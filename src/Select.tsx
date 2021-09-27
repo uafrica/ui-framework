@@ -148,22 +148,22 @@ function GroupedSelect(props: IGroupedSelect) {
                   }
                 }}
                 className={
-                  "flex-1 cursor-pointer select-none relative py-2 pl-2 pr-9 hover:bg-gray-100 rounded-md mt-1 truncate " +
+                  "flex-1 cursor-pointer select-none relative py-2 pl-2 pr-9 hover:bg-gray-100 rounded-md mt-1  " +
                   (selected ? "bg-gray-100" : "text-gray-900")
                 }
               >
-                <span className={"block truncate " + (selected ? "font-semibold" : "font-normal")}>
+                <span className={"flex flex-wrap " + (selected ? "font-semibold" : "font-normal")}>
                   {option.label}
                 </span>
 
                 {selected ? (
-                  <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-primary-600">
+                  <span className="absolute inset-y-0 right-0 u-vertical-center pr-4 text-primary-600">
                     <FontAwesomeIcon icon="check" className="h-5 w-5" aria-hidden="true" />
                   </span>
                 ) : null}
               </div>
               {onDelete && !option.disableDelete && (
-                <span className="flex items-center p-2 text-red hover:text-red-700 cursor-pointer">
+                <span className="u-vertical-center p-2 text-red hover:text-red-700 cursor-pointer">
                   <FontAwesomeIcon
                     icon="trash"
                     title="Delete"
@@ -292,13 +292,16 @@ function GroupedSelect(props: IGroupedSelect) {
                         }}
                       >
                         <div
-                          className="bg-white relative border border-gray-300 rounded-md shadow-sm pl-3 pr-6 py-2 text-left cursor-pointer disabled:cursor-default w-full"
+                          className={
+                            "relative border border-gray-300 rounded-md shadow-sm pl-3 pr-6 py-2 text-left w-full " +
+                            (disabled ? "bg-gray-100" : "bg-white cursor-pointer")
+                          }
                           id={id}
                         >
                           <span className="block truncate">
                             {labelWithValue ? labelWithValue : placeholder}
                           </span>
-                          <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                          <span className="absolute inset-y-0 right-0 u-vertical-center pr-2 pointer-events-none">
                             <FontAwesomeIcon
                               icon="caret-down"
                               className="h-5 w-5 text-gray-400"
@@ -331,7 +334,7 @@ function GroupedSelect(props: IGroupedSelect) {
                       style={style}
                       ref={ref}
                       className={
-                        "overflow-hidden z-30 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 px-4 pb-2 bg-white " +
+                        "overflow-hidden z-30 rounded-lg shadow-lg u-black-ring px-4 pb-2 bg-white " +
                         (popoverWidth ? popoverWidth : "w-72")
                       }
                     >

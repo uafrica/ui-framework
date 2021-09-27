@@ -47,7 +47,7 @@ function Button(props: IRadioButtonProps) {
         }}
         className={
           (disabled ? "text-gray-500 " : "text-base cursor-pointer ") +
-          " flex items-center " +
+          " u-vertical-center " +
           (labelClassName ? labelClassName : "")
         }
       >

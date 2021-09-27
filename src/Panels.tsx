@@ -44,17 +44,14 @@ function TableActionsPanel(props: IProps) {
 
 function SectionActionsPanel(props: ISectionActionsPanel) {
   let { title, className, toggleEditMode, hideEditMode } = props;
-
   return (
-    <div className={"flex justify-between flex-col sm:flex-row " + (className ? className : "")}>
+    <div className={"u-panel " + (className ? className : "")}>
       {title && (
         <SectionHeading toggleEditMode={toggleEditMode} hideEditMode={hideEditMode}>
           {title}
         </SectionHeading>
       )}
-      <div
-        className="ml-auto flex flex-wrap flex-row space-x-0 sm:space-x-4 space-y-4 sm:space-y-0 flex-grow-0 w-full md:w-auto justify-end items-center"
-      >
+      <div className="ml-auto u-vertical-center flex-wrap flex-row space-x-0 sm:space-x-4 space-y-4 sm:space-y-0 flex-grow-0 w-full md:w-auto justify-end">
         {props.children}
       </div>
     </div>
@@ -65,9 +62,9 @@ function PageActionsPanel(props: IProps) {
   let { title } = props;
 
   return (
-    <div className="ua-page-actions-panel flex justify-between flex-col md:flex-row items-start md:items-center z-30 xs:pb-4">
+    <div className="ua-page-actions-panel u-panel xs:pb-4">
       {title && <PageHeading>{title}</PageHeading>}
-      <div className="ua-page-actions-panel-children flex ml-0 xs:ml-auto xs:flex-row flex-col-reverse space-x-0 xs:space-x-4 items-start xs:items-center ">
+      <div className="ua-page-actions-panel-children ml-0 xs:ml-auto u-reverse-flex-col-to-row items-start xs:items-center ">
         {props.children}
       </div>
     </div>
@@ -78,8 +75,8 @@ function ModalActionsPanel(props: IProps) {
   let { title, onClose } = props;
 
   return (
-    <div className="ua-modal-actions-panel flex justify-between flex-col md:flex-row items-start md:items-center z-30 pb-4">
-      <div className="flex justify-between w-full md:w-auto items-center">
+    <div className="ua-modal-actions-panel u-panel pb-4">
+      <div className="u-vertical-center justify-between w-full md:w-auto">
         <div>{title && <PageHeading>{title}</PageHeading>}</div>
         <div>
           {onClose && (
@@ -89,7 +86,7 @@ function ModalActionsPanel(props: IProps) {
           )}
         </div>
       </div>
-      <div className="flex flex-row  space-x-4 items-center w-full md:w-auto justify-center flex-wrap pt-2">
+      <div className="u-horizontal-center flex-row  space-x-4 items-center w-full md:w-auto  flex-wrap pt-2">
         {props.children}
         {onClose && (
           <div className="hidden md:block" onClick={onClose}>
@@ -107,7 +104,7 @@ function FiltersPanel(props: IFiltersPanel) {
   return (
     <div
       className={
-        "ua-filters-panel flex flex-wrap flex-row items-center " + (className ? className : "")
+        "ua-filters-panel u-vertical-center flex-wrap flex-row " + (className ? className : "")
       }
     >
       {children}

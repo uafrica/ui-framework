@@ -64,7 +64,7 @@ const Base = ({
           )}
           <div className="mt-4 text-center sm:mt-0 sm:text-left w-full">
             {(title || closeButton) && (
-              <div className="ua-modal-actions-panel flex justify-between items-center z-30 text-lg font-bold text-gray-900 text-left pb-4">
+              <div className="ua-modal-actions-panel u-vertical-center justify-between z-30 text-lg font-bold text-gray-900 text-left pb-4">
                 {title && title}
 
                 {closeButton && <Button.Close onClick={onHide} />}
@@ -102,11 +102,7 @@ function Large(props: ISmallMediumModalProps) {
 }
 
 function ButtonsPanel(props: any) {
-  return (
-    <div className="mt-10 flex flex-col-reverse sm:flex-row justify-between space-y-4 sm:space-y-0 space-y-reverse">
-      {props.children}
-    </div>
-  );
+  return <div className="mt-10 u-reverse-flex-col-to-row justify-between">{props.children}</div>;
 }
 
 const Modal = {
