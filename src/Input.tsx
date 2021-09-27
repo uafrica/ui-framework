@@ -12,8 +12,6 @@ interface IInputProps {
   labelClassName?: string;
   htmlFor?: string;
   register?: any;
-  registerV7?: any; // For react-hooks-v7+
-  required?: boolean; // For react-hooks-v7+
   name?: string;
   defaultValue?: any;
   value?: any;
@@ -89,9 +87,7 @@ function Input(props: IInputProps) {
     max,
     autoComplete,
     info,
-    appendSelectProps,
-    required,
-    registerV7
+    appendSelectProps
   } = props;
 
   type = type ? type : "text";
@@ -112,7 +108,6 @@ function Input(props: IInputProps) {
       autoFocus={autoFocus}
       name={name}
       ref={reference ? (r: any) => reference(r) : register}
-      {...(registerV7 ? registerV7(name, { required }) : [])}
       type={type}
       defaultValue={defaultValue}
       value={value}

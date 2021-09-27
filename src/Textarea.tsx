@@ -25,8 +25,6 @@ interface ITextarea {
   placeholder?: string;
   infoButton?: any;
   register?: any;
-  registerV7?: any; // For react-hooks-v7+
-  required?: boolean; // For react-hooks-v7+
   validationError?: any;
   errorMessage?: any;
   fixed?: boolean;
@@ -54,9 +52,7 @@ function Textarea(props: ITextarea) {
     infoButton,
     errorMessage,
     rows,
-    optional,
-    required,
-    registerV7
+    optional
   } = props;
 
   return (
@@ -83,7 +79,6 @@ function Textarea(props: ITextarea) {
         onFocus={onFocus}
         onBlur={onBlur}
         ref={register}
-        {...(registerV7 ? registerV7(name, { required }) : [])}
       />
       {validationError &&
         (errorMessage && validationError.type === "required" ? (
