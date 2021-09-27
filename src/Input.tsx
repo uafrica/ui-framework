@@ -112,7 +112,7 @@ function Input(props: IInputProps) {
       autoFocus={autoFocus}
       name={name}
       ref={reference ? (r: any) => reference(r) : register}
-      {...registerV7(name, { required })}
+      {...(registerV7 ? registerV7(name, { required }) : [])}
       type={type}
       defaultValue={defaultValue}
       value={value}
