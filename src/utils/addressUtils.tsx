@@ -1,6 +1,7 @@
 function addressObjFromGoogleResult(place: any): {
   company: any;
   address: any;
+  street_address: any;
   local_area: any;
   city: any;
   zone: any;
@@ -66,6 +67,7 @@ function addressObjFromGoogleResult(place: any): {
   const addressObj = {
     company,
     address: streetAddress,
+    street_address: streetAddress,
     local_area: localArea.join(", "),
     city,
     code: googleAddressObj.postal_code,
