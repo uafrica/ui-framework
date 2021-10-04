@@ -73,7 +73,7 @@ function GroupedSelect(props: IGroupedSelect) {
   } = props;
 
   const popupNode = useRef<HTMLElement>();
-  const ctxValue = useGroupedSelectCtx(popupNode);
+  const ctxValue = useGroupedSelectCtx(popupNode, onSearchBlur);
 
   // State for searching
   let [searchTerm, setSearchTerm] = useState<string>("");
@@ -206,7 +206,7 @@ function GroupedSelect(props: IGroupedSelect) {
   }
 
   let allOptionsSearched = flattenedOptions.filter((option: any) => {
-    if (typeof option.label === "string" && searchTerm) {
+    if (typeof option?.label === "string" && searchTerm) {
       return option.label.toLowerCase().indexOf(searchTerm) >= 0;
     }
     return true;
@@ -406,7 +406,8 @@ const GroupedSelectCtx = createContext<GroupedSelectContextType>({
 });
 
 function useGroupedSelectCtx(
-  ref: React.MutableRefObject<HTMLElement | undefined>
+  ref: React.MutableRefObject<HTMLElement | undefined>,
+  onSearchBlur?: Function
 ): GroupedSelectContextType {
   const [isVisible, setVisible] = useState<boolean>(false);
 
@@ -424,6 +425,9 @@ function useGroupedSelectCtx(
 
     return () => {
       document.removeEventListener("mousedown", mouseDownListener);
+      if (onSearchBlur) {
+        onSearchBlur(); // fires on search blur whenever the dropdown is closed
+      }
     };
   }, [isVisible]);
 
