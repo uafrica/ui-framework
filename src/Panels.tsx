@@ -1,3 +1,4 @@
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { Button } from "./Button";
 import { PageHeading } from "./PageHeading";
 import { SectionHeading } from "./SectionHeading";
@@ -8,6 +9,14 @@ interface IProps {
   title?: any;
   className?: string;
   onClose?: any;
+}
+
+interface IPageActionsPanelProps {
+  children?: any;
+  title?: any;
+  className?: string;
+  onClose?: any;
+  icon?: IconProp;
 }
 
 interface ISectionActionsPanel {
@@ -58,12 +67,12 @@ function SectionActionsPanel(props: ISectionActionsPanel) {
   );
 }
 
-function PageActionsPanel(props: IProps) {
-  let { title } = props;
+function PageActionsPanel(props: IPageActionsPanelProps) {
+  let { title, icon } = props;
 
   return (
     <div className="ua-page-actions-panel u-panel xs:pb-4">
-      {title && <PageHeading>{title}</PageHeading>}
+      {title && <PageHeading icon={icon}>{title}</PageHeading>}
       <div className="ua-page-actions-panel-children ml-0 xs:ml-auto u-reverse-flex-col-to-row items-start xs:items-center ">
         {props.children}
       </div>
