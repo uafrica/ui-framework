@@ -171,7 +171,7 @@ function Input(props: IInputProps) {
         </div>
         {appendSelectProps && (
           <div className="-ml-2">
-            <Select {...appendSelectProps} noMargin disabled />
+            <Select {...appendSelectProps} noMargin disabled={disabled} />
           </div>
         )}
       </div>
