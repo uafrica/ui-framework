@@ -10,6 +10,7 @@ interface ISectionHeading {
   hideEditMode?: boolean;
   center?: boolean;
   marginTop?: boolean; // Used if two sections are below each other
+  noMarginBottom?: boolean;
 }
 
 function SectionHeading(props: ISectionHeading) {
@@ -21,23 +22,23 @@ function SectionHeading(props: ISectionHeading) {
     toggleEditMode,
     hideEditMode,
     center,
-    marginTop
+    marginTop,
+    noMarginBottom
   } = props;
 
   return (
     <div
       className={
-        "u-vertical-center flex-row space-x-4 mb-4 " +
+        "u-vertical-center flex-row space-x-4 " +
         (center ? "justify-center" : "") +
-        (marginTop ? " mt-8" : "")
+        (marginTop ? " mt-8" : "") +
+        (noMarginBottom ? "" : " mb-4 ")
       }
     >
       {icon && (
         <div
           className={
-            "rounded-full u-center h-8 w-8 bg-" +
-            (iconColor ? iconColor : "black") +
-            "-100"
+            "rounded-full u-center h-8 w-8 bg-" + (iconColor ? iconColor : "black") + "-100"
           }
         >
           <FontAwesomeIcon
