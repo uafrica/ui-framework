@@ -56,7 +56,7 @@ function SectionActionsPanel(props: ISectionActionsPanel) {
   return (
     <div className={"u-panel " + (className ? className : "")}>
       {title && (
-        <SectionHeading toggleEditMode={toggleEditMode} hideEditMode={hideEditMode}>
+        <SectionHeading toggleEditMode={toggleEditMode} hideEditMode={hideEditMode} noMarginBottom>
           {title}
         </SectionHeading>
       )}
