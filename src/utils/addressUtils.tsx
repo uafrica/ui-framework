@@ -1,6 +1,5 @@
 function addressObjFromGoogleResult(place: any): {
   company: any;
-  address: any;
   street_address: any;
   local_area: any;
   city: any;
@@ -66,7 +65,6 @@ function addressObjFromGoogleResult(place: any): {
 
   const addressObj = {
     company,
-    address: streetAddress,
     street_address: streetAddress,
     local_area: localArea.join(", "),
     city,
@@ -125,9 +123,9 @@ function formatEnteredAddress(address: string): any {
 }
 
 function generateEnteredAddress(addressObj: any): string {
-  let { company, address, local_area, city, code, zone, country } = addressObj;
+  let { company, street_address, local_area, city, code, zone, country } = addressObj;
 
-  return concatNonEmpty([company, address, local_area, city, code, zone, country], ", ");
+  return concatNonEmpty([company, street_address, local_area, city, code, zone, country], ", ");
 }
 
 export {
