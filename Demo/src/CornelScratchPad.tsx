@@ -8,7 +8,8 @@ import {
   Switch,
   Textarea,
   Button,
-  Dropdown
+  Dropdown,
+  FiltersPanel
 } from "../../src";
 
 function CornelScratchPad() {
@@ -36,31 +37,33 @@ function CornelScratchPad() {
           }}
         />
       </div>
-      <div className="my-4">
-        <Select
-          placeholder="Select an option"
-          value={selectValue}
-          onChange={(newValue: any) => setSelectValue(newValue)}
-          options={[
-            { label: "Option 1", value: 1 },
-            { label: "Option 2", value: 2 }
-          ]}
-        />
-      </div>
+      <FiltersPanel>
+        <div className="my-4">
+          <Select
+            placeholder="Select an option"
+            value={selectValue}
+            onChange={(newValue: any) => setSelectValue(newValue)}
+            options={[
+              { label: "Option 1", value: 1 },
+              { label: "Option 2", value: 2 }
+            ]}
+          />
+        </div>
 
-      <div className="my-4">
-        <Select
-          placeholder="Multiselect"
-          value={multiSelectValue}
-          multiSelection
-          onChange={(newValue: any) => setMultiSelectValue(newValue)}
-          options={[
-            { label: "Option 1", value: 1 },
-            { label: "Option 2", value: 2 }
-          ]}
-          buttons={<Button.Link title="Save current filters" onClick={() => {}} />}
-        />
-      </div>
+        <div className="my-4">
+          <Select
+            placeholder="Multiselect"
+            value={multiSelectValue}
+            multiSelection
+            onChange={(newValue: any) => setMultiSelectValue(newValue)}
+            options={[
+              { label: "Option 1", value: 1 },
+              { label: "Option 2", value: 2 }
+            ]}
+            buttons={<Button.Link title="Save current filters" onClick={() => {}} />}
+          />
+        </div>
+      </FiltersPanel>
 
       <Switch
         label="Toggle me on"

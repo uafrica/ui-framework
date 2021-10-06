@@ -52,8 +52,10 @@
     width: calc(100% + 3rem);
     margin-left: -1.5rem;
     margin-right: -1.5rem;
+    padding-bottom: 0 !important;
     bottom: 0 !important;
   }
+
   .ua-modal-actions-panel {
     background-color: white;
     position: fixed !important;
@@ -97,6 +99,10 @@
 
 .ua-filters-panel > * {
   margin-left: 1rem;
+}
+
+.ua-filters-panel > *:nth-child(1) {
+  margin-left: 0 !important;
 }
 
 @media (max-width: 475px) {

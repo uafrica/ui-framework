@@ -71,7 +71,7 @@ const Base = ({
               </div>
             )}
 
-            <div className={title || closeButton ? "mt-20" : "mt-24 md:mt-20"}>{children}</div>
+            <div className={title || closeButton ? "mt-10 pt-6" : "mt-24 md:mt-20"}>{children}</div>
           </div>
         </div>
       </div>
