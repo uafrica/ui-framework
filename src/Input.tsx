@@ -36,7 +36,7 @@ interface IInputProps {
   autoFocus?: any;
   optional?: boolean; // displays the text "optional" next to the label
   readOnly?: boolean;
-
+  inputClassName?: string;
   info?: any;
   inputFieldId?: string;
   appendIcon?: IconProp;
@@ -87,13 +87,21 @@ function Input(props: IInputProps) {
     max,
     autoComplete,
     info,
-    appendSelectProps
+    appendSelectProps,
+    inputClassName
   } = props;
 
   type = type ? type : "text";
   labelClassName = labelClassName ? labelClassName : "";
 
-  let inputClasses = prependText ? " pl-7 " : "";
+  // console.log(prependText?.length);
+
+  // @ts-ignore
+  let inputClasses = prependText ? ` pl-7 ` : "";
+
+  if (inputClassName) {
+    inputClasses = inputClassName;
+  }
 
   if (appendIcon || appendText) {
     if (appendText && appendText.length > 4) {
@@ -124,6 +132,7 @@ function Input(props: IInputProps) {
       step={step}
       min={min}
       max={max}
+      // style={{ paddingLeft: leftPadding ? leftPadding + "px" : "inherit" }}
       autoComplete={autoComplete}
       className={
         "shadow-sm block w-full border-gray-300 rounded-md " +
