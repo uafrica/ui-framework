@@ -52,7 +52,13 @@ function Forms() {
   const InputPrice = () => (
     <>
       <div className="max-w-md my-4 flex">
-        <Input label="Price" labelInline={inlineInput} appendText={"/kg"} prependText={"R"} />
+        <Input
+          label="Price"
+          labelInline={inlineInput}
+          appendText={"/kg"}
+          prependText={"RRR"}
+          inputClassName="pl-11"
+        />
         {inlineInput && (
           <div className="flex items-center">
             <InfoButton>State has been applied with inline input component</InfoButton>
