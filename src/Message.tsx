@@ -70,12 +70,6 @@ function BaseMessage(props: IBaseMessageProps) {
     color = "primary";
   }
 
-  
-
-
-
-
-
   return (
     <div
       className={
@@ -97,9 +91,7 @@ function BaseMessage(props: IBaseMessageProps) {
           />
         )}
         <div>
-          <div className={"text-" + color + "-700"}>
-            <p>{children}</p>
-          </div>
+          <div className={"text-" + color + "-700"}>{children}</div>
         </div>
       </div>
     </div>
