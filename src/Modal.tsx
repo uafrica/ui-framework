@@ -102,7 +102,21 @@ function Large(props: ISmallMediumModalProps) {
 }
 
 function ButtonsPanel(props: any) {
-  return <div className="mt-10 u-reverse-flex-col-to-row justify-between">{props.children}</div>;
+  return (
+    <div
+      className={
+        props.fixed
+          ? "fixed bottom-0 ua-modal-buttons-panel shadow-inner z-20 p-4 pb-4 bg-white"
+          : ""
+      }
+    >
+      <div
+        className={(props.fixed ? "" : "mt-10 ") + " u-reverse-flex-col-to-row justify-between  "}
+      >
+        {props.children}
+      </div>
+    </div>
+  );
 }
 
 const Modal = {
