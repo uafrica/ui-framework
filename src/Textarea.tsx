@@ -52,7 +52,8 @@ function Textarea(props: ITextarea) {
     infoButton,
     errorMessage,
     rows,
-    optional
+    optional,
+    disabled
   } = props;
 
   return (
@@ -78,6 +79,7 @@ function Textarea(props: ITextarea) {
         onChange={onChange}
         onFocus={onFocus}
         onBlur={onBlur}
+        disabled={disabled}
         ref={register}
       />
       {validationError &&
