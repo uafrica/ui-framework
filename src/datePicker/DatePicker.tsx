@@ -19,7 +19,7 @@ interface IDatePicker {
   maxDate?: Date; // todo implement
   showTimeSelect?: boolean;
   onChange: (date: Date) => void;
-  disabled: boolean;
+  disabled?: boolean;
 }
 
 const daysOfWeekNames = [
