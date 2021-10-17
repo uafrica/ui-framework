@@ -19,6 +19,7 @@ interface IDatePicker {
   maxDate?: Date; // todo implement
   showTimeSelect?: boolean;
   onChange: (date: Date) => void;
+  disabled: boolean;
 }
 
 const daysOfWeekNames = [
@@ -61,7 +62,8 @@ function DatePicker(props: IDatePicker) {
     dateFormat,
     containerClassName,
     onChange,
-    showTimeSelect
+    showTimeSelect,
+    disabled
   } = props;
 
   let date = new Date();
@@ -86,30 +88,33 @@ function DatePicker(props: IDatePicker) {
               labelInline={labelInline}
               containerClassName={containerClassName}
               placeholder={placeholder}
-              appendIcon="caret-down"
+              appendIcon={disabled ? undefined : "caret-down"}
+              disabled={disabled}
             />
           )}
         </Reference>
-        <Popper
-          placement="bottom-start"
-          innerRef={node => (popupNode.current = node)}
-          modifiers={[
-            {
-              name: "offset",
-              options: {
-                offset: [0, 5]
+        {!disabled && (
+          <Popper
+            placement="bottom-start"
+            innerRef={node => (popupNode.current = node)}
+            modifiers={[
+              {
+                name: "offset",
+                options: {
+                  offset: [0, 5]
+                }
               }
+            ]}
+          >
+            {({ ref, style, placement }) =>
+              ctxValue.isVisible ? (
+                <div>
+                  <Calendar placement={placement} style={style} ref={ref} />
+                </div>
+              ) : null
             }
-          ]}
-        >
-          {({ ref, style, placement }) =>
-            ctxValue.isVisible ? (
-              <div>
-                <Calendar placement={placement} style={style} ref={ref} />
-              </div>
-            ) : null
-          }
-        </Popper>
+          </Popper>
+        )}
       </Manager>
     </DatePickerCtx.Provider>
   );
