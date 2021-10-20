@@ -53,6 +53,7 @@ function InfoButton(props: IInfoButton) {
                     className={
                       "info-popover z-50 origin-top-right absolute font-normal p-4 w-80 rounded-md shadow-md bg-white divide-y u-black-ring divide-gray-100 focus:outline-none"
                     }
+                    // @ts-ignore
                     style={style}
                     ref={ref}
                   >

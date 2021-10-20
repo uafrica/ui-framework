@@ -16,7 +16,8 @@ interface IDatePicker {
   placeholder?: string;
   dateFormat?: string;
   containerClassName?: string;
-  maxDate?: Date; // todo implement
+  minDate?: Date;
+  maxDate?: Date;
   showTimeSelect?: boolean;
   onChange: (date: Date) => void;
   disabled?: boolean;
@@ -63,7 +64,9 @@ function DatePicker(props: IDatePicker) {
     containerClassName,
     onChange,
     showTimeSelect,
-    disabled
+    disabled,
+    minDate,
+    maxDate
   } = props;
 
   let date = new Date();
@@ -72,7 +75,14 @@ function DatePicker(props: IDatePicker) {
   }
 
   const popupNode = useRef<HTMLElement>();
-  const ctxValue = useDatePickerCtx(date, onChange, Boolean(showTimeSelect), popupNode);
+  const ctxValue = useDatePickerCtx(
+    date,
+    onChange,
+    Boolean(showTimeSelect),
+    popupNode,
+    minDate,
+    maxDate
+  );
 
   return (
     <DatePickerCtx.Provider value={ctxValue}>
@@ -148,6 +158,7 @@ const Calendar: React.FC<CalendarProps> = React.forwardRef<HTMLDivElement, Calen
         className="bg-white z-30 relative shadow-lg max-w-xs w-64 p-2 rounded-lg u-black-ring"
         ref={ref}
         data-placement={props.placement}
+        // @ts-ignore
         style={props.style}
       >
         {selectionComponent}
@@ -227,7 +238,8 @@ const DateSelection: React.FC<{}> = _ => {
     selectDate,
     visible: { month, year },
     isSelectedDate,
-    showTimeSelect
+    showTimeSelect,
+    isWithinRange
   } = useContext(DatePickerCtx);
 
   const dates = [];
@@ -237,13 +249,20 @@ const DateSelection: React.FC<{}> = _ => {
   }
 
   for (let i = 1; i <= daysInMonth(month, year); i++) {
+    let inRange: boolean = isWithinRange(i);
     dates.push(
       <button
         key={`day${i}`}
         className={`hover:bg-gray-200 rounded p-1 ${
-          isSelectedDate(i) ? "bg-gray-300 font-semibold" : ""
-        }`}
-        onClick={() => selectDate(i)}
+          isSelectedDate(i) ? "bg-gray-300 font-semibold " : ""
+        }
+        
+        ${inRange ? "" : " text-gray-400 cursor-not-allowed"}`}
+        onClick={() => {
+          if (inRange) {
+            selectDate(i);
+          }
+        }}
         style={{ textAlign: "center" }}
       >
         {i}
@@ -392,6 +411,7 @@ const CalendarButton: React.FC<{
   return (
     <button
       className={`hover:bg-gray-200 rounded p-1 u-horizontal-center align-center focus:outline-none items-center ${props.className}`}
+      // @ts-ignore
       style={props.style}
       onClick={props.onClick}
     >

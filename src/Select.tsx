@@ -331,6 +331,7 @@ function GroupedSelect(props: IGroupedSelect) {
                 {({ ref, style }) =>
                   ctxValue.isVisible ? (
                     <div
+                      // @ts-ignore
                       style={style}
                       ref={ref}
                       className={

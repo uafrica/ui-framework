@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import moment from "moment";
 
 type ViewState = "date" | "month" | "year";
 
@@ -13,6 +14,8 @@ interface Time {
 
 interface DatePickerContextType {
   date: Date | null;
+  minDate?: Date;
+  maxDate?: Date;
   visible: MonthYear;
   time: Time;
   view: ViewState;
@@ -34,10 +37,13 @@ interface DatePickerContextType {
   showCalendar: () => void;
   toggleCalendar: () => void;
   isSelectedDate: (d: number) => boolean;
+  isWithinRange: (d: number) => boolean;
 }
 
 export const DatePickerCtx = createContext<DatePickerContextType>({
   date: new Date(),
+  minDate: undefined,
+  maxDate: undefined,
   visible: {
     month: 0,
     year: 1970
@@ -61,6 +67,7 @@ export const DatePickerCtx = createContext<DatePickerContextType>({
   showCalendar: () => {},
   toggleCalendar: () => {},
   isSelectedDate: () => false,
+  isWithinRange: () => true,
   showTimeSelect: false
 });
 
@@ -68,7 +75,9 @@ export function useDatePickerCtx(
   date: Date,
   onChange: (d: Date) => void,
   showTimeSelect: boolean,
-  ref: React.MutableRefObject<HTMLElement | undefined>
+  ref: React.MutableRefObject<HTMLElement | undefined>,
+  minDate?: Date,
+  maxDate?: Date
 ): DatePickerContextType {
   const [monthYear, setMonthYear] = useState<MonthYear>({
     month: date?.getMonth() ?? new Date().getMonth(),
@@ -92,6 +101,28 @@ export function useDatePickerCtx(
     if (!showTimeSelect) {
       setVisible(false);
     }
+  };
+
+  const isWithinRange = (d: number) => {
+    let inRange = true;
+    let date: Date;
+    if (showTimeSelect) {
+      date = new Date(monthYear.year, monthYear.month, d, time.hours, time.minutes);
+    } else {
+      date = new Date(monthYear.year, monthYear.month, d);
+    }
+
+    if (minDate) {
+      if (moment(date).isBefore(minDate)) {
+        inRange = false;
+      }
+    }
+    if (maxDate) {
+      if (moment(date).isAfter(maxDate)) {
+        inRange = false;
+      }
+    }
+    return inRange;
   };
 
   const isSelectedDate = (d: number): boolean => {
@@ -181,6 +212,7 @@ export function useDatePickerCtx(
     showCalendar: () => setVisible(true),
     toggleCalendar: () => setVisible(state => !state),
     isSelectedDate,
+    isWithinRange,
     showTimeSelect
   };
 }
