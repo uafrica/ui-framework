@@ -41,6 +41,7 @@ interface IInputProps {
   inputFieldId?: string;
   appendIcon?: IconProp;
   appendIconId?: string;
+  onAppendIconClick?: any;
   appendText?: string;
   appendSelectProps?: any;
   prependText?: string;
@@ -69,6 +70,7 @@ function Input(props: IInputProps) {
     appendIcon,
     appendText,
     appendIconId,
+    onAppendIconClick,
     optional,
     disabled,
     errorMessage,
@@ -165,18 +167,40 @@ function Input(props: IInputProps) {
       <div className="u-vertical-center flex-row w-full" id={inputFieldId} style={inputFieldStyle}>
         <div className={"relative rounded-m w-full"}>
           {prependText && (
-            <div className="absolute inset-y-0 left-0 pl-3 u-vertical-center pointer-events-none ">
+            <div
+              className={
+                "absolute inset-y-0 left-0 pl-3 u-vertical-center " +
+                (onAppendIconClick ? "" : " pointer-events-none")
+              }
+            >
               <span className="text-gray-500 sm:text-sm">{prependText}</span>
             </div>
           )}
 
           {InputElement}
           {appendIcon && (
-            <div className="u-input-icon" id={appendIconId}>
+            <div
+              className={
+                "absolute inset-y-0 right-0 mr-3 flex items-center  " +
+                (onAppendIconClick
+                  ? " cursor-pointer text-primary"
+                  : " pointer-events-none text-gray-400")
+              }
+              id={appendIconId}
+              onClick={onAppendIconClick ? onAppendIconClick : undefined}
+            >
               <FontAwesomeIcon icon={appendIcon} size="sm" />
             </div>
           )}
-          {appendText && <div className="u-input-icon">{appendText}</div>}
+          {appendText && (
+            <div
+              className={
+                "absolute inset-y-0 right-0 mr-3 flex items-center text-gray-400 pointer-events-none"
+              }
+            >
+              {appendText}
+            </div>
+          )}
         </div>
         {appendSelectProps && (
           <div className="-ml-2">

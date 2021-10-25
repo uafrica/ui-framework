@@ -128,6 +128,7 @@ function DropdownMenu(props: IDropdown) {
                     ctxValue.hideDropdownMenu();
                   }}
                   ref={ref}
+                  // @ts-ignore
                   style={style}
                   className={
                     "z-10 origin-top-right absolute right-0 rounded-md shadow-lg bg-white u-black-ring focus:outline-none " +
