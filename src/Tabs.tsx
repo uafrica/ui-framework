@@ -83,8 +83,8 @@ function Secondary(props: ITabs) {
               onClick={() => props.onSelect(child.props.tabID)}
               className={
                 (props.activeTabID === child.props.tabID
-                  ? "bg-primary-100 text-primary-700"
-                  : "text-gray-700 hover:bg-gray-200") +
+                  ? "bg-primary-100 text-primary-700 font-bold"
+                  : "text-black hover:bg-gray-200") +
                 " cursor-pointer px-3 py-2 font-medium rounded-md"
               }
             >
