@@ -251,7 +251,7 @@ function GroupedSelect(props: IGroupedSelect) {
   return (
     <div className={_containerClassName} onClick={(e: any) => e.stopPropagation()}>
       <Popover>
-        <div className={labelInline ? "flex flex-row items-center" : ""}>
+        <div className={labelInline ? "flex flex-row items-center space-x-4" : ""}>
           {label && (
             <Label className={labelClassName} noMargin={labelInline}>
               {label} {info && <InfoButton>{info}</InfoButton>}
