@@ -32,11 +32,19 @@ function TableContainer(props: IProps) {
 }
 
 function Head(props: any) {
-  return <thead className={tableHeadClass}>{props.children}</thead>;
+  return (
+    <thead className={tableHeadClass} {...props}>
+      {props.children}
+    </thead>
+  );
 }
 
 function Row(props: any) {
-  return <tr className={tableRowClass}>{props.children}</tr>;
+  return (
+    <tr className={tableRowClass} {...props}>
+      {props.children}
+    </tr>
+  );
 }
 
 function HeadCol(props: any) {
@@ -44,6 +52,7 @@ function HeadCol(props: any) {
     <th
       className={tableHeadColClass + (props.center ? " text-center " : " text-left ")}
       scope="col"
+      {...props}
     >
       {props.children}
     </th>
@@ -56,7 +65,7 @@ function Body(props: any) {
 
 function Col(props: any) {
   return (
-    <td className={tableColClass + (props.center ? " text-center " : " text-left ")}>
+    <td className={tableColClass + (props.center ? " text-center " : " text-left ")} {...props}>
       {props.children}
     </td>
   );
