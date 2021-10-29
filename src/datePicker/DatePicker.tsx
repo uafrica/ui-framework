@@ -20,6 +20,7 @@ interface IDatePicker {
   maxDate?: Date;
   showTimeSelect?: boolean;
   onChange: (date: Date) => void;
+  onDatePickerClose?: Function;
   disabled?: boolean;
 }
 
@@ -63,6 +64,7 @@ function DatePicker(props: IDatePicker) {
     dateFormat,
     containerClassName,
     onChange,
+    onDatePickerClose,
     showTimeSelect,
     disabled,
     minDate,
@@ -78,6 +80,7 @@ function DatePicker(props: IDatePicker) {
   const ctxValue = useDatePickerCtx(
     date,
     onChange,
+    onDatePickerClose,
     Boolean(showTimeSelect),
     popupNode,
     minDate,

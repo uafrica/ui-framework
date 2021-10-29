@@ -74,6 +74,7 @@ export const DatePickerCtx = createContext<DatePickerContextType>({
 export function useDatePickerCtx(
   date: Date,
   onChange: (d: Date) => void,
+  onDatePickerClose: Function | undefined,
   showTimeSelect: boolean,
   ref: React.MutableRefObject<HTMLElement | undefined>,
   minDate?: Date,
@@ -91,6 +92,17 @@ export function useDatePickerCtx(
   const [view, setView] = useState<ViewState>("date");
 
   const [isVisible, setVisible] = useState<boolean>(false);
+  const [isInitialRender, setIsInitialRender] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (isInitialRender) {
+      setIsInitialRender(false);
+    } else if (isVisible === false) {
+      if (onDatePickerClose) {
+        onDatePickerClose();
+      }
+    }
+  }, [isVisible]);
 
   const selectDate = (d: number) => {
     if (showTimeSelect) {
