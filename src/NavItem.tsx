@@ -25,7 +25,7 @@ function NavItem(props: IProps) {
     <div
       id={"nav_" + item.displayName.replaceAll(" ", "_").toLowerCase()}
       className={
-        "text-gray-700 hover:bg-gray-100 hover:text-gray-900 group u-vertical-center px-2 py-1.5 rounded-md mb-1 " +
+        "nav-item text-gray-700 hover:bg-gray-100 hover:text-gray-900 group u-vertical-center px-2 py-1.5 rounded-md mb-1 " +
         bgClass
       }
     >
@@ -33,6 +33,12 @@ function NavItem(props: IProps) {
         <FontAwesomeIcon icon={item.icon} size="xs" />{" "}
       </div>
       {props.isNavbarCollapsed ? " " : item.displayName}
+
+      {props.isNavbarCollapsed && (
+        <div className="absolute nav-item-popover z-50 bg-white rounded-md text-gray-700 border border-gray-100 shadow-md">
+          <strong className="nav-item-text p-4 ">{item.displayName}</strong>
+        </div>
+      )}
     </div>
   );
 }
