@@ -131,7 +131,7 @@ function DropdownMenu(props: IDropdown) {
                   // @ts-ignore
                   style={style}
                   className={
-                    "z-10 origin-top-right absolute right-0 rounded-md shadow-lg bg-white u-black-ring focus:outline-none " +
+                    "z-10 origin-top-right absolute right-0 rounded-md shadow-lg bg-white u-black-ring focus:outline-none m-1 " +
                     widthClass
                   }
                 >
