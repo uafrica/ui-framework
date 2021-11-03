@@ -14,6 +14,18 @@ interface IDropdown {
   id?: string;
   style?: string;
   widthClass?: string; // tailwind w-X class e.g. w-56
+  placement?:
+    | "auto"
+    | "auto-start"
+    | "auto-end"
+    | "top-start"
+    | "top-end"
+    | "bottom-start"
+    | "bottom-end"
+    | "right-start"
+    | "right-end"
+    | "left-start"
+    | "left-end";
 }
 
 interface IMenuItem {
@@ -75,11 +87,13 @@ function useDropdownMenuCtx(
 }
 
 function DropdownMenu(props: IDropdown) {
-  let { title, icon, noBackground, id, widthClass, color } = props;
+  let { title, icon, noBackground, id, widthClass, color, placement } = props;
 
   const popupNode = useRef<HTMLElement>();
   const ctxValue = useDropdownMenuCtx(popupNode);
-  let placement = "bottom-start";
+  if (!placement) {
+    placement = "bottom-start";
+  }
 
   widthClass = widthClass ? widthClass : "w-72";
 
