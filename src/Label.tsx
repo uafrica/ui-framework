@@ -19,12 +19,7 @@ function Label(props: ILabel) {
   return (
     <label
       htmlFor={htmlFor}
-      className={
-        "u-label-text " +
-        (noMargin ? "" : " mb-2 ") +
-        " " +
-        (className ? className : "")
-      }
+      className={"u-label-text " + (noMargin ? "" : " mb-2 ") + " " + (className ? className : "")}
     >
       {children}
     </label>
@@ -36,14 +31,7 @@ function LabelWithValue(props: ILabelWithValue) {
 
   return (
     <div className={"flex flex-row space-x-2 flex-wrap " + (noMargin ? "" : " pt-2")}>
-      <label
-        className={
-          "u-label-text " +
-          (noMargin ? "" : " mb-2 ")
-        }
-      >
-        {label}
-      </label>
+      <label className={"u-label-text self-baseline " + (noMargin ? "" : " mb-2 ")}>{label}</label>
       <div className="text-left">{value}</div>
     </div>
   );

@@ -20,6 +20,7 @@ interface IDatePicker {
   maxDate?: Date;
   showTimeSelect?: boolean;
   onChange: (date: Date) => void;
+  onDatePickerClose?: Function;
   disabled?: boolean;
 }
 
@@ -63,6 +64,7 @@ function DatePicker(props: IDatePicker) {
     dateFormat,
     containerClassName,
     onChange,
+    onDatePickerClose,
     showTimeSelect,
     disabled,
     minDate,
@@ -78,6 +80,7 @@ function DatePicker(props: IDatePicker) {
   const ctxValue = useDatePickerCtx(
     date,
     onChange,
+    onDatePickerClose,
     Boolean(showTimeSelect),
     popupNode,
     minDate,
@@ -283,7 +286,10 @@ const DateSelection: React.FC<{}> = _ => {
       >
         <button
           className="hover:bg-gray-200 rounded p-1 u-horizontal-center align-center focus:outline-none items-center"
-          onClick={() => prevMonth()}
+          onClick={(e: any) => {
+            e.preventDefault();
+            prevMonth();
+          }}
         >
           <FontAwesomeIcon icon="chevron-left" className="stroke-current" />
         </button>
@@ -306,7 +312,10 @@ const DateSelection: React.FC<{}> = _ => {
 
         <button
           className="hover:bg-gray-200 rounded p-1 u-horizontal-center align-center focus:outline-none items-center"
-          onClick={() => nextMonth()}
+          onClick={(e: any) => {
+            e.preventDefault();
+            nextMonth();
+          }}
         >
           <FontAwesomeIcon icon="chevron-right" className="stroke-current" />
         </button>
