@@ -8,6 +8,7 @@ import { Manager, Popper, Reference } from "react-popper";
 interface IDropdown {
   children: any;
   title?: string;
+  square?: boolean;
   icon?: IconProp;
   noBackground?: boolean;
   color?: string;
@@ -75,7 +76,7 @@ function useDropdownMenuCtx(
 }
 
 function DropdownMenu(props: IDropdown) {
-  let { title, icon, noBackground, id, widthClass, color } = props;
+  let { title, icon, noBackground, id, widthClass, color, square } = props;
 
   const popupNode = useRef<HTMLElement>();
   const ctxValue = useDropdownMenuCtx(popupNode);
@@ -104,7 +105,9 @@ function DropdownMenu(props: IDropdown) {
                     ("text-" + color + " ") +
                     (noBackground
                       ? " hover:text-" + color + "-700 font-bold"
-                      : " hover:bg-gray-50 border-gray-300 shadow-sm rounded-full border bg-white")
+                      : ` hover:bg-gray-50 border-gray-300 shadow-sm ${
+                          square ? "rounded" : "rounded-full"
+                        } border bg-white`)
                   }
                 >
                   {icon && <FontAwesomeIcon icon={icon} className="h-5 w-5" aria-hidden="true" />}
