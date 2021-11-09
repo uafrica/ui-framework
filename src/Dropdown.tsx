@@ -8,12 +8,15 @@ import { Manager, Popper, Reference } from "react-popper";
 interface IDropdown {
   children: any;
   title?: string;
+  square?: boolean;
   icon?: IconProp;
   noBackground?: boolean;
   color?: string;
   id?: string;
   style?: string;
   widthClass?: string; // tailwind w-X class e.g. w-56
+  buttonWidth?: string;
+  between?: boolean;
   placement?:
     | "auto"
     | "auto-start"
@@ -87,7 +90,18 @@ function useDropdownMenuCtx(
 }
 
 function DropdownMenu(props: IDropdown) {
-  let { title, icon, noBackground, id, widthClass, color, placement } = props;
+  let {
+    title,
+    icon,
+    noBackground,
+    id,
+    widthClass,
+    color,
+    placement,
+    square,
+    buttonWidth,
+    between
+  } = props;
 
   const popupNode = useRef<HTMLElement>();
   const ctxValue = useDropdownMenuCtx(popupNode);
@@ -102,7 +116,9 @@ function DropdownMenu(props: IDropdown) {
   return (
     <DropdownMenuCtx.Provider value={ctxValue}>
       <Manager>
-        <div className="relative inline-block text-left cursor-pointer">
+        <div
+          className={`relative inline-block text-left cursor-pointer ${buttonWidth && buttonWidth}`}
+        >
           <Reference>
             {({ ref }) => (
               <div
@@ -114,11 +130,15 @@ function DropdownMenu(props: IDropdown) {
                 <div
                   id={id}
                   className={
-                    "inline-flex justify-center w-full px-4 py-2 font-medium  focus:outline-none " +
+                    `inline-flex ${
+                      between ? "justify-between" : "justify-center"
+                    } w-full px-4 py-2 font-medium  focus:outline-none ` +
                     ("text-" + color + " ") +
                     (noBackground
                       ? " hover:text-" + color + "-700 font-bold"
-                      : " hover:bg-gray-50 border-gray-300 shadow-sm rounded-full border bg-white")
+                      : ` hover:bg-gray-50 border-gray-300 shadow-sm ${
+                          square ? "rounded" : "rounded-full"
+                        } border bg-white`)
                   }
                 >
                   {icon && <FontAwesomeIcon icon={icon} className="h-5 w-5" aria-hidden="true" />}
