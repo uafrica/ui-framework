@@ -29,6 +29,7 @@ interface ITextarea {
   errorMessage?: any;
   fixed?: boolean;
   rows?: any;
+  maxLength?: number;
 }
 
 // Implementation
@@ -53,7 +54,8 @@ function Textarea(props: ITextarea) {
     errorMessage,
     rows,
     optional,
-    disabled
+    disabled,
+    maxLength
   } = props;
 
   return (
@@ -81,6 +83,7 @@ function Textarea(props: ITextarea) {
         onBlur={onBlur}
         disabled={disabled}
         ref={register}
+        maxLength={maxLength}
       />
       {validationError &&
         (errorMessage && validationError.type === "required" ? (
