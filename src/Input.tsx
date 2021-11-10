@@ -134,7 +134,6 @@ function Input(props: IInputProps) {
       step={step}
       min={min}
       max={max}
-      // style={{ paddingLeft: leftPadding ? leftPadding + "px" : "inherit" }}
       autoComplete={autoComplete}
       className={
         "shadow-sm block w-full border-gray-300 rounded-md " +
