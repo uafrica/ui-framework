@@ -11,7 +11,7 @@ function addressObjFromGoogleResult(place: any): {
   lng: any;
 } {
   // Copied from google API developer guide
-  const googleComponentForm: any = {
+  const googleComponentShortOrLong: any = {
     street_number: "short_name",
     route: "long_name",
     sublocality_level_1: "long_name",
@@ -36,11 +36,13 @@ function addressObjFromGoogleResult(place: any): {
   };
 
   for (var i = 0; i < place.address_components.length; i++) {
-    var addressType = place.address_components[i].types[0];
-    // get the long/short version of the place address component base on componentForm
-    if (googleComponentForm[addressType]) {
-      googleAddressObj[addressType] = place.address_components[i][googleComponentForm[addressType]];
-    }
+    place.address_components[i].types.forEach((addressType: any) => {
+      // get the long/short version of the place address component base on componentForm
+      if (googleComponentShortOrLong[addressType]) {
+        googleAddressObj[addressType] =
+          place.address_components[i][googleComponentShortOrLong[addressType]];
+      }
+    });
   }
 
   // Map to names expected by address form
@@ -59,8 +61,8 @@ function addressObjFromGoogleResult(place: any): {
     localArea.push(googleAddressObj.sublocality_level_2);
   }
 
-  if (googleAddressObj.locality) {
-    localArea.push(googleAddressObj.sublocality_level_2);
+  if (googleAddressObj.locality && localArea.length === 0) {
+    localArea.push(googleAddressObj.locality);
   }
 
   let city = googleAddressObj.administrative_area_level_2;
