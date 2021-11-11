@@ -25,8 +25,14 @@ function addressObjFromGoogleResult(place: any): {
 
   var googleAddressObj: any = {};
   googleAddressObj.lat_lng = {
-    lat: place.geometry.location.lat(),
-    lng: place.geometry.location.lng()
+    lat:
+      typeof place.geometry.location.lat === "function"
+        ? place.geometry.location.lat()
+        : place.geometry.location.lat,
+    lng:
+      typeof place.geometry.location.lng === "function"
+        ? place.geometry.location.lng()
+        : place.geometry.location.lng
   };
 
   for (var i = 0; i < place.address_components.length; i++) {
@@ -53,15 +59,11 @@ function addressObjFromGoogleResult(place: any): {
     localArea.push(googleAddressObj.sublocality_level_2);
   }
 
-  let city: any;
-
   if (googleAddressObj.locality) {
-    city = googleAddressObj.locality;
+    localArea.push(googleAddressObj.sublocality_level_2);
   }
 
-  if (!city) {
-    city = googleAddressObj.administrative_area_level_2;
-  }
+  let city = googleAddressObj.administrative_area_level_2;
 
   const addressObj = {
     company,
