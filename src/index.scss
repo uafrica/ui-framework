@@ -32,6 +32,32 @@
   }
 }
 
+/* NAV */
+.nav-item {
+  .nav-item-popover {
+    left: 42px;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    transition: max-width 1s;
+    max-width: 0;
+  }
+  .nav-item-text {
+    display: none;
+  }
+}
+
+.nav-item:hover {
+  .nav-item-popover {
+    transition: max-width 1s;
+    max-width: 300px;
+  }
+  .nav-item-text {
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+  }
+}
+
 /* SAVE PANEL */
 .save-panel {
   width: calc(100% - 15em);
