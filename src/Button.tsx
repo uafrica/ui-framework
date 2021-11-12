@@ -55,11 +55,13 @@ interface IButtonBaseProps extends IButtonProps {
 
 // Implementation
 function Primary(props: IButtonProps) {
+  let bgColor = props.bgColor ? props.bgColor : "primary";
+
   return (
     <BaseButton
       {...props}
       buttonTypeClassNames={
-        "u-button border-transparent text-white bg-primary hover:bg-primary-dark"
+        "u-button border-transparent text-white bg-" + bgColor + " hover:bg-" + bgColor + "-dark"
       }
       type="submit"
     />
@@ -67,11 +69,19 @@ function Primary(props: IButtonProps) {
 }
 
 function Secondary(props: IButtonProps) {
+  let bgColor = props.bgColor ? props.bgColor : "primary";
+
   return (
     <BaseButton
       {...props}
       buttonTypeClassNames={
-        "u-button border-primary text-primary bg-white hover:bg-primary hover:text-white "
+        "u-button border-" +
+        bgColor +
+        " text-" +
+        bgColor +
+        " bg-white hover:bg-" +
+        bgColor +
+        " hover:text-white "
       }
     />
   );
@@ -250,13 +260,7 @@ function ButtonsPanel(props: IButtonsPanelProps) {
   }
 
   return (
-    <div
-      className={
-        " w-full u-reverse-flex-col-to-row " +
-        align +
-        (noMargin ? "" : " mt-6")
-      }
-    >
+    <div className={" w-full u-reverse-flex-col-to-row " + align + (noMargin ? "" : " mt-6")}>
       {children}
     </div>
   );
