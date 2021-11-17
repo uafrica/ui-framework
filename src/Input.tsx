@@ -47,6 +47,7 @@ interface IInputProps {
   prependText?: string;
   inputFieldStyle?: any;
   inputId?: string;
+  onClearSearch?: Function;
 }
 
 // Implementation
@@ -90,7 +91,8 @@ function Input(props: IInputProps) {
     autoComplete,
     info,
     appendSelectProps,
-    inputClassName
+    inputClassName,
+    onClearSearch
   } = props;
 
   type = type ? type : "text";
@@ -105,8 +107,10 @@ function Input(props: IInputProps) {
     inputClasses = inputClassName;
   }
 
-  if (appendIcon || appendText) {
-    if (appendText && appendText.length > 4) {
+  if (appendIcon || appendText || onClearSearch) {
+    if (onClearSearch) {
+      inputClasses += " pr-20";
+    } else if (appendText && appendText.length > 4) {
       inputClasses += " pr-20";
     } else {
       inputClasses += " pr-12";
@@ -177,18 +181,37 @@ function Input(props: IInputProps) {
           )}
 
           {InputElement}
-          {appendIcon && (
-            <div
-              className={
-                "absolute inset-y-0 right-0 mr-3 flex items-center  " +
-                (onAppendIconClick
-                  ? " cursor-pointer text-primary"
-                  : " pointer-events-none text-gray-400")
-              }
-              id={appendIconId}
-              onClick={onAppendIconClick ? onAppendIconClick : undefined}
-            >
-              <FontAwesomeIcon icon={appendIcon} size="sm" />
+          {(appendIcon || onClearSearch) && (
+            <div className={"absolute inset-y-0 right-0 mr-3 flex items-center"}>
+              {appendIcon && (
+                <div
+                  className={
+                    onAppendIconClick
+                      ? " cursor-pointer text-primary"
+                      : " pointer-events-none text-gray-400"
+                  }
+                  id={appendIconId}
+                  onClick={onAppendIconClick ? onAppendIconClick : undefined}
+                >
+                  <FontAwesomeIcon icon={appendIcon} size="sm" />
+                </div>
+              )}
+              {appendIcon && onClearSearch && (
+                <div className="mx-2 pointer-events-none text-gray-200">|</div>
+              )}
+              {onClearSearch && (
+                <div
+                  title="Clear search"
+                  className="cursor-pointer text-gray-400 "
+                  onClick={() => {
+                    if (onClearSearch) {
+                      onClearSearch();
+                    }
+                  }}
+                >
+                  <FontAwesomeIcon icon={"times"} size="sm" />
+                </div>
+              )}
             </div>
           )}
           {appendText && (
