@@ -4,6 +4,7 @@ import { SectionHeading } from "./SectionHeading";
 import { Button } from "./Button";
 import { Card } from "./Card";
 import { Input } from "./Input";
+import { Counter } from "./Counter";
 import { NavItem, NavItemDivider } from "./NavItem";
 import { Loader } from "./Loader";
 import { Tabs } from "./Tabs";
@@ -54,6 +55,7 @@ export {
   Card,
   DatePicker,
   Input,
+  Counter,
   Modal,
   Confirm,
   Select,
