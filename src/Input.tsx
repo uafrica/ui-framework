@@ -43,8 +43,10 @@ interface IInputProps {
   appendIconId?: string;
   onAppendIconClick?: any;
   appendText?: string;
+  appendPadding?: string;
   appendSelectProps?: any;
   prependText?: string;
+  prependPadding?: string;
   inputFieldStyle?: any;
   inputId?: string;
   onClearSearch?: Function;
@@ -70,6 +72,7 @@ function Input(props: IInputProps) {
     inputId,
     appendIcon,
     appendText,
+    appendPadding,
     appendIconId,
     onAppendIconClick,
     optional,
@@ -79,6 +82,7 @@ function Input(props: IInputProps) {
     onClick,
     onFocus,
     prependText,
+    prependPadding,
     onBlur,
     containerClassName,
     labelInline,
@@ -98,16 +102,16 @@ function Input(props: IInputProps) {
   type = type ? type : "text";
   labelClassName = labelClassName ? labelClassName : "";
 
-  // console.log(prependText?.length);
-
   // @ts-ignore
-  let inputClasses = prependText ? ` pl-7 ` : "";
+  let inputClasses = prependPadding ? ` ${prependPadding} ` : prependText ? ` pl-7 ` : "";
 
   if (inputClassName) {
     inputClasses = inputClassName;
   }
 
-  if (appendIcon || appendText || onClearSearch) {
+  if (appendPadding) {
+    inputClasses += ` ${appendPadding} `;
+  } else if (appendIcon || appendText || onClearSearch) {
     if (onClearSearch) {
       inputClasses += " pr-20";
     } else if (appendText && appendText.length > 4) {
