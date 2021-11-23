@@ -13,10 +13,12 @@ interface IAccordion {
   onDelete?: any;
   backgroundColor?: string;
   textColor?: string;
+  noCaret?: boolean;
 }
 
 function Accordion(props: IAccordion) {
-  let { className, overrideOpen, title, children, onDelete, backgroundColor, textColor } = props;
+  let { className, overrideOpen, title, children, onDelete, backgroundColor, textColor, noCaret } =
+    props;
 
   useEffect(() => {
     setOpen(Boolean(overrideOpen));
@@ -45,10 +47,12 @@ function Accordion(props: IAccordion) {
                 <FontAwesomeIcon icon="trash" className="delete" title="Delete item" />
               </Confirm>
             )}
-            <FontAwesomeIcon
-              icon="caret-down"
-              className={`${open ? "transform rotate-180" : ""} w-5 h-5 text-primary-500`}
-            />
+            {!noCaret && (
+              <FontAwesomeIcon
+                icon="caret-down"
+                className={`${open ? "transform rotate-180" : ""} w-5 h-5 text-primary-500`}
+              />
+            )}
           </div>
         </div>
         <Transition
