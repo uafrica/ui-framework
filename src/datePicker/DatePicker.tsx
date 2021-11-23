@@ -92,18 +92,20 @@ function DatePicker(props: IDatePicker) {
       <Manager>
         <Reference>
           {({ ref }) => (
-            <Input
-              reference={ref}
-              onFocus={() => ctxValue.showCalendar()}
-              value={selected ? formattedDate(dateFormat, date) : ""}
-              readOnly
-              label={label}
-              labelInline={labelInline}
-              containerClassName={containerClassName}
-              placeholder={placeholder}
-              appendIcon={disabled ? undefined : "caret-down"}
-              disabled={disabled}
-            />
+            <div className="mb-2">
+              <Input
+                reference={ref}
+                onFocus={() => ctxValue.showCalendar()}
+                value={selected ? formattedDate(dateFormat, date) : ""}
+                readOnly
+                label={label}
+                labelInline={labelInline}
+                containerClassName={containerClassName}
+                placeholder={placeholder}
+                appendIcon={disabled ? undefined : "caret-down"}
+                disabled={disabled}
+              />
+            </div>
           )}
         </Reference>
         {!disabled && (

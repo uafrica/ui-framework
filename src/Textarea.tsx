@@ -62,7 +62,7 @@ function Textarea(props: ITextarea) {
     <div className={containerClassName ? containerClassName : defaultContainerClass} id={fieldId}>
       <div className="flex justify-between">
         {label && (
-          <div>
+          <div className="mt-1">
             <Label className={labelClassName}>
               {label} {info && <InfoButton>{info}</InfoButton>}
             </Label>

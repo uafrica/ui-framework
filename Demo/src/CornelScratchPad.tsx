@@ -108,7 +108,8 @@ function CornelScratchPad() {
         }}
       />
 
-      <LabelWithValue label="label" value="value" info="Some info here" />
+      <LabelWithValue label="Label" value="Value" info="Some info here" />
+      <LabelWithValue label="Another label" value="Value" info="Some info here" />
       {/* <Modal.Medium title="A modal!" closeButton show={true}>
         Some content here
     </Modal.Medium> */}

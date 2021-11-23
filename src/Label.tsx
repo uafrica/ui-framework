@@ -33,11 +33,11 @@ function LabelWithValue(props: ILabelWithValue) {
   let { label, value, noMargin, info } = props;
 
   return (
-    <div className={"flex flex-row space-x-2 flex-wrap " + (noMargin ? "" : " pt-2")}>
-      <label className={"u-label-text self-baseline " + (noMargin ? "" : " mb-2 ")}>{label}</label>
-      <div className="text-left">{value}</div>
+    <div className={"flex flex-row items-center flex-wrap " + (noMargin ? "" : " mb-2 pt-2")}>
+      <label className={"u-label-text self-baseline"}>{label}</label>
+      <div className="ml-2 text-left">{value}</div>
       {info && (
-        <div className="mt-1">
+        <div>
           <InfoButton>{info}</InfoButton>
         </div>
       )}
