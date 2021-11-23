@@ -9,7 +9,8 @@ import {
   Textarea,
   Button,
   Dropdown,
-  FiltersPanel
+  FiltersPanel,
+  LabelWithValue
 } from "../../src";
 
 function CornelScratchPad() {
@@ -106,6 +107,8 @@ function CornelScratchPad() {
           console.log(date);
         }}
       />
+
+      <LabelWithValue label="label" value="value" info="Some info here" />
       {/* <Modal.Medium title="A modal!" closeButton show={true}>
         Some content here
     </Modal.Medium> */}

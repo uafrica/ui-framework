@@ -1,4 +1,4 @@
-import { InfoButton } from "InfoButton";
+import { InfoButton } from "./InfoButton";
 
 // Interface
 interface ILabel {
@@ -36,7 +36,11 @@ function LabelWithValue(props: ILabelWithValue) {
     <div className={"flex flex-row space-x-2 flex-wrap " + (noMargin ? "" : " pt-2")}>
       <label className={"u-label-text self-baseline " + (noMargin ? "" : " mb-2 ")}>{label}</label>
       <div className="text-left">{value}</div>
-      {info && <InfoButton>{info}</InfoButton>}
+      {info && (
+        <div className="mt-1">
+          <InfoButton>{info}</InfoButton>
+        </div>
+      )}
     </div>
   );
 }
