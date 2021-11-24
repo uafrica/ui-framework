@@ -92,7 +92,7 @@ function DatePicker(props: IDatePicker) {
       <Manager>
         <Reference>
           {({ ref }) => (
-            <div className="mb-2">
+            <div>
               <Input
                 reference={ref}
                 onFocus={() => ctxValue.showCalendar()}
