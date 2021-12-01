@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import usePrevious from "hooks/usePrevious";
+import { usePrevious } from "hooks/usePrevious";
 import { useHistory } from "react-router-dom";
 
 function useTabs(defaultTab: string) {
@@ -36,4 +36,4 @@ function useTabs(defaultTab: string) {
   return { activeTabID, onTabSelected };
 }
 
-export default useTabs;
+export { useTabs };
