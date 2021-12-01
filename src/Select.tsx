@@ -142,27 +142,41 @@ function GroupedSelect(props: IGroupedSelect) {
             <div key={option.value} className="flex flex-row items-center">
               <div
                 onClick={() => {
-                  onSelectToggle(option.value);
-                  if (!multiSelection) {
-                    ctxValue.hideSelect();
+                  if (option.disabled !== true) {
+                    onSelectToggle(option.value);
+                    if (!multiSelection) {
+                      ctxValue.hideSelect();
+                    }
                   }
                 }}
                 className={
-                  "flex-1 cursor-pointer select-none relative py-2 pl-2 pr-9 hover:bg-gray-100 rounded-md mt-1  " +
-                  (selected ? "bg-gray-100" : "text-gray-900")
+                  "flex-1 select-none relative py-2 pl-2 pr-9 hover:bg-gray-100 rounded-md mt-1  " +
+                  (selected ? "bg-gray-100" : "text-gray-900") +
+                  (option.disabled === true ? " cursor-not-allowed " : " cursor-pointer ")
                 }
               >
-                <span className={"flex flex-wrap " + (selected ? "font-semibold" : "font-normal")}>
+                <span
+                  className={
+                    "flex flex-wrap " +
+                    (selected ? "font-semibold" : "font-normal") +
+                    (option.disabled === true ? " text-gray-500 " : "")
+                  }
+                >
                   {option.label}
                 </span>
 
                 {selected ? (
-                  <span className="absolute inset-y-0 right-0 u-vertical-center pr-4 text-primary-600">
+                  <span
+                    className={
+                      "absolute inset-y-0 right-0 u-vertical-center pr-4 " +
+                      (option.disabled === true ? " text-gray-500 " : " text-primary-600 ")
+                    }
+                  >
                     <FontAwesomeIcon icon="check" className="h-5 w-5" aria-hidden="true" />
                   </span>
                 ) : null}
               </div>
-              {onDelete && !option.disableDelete && (
+              {onDelete && !option.disableDelete && option.disabled !== true && (
                 <span className="u-vertical-center p-2 text-red hover:text-red-700 cursor-pointer">
                   <FontAwesomeIcon
                     icon="trash"
@@ -230,17 +244,38 @@ function GroupedSelect(props: IGroupedSelect) {
   // Select all buttons
   let selectAllButton: any;
 
+  let disabledOptions = flattenedOptions
+    .filter((option: { value: string | number; disabled?: boolean }) => {
+      return option.disabled;
+    })
+    .map((option: { label: string; value: any; disabled?: boolean }) => {
+      return option.value;
+    });
+
   if (multiSelection) {
-    let allSelected = flattenedOptions.length === value.length;
+    const selectedDisabledOptions = value.filter((v: any) => disabledOptions.includes(v));
+    const notSelectedDisabledOptions = disabledOptions.filter(
+      (v: any) => !selectedDisabledOptions.includes(v)
+    );
+    let allSelected = flattenedOptions.length - notSelectedDisabledOptions.length === value.length;
     selectAllButton = (
       <Button.Link
         key="select-deselect"
         title={allSelected ? "Deselect all" : "Select all"}
         onClick={() => {
           if (allSelected) {
-            onChange && onChange([]);
+            // deselect all, ignore disabled options
+            onChange && onChange(selectedDisabledOptions);
           } else {
-            onChange && onChange(flattenedOptions.map(option => option.value));
+            // select all, ignore disabled options
+            onChange &&
+              onChange(
+                flattenedOptions
+                  .filter((option: { value: string | number; disabled?: boolean }) => {
+                    return notSelectedDisabledOptions.indexOf(option.value) === -1;
+                  })
+                  .map(option => option.value)
+              );
           }
         }}
       />
