@@ -174,7 +174,7 @@ function Input(props: IInputProps) {
       )}
       <div className="u-vertical-center flex-row w-full" id={inputFieldId} style={inputFieldStyle}>
         {prependSelectProps && (
-          <div className="-ml-2">
+          <div className="-mr-2 z-50">
             <Select {...prependSelectProps} noMargin disabled={disabled} />
           </div>
         )}
