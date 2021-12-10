@@ -15,6 +15,7 @@ interface ITabs {
   children: any;
   activeTabID: string;
   onSelect: any;
+  wrapTabsForMobile?: boolean;
 }
 
 // Implementation
@@ -36,7 +37,14 @@ function Primary(props: ITabs) {
     <div>
       <div>
         <div className="border-b border-gray-200">
-          <nav className="-mb-px flex space-x-8" aria-label="Tabs">
+          <nav
+            className={`-mb-px flex ${
+              props.wrapTabsForMobile
+                ? " flex-col sm:flex-row space-y-1 sm:space-y-0 sm:space-x-8 "
+                : " space-x-8 "
+            }`}
+            aria-label="Tabs"
+          >
             {children.map((child: any) => (
               <div
                 key={child.props.tabID}
@@ -75,7 +83,14 @@ function Secondary(props: ITabs) {
   return (
     <div className="mt-8">
       <div>
-        <nav className="flex space-x-4 pb-2 border-b border-gray-200" aria-label="Tabs">
+        <nav
+          className={`flex ${
+            props.wrapTabsForMobile
+              ? " flex-col sm:flex-row space-y-1 sm:space-y-0 sm:space-x-4 "
+              : " space-x-4 "
+          } pb-2 border-b border-gray-200`}
+          aria-label="Tabs"
+        >
           {children.map((child: any) => (
             <div
               key={child.props.tabID}
