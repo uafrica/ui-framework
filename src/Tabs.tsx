@@ -9,6 +9,7 @@ interface ITab {
   title: string;
   info?: string;
   className?: string;
+  isClickable?: boolean;
 }
 
 interface ITabs {
@@ -49,12 +50,20 @@ function Primary(props: ITabs) {
               <div
                 key={child.props.tabID}
                 id={child.props.id}
-                onClick={() => props.onSelect(child.props.tabID)}
+                onClick={() => {
+                  if (child.props.isClickable !== false) {
+                    props.onSelect(child.props.tabID);
+                  }
+                }}
                 className={
                   (props.activeTabID === child.props.tabID
                     ? "border-primary-500 text-primary-600 "
-                    : "border-transparent text-gray-700 hover:text-gray-900 hover:border-gray-300") +
-                  " cursor-pointer group inline-flex items-center py-3 px-1 border-b-2 font-bold"
+                    : "border-transparent text-gray-700  " +
+                      (child.props.isClickable !== false
+                        ? " hover:text-gray-900 hover:border-gray-300"
+                        : "")) +
+                  (child.props.isClickable !== false ? " cursor-pointer " : " cursor-default ") +
+                  "  group inline-flex items-center py-3 px-1 border-b-2 font-bold"
                 }
               >
                 <span className={"flex flex-row space-x-4 items-center " + child.props.className}>
@@ -95,12 +104,18 @@ function Secondary(props: ITabs) {
             <div
               key={child.props.tabID}
               id={child.props.id}
-              onClick={() => props.onSelect(child.props.tabID)}
+              onClick={() => {
+                if (child.props.isClickable !== false) {
+                  props.onSelect(child.props.tabID);
+                }
+              }}
               className={
                 (props.activeTabID === child.props.tabID
                   ? "bg-primary-100 text-primary-700 font-bold"
-                  : "text-black hover:bg-gray-200") +
-                " cursor-pointer px-3 py-2 font-medium rounded-md"
+                  : "text-black " +
+                    (child.props.isClickable !== false ? " hover:bg-gray-200 " : "")) +
+                (child.props.isClickable !== false ? " cursor-pointer " : " cursor-default ") +
+                "  px-3 py-2 font-medium rounded-md"
               }
             >
               <span className={"u-vertical-center flex-row space-x-4 " + child.props.className}>
