@@ -8,6 +8,7 @@ interface ISavePanel {
   saved?: boolean;
   saveDisabledText?: string;
   saveText?: string;
+  cancelText?: string;
   className?: string;
   cancelChanges?: any;
   saveChanges: any;
@@ -26,6 +27,7 @@ function SavePanel(props: ISavePanel) {
     saved,
     saveDisabledText,
     saveText,
+    cancelText,
     className
   } = props;
 
@@ -46,7 +48,7 @@ function SavePanel(props: ISavePanel) {
           <div className="ml-2 mr-2 sm:mr-0 mt-4 sm:mt-0">
             <Button.Cancel
               id="cancel_button"
-              title="Cancel"
+              title={cancelText ? cancelText : "Cancel"}
               onClick={props.cancelChanges}
               className="w-full"
             />
