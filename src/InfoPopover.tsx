@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { Manager, Reference, Popper } from "react-popper";
 import { createContext, useEffect, useState, ReactNode } from "react";
 import { createPortal } from "react-dom";
+import ReactDOM from "react-dom";
 
 interface IInfoPopover {
   placement?:
@@ -61,8 +62,15 @@ function InfoPopover(props: IInfoPopover) {
   const popupNode = useRef<HTMLElement>();
   const ctxValue = useInfoPopoverCtx(popupNode);
 
+  const hostElement = document.getElementById("modal-host");
+
+  const content = (
+    <div className="uafrica-modal-overlay fixed inset-0 bg-black bg-opacity-20 transition-opacity" />
+  );
+
   return (
     <div className="relative text-left ml-4">
+      {hostElement && showPopover && ReactDOM.createPortal(content, hostElement)}
       <InfoPopoverCtx.Provider value={ctxValue}>
         <Manager>
           <Reference>
