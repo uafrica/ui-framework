@@ -132,7 +132,25 @@ function generateEnteredAddress(addressObj: any): string {
   return concatNonEmpty([company, street_address, local_area, city, code, zone, country], ", ");
 }
 
+function validateAddress(address: any) {
+  // existing addresses will not be judged
+  if (address.id && address.entered_address) {
+    return "success";
+  }
+
+  if (
+    (address.street_address || address.company || address.local_area) &&
+    address.zone &&
+    address.country
+  ) {
+    return "success";
+  }
+
+  return "requires a street address, province/zone and country";
+}
+
 export {
+  validateAddress,
   addressObjFromGoogleResult,
   formatEnteredAddress,
   formatEnteredAddressLine,
