@@ -6,6 +6,7 @@ interface ILabel {
   className?: string;
   htmlFor?: any;
   noMargin?: boolean;
+  labelColor?: string;
 }
 
 interface ILabelWithValue {
@@ -13,16 +14,24 @@ interface ILabelWithValue {
   value: any;
   noMargin?: boolean;
   info?: string;
+  labelColor?: string;
 }
 
 // Implementation
 function Label(props: ILabel) {
-  let { children, htmlFor, className, noMargin } = props;
+  let { children, htmlFor, className, noMargin, labelColor } = props;
 
   return (
     <label
       htmlFor={htmlFor}
-      className={"u-label-text " + (noMargin ? "" : " mb-2 ") + " " + (className ? className : "")}
+      className={
+        "font-semibold mr-2 flex items-center text-left " +
+        (noMargin ? "" : " mb-2 ") +
+        " " +
+        (className ? className : "") +
+        " " +
+        (labelColor ? labelColor : "text-gray-900")
+      }
     >
       {children}
     </label>
@@ -30,11 +39,19 @@ function Label(props: ILabel) {
 }
 
 function LabelWithValue(props: ILabelWithValue) {
-  let { label, value, noMargin, info } = props;
+  let { label, value, noMargin, info, labelColor } = props;
 
   return (
     <div className={"flex flex-row items-center flex-wrap " + (noMargin ? "" : " mb-2 pt-2")}>
-      <label className={"u-label-text self-baseline"}>{label}</label>
+      <label
+        className={
+          "font-semibold mr-2 flex items-center text-left self-baseline" +
+          " " +
+          (labelColor ? labelColor : "text-gray-900")
+        }
+      >
+        {label}
+      </label>
       <div className="ml-2 text-left">{value}</div>
       {info && (
         <div>

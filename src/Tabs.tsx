@@ -9,12 +9,14 @@ interface ITab {
   title: string;
   info?: string;
   className?: string;
+  isClickable?: boolean;
 }
 
 interface ITabs {
   children: any;
   activeTabID: string;
   onSelect: any;
+  wrapTabsForMobile?: boolean;
 }
 
 // Implementation
@@ -36,17 +38,32 @@ function Primary(props: ITabs) {
     <div>
       <div>
         <div className="border-b border-gray-200">
-          <nav className="-mb-px flex space-x-8" aria-label="Tabs">
+          <nav
+            className={`-mb-px flex ${
+              props.wrapTabsForMobile
+                ? " flex-col sm:flex-row space-y-1 sm:space-y-0 sm:space-x-8 "
+                : " space-x-8 "
+            }`}
+            aria-label="Tabs"
+          >
             {children.map((child: any) => (
               <div
                 key={child.props.tabID}
                 id={child.props.id}
-                onClick={() => props.onSelect(child.props.tabID)}
+                onClick={() => {
+                  if (child.props.isClickable !== false) {
+                    props.onSelect(child.props.tabID);
+                  }
+                }}
                 className={
                   (props.activeTabID === child.props.tabID
                     ? "border-primary-500 text-primary-600 "
-                    : "border-transparent text-gray-700 hover:text-gray-900 hover:border-gray-300") +
-                  " cursor-pointer group inline-flex items-center py-3 px-1 border-b-2 font-bold"
+                    : "border-transparent text-gray-700  " +
+                      (child.props.isClickable !== false
+                        ? " hover:text-gray-900 hover:border-gray-300"
+                        : "")) +
+                  (child.props.isClickable !== false ? " cursor-pointer " : " cursor-default ") +
+                  "  group inline-flex items-center py-3 px-1 border-b-2 font-bold"
                 }
               >
                 <span className={"flex flex-row space-x-4 items-center " + child.props.className}>
@@ -75,17 +92,30 @@ function Secondary(props: ITabs) {
   return (
     <div className="mt-8">
       <div>
-        <nav className="flex space-x-4 pb-2 border-b border-gray-200" aria-label="Tabs">
+        <nav
+          className={`flex ${
+            props.wrapTabsForMobile
+              ? " flex-col sm:flex-row space-y-1 sm:space-y-0 sm:space-x-4 "
+              : " space-x-4 "
+          } pb-2 border-b border-gray-200`}
+          aria-label="Tabs"
+        >
           {children.map((child: any) => (
             <div
               key={child.props.tabID}
               id={child.props.id}
-              onClick={() => props.onSelect(child.props.tabID)}
+              onClick={() => {
+                if (child.props.isClickable !== false) {
+                  props.onSelect(child.props.tabID);
+                }
+              }}
               className={
                 (props.activeTabID === child.props.tabID
                   ? "bg-primary-100 text-primary-700 font-bold"
-                  : "text-black hover:bg-gray-200") +
-                " cursor-pointer px-3 py-2 font-medium rounded-md"
+                  : "text-black " +
+                    (child.props.isClickable !== false ? " hover:bg-gray-200 " : "")) +
+                (child.props.isClickable !== false ? " cursor-pointer " : " cursor-default ") +
+                "  px-3 py-2 font-medium rounded-md"
               }
             >
               <span className={"u-vertical-center flex-row space-x-4 " + child.props.className}>

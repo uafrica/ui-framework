@@ -9,6 +9,7 @@ function addressObjFromGoogleResult(place: any): {
   lat_lng: any;
   lat: any;
   lng: any;
+  types: string[];
 } {
   // Copied from google API developer guide
   const googleComponentShortOrLong: any = {
@@ -78,7 +79,8 @@ function addressObjFromGoogleResult(place: any): {
     lat_lng: googleAddressObj.lat_lng,
     lat: googleAddressObj.lat_lng.lat,
     lng: googleAddressObj.lat_lng.lng,
-    entered_address: ""
+    entered_address: "",
+    types: place.types
   };
 
   addressObj.entered_address = generateEnteredAddress(addressObj);
@@ -149,10 +151,24 @@ function validateAddress(address: any) {
   return "requires a street address, province/zone and country";
 }
 
+function validateGoogleAddressType(addressObj: any, invalidTypes: string[]): boolean {
+  // place types: https://developers.google.com/maps/documentation/places/web-service/supported_types#table1
+  let isValid = true;
+  if (addressObj.types) {
+    invalidTypes.forEach((invalidType: string) => {
+      if (addressObj.types.indexOf(invalidType) !== -1) {
+        isValid = false;
+      }
+    });
+  }
+  return isValid;
+}
+
 export {
-  validateAddress,
   addressObjFromGoogleResult,
   formatEnteredAddress,
   formatEnteredAddressLine,
-  generateEnteredAddress
+  generateEnteredAddress,
+  validateGoogleAddressType,
+  validateAddress
 };

@@ -23,6 +23,7 @@ import { Radio } from "./Radio";
 import { IconWithBackground } from "./IconWithBackground";
 import { Textarea } from "./Textarea";
 import { InfoButton } from "./InfoButton";
+import { InfoPopover } from "./InfoPopover";
 import { Table } from "./Table";
 import { Confirm } from "./Confirm";
 import { Label, LabelWithValue } from "./Label";
@@ -35,6 +36,8 @@ import CopyText from "./CopyText";
 import SkeletonLoader from "./SkeletonLoaders";
 import { SavingOverlay } from "./SavingOverlay";
 import * as addressUtils from "./utils/addressUtils";
+import { useTabs } from "./hooks/useTabs";
+import { usePrevious } from "./hooks/usePrevious";
 import "./index.scss";
 
 const DownloadButton = Button.Download;
@@ -72,6 +75,7 @@ export {
   Checkbox,
   Radio,
   InfoButton,
+  InfoPopover,
   Textarea,
   Table,
   SavePanel,
@@ -84,5 +88,7 @@ export {
   LabelWithValue,
   SavePanelContainer,
   IconWithBackground,
-  addressUtils
+  addressUtils,
+  useTabs,
+  usePrevious
 };

@@ -50,8 +50,8 @@ interface IInputProps {
   inputFieldStyle?: any;
   inputId?: string;
   onClearSearch?: Function;
+  prependSelectProps?: any;
 }
-
 // Implementation
 function Input(props: IInputProps) {
   let {
@@ -96,7 +96,8 @@ function Input(props: IInputProps) {
     info,
     appendSelectProps,
     inputClassName,
-    onClearSearch
+    onClearSearch,
+    prependSelectProps
   } = props;
 
   type = type ? type : "text";
@@ -142,7 +143,7 @@ function Input(props: IInputProps) {
       step={step}
       min={min}
       max={max}
-      autoComplete={autoComplete}
+      autoComplete={autoComplete === "off" ? "something-chrome-does-not-know" : autoComplete} // setting autoComplete to off is not reliable
       className={
         "shadow-sm block w-full border-gray-300 rounded-md " +
         inputClasses +
@@ -172,6 +173,11 @@ function Input(props: IInputProps) {
         </div>
       )}
       <div className="u-vertical-center flex-row w-full" id={inputFieldId} style={inputFieldStyle}>
+        {prependSelectProps && (
+          <div className="-mr-2 z-10">
+            <Select {...prependSelectProps} noMargin disabled={disabled} />
+          </div>
+        )}
         <div className={"relative rounded-m w-full"}>
           {prependText && (
             <div

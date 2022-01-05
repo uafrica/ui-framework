@@ -1,4 +1,4 @@
-import { Button, Modal, PageActionsPanel } from "../../../src";
+import { Button, Modal, PageActionsPanel, Accordion } from "../../../src";
 import { useState } from "react";
 
 function Modals() {
@@ -33,8 +33,9 @@ function Modals() {
             setNestedModal2(true);
           }}
         />
-
-        <div className="mt-4">Some content here</div>
+        <Accordion title={"Some title"} noCaret>
+          <div className="mt-4">Some content here</div>
+        </Accordion>
 
         <Modal.Medium
           show={nestedModal2}
