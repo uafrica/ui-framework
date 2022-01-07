@@ -23,6 +23,7 @@ import { Radio } from "./Radio";
 import { IconWithBackground } from "./IconWithBackground";
 import { Textarea } from "./Textarea";
 import { InfoButton } from "./InfoButton";
+import { InfoPopover } from "./InfoPopover";
 import { Table } from "./Table";
 import { Confirm } from "./Confirm";
 import { Label, LabelWithValue } from "./Label";
@@ -74,6 +75,7 @@ export {
   Checkbox,
   Radio,
   InfoButton,
+  InfoPopover,
   Textarea,
   Table,
   SavePanel,
