@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { usePrevious } from "hooks/usePrevious";
+import { usePrevious } from "./usePrevious";
 import { useHistory } from "react-router-dom";
 
 function useTabs(defaultTab: string) {

@@ -51,6 +51,7 @@ interface IInputProps {
   inputId?: string;
   onClearSearch?: Function;
   prependSelectProps?: any;
+  prependTextSize?: string;
 }
 // Implementation
 function Input(props: IInputProps) {
@@ -97,7 +98,8 @@ function Input(props: IInputProps) {
     appendSelectProps,
     inputClassName,
     onClearSearch,
-    prependSelectProps
+    prependSelectProps,
+    prependTextSize
   } = props;
 
   type = type ? type : "text";
@@ -186,7 +188,11 @@ function Input(props: IInputProps) {
                 (onAppendIconClick ? "" : " pointer-events-none")
               }
             >
-              <span className="text-gray-500 sm:text-sm">{prependText}</span>
+              <span
+                className={"text-gray-500 " + (prependTextSize ? prependTextSize : "sm:text-sm")}
+              >
+                {prependText}
+              </span>
             </div>
           )}
 
