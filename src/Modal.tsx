@@ -47,7 +47,7 @@ const Base = ({
   }, []);
 
   function listenForEscape(e: any) {
-    if (e.key === "Escape") {
+    if (e.key === "Escape" && !disableClickOutsideToClose && closeButton && onHide !== undefined) {
       let elements = document.getElementsByClassName("uafrica-modal-overlay");
       if (elements[elements.length - 1].id === modalId) {
         e.preventDefault();
