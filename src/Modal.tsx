@@ -1,7 +1,7 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "./Button";
-import { createContext, useRef } from "react";
+import { createContext, useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 
 interface ISmallMediumModalProps {
@@ -36,6 +36,25 @@ const Base = ({
   disableClickOutsideToClose,
   ...props
 }: IBaseProps) => {
+  let elements = document.getElementsByClassName("uafrica-modal-overlay");
+
+  const [modalId] = useState(`modal_${elements.length}`);
+  useEffect(() => {
+    window.addEventListener("keydown", listenForEscape);
+    return () => {
+      window.removeEventListener("keydown", listenForEscape);
+    };
+  }, []);
+
+  function listenForEscape(e: any) {
+    if (e.key === "Escape") {
+      let elements = document.getElementsByClassName("uafrica-modal-overlay");
+      if (elements[elements.length - 1].id === modalId) {
+        e.preventDefault();
+        onHide();
+      }
+    }
+  }
   const ref = useRef(null);
   if (!show) {
     return null;
@@ -45,6 +64,7 @@ const Base = ({
   const content = (
     <ModalContext.Provider value={{ onHide, parentRef: ref }}>
       <div
+        id={modalId}
         className="uafrica-modal-overlay fixed inset-0 bg-black bg-opacity-60 transition-opacity"
         onClick={!disableClickOutsideToClose && onHide ? onHide : () => {}}
       />
