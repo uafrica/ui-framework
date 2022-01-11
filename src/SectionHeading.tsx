@@ -11,6 +11,7 @@ interface ISectionHeading {
   center?: boolean;
   marginTop?: boolean; // Used if two sections are below each other
   noMarginBottom?: boolean;
+  options?: any;
 }
 
 function SectionHeading(props: ISectionHeading) {
@@ -23,7 +24,8 @@ function SectionHeading(props: ISectionHeading) {
     hideEditMode,
     center,
     marginTop,
-    noMarginBottom
+    noMarginBottom,
+    options
   } = props;
 
   return (
@@ -57,6 +59,7 @@ function SectionHeading(props: ISectionHeading) {
           onClick={() => toggleEditMode()}
         />
       )}
+      {options && options}
     </div>
   );
 }
