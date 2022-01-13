@@ -3,10 +3,11 @@ interface IProps {
   className?: string;
   width?: string;
   mediumWidth?: string;
+  padding?: string;
 }
 
 function Card(props: IProps) {
-  let { mediumWidth, width, children } = props;
+  let { mediumWidth, width, children, padding } = props;
   let className = props.className ? props.className : "";
 
   return (
@@ -14,7 +15,9 @@ function Card(props: IProps) {
       className={
         "xs:shadow-md rounded-md bg-white mt-3 mb-2 border-gray-100  " +
         (className.includes("border") ? "" : "border ") +
-        (width ? " mx-2 inline-block p-2 xs:p-6 " : " p-4 xs:p-6 block ") +
+        (width
+          ? ` mx-2 inline-block ${padding ? padding : "p-2 xs:p-6"} `
+          : ` ${padding ? padding : "p-4 xs:p-6"} block `) +
         className +
         (mediumWidth ? "w-full sm:w-" + mediumWidth : "")
       }
