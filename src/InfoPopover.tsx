@@ -76,7 +76,7 @@ function InfoPopover(props: IInfoPopover) {
           <Reference>
             {({ ref }) => (
               <div
-                className="u-center w-full "
+                className=" w-full "
                 ref={ref}
                 onClick={(e: any) => {
                   e.stopPropagation();
