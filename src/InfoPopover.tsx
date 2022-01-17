@@ -69,7 +69,7 @@ function InfoPopover(props: IInfoPopover) {
   );
 
   return (
-    <div className="relative text-left ml-4">
+    <div className="relative text-left">
       {hostElement && showPopover && ReactDOM.createPortal(content, hostElement)}
       <InfoPopoverCtx.Provider value={ctxValue}>
         <Manager>
