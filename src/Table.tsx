@@ -31,9 +31,15 @@ function TableContainer(props: IProps) {
   );
 }
 
-function Head(props: any) {
+interface IHeadProps {
+  tableHeadColor?: string;
+  restProps?: any;
+  children: any;
+}
+
+function Head(props: IHeadProps) {
   return (
-    <thead className={tableHeadClass} {...props}>
+    <thead className={props.tableHeadColor ? props.tableHeadColor : tableHeadClass} {...props}>
       {props.children}
     </thead>
   );
