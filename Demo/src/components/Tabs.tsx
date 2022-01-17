@@ -4,6 +4,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import Modals from "./Modals";
 import Forms from "./Forms";
 import CornelScratchPad from "CornelScratchPad";
+import Tables from "./Tables";
 
 function TabsPage() {
   const history = useHistory();
@@ -45,6 +46,9 @@ function TabsPage() {
         </Tabs.Tab>
         <Tabs.Tab tabID={"dialog"} title={"Modals"}>
           <Modals />
+        </Tabs.Tab>
+        <Tabs.Tab tabID={"table"} title={"Tables"}>
+          <Tables />
         </Tabs.Tab>
         <Tabs.Tab tabID={"cornel"} title={"Cornel's scratchpad"}>
           <CornelScratchPad />
