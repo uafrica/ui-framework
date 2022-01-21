@@ -140,15 +140,36 @@ function validateAddress(address: any) {
     return "success";
   }
 
+  let validationItems = [];
   if (
-    (address.street_address || address.company || address.local_area) &&
+    (address.street_address || address.company) &&
+    address.local_area &&
+    address.city &&
     address.zone &&
     address.country
   ) {
     return "success";
+  } else {
+    if (!(address.street_address || address.company)) {
+      validationItems.push("street address or company");
+    }
+    if (!address.local_area) {
+      validationItems.push("suburb");
+    }
+    if (!address.city) {
+      validationItems.push("city");
+    }
+    if (!address.zone) {
+      validationItems.push("province/zone");
+    }
+    if (!address.country) {
+      validationItems.push("country");
+    }
   }
 
-  return "requires a street address, province/zone and country";
+  let validationString = validationItems.join(", ");
+
+  return `requires the following: ${validationString}`;
 }
 
 function validateGoogleAddressType(addressObj: any, invalidTypes: string[]): boolean {
