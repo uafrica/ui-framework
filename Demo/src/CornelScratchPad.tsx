@@ -23,6 +23,7 @@ function CornelScratchPad() {
     <div>
       <div className="max-w-sm my-4">
         <Input
+          showAsterisk
           prependText="R"
           label="Price"
           disabled

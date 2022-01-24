@@ -52,6 +52,7 @@ interface IInputProps {
   onClearSearch?: Function;
   prependSelectProps?: any;
   prependTextSize?: string;
+  showAsterisk?: boolean;
 }
 // Implementation
 function Input(props: IInputProps) {
@@ -99,7 +100,8 @@ function Input(props: IInputProps) {
     inputClassName,
     onClearSearch,
     prependSelectProps,
-    prependTextSize
+    prependTextSize,
+    showAsterisk
   } = props;
 
   type = type ? type : "text";
@@ -168,7 +170,10 @@ function Input(props: IInputProps) {
       {label && label.length > 0 && (
         <div className="flex justify-between">
           <Label htmlFor={htmlFor} className={labelClassName} noMargin={labelInline}>
-            {label}
+            <span className="inline-block whitespace-nowrap">
+              {label}
+              {showAsterisk && " *"}
+            </span>
             {info && <InfoButton>{info}</InfoButton>}
           </Label>
           {optional && <span className="text-gray-500">(Optional)</span>}
