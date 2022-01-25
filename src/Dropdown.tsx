@@ -116,9 +116,7 @@ function DropdownMenu(props: IDropdown) {
   return (
     <DropdownMenuCtx.Provider value={ctxValue}>
       <Manager>
-        <div
-          className={`relative inline-block text-left cursor-pointer ${buttonWidth && buttonWidth}`}
-        >
+        <div className={`inline-block text-left cursor-pointer ${buttonWidth && buttonWidth}`}>
           <Reference>
             {({ ref }) => (
               <div
@@ -163,7 +161,7 @@ function DropdownMenu(props: IDropdown) {
                   }}
                   ref={ref}
                   // @ts-ignore
-                  style={style}
+                  style={{ margin: 0, ...style }}
                   className={
                     "z-10 origin-top-right absolute right-0 rounded-md shadow-lg bg-white u-black-ring focus:outline-none m-1 " +
                     widthClass
