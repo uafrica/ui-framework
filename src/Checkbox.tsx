@@ -71,7 +71,7 @@ function Checkbox(props: IProps) {
           title={hoverTitle}
           type="checkbox"
           className={
-            "focus:ring-0 " +
+            "u-focus " +
             (disabled ? "text-gray-500 " : "text-primary hover:border-primary cursor-pointer ") +
             " border-gray-300 rounded " +
             (className ? className : "")

@@ -64,7 +64,7 @@ function Button(props: IRadioButtonProps) {
           type="radio"
           className={
             (labelLeft ? "ml-2 " : "mr-2 ") +
-            "cursor-pointer form-radio focus:ring-0 " +
+            "cursor-pointer form-radio u-focus " +
             (disabled ? "text-gray-500 " : "text-primary hover:border-primary ") +
             " border-gray-300  " +
             (className ? className : "")

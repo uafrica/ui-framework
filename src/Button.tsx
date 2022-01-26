@@ -209,13 +209,14 @@ function BaseButton(props: IButtonBaseProps) {
 
   return (
     <button
+      tabIndex={0}
       id={id}
       disabled={disabledOrLoading}
       onClick={props.onClick}
       type={type ? type : "button"}
       title={hoverTitle}
       className={
-        "h-9 " +
+        "rounded-full u-focus h-9 " +
         buttonTypeClassNames +
         " " +
         (center ? " block mx-auto " : "") +

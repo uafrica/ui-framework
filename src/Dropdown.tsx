@@ -120,7 +120,18 @@ function DropdownMenu(props: IDropdown) {
           <Reference>
             {({ ref }) => (
               <div
+                tabIndex={0}
+                className="u-focus rounded-full"
                 ref={ref}
+                onKeyPress={(e: any) => {
+                  if (e.key === "Enter") {
+                    if (ctxValue.isVisible) {
+                      ctxValue.hideDropdownMenu();
+                    } else {
+                      ctxValue.showDropdownMenu();
+                    }
+                  }
+                }}
                 onClick={() => {
                   ctxValue.showDropdownMenu();
                 }}
@@ -213,12 +224,22 @@ function MenuItem(props: IMenuItem) {
   let { title, icon, id } = props;
 
   return (
-    <div id={id}>
+    <div
+      id={id}
+      tabIndex={0}
+      className="u-focus"
+      onKeyPress={(e: any) => {
+        if (e.key === "Enter") {
+          document.body.click();
+          props.onClick();
+        }
+      }}
+    >
       <Menu.Item>
         {({ active }) => (
           <div
             className={
-              "group u-vertical-center px-4 py-2 cursor-pointer font-semibold " +
+              " group u-vertical-center px-4 py-2 cursor-pointer font-semibold " +
               (active ? "bg-gray-100 text-gray-900" : "text-black")
             }
             onClick={() => {

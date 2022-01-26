@@ -95,7 +95,11 @@ function DatePicker(props: IDatePicker) {
             <div>
               <Input
                 reference={ref}
-                onFocus={() => ctxValue.showCalendar()}
+                onKeyPress={(e: any) => {
+                  if (e.key === "Enter") {
+                    ctxValue.toggleCalendar();
+                  }
+                }}
                 value={selected ? formattedDate(dateFormat, date) : ""}
                 readOnly
                 label={label}
@@ -257,8 +261,9 @@ const DateSelection: React.FC<{}> = _ => {
     let inRange: boolean = isWithinRange(i);
     dates.push(
       <button
+        tabIndex={0}
         key={`day${i}`}
-        className={`hover:bg-gray-200 rounded p-1 ${
+        className={`u-focus hover:bg-gray-200 rounded p-1 ${
           isSelectedDate(i) ? "bg-gray-300 font-semibold " : ""
         }
         
@@ -287,7 +292,8 @@ const DateSelection: React.FC<{}> = _ => {
         }}
       >
         <button
-          className="hover:bg-gray-200 rounded p-1 u-horizontal-center align-center focus:outline-none items-center"
+          tabIndex={0}
+          className="u-focus hover:bg-gray-200 rounded p-1 u-horizontal-center align-center focus:outline-none items-center"
           onClick={(e: any) => {
             e.preventDefault();
             prevMonth();
@@ -297,7 +303,8 @@ const DateSelection: React.FC<{}> = _ => {
         </button>
 
         <button
-          className={`hover:bg-gray-200 rounded p-1 u-horizontal-center align-center  focus:outline-none items-center font-semibold`}
+          tabIndex={0}
+          className={`u-focus hover:bg-gray-200 rounded p-1 u-horizontal-center align-center  focus:outline-none items-center font-semibold`}
           style={{ gridColumn: "2/5" }}
           onClick={() => viewMonths()}
         >
@@ -305,7 +312,8 @@ const DateSelection: React.FC<{}> = _ => {
         </button>
 
         <button
-          className={`hover:bg-gray-200 rounded p-1 u-horizontal-center align-center focus:outline-none items-center font-semibold`}
+          tabIndex={0}
+          className={`u-focus hover:bg-gray-200 rounded p-1 u-horizontal-center align-center focus:outline-none items-center font-semibold`}
           style={{ gridColumn: "5/7" }}
           onClick={() => viewYears()}
         >
@@ -313,7 +321,8 @@ const DateSelection: React.FC<{}> = _ => {
         </button>
 
         <button
-          className="hover:bg-gray-200 rounded p-1 u-horizontal-center align-center focus:outline-none items-center"
+          tabIndex={0}
+          className="u-focus hover:bg-gray-200 rounded p-1 u-horizontal-center align-center focus:outline-none items-center"
           onClick={(e: any) => {
             e.preventDefault();
             nextMonth();
@@ -421,7 +430,8 @@ const CalendarButton: React.FC<{
 
   return (
     <button
-      className={`hover:bg-gray-200 rounded p-1 u-horizontal-center align-center focus:outline-none items-center ${props.className}`}
+      tabIndex={0}
+      className={`hover:bg-gray-200 rounded p-1 u-horizontal-center align-center u-focus items-center ${props.className}`}
       // @ts-ignore
       style={props.style}
       onClick={props.onClick}
