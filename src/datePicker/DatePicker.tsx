@@ -100,6 +100,9 @@ function DatePicker(props: IDatePicker) {
                     ctxValue.toggleCalendar();
                   }
                 }}
+                onClick={() => {
+                  ctxValue.toggleCalendar();
+                }}
                 value={selected ? formattedDate(dateFormat, date) : ""}
                 readOnly
                 label={label}

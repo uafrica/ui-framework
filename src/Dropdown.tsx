@@ -227,7 +227,7 @@ function MenuItem(props: IMenuItem) {
     <div
       id={id}
       tabIndex={0}
-      className="u-focus"
+      className="u-focus rounded-md mx-1"
       onKeyPress={(e: any) => {
         if (e.key === "Enter") {
           document.body.click();
