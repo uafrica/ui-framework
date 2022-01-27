@@ -61,7 +61,11 @@ function Primary(props: IButtonProps) {
     <BaseButton
       {...props}
       buttonTypeClassNames={
-        "u-button border-transparent text-white bg-" + bgColor + " hover:bg-" + bgColor + "-dark"
+        "u-focus u-button border-transparent text-white bg-" +
+        bgColor +
+        " hover:bg-" +
+        bgColor +
+        "-dark"
       }
       type="submit"
     />
@@ -75,7 +79,7 @@ function Secondary(props: IButtonProps) {
     <BaseButton
       {...props}
       buttonTypeClassNames={
-        "u-button border-" +
+        "u-focus u-button border-" +
         bgColor +
         " text-" +
         bgColor +
@@ -92,7 +96,7 @@ function Tertiary(props: IButtonProps) {
     <BaseButton
       {...props}
       buttonTypeClassNames={
-        "u-button border-gray-900 text-gray-99 bg-white hover:text-primary hover:border-primary "
+        "u-focus u-button border-gray-900 text-gray-99 bg-white hover:text-primary hover:border-primary "
       }
     />
   );
@@ -102,7 +106,9 @@ function Danger(props: IButtonProps) {
   return (
     <BaseButton
       {...props}
-      buttonTypeClassNames={"u-button border-transparent text-white bg-red hover:bg-red-dark"}
+      buttonTypeClassNames={
+        "focus:outline-none focus:ring-1 focus:ring-red u-button border-transparent text-white bg-red hover:bg-red-dark "
+      }
     />
   );
 }
@@ -116,7 +122,7 @@ function Icon(props: IButtonProps) {
       {...props}
       iconSize={props.iconSize ? props.iconSize : "lg"}
       buttonTypeClassNames={
-        "u-button border-transparent text-" +
+        "u-focus u-button border-transparent text-" +
         color +
         " bg-" +
         bgColor +
@@ -137,7 +143,7 @@ function Cancel(props: IButtonProps) {
       {...props}
       title={title}
       buttonTypeClassNames={
-        "u-button justify-center border-gray-300 text-gray-700 bg-white hover:bg-gray-50 "
+        "u-focus u-button justify-center border-gray-300 text-gray-700 bg-white hover:bg-gray-50 "
       }
     />
   );
@@ -157,7 +163,7 @@ function BaseLink(props: ILinkBaseProps) {
     props.color +
     " font-bold hover:text-" +
     props.color +
-    "-dark focus:outline-none justify-center " +
+    "-dark focus:outline-none justify-center focus:underline " +
     (props.small ? " text-xs " : " ") +
     (props.noPadding ? "" : " px-3 py-1 ");
 
@@ -216,7 +222,7 @@ function BaseButton(props: IButtonBaseProps) {
       type={type ? type : "button"}
       title={hoverTitle}
       className={
-        "rounded-full u-focus h-9 " +
+        "rounded-full h-9 " +
         buttonTypeClassNames +
         " " +
         (center ? " block mx-auto " : "") +
