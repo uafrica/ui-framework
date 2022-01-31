@@ -116,13 +116,22 @@ function DropdownMenu(props: IDropdown) {
   return (
     <DropdownMenuCtx.Provider value={ctxValue}>
       <Manager>
-        <div
-          className={`relative inline-block text-left cursor-pointer ${buttonWidth && buttonWidth}`}
-        >
+        <div className={`inline-block text-left cursor-pointer ${buttonWidth && buttonWidth}`}>
           <Reference>
             {({ ref }) => (
               <div
+                tabIndex={0}
+                className="u-focus rounded-full"
                 ref={ref}
+                onKeyPress={(e: any) => {
+                  if (e.key === "Enter") {
+                    if (ctxValue.isVisible) {
+                      ctxValue.hideDropdownMenu();
+                    } else {
+                      ctxValue.showDropdownMenu();
+                    }
+                  }
+                }}
                 onClick={() => {
                   ctxValue.showDropdownMenu();
                 }}
@@ -163,7 +172,7 @@ function DropdownMenu(props: IDropdown) {
                   }}
                   ref={ref}
                   // @ts-ignore
-                  style={style}
+                  style={{ margin: 0, ...style }}
                   className={
                     "z-10 origin-top-right absolute right-0 rounded-md shadow-lg bg-white u-black-ring focus:outline-none m-1 " +
                     widthClass
@@ -215,12 +224,22 @@ function MenuItem(props: IMenuItem) {
   let { title, icon, id } = props;
 
   return (
-    <div id={id}>
+    <div
+      id={id}
+      tabIndex={0}
+      className="u-focus rounded-md mx-1"
+      onKeyPress={(e: any) => {
+        if (e.key === "Enter") {
+          document.body.click();
+          props.onClick();
+        }
+      }}
+    >
       <Menu.Item>
         {({ active }) => (
           <div
             className={
-              "group u-vertical-center px-4 py-2 cursor-pointer font-semibold " +
+              " group u-vertical-center px-4 py-2 cursor-pointer font-semibold " +
               (active ? "bg-gray-100 text-gray-900" : "text-black")
             }
             onClick={() => {

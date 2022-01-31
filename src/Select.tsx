@@ -107,6 +107,15 @@ function GroupedSelect(props: IGroupedSelect) {
     onChange && onChange(newValue);
   }
 
+  function clickOption(option: any) {
+    if (option.disabled !== true) {
+      onSelectToggle(option.value);
+      if (!multiSelection) {
+        ctxValue.hideSelect();
+      }
+    }
+  }
+
   // renders a option group with its list of options
   function renderOptionGroup(optionGroup: IOptionGroup) {
     let limit = 100;
@@ -129,7 +138,7 @@ function GroupedSelect(props: IGroupedSelect) {
     }
 
     return (
-      <div key={optionGroup.label}>
+      <div key={optionGroup.label} className="mb-4">
         {optionGroup.label && (
           <div className="text-gray-600 uppercase text-xs p-2 mt-4">{optionGroup.label}</div>
         )}
@@ -144,16 +153,17 @@ function GroupedSelect(props: IGroupedSelect) {
           return (
             <div key={option.value} className="flex flex-row items-center">
               <div
-                onClick={() => {
-                  if (option.disabled !== true) {
-                    onSelectToggle(option.value);
-                    if (!multiSelection) {
-                      ctxValue.hideSelect();
-                    }
+                tabIndex={0}
+                onKeyPress={e => {
+                  if (e.key === "Enter") {
+                    clickOption(option);
                   }
                 }}
+                onClick={() => {
+                  clickOption(option);
+                }}
                 className={
-                  "flex-1 select-none relative py-2 pl-2 pr-9 hover:bg-gray-100 rounded-md mt-1  " +
+                  "flex-1 select-none relative py-2 pl-2 pr-9 hover:bg-gray-100 focus:bg-gray-100 u-focus rounded-md mt-1 mx-1  " +
                   (selected ? "bg-gray-100" : "text-gray-900") +
                   (option.disabled === true ? " cursor-not-allowed " : " cursor-pointer ")
                 }
@@ -309,6 +319,17 @@ function GroupedSelect(props: IGroupedSelect) {
                       className={"relative " + (className ? className : "") + _buttonWidth}
                     >
                       <div
+                        className="u-focus rounded-md"
+                        tabIndex={0}
+                        onKeyPress={(e: any) => {
+                          if (e.key === "Enter") {
+                            if (ctxValue.isVisible) {
+                              ctxValue.hideSelect();
+                            } else {
+                              ctxValue.showSelect();
+                            }
+                          }
+                        }}
                         onClick={(e: any) => {
                           e.stopPropagation();
 
@@ -379,6 +400,7 @@ function GroupedSelect(props: IGroupedSelect) {
                     >
                       {!noSearch && (
                         <Input
+                          autoComplete={false}
                           inputId="ui-framework-search"
                           containerClassName="mt-4 w-full"
                           onBlur={onSearchBlur}
@@ -458,11 +480,21 @@ function useGroupedSelectCtx(
       }
     }
 
+    // @ts-ignore
+    function keyDownListener(e: KeyboardEvent) {
+      // does not play well with modal esc
+      // if (e.key === "Escape") {
+      //   setVisible(false);
+      // }
+    }
+
     if (isVisible) {
+      window.addEventListener("keydown", keyDownListener);
       document.addEventListener("mousedown", mouseDownListener);
     }
 
     return () => {
+      window.removeEventListener("keydown", keyDownListener);
       document.removeEventListener("mousedown", mouseDownListener);
       if (onSearchBlur) {
         onSearchBlur(); // fires on search blur whenever the dropdown is closed
