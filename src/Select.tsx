@@ -400,7 +400,8 @@ function GroupedSelect(props: IGroupedSelect) {
                     >
                       {!noSearch && (
                         <Input
-                          autoComplete={false}
+                          autoFocus={true}
+                          autoComplete="off"
                           inputId="ui-framework-search"
                           containerClassName="mt-4 w-full"
                           onBlur={onSearchBlur}
