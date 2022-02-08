@@ -120,28 +120,28 @@ function DropdownMenu(props: IDropdown) {
           <Reference>
             {({ ref }) => (
               <div
-                tabIndex={0}
-                className="u-focus rounded-full"
+                className="rounded-full"
                 ref={ref}
-                onKeyPress={(e: any) => {
-                  if (e.key === "Enter") {
-                    if (ctxValue.isVisible) {
-                      ctxValue.hideDropdownMenu();
-                    } else {
-                      ctxValue.showDropdownMenu();
-                    }
-                  }
-                }}
                 onClick={() => {
                   ctxValue.showDropdownMenu();
                 }}
               >
                 <div
+                  tabIndex={0}
+                  onKeyPress={(e: any) => {
+                    if (e.key === "Enter") {
+                      if (ctxValue.isVisible) {
+                        ctxValue.hideDropdownMenu();
+                      } else {
+                        ctxValue.showDropdownMenu();
+                      }
+                    }
+                  }}
                   id={id}
                   className={
-                    `inline-flex ${
+                    `u-focus rounded-full inline-flex ${
                       between ? "justify-between" : "justify-center"
-                    } w-full px-4 py-2 font-medium  focus:outline-none ` +
+                    } w-full px-4 py-0 my-2 font-medium  focus:outline-none ` +
                     ("text-" + color + " ") +
                     (noBackground
                       ? " hover:text-" + color + "-700 font-bold"
