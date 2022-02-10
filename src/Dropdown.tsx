@@ -120,21 +120,32 @@ function DropdownMenu(props: IDropdown) {
           <Reference>
             {({ ref }) => (
               <div
+                className="rounded-full"
                 ref={ref}
                 onClick={() => {
                   ctxValue.showDropdownMenu();
                 }}
               >
                 <div
+                  tabIndex={0}
+                  onKeyPress={(e: any) => {
+                    if (e.key === "Enter") {
+                      if (ctxValue.isVisible) {
+                        ctxValue.hideDropdownMenu();
+                      } else {
+                        ctxValue.showDropdownMenu();
+                      }
+                    }
+                  }}
                   id={id}
                   className={
-                    `inline-flex ${
+                    ` u-focus rounded-full inline-flex ${
                       between ? "justify-between" : "justify-center"
-                    } w-full px-4 py-2 font-medium  focus:outline-none ` +
+                    } w-full px-4 font-medium  focus:outline-none ` +
                     ("text-" + color + " ") +
                     (noBackground
-                      ? " hover:text-" + color + "-700 font-bold"
-                      : ` hover:bg-gray-50 border-gray-300 shadow-sm ${
+                      ? "my-1 py-1 hover:text-" + color + "-700 font-bold"
+                      : ` py-2 hover:bg-gray-50 border-gray-300 shadow-sm ${
                           square ? "rounded" : "rounded-full"
                         } border bg-white`)
                   }
@@ -213,12 +224,22 @@ function MenuItem(props: IMenuItem) {
   let { title, icon, id } = props;
 
   return (
-    <div id={id}>
+    <div
+      id={id}
+      tabIndex={0}
+      className="u-focus rounded-md mx-1"
+      onKeyPress={(e: any) => {
+        if (e.key === "Enter") {
+          document.body.click();
+          props.onClick();
+        }
+      }}
+    >
       <Menu.Item>
         {({ active }) => (
           <div
             className={
-              "group u-vertical-center px-4 py-2 cursor-pointer font-semibold " +
+              " group u-vertical-center px-4 py-2 cursor-pointer font-semibold " +
               (active ? "bg-gray-100 text-gray-900" : "text-black")
             }
             onClick={() => {

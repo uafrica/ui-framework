@@ -1,5 +1,9 @@
 @layer components {
   // common utility patterns
+
+  .u-focus {
+    @apply focus:outline-none focus:ring-1 focus:ring-primary;
+  }
   .u-button {
     @apply inline-flex justify-center items-center px-5 py-2 border leading-4 font-medium rounded-full shadow-sm focus:outline-none;
   }
@@ -167,8 +171,8 @@
 }
 
 /* COUNTER */
-.input-counter{
-  text-align: center !important; 
+.input-counter {
+  text-align: center !important;
   border-radius: 0 !important;
 }
 .input-counter::-webkit-outer-spin-button,

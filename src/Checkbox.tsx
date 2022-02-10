@@ -68,10 +68,15 @@ function Checkbox(props: IProps) {
       >
         {label && (labelLeft || (!labelLeft && !labelRight)) && labelEl}
         <input
+          onKeyPress={(e: any) => {
+            if (e.key === "Enter") {
+              disabled ? null : onClick(e);
+            }
+          }}
           title={hoverTitle}
           type="checkbox"
           className={
-            "focus:ring-0 " +
+            "u-focus " +
             (disabled ? "text-gray-500 " : "text-primary hover:border-primary cursor-pointer ") +
             " border-gray-300 rounded " +
             (className ? className : "")
