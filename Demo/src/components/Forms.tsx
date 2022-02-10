@@ -7,7 +7,8 @@ import {
   Switch,
   Select,
   Dropdown,
-  Radio
+  Radio,
+  Textarea
 } from "../../../src";
 import { useEffect, useState } from "react";
 
@@ -120,6 +121,12 @@ function Forms() {
           ]
         }}
       />
+    </div>
+  );
+
+  const TextareaField = () => (
+    <div className="max-w-md my-4">
+      <Textarea label={"Textarea"} />
     </div>
   );
 
@@ -302,6 +309,8 @@ function Forms() {
       <InputPrice />
 
       <SelectInput />
+
+      <TextareaField />
       <SectionHeading>Date picker</SectionHeading>
       <hr />
       <div className="mt-5">

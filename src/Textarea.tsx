@@ -71,7 +71,10 @@ function Textarea(props: ITextarea) {
         {optional && <span className="text-gray-500">(Optional)</span>}
       </div>
       <textarea
-        className="mt-2 shadow-sm block w-full border border-gray-300 rounded-md"
+        className={
+          "mt-2 shadow-sm block w-full border border-gray-300 rounded-md" +
+          (disabled ? " bg-gray-100" : "")
+        }
         id={id}
         value={value}
         rows={rows ? rows : 4}
