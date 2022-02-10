@@ -400,7 +400,7 @@ function GroupedSelect(props: IGroupedSelect) {
                     >
                       {!noSearch && (
                         <Input
-                          autoFocus={true}
+                          autoFocus={false} // set too false to not make page jump on initial open
                           autoComplete="off"
                           inputId="ui-framework-search"
                           containerClassName="mt-4 w-full"
