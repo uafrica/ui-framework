@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { usePrevious } from "./usePrevious";
 import { useHistory } from "react-router-dom";
 
-function useTabs(defaultTab: string) {
+function useTabs(defaultTab: string, clearParams?: boolean) {
   const history: any = useHistory();
   const [activeTabID, setActiveTabID] = useState<any>();
 
@@ -29,7 +29,7 @@ function useTabs(defaultTab: string) {
 
     history.push({
       pathname: location.pathname,
-      search: queryParams.toString()
+      search: clearParams ? `tab=${tab}` : queryParams.toString()
     });
   }
 
