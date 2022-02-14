@@ -68,9 +68,13 @@ function InfoPopover(props: IInfoPopover) {
     <div className="uafrica-modal-overlay fixed inset-0 bg-black bg-opacity-20 transition-opacity" />
   );
 
+  if (!showPopover) {
+    return <>{children}</>;
+  }
+
   return (
     <div className="relative text-left">
-      {hostElement && showPopover && ReactDOM.createPortal(content, hostElement)}
+      {hostElement && ReactDOM.createPortal(content, hostElement)}
       <InfoPopoverCtx.Provider value={ctxValue}>
         <Manager>
           <Reference>
@@ -86,26 +90,22 @@ function InfoPopover(props: IInfoPopover) {
               </div>
             )}
           </Reference>
-          {showPopover && (
-            <Portal>
-              <Popper placement={placement} innerRef={node => (popupNode.current = node)}>
-                {({ ref, style }) =>
-                  props.showPopover ? (
-                    <div
-                      className={
-                        "info-popover z-50 origin-top-right absolute font-normal p-4 w-80 rounded-md shadow-md bg-white divide-y u-black-ring divide-gray-100 focus:outline-none"
-                      }
-                      // @ts-ignore
-                      style={style}
-                      ref={ref}
-                    >
-                      {popoverContent}
-                    </div>
-                  ) : null
-                }
-              </Popper>
-            </Portal>
-          )}
+          <Portal>
+            <Popper placement={placement} innerRef={node => (popupNode.current = node)}>
+              {({ ref, style }) => (
+                <div
+                  className={
+                    "info-popover z-50 origin-top-right absolute font-normal p-4 w-80 rounded-md shadow-md bg-white divide-y u-black-ring divide-gray-100 focus:outline-none"
+                  }
+                  // @ts-ignore
+                  style={style}
+                  ref={ref}
+                >
+                  {popoverContent}
+                </div>
+              )}
+            </Popper>
+          </Portal>
         </Manager>
       </InfoPopoverCtx.Provider>
     </div>
