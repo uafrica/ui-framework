@@ -25,7 +25,7 @@ interface IRadioGroupProps {
 }
 
 function Button(props: IRadioButtonProps) {
-  let { label, onChange, disabled, labelClassName, className, labelLeft, labelRight, name } = props;
+  let { label, onChange, disabled, labelClassName, className, labelLeft, labelRight, name, checked } = props;
 
   function selectOption() {
     var list = document.querySelectorAll(`input[name='${name}']`);
@@ -73,6 +73,7 @@ function Button(props: IRadioButtonProps) {
           id={label}
           name={name}
           value={label}
+          checked={checked}
           onChange={e => {
             onChange(e.target.value);
           }}
