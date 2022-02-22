@@ -53,6 +53,7 @@ interface IInputProps {
   prependSelectProps?: any;
   prependTextSize?: string;
   showAsterisk?: boolean;
+  noArrows?: boolean;
 }
 // Implementation
 function Input(props: IInputProps) {
@@ -101,7 +102,8 @@ function Input(props: IInputProps) {
     onClearSearch,
     prependSelectProps,
     prependTextSize,
-    showAsterisk
+    showAsterisk,
+    noArrows
   } = props;
 
   type = type ? type : "text";
@@ -160,11 +162,12 @@ function Input(props: IInputProps) {
   return (
     <div
       className={
-        containerClassName
+        (noArrows ? " no-arrows " : "") +
+        (containerClassName
           ? containerClassName
           : labelInline
           ? "u-vertical-center flex-row space-x-4"
-          : "mt-4 max-w-sm"
+          : "mt-4 max-w-sm")
       }
     >
       {label && label.length > 0 && (
