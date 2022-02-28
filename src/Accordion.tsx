@@ -14,10 +14,11 @@ interface IAccordion {
   backgroundColor?: string;
   textColor?: string;
   noCaret?: boolean;
+  caretColor?: string;
 }
 
 function Accordion(props: IAccordion) {
-  let { className, overrideOpen, title, children, onDelete, backgroundColor, textColor, noCaret } =
+  let { className, overrideOpen, title, children, onDelete, backgroundColor, textColor, noCaret, caretColor } =
     props;
 
   useEffect(() => {
@@ -50,7 +51,7 @@ function Accordion(props: IAccordion) {
             {!noCaret && (
               <FontAwesomeIcon
                 icon="caret-down"
-                className={`${open ? "transform rotate-180" : ""} w-5 h-5 text-primary-500`}
+                className={`${open ? "transform rotate-180" : ""} w-5 h-5 text-${caretColor}-500`}
               />
             )}
           </div>
@@ -73,7 +74,8 @@ function Accordion(props: IAccordion) {
 
 Accordion.defaultProps = {
   backgroundColor: "primary",
-  textColor: "primary"
+  textColor: "primary",
+  caretColor: "primary"
 };
 
 export default Accordion;
