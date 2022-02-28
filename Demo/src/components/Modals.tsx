@@ -33,7 +33,7 @@ function Modals() {
             setNestedModal2(true);
           }}
         />
-        <Accordion title={"Some title"} noCaret>
+        <Accordion title={"Some title"} caretColor={"red"}>
           <div className="mt-4">Some content here</div>
         </Accordion>
 
