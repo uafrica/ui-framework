@@ -42,7 +42,6 @@ const Base = ({
 
   const [modalId] = useState(`modal_${elements.length}`);
   useEffect(() => {
-    console.log("disablePressEscToClose", disablePressEscToClose);
     if (!disablePressEscToClose) {
       window.addEventListener("keydown", listenForEscape);
       return () => {
