@@ -12,6 +12,7 @@ interface ISmallMediumModalProps {
   icon?: IconProp;
   closeButton: boolean;
   disableClickOutsideToClose?: boolean;
+  disablePressEscToClose?: boolean;
 }
 
 interface IBaseProps extends ISmallMediumModalProps {
@@ -34,16 +35,22 @@ const Base = ({
   title,
   closeButton,
   disableClickOutsideToClose,
+  disablePressEscToClose,
   ...props
 }: IBaseProps) => {
   let elements = document.getElementsByClassName("uafrica-modal-overlay");
 
   const [modalId] = useState(`modal_${elements.length}`);
   useEffect(() => {
-    window.addEventListener("keydown", listenForEscape);
-    return () => {
-      window.removeEventListener("keydown", listenForEscape);
-    };
+    console.log("disablePressEscToClose", disablePressEscToClose);
+    if (!disablePressEscToClose) {
+      window.addEventListener("keydown", listenForEscape);
+      return () => {
+        window.removeEventListener("keydown", listenForEscape);
+      };
+    } else {
+      return;
+    }
   }, []);
 
   function listenForEscape(e: any) {
