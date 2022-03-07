@@ -16,6 +16,9 @@ interface IDropdown {
   style?: string;
   widthClass?: string; // tailwind w-X class e.g. w-56
   buttonWidth?: string;
+  borderColor?: string;
+  leftRounded?: boolean;
+  rightRounded?: boolean;
   between?: boolean;
   placement?:
     | "auto"
@@ -100,7 +103,10 @@ function DropdownMenu(props: IDropdown) {
     placement,
     square,
     buttonWidth,
-    between
+    between,
+    borderColor,
+    leftRounded,
+    rightRounded
   } = props;
 
   const popupNode = useRef<HTMLElement>();
@@ -139,13 +145,15 @@ function DropdownMenu(props: IDropdown) {
                   }}
                   id={id}
                   className={
-                    ` u-focus rounded-full inline-flex ${
+                    ` u-focus ${
+                      leftRounded ? "rounded-r" : rightRounded ? "rounded-l" : "rounded-full"
+                    } inline-flex ${
                       between ? "justify-between" : "justify-center"
                     } w-full px-4 font-medium  focus:outline-none ` +
                     ("text-" + color + " ") +
                     (noBackground
                       ? "my-1 py-1 hover:text-" + color + "-700 font-bold"
-                      : ` py-2 hover:bg-gray-50 border-gray-300 shadow-sm ${
+                      : ` py-2 hover:bg-gray-50 border-${borderColor} shadow-sm ${
                           square ? "rounded" : "rounded-full"
                         } border bg-white`)
                   }
@@ -292,6 +300,10 @@ function MenuHeading(props: IMenuHeading) {
     </div>
   );
 }
+
+DropdownMenu.defaultProps = {
+  borderColor: "gray-300"
+};
 
 const Dropdown = {
   MenuItemContainer,
