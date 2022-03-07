@@ -1,4 +1,11 @@
-import { Button, Modal, PageActionsPanel, Accordion } from "../../../src";
+import {
+  Button,
+  Modal,
+  PageActionsPanel,
+  Accordion,
+  ModalActionsPanel,
+  Dropdown
+} from "../../../src";
 import { useState } from "react";
 
 function Modals() {
@@ -21,12 +28,20 @@ function Modals() {
 
   function renderNestedModal() {
     return (
-      <Modal.Large
-        show={nestedModal1}
-        closeButton
-        onHide={() => setNestedModal1(false)}
-        title="Nested modal 1"
-      >
+      <Modal.Large show={nestedModal1} closeButton onHide={() => setNestedModal1(false)}>
+        <ModalActionsPanel title={"Large nested modal"}>
+          <div className={"flex items-center"}>
+            <Button.Primary title={"Button"} leftRounded={true} />
+            <Dropdown.Menu
+              color={"primary"}
+              borderColor={"primary"}
+              rightRounded={true}
+              buttonStyle={{ paddingTop: "5px", paddingBottom: "5px" }}
+            >
+              <Dropdown.MenuItem title={"Item 1"} onClick={() => {}} />
+            </Dropdown.Menu>
+          </div>
+        </ModalActionsPanel>
         <Button.Primary
           title="Open nested modal 2"
           onClick={() => {

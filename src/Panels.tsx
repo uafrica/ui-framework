@@ -95,7 +95,7 @@ function ModalActionsPanel(props: IProps) {
           )}
         </div>
       </div>
-      <div className="u-horizontal-center flex-row  space-x-4 items-center w-full md:w-auto  flex-wrap pt-2">
+      <div className="u-horizontal-center flex-row space-x-4 items-center w-full md:w-auto flex-wrap pt-2">
         {props.children}
         {onClose && (
           <div className="hidden md:block" onClick={onClose}>
