@@ -19,6 +19,7 @@ interface IDropdown {
   borderColor?: string;
   leftRounded?: boolean;
   rightRounded?: boolean;
+  buttonStyle?: any;
   between?: boolean;
   placement?:
     | "auto"
@@ -106,7 +107,8 @@ function DropdownMenu(props: IDropdown) {
     between,
     borderColor,
     leftRounded,
-    rightRounded
+    rightRounded,
+    buttonStyle
   } = props;
 
   const popupNode = useRef<HTMLElement>();
@@ -144,6 +146,7 @@ function DropdownMenu(props: IDropdown) {
                     }
                   }}
                   id={id}
+                  style={buttonStyle && buttonStyle}
                   className={
                     ` u-focus ${
                       leftRounded ? "rounded-r" : rightRounded ? "rounded-l" : "rounded-full"

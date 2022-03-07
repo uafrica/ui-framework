@@ -8,7 +8,8 @@ import {
   Select,
   Dropdown,
   Radio,
-  Textarea
+  Textarea,
+  Button
 } from "../../../src";
 import { useEffect, useState } from "react";
 
@@ -183,28 +184,37 @@ function Forms() {
         )}
       </div>
       <div className="my-4">
-        <Dropdown.Menu icon="cog" title="dropdown options" borderColor={"blue"} color={"blue"}>
-          <Dropdown.MenuItem
-            icon="plus"
-            title="Option 1"
-            onClick={() => alert("Option 1 selected")}
-          />
-          <Dropdown.MenuItem
-            icon="search"
-            title="Option 2"
-            onClick={() => alert("Option 2 selected")}
-          />
-          <Dropdown.MenuItem
-            icon="truck"
-            title="Option 3"
-            onClick={() => alert("Option 3 selected")}
-          />
-          <Dropdown.MenuItem
-            icon="money-bill"
-            title="Option 4"
-            onClick={() => alert("Option 4 selected")}
-          />
-        </Dropdown.Menu>
+        <div className="flex">
+          <Button.Primary leftRounded={true} title={"Save"} />
+          <Dropdown.Menu
+            icon="cog"
+            title="dropdown options"
+            borderColor={"blue"}
+            color={"blue"}
+            rightRounded={true}
+          >
+            <Dropdown.MenuItem
+              icon="plus"
+              title="Option 1"
+              onClick={() => alert("Option 1 selected")}
+            />
+            <Dropdown.MenuItem
+              icon="search"
+              title="Option 2"
+              onClick={() => alert("Option 2 selected")}
+            />
+            <Dropdown.MenuItem
+              icon="truck"
+              title="Option 3"
+              onClick={() => alert("Option 3 selected")}
+            />
+            <Dropdown.MenuItem
+              icon="money-bill"
+              title="Option 4"
+              onClick={() => alert("Option 4 selected")}
+            />
+          </Dropdown.Menu>
+        </div>
 
         <div>
           <div className="mt-5">
