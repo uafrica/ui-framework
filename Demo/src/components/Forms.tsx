@@ -183,7 +183,7 @@ function Forms() {
         )}
       </div>
       <div className="my-4">
-        <Dropdown.Menu icon="cog" title="dropdown options">
+        <Dropdown.Menu icon="cog" title="dropdown options" borderColor={"blue"} color={"blue"}>
           <Dropdown.MenuItem
             icon="plus"
             title="Option 1"

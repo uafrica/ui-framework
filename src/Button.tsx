@@ -15,6 +15,8 @@ interface IButtonProps {
   className?: string;
   disabled?: boolean;
   hoverTitle?: string;
+  leftRounded?: boolean;
+  rightRounded?: boolean;
   bgColor?: string; // overrides icon bg
 }
 
@@ -198,7 +200,9 @@ function BaseButton(props: IButtonBaseProps) {
     type,
     id,
     iconSize,
-    hoverTitle
+    hoverTitle,
+    leftRounded,
+    rightRounded
   } = props;
 
   let disabledOrLoading = disabled || isLoading;
@@ -222,7 +226,7 @@ function BaseButton(props: IButtonBaseProps) {
       type={type ? type : "button"}
       title={hoverTitle}
       className={
-        "rounded-full h-9 " +
+        (leftRounded ? "rounded-r h-9" : rightRounded ? "rounded-l h-9" : "rounded-full h-9 ") +
         buttonTypeClassNames +
         " " +
         (center ? " block mx-auto " : "") +
