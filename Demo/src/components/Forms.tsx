@@ -191,7 +191,7 @@ function Forms() {
             title="dropdown options"
             borderColor={"blue"}
             color={"blue"}
-            rightRounded={true}
+            square={true}
           >
             <Dropdown.MenuItem
               icon="plus"
