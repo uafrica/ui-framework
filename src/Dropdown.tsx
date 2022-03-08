@@ -149,7 +149,7 @@ function DropdownMenu(props: IDropdown) {
                   style={buttonStyle && buttonStyle}
                   className={
                     ` u-focus ${
-                      leftRounded ? "rounded-r" : rightRounded ? "rounded-l" : "rounded-full"
+                      leftRounded ? "rounded-r" : rightRounded ? "rounded-l" : square ? "rounded" : "rounded-full"
                     } inline-flex ${
                       between ? "justify-between" : "justify-center"
                     } w-full px-4 font-medium  focus:outline-none ` +
