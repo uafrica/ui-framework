@@ -132,8 +132,8 @@ function ButtonsPanel(props: any) {
     <div
       className={
         props.fixed
-          ? "fixed bottom-0 ua-modal-buttons-panel shadow-inner z-20 p-4 pb-4 bg-white"
-          : ""
+          ? "fixed bottom-0 ua-modal-buttons-panel shadow-inner z-20 p-4 pb-4 mb-1 bg-white"
+          : "mb-1"
       }
     >
       <div
