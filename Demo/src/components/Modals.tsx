@@ -73,7 +73,7 @@ function Modals() {
           >
             <div>Some content here</div>
 
-            <Modal.ButtonsPanel>
+            <Modal.ButtonsPanel isFixed>
               <Button.Cancel title="Cancel" onClick={() => setNestedModal3(false)} />
               <Button.Primary
                 title="Save"
