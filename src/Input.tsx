@@ -34,7 +34,7 @@ interface IInputProps {
   containerClassName?: string;
   errorMessage?: string;
   autoFocus?: any;
-  optional?: boolean; // displays the text "optional" next to the label
+  optional?: any; // when boolean displays the text "optional" next to the label, when string displays string value
   readOnly?: boolean;
   inputClassName?: string;
   info?: any;
@@ -179,7 +179,11 @@ function Input(props: IInputProps) {
             </span>
             {info && <InfoButton>{info}</InfoButton>}
           </Label>
-          {optional && <span className="text-gray-500">(Optional)</span>}
+          {optional && (
+            <span className="text-gray-500">
+              {typeof optional === "string" ? optional : "(Optional)"}
+            </span>
+          )}
         </div>
       )}
       <div className="u-vertical-center flex-row w-full" id={inputFieldId} style={inputFieldStyle}>
