@@ -253,7 +253,8 @@ function MenuItem(props: IMenuItem) {
               " group u-vertical-center px-4 py-2 cursor-pointer font-semibold " +
               (active ? "bg-gray-100 text-gray-900" : "text-black")
             }
-            onClick={() => {
+            onClick={(e: any) => {
+              e.stopPropagation();
               document.body.click();
               props.onClick();
             }}
