@@ -277,9 +277,15 @@ function ButtonsPanel(props: IButtonsPanelProps) {
   );
 }
 
-function Download(props: { isDownloading: boolean; download: any; downloadType: string }) {
+function Download(props: {
+  isDownloading: boolean;
+  download: any;
+  downloadType: string;
+  disabled: boolean;
+}) {
   return (
     <Button.Link
+      disabled={props.disabled}
       onClick={() => props.download()}
       icon="download"
       isLoading={props.isDownloading}
