@@ -281,7 +281,7 @@ function Download(props: {
   isDownloading: boolean;
   download: any;
   downloadType: string;
-  disabled: boolean;
+  disabled?: boolean;
 }) {
   return (
     <Button.Link
