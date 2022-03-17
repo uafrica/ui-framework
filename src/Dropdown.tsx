@@ -40,6 +40,7 @@ interface IMenuItem {
   icon?: IconProp;
   onClick: any;
   id?: string;
+  disabled?: boolean;
 }
 
 interface IMenuHeading {
@@ -149,7 +150,13 @@ function DropdownMenu(props: IDropdown) {
                   style={buttonStyle && buttonStyle}
                   className={
                     ` u-focus ${
-                      leftRounded ? "rounded-r" : rightRounded ? "rounded-l" : square ? "rounded" : "rounded-full"
+                      leftRounded
+                        ? "rounded-r"
+                        : rightRounded
+                        ? "rounded-l"
+                        : square
+                        ? "rounded"
+                        : "rounded-full"
                     } inline-flex ${
                       between ? "justify-between" : "justify-center"
                     } w-full px-4 font-medium  focus:outline-none ` +
@@ -232,7 +239,7 @@ function ContextMenu(props: IDropdown) {
 }
 
 function MenuItem(props: IMenuItem) {
-  let { title, icon, id } = props;
+  let { title, icon, id, disabled } = props;
 
   return (
     <div
@@ -240,7 +247,7 @@ function MenuItem(props: IMenuItem) {
       tabIndex={0}
       className="u-focus rounded-md mx-1"
       onKeyPress={(e: any) => {
-        if (e.key === "Enter") {
+        if (e.key === "Enter" && !disabled) {
           document.body.click();
           props.onClick();
         }
@@ -251,18 +258,27 @@ function MenuItem(props: IMenuItem) {
           <div
             className={
               " group u-vertical-center px-4 py-2 cursor-pointer font-semibold " +
-              (active ? "bg-gray-100 text-gray-900" : "text-black")
+              (disabled
+                ? "bg-gray-100 text-gray-500"
+                : active
+                ? "bg-gray-100 text-gray-900"
+                : "text-black")
             }
             onClick={(e: any) => {
-              e.stopPropagation();
-              document.body.click();
-              props.onClick();
+              if (!disabled) {
+                e.stopPropagation();
+                document.body.click();
+                props.onClick();
+              }
             }}
           >
             {icon && (
               <FontAwesomeIcon
                 icon={icon}
-                className="mr-3 h-5 w-5 text-black group-hover:text-gray-900"
+                className={
+                  "mr-3 h-5 w-5  " +
+                  (disabled ? "text-gray-500" : "text-black group-hover:text-gray-900")
+                }
                 aria-hidden="true"
               />
             )}
