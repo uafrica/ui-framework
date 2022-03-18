@@ -63,7 +63,7 @@ function Primary(props: IButtonProps) {
     <BaseButton
       {...props}
       buttonTypeClassNames={
-        "u-focus u-button border-transparent text-white bg-" +
+        "focus:outline-none focus:ring-1 focus:ring-primary u-button border-transparent text-white bg-" +
         bgColor +
         " hover:bg-" +
         bgColor +

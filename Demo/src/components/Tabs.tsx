@@ -5,6 +5,7 @@ import Modals from "./Modals";
 import Forms from "./Forms";
 import CornelScratchPad from "CornelScratchPad";
 import Tables from "./Tables";
+import Buttons from "./Buttons";
 
 function TabsPage() {
   const history = useHistory();
@@ -49,6 +50,9 @@ function TabsPage() {
         </Tabs.Tab>
         <Tabs.Tab tabID={"table"} title={"Tables"}>
           <Tables />
+        </Tabs.Tab>
+        <Tabs.Tab tabID={"buttons"} title={"Buttons"}>
+          <Buttons />
         </Tabs.Tab>
         <Tabs.Tab tabID={"cornel"} title={"Cornel's scratchpad"}>
           <CornelScratchPad />
