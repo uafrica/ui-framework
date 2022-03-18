@@ -72,7 +72,7 @@ function Textarea(props: ITextarea) {
       </div>
       <textarea
         className={
-          "mt-2 shadow-sm block w-full border border-gray-300 rounded-md" +
+          "focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent mt-2 shadow-sm block w-full border border-gray-300 rounded-md" +
           (disabled ? " bg-gray-100" : "")
         }
         id={id}

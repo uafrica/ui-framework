@@ -80,10 +80,10 @@ module.exports = {
       primary: {
         ...colors.primary,
         light: "#D6ECFF",
-        DEFAULT: "#007BFF",
-        dark: "#0060C7",
-        100: "rgb(214, 236, 255)",
-        500: "#0076fa"
+        DEFAULT: "#1ABC9C",
+        dark: "#3AB69F",
+        100: "rgb(182, 234, 225)",
+        500: "#3DC7AE"
       }
     }
   },

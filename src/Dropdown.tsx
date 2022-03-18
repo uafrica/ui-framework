@@ -169,7 +169,7 @@ function DropdownMenu(props: IDropdown) {
                   }
                 >
                   {icon && <FontAwesomeIcon icon={icon} className="h-5 w-5" aria-hidden="true" />}
-                  {Boolean(title) && <span className="ml-2">{title}</span>}
+                  {Boolean(title) && <span className="ml-2 truncate">{title}</span>}
                   <FontAwesomeIcon
                     icon="caret-down"
                     className="-mr-1 ml-2 h-5 w-5"
