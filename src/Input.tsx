@@ -151,7 +151,7 @@ function Input(props: IInputProps) {
       max={max}
       autoComplete={autoComplete === "off" ? "something-chrome-does-not-know" : autoComplete} // setting autoComplete to off is not reliable
       className={
-        "u-focus focus:border-transparent shadow-sm block w-full border-gray-300 rounded-md " +
+        "focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent shadow-sm block w-full border-gray-300 rounded-md " +
         inputClasses +
         " " +
         (disabled ? " bg-gray-100" : "")

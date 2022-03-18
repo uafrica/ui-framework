@@ -81,7 +81,7 @@ module.exports = {
         ...colors.primary,
         light: "#D6ECFF",
         DEFAULT: "#1ABC9C",
-        dark: "#148F77",
+        dark: "#3AB69F",
         100: "rgb(182, 234, 225)",
         500: "#3DC7AE"
       }
