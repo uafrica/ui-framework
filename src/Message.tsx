@@ -106,9 +106,7 @@ function BaseMessage(props: IBaseMessageProps) {
           </div>
         </div>
       )}
-
     </>
-
   );
 }
 

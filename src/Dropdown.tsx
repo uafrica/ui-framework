@@ -180,7 +180,14 @@ function DropdownMenu(props: IDropdown) {
             )}
           </Reference>
           {/* @ts-ignore */}
-          <Popper placement={placement} innerRef={node => (popupNode.current = node)}>
+          <Popper placement={placement} modifiers={[
+            {
+              name: "offset",
+              options: {
+                offset: [0, 5]
+              }
+            }
+          ]} innerRef={node => (popupNode.current = node)}>
             {({ ref, style }) =>
               ctxValue.isVisible ? (
                 <div
