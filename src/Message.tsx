@@ -1,5 +1,6 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
 
 // Interfaces
 interface IMessageProps {
@@ -7,6 +8,7 @@ interface IMessageProps {
   children: any;
   noPadding?: boolean;
   shadow?: boolean;
+  close?: boolean;
 }
 
 interface IInstructionProps {
@@ -52,7 +54,8 @@ function Instruction(props: IInstructionProps) {
 }
 
 function BaseMessage(props: IBaseMessageProps) {
-  let { children, variant, noPadding, shadow } = props;
+  let { children, variant, noPadding, shadow, close } = props;
+  const [show, setShow] = useState<boolean>(true)
 
   let color = "gray";
   let icon: IconProp | undefined;
@@ -71,30 +74,41 @@ function BaseMessage(props: IBaseMessageProps) {
   }
 
   return (
-    <div
-      className={
-        "rounded-md border border-" +
-        color +
-        "-200 bg-" +
-        color +
-        "-50 " +
-        (noPadding ? "" : " p-4 my-4 ") +
-        (shadow ? " shadow-lg " : "")
-      }
-    >
-      <div className="u-vertical-center">
-        {icon && (
-          <FontAwesomeIcon
-            className={"mr-3 h-5 w-5 text-" + color + "-400"}
-            aria-hidden="true"
-            icon={icon}
-          />
-        )}
-        <div>
-          <div className={"text-" + color + "-700"}>{children}</div>
+    <>
+      {show && (
+        <div
+          className={
+            "rounded-md border border-" +
+            color +
+            "-200 bg-" +
+            color +
+            "-50 " +
+            (noPadding ? "" : " p-4 my-4 ") +
+            (shadow ? " shadow-lg " : "")
+          }
+        >
+          <div className={"flex justify-between items-center"}>
+            <div className="u-vertical-center">
+              {icon && (
+                <FontAwesomeIcon
+                  className={"mr-3 h-5 w-5 text-" + color + "-400"}
+                  aria-hidden="true"
+                  icon={icon}
+                />
+              )}
+              <div>
+                <div className={"text-" + color + "-700"}>{children}</div>
+              </div>
+            </div>
+            {close && (
+              <FontAwesomeIcon icon={"times"} className={"text-" + color + "-400 cursor-pointer"} onClick={() => setShow(!show)} />
+            )}
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+
+    </>
+
   );
 }
 

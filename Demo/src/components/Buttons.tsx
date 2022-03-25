@@ -1,5 +1,6 @@
 import {
-  Button
+  Button,
+  Message
 } from "../../../src";
 import { useState } from "react";
 
@@ -40,31 +41,35 @@ function Buttons() {
   };
 
   return (
-    <div className={"my-4 flex gap-5"}>
-      <Button.Primary
-        title={"Primary"}
-        onClick={() => setLoadingState("primary")}
-        isLoading={isLoading.primary}
-        loadingTitle={"Primary loading"}
-      />
-      <Button.Secondary
-        title={"Secondary"}
-        onClick={() => setLoadingState("secondary")}
-        isLoading={isLoading.secondary}
-        loadingTitle={"Secondary loading"}
-      />
-      <Button.Tertiary
-        title={"Tertiary"}
-        onClick={() => setLoadingState("tertiary")}
-        isLoading={isLoading.tertiary}
-        loadingTitle={"Tertiary loading"}
-      />
-      <Button.Tertiary
-        icon={"download"}
-        onClick={() => setLoadingState("link")}
-        isLoading={isLoading.link}
-      />
-    </div>
+    <>
+      <Message.Success close>This is a message</Message.Success>
+      <div className={"my-4 flex gap-5"}>
+        <Button.Primary
+          title={"Primary"}
+          onClick={() => setLoadingState("primary")}
+          isLoading={isLoading.primary}
+          loadingTitle={"Primary loading"}
+        />
+        <Button.Secondary
+          title={"Secondary"}
+          onClick={() => setLoadingState("secondary")}
+          isLoading={isLoading.secondary}
+          loadingTitle={"Secondary loading"}
+        />
+        <Button.Tertiary
+          title={"Tertiary"}
+          onClick={() => setLoadingState("tertiary")}
+          isLoading={isLoading.tertiary}
+          loadingTitle={"Tertiary loading"}
+        />
+        <Button.Tertiary
+          icon={"download"}
+          onClick={() => setLoadingState("link")}
+          isLoading={isLoading.link}
+        />
+      </div>
+    </>
+
   );
 }
 
