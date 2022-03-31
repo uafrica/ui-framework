@@ -38,16 +38,18 @@ function SectionHeading(props: ISectionHeading) {
       }
     >
       {icon && (
-        <div
-          className={
-            "rounded-full u-center h-8 w-8 bg-" + (iconColor ? iconColor : "black") + "-100"
-          }
-        >
-          <FontAwesomeIcon
-            size="sm"
-            icon={icon}
-            className={"text-" + (iconColor ? iconColor : "black") + "-500"}
-          />
+        <div className="w-8">
+          <div
+            className={
+              "rounded-full u-center h-8 w-8 bg-" + (iconColor ? iconColor : "black") + "-100"
+            }
+          >
+            <FontAwesomeIcon
+              size="sm"
+              icon={icon}
+              className={"text-" + (iconColor ? iconColor : "black") + "-500"}
+            />
+          </div>
         </div>
       )}
 
