@@ -41,6 +41,7 @@ interface IMenuItem {
   onClick: any;
   id?: string;
   disabled?: boolean;
+  isLoading?: boolean;
 }
 
 interface IMenuHeading {
@@ -180,14 +181,18 @@ function DropdownMenu(props: IDropdown) {
             )}
           </Reference>
           {/* @ts-ignore */}
-          <Popper placement={placement} modifiers={[
-            {
-              name: "offset",
-              options: {
-                offset: [0, 5]
+          <Popper
+            placement={placement}
+            modifiers={[
+              {
+                name: "offset",
+                options: {
+                  offset: [0, 5]
+                }
               }
-            }
-          ]} innerRef={node => (popupNode.current = node)}>
+            ]}
+            innerRef={node => (popupNode.current = node)}
+          >
             {({ ref, style }) =>
               ctxValue.isVisible ? (
                 <div
@@ -234,7 +239,7 @@ function ContextMenu(props: IDropdown) {
         <Menu.Items
           static
           className={
-            "z-10 origin-top-right absolute right-0 mt-2 rounded-md shadow-lg bg-white u-black-ring focus:outline-none " +
+            "z-10 origin-top-right absolute py-3 right-0 mt-2 rounded-md shadow-lg bg-white u-black-ring focus:outline-none " +
             widthClass
           }
         >
@@ -246,7 +251,13 @@ function ContextMenu(props: IDropdown) {
 }
 
 function MenuItem(props: IMenuItem) {
-  let { title, icon, id, disabled } = props;
+  let { title, icon, id, disabled, isLoading } = props;
+
+  let iconToShow = icon;
+
+  if (isLoading) {
+    iconToShow = "sync";
+  }
 
   return (
     <div
@@ -279,9 +290,10 @@ function MenuItem(props: IMenuItem) {
               }
             }}
           >
-            {icon && (
+            {iconToShow && (
               <FontAwesomeIcon
-                icon={icon}
+                icon={iconToShow}
+                spin={isLoading}
                 className={
                   "mr-3 h-5 w-5  " +
                   (disabled ? "text-gray-500" : "text-black group-hover:text-gray-900")
