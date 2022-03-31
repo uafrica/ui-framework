@@ -195,6 +195,7 @@ function Forms() {
           >
             <Dropdown.MenuItem
               icon="plus"
+              isLoading={true}
               title="Option 1"
               onClick={() => alert("Option 1 selected")}
             />
