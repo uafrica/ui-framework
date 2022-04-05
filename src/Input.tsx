@@ -42,6 +42,7 @@ interface IInputProps {
   appendIcon?: IconProp;
   appendIconId?: string;
   onAppendIconClick?: any;
+  appendIconColor?: string;
   appendText?: string;
   appendPadding?: string;
   appendSelectProps?: any;
@@ -78,6 +79,7 @@ function Input(props: IInputProps) {
     appendPadding,
     appendIconId,
     onAppendIconClick,
+    appendIconColor,
     optional,
     disabled,
     errorMessage,
@@ -215,7 +217,7 @@ function Input(props: IInputProps) {
                 <div
                   className={
                     onAppendIconClick
-                      ? " cursor-pointer text-primary"
+                      ? " cursor-pointer " + (appendIconColor ?? "text-primary")
                       : " pointer-events-none text-gray-400"
                   }
                   id={appendIconId}

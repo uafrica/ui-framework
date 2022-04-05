@@ -110,6 +110,10 @@ function DatePicker(props: IDatePicker) {
                 containerClassName={containerClassName}
                 placeholder={placeholder}
                 appendIcon={disabled ? undefined : "caret-down"}
+                onAppendIconClick={() => {
+                  ctxValue.toggleCalendar();
+                }}
+                appendIconColor="text-gray-400"
                 disabled={disabled}
               />
             </div>
