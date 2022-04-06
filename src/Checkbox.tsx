@@ -17,6 +17,7 @@ interface IProps {
   noPadding?: boolean;
   labelLeft?: boolean;
   labelRight?: boolean;
+  textColor?: string;
 }
 
 function Checkbox(props: IProps) {
@@ -36,7 +37,8 @@ function Checkbox(props: IProps) {
     labelRight,
     hoverTitle,
     noPadding,
-    disabled
+    disabled,
+    textColor
   } = props;
 
   const labelEl = (
@@ -52,6 +54,8 @@ function Checkbox(props: IProps) {
       {info && <InfoButton>{info}</InfoButton>}
     </label>
   );
+
+  let textDisplayColor = textColor && textColor.length > 0 ? textColor : "primary";
 
   return (
     <div className="flex items-start">
@@ -77,7 +81,9 @@ function Checkbox(props: IProps) {
           type="checkbox"
           className={
             "u-focus " +
-            (disabled ? "text-gray-500 " : "text-primary hover:border-primary cursor-pointer ") +
+            (disabled
+              ? "text-gray-500 "
+              : `text-${textDisplayColor} hover:border-primary cursor-pointer `) +
             " border-gray-300 rounded " +
             (className ? className : "")
           }

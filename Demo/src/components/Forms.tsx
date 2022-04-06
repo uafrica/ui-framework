@@ -9,7 +9,8 @@ import {
   Dropdown,
   Radio,
   Textarea,
-  Button
+  Button,
+  Checkbox
 } from "../../../src";
 import { useEffect, useState } from "react";
 
@@ -264,6 +265,7 @@ function Forms() {
       <PageHeading>Form Components</PageHeading>
       <SectionHeading>Input and checkbox components</SectionHeading>
       <hr />
+      <Checkbox checked={true} textColor={"red-600"} />
       <div className="mt-5">
         <Switch
           checked={showInputInterface}
