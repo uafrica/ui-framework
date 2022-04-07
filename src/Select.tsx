@@ -234,7 +234,7 @@ function GroupedSelect(props: IGroupedSelect) {
 
   let allOptionsSearched = flattenedOptions.filter((option: any) => {
     if (typeof option?.label === "string" && searchTerm) {
-      return option.label.toLowerCase().indexOf(searchTerm) >= 0;
+      return option.label.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0;
     }
     return true;
   });
