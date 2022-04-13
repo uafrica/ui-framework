@@ -44,6 +44,7 @@ interface IBase {
   buttons?: any; // If you want an add option buttons to the bottom of the list, add Button.Link elements
   onDelete?: (label: any, value: any) => void; // Renders a delete button next to each option
   allowDeselect?: boolean; // single select mode does not allow for the deselection of an option by default, only switching to another option. override by setting this to true
+  showAsterisk?: boolean;
 }
 
 // Implementation
@@ -71,7 +72,8 @@ function GroupedSelect(props: IGroupedSelect) {
     onSearchBlur,
     onSearchFocus,
     noSearch,
-    allowDeselect
+    allowDeselect,
+    showAsterisk
   } = props;
 
   const popupNode = useRef<HTMLElement>();
@@ -302,7 +304,7 @@ function GroupedSelect(props: IGroupedSelect) {
         <div className={labelInline ? "flex flex-row items-center space-x-4" : ""}>
           {label && (
             <Label className={labelClassName} noMargin={labelInline}>
-              {label} {info && <InfoButton>{info}</InfoButton>}
+              {label} {showAsterisk && " *"} {info && <InfoButton>{info}</InfoButton>}
             </Label>
           )}
 
