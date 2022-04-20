@@ -173,7 +173,7 @@ function DropdownMenu(props: IDropdown) {
                   {Boolean(title) && <span className="ml-2 truncate">{title}</span>}
                   <FontAwesomeIcon
                     icon="caret-down"
-                    className="-mr-1 ml-2 h-5 w-5"
+                    className={"-mr-1 ml-2 h-5 w-5" + (title ? " mt-px" : "")}
                     aria-hidden="true"
                   />
                 </div>
@@ -275,7 +275,7 @@ function MenuItem(props: IMenuItem) {
         {({ active }) => (
           <div
             className={
-              " group u-vertical-center px-4 py-2 cursor-pointer font-semibold " +
+              " group u-vertical-center px-4 py-2 cursor-pointer font-semibold "  +
               (disabled
                 ? "bg-gray-100 text-gray-500"
                 : active
