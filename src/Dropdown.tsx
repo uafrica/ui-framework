@@ -21,6 +21,7 @@ interface IDropdown {
   rightRounded?: boolean;
   buttonStyle?: any;
   between?: boolean;
+  padding?: string;
   placement?:
     | "auto"
     | "auto-start"
@@ -107,6 +108,7 @@ function DropdownMenu(props: IDropdown) {
     square,
     buttonWidth,
     between,
+    padding,
     borderColor,
     leftRounded,
     rightRounded,
@@ -117,6 +119,11 @@ function DropdownMenu(props: IDropdown) {
   const ctxValue = useDropdownMenuCtx(popupNode);
   if (!placement) {
     placement = "bottom-start";
+  }
+  let componentPadding = "px-4"
+
+  if (padding) {
+    componentPadding = padding
   }
 
   widthClass = widthClass ? widthClass : "w-72";
@@ -160,7 +167,7 @@ function DropdownMenu(props: IDropdown) {
                         : "rounded-full"
                     } inline-flex ${
                       between ? "justify-between" : "justify-center"
-                    } w-full px-4 font-medium  focus:outline-none ` +
+                    } w-full ${componentPadding} font-medium  focus:outline-none ` +
                     ("text-" + color + " ") +
                     (noBackground
                       ? "my-1 py-1 hover:text-" + color + "-700 font-bold"
