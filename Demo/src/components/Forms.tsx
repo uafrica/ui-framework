@@ -188,10 +188,8 @@ function Forms() {
         <div className="flex">
           <Button.Primary leftRounded={true} title={"Save"} />
           <Dropdown.Menu
-            icon="cog"
             title="dropdown options"
-            borderColor={"blue"}
-            color={"blue"}
+            padding={"pr-4 pl-2"}
             square={true}
           >
             <Dropdown.MenuItem
