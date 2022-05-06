@@ -19,6 +19,7 @@ interface IInfoPopover {
   popoverContent: any;
   showPopover: boolean;
   onPopoverDismiss: Function;
+  width?: string;
 }
 
 function InfoPopover(props: IInfoPopover) {
@@ -54,7 +55,7 @@ function InfoPopover(props: IInfoPopover) {
     }, [props.showPopover]);
   }
 
-  let { placement, children, popoverContent, showPopover } = props;
+  let { placement, children, popoverContent, showPopover, width } = props;
 
   if (!placement) {
     placement = "auto";
@@ -95,7 +96,8 @@ function InfoPopover(props: IInfoPopover) {
               {({ ref, style }) => (
                 <div
                   className={
-                    "info-popover z-50 origin-top-right absolute font-normal p-4 w-80 rounded-md shadow-md bg-white divide-y u-black-ring divide-gray-100 focus:outline-none"
+                    "info-popover z-50 origin-top-right absolute font-normal p-4 rounded-md shadow-md bg-white divide-y u-black-ring divide-gray-100 focus:outline-none " +
+                    (width ? width : "w-80")
                   }
                   // @ts-ignore
                   style={style}
