@@ -43,6 +43,7 @@ interface IMenuItem {
   id?: string;
   disabled?: boolean;
   isLoading?: boolean;
+  closeOnClick?: boolean;
 }
 
 interface IMenuHeading {
@@ -120,10 +121,10 @@ function DropdownMenu(props: IDropdown) {
   if (!placement) {
     placement = "bottom-start";
   }
-  let componentPadding = "px-4"
+  let componentPadding = "px-4";
 
   if (padding) {
-    componentPadding = padding
+    componentPadding = padding;
   }
 
   widthClass = widthClass ? widthClass : "w-72";
@@ -203,7 +204,7 @@ function DropdownMenu(props: IDropdown) {
             {({ ref, style }) =>
               ctxValue.isVisible ? (
                 <div
-                  onClick={e => {
+                  onClick={(e: any) => {
                     e.stopPropagation();
                     ctxValue.hideDropdownMenu();
                   }}
@@ -258,7 +259,7 @@ function ContextMenu(props: IDropdown) {
 }
 
 function MenuItem(props: IMenuItem) {
-  let { title, icon, id, disabled, isLoading } = props;
+  let { title, icon, id, disabled, isLoading, closeOnClick } = props;
 
   let iconToShow = icon;
 
@@ -282,7 +283,7 @@ function MenuItem(props: IMenuItem) {
         {({ active }) => (
           <div
             className={
-              " group u-vertical-center px-4 py-2 cursor-pointer font-semibold "  +
+              " group u-vertical-center px-4 py-2 cursor-pointer font-semibold " +
               (disabled
                 ? "bg-gray-100 text-gray-500"
                 : active
@@ -291,9 +292,14 @@ function MenuItem(props: IMenuItem) {
             }
             onClick={(e: any) => {
               if (!disabled) {
-                e.stopPropagation();
-                document.body.click();
-                props.onClick();
+                if (closeOnClick) {
+                  document.body.click();
+                  props.onClick();
+                } else {
+                  e.stopPropagation();
+                  document.body.click();
+                  props.onClick();
+                }
               }
             }}
           >

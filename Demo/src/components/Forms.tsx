@@ -187,11 +187,7 @@ function Forms() {
       <div className="my-4">
         <div className="flex">
           <Button.Primary leftRounded={true} title={"Save"} />
-          <Dropdown.Menu
-            title="dropdown options"
-            padding={"pr-4 pl-2"}
-            square={true}
-          >
+          <Dropdown.Menu title="dropdown options" padding={"pr-4 pl-2"} square={true}>
             <Dropdown.MenuItem
               icon="plus"
               isLoading={true}
@@ -355,6 +351,10 @@ function Forms() {
       <SectionHeading>Select and dropdown components</SectionHeading>
       <hr />
       <SelectAndDropdown />
+      <Dropdown.Menu title={"New dropdown"}>
+        <Dropdown.MenuItem title={"Item 1"} onClick={() => alert("one")} closeOnClick={false} />
+        <Dropdown.MenuItem title={"Item 2"} onClick={() => alert("two")} closeOnClick={true} />
+      </Dropdown.Menu>
 
       <SectionHeading>Radio buttons and groups</SectionHeading>
       <hr />
