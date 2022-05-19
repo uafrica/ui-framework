@@ -15,11 +15,22 @@ interface IAccordion {
   textColor?: string;
   noCaret?: boolean;
   caretColor?: string;
+  endComponent?: any;
 }
 
 function Accordion(props: IAccordion) {
-  let { className, overrideOpen, title, children, onDelete, backgroundColor, textColor, noCaret, caretColor } =
-    props;
+  let {
+    className,
+    overrideOpen,
+    title,
+    children,
+    onDelete,
+    backgroundColor,
+    textColor,
+    noCaret,
+    caretColor,
+    endComponent
+  } = props;
 
   useEffect(() => {
     setOpen(Boolean(overrideOpen));
@@ -34,7 +45,10 @@ function Accordion(props: IAccordion) {
           onClick={() => setOpen(!open)}
           className={`cursor-pointer flex w-full space-x-4 px-4 py-2 text-md items-center font-bold text-left text-${textColor}-900 bg-${backgroundColor}-100 rounded-lg hover:bg-${backgroundColor}-200 focus:outline-none focus-visible:ring focus-visible:ring-${backgroundColor}-500 focus-visible:ring-opacity-75`}
         >
-          <span className="w-full">{title}</span>
+          <span className="w-full" style={{ border: "1px solid red" }}>
+            {title}
+          </span>
+          {endComponent && <>{endComponent}</>}
           <div className="flex space-x-4">
             {onDelete && (
               <Confirm
@@ -48,6 +62,7 @@ function Accordion(props: IAccordion) {
                 <FontAwesomeIcon icon="trash" className="delete" title="Delete item" />
               </Confirm>
             )}
+
             {!noCaret && (
               <FontAwesomeIcon
                 icon="caret-down"
@@ -75,7 +90,8 @@ function Accordion(props: IAccordion) {
 Accordion.defaultProps = {
   backgroundColor: "primary",
   textColor: "primary",
-  caretColor: "primary"
+  caretColor: "primary",
+  endComponent: null
 };
 
 export default Accordion;
