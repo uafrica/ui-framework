@@ -48,11 +48,7 @@ function Modals() {
             setNestedModal2(true);
           }}
         />
-        <Accordion
-          title={"Some title"}
-          caretColor={"red"}
-          endComponent={<div className={"w-96"}>This is the component</div>}
-        >
+        <Accordion title={"Some title"} caretColor={"red"}>
           <div className="mt-4">Some content here</div>
         </Accordion>
 

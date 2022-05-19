@@ -45,9 +45,7 @@ function Accordion(props: IAccordion) {
           onClick={() => setOpen(!open)}
           className={`cursor-pointer flex w-full space-x-4 px-4 py-2 text-md items-center font-bold text-left text-${textColor}-900 bg-${backgroundColor}-100 rounded-lg hover:bg-${backgroundColor}-200 focus:outline-none focus-visible:ring focus-visible:ring-${backgroundColor}-500 focus-visible:ring-opacity-75`}
         >
-          <span className="w-full" style={{ border: "1px solid red" }}>
-            {title}
-          </span>
+          <span className="w-full">{title}</span>
           {endComponent && <>{endComponent}</>}
           <div className="flex space-x-4">
             {onDelete && (
