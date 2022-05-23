@@ -309,7 +309,7 @@ function GroupedSelect(props: IGroupedSelect) {
           )}
 
           {/* Button that is clicked on to open the dropdown */}
-          <GroupedSelectCtx.Provider value={ctxValue}>
+          <GroupedSelectCtx.Provider value={ctxValue} key={ctxValue.isVisible.toString()}>
             <Manager>
               <Reference>
                 {({ ref }) => (
@@ -337,7 +337,12 @@ function GroupedSelect(props: IGroupedSelect) {
 
                           if (disabled) return;
 
-                          ctxValue.showSelect();
+                          if (ctxValue.isVisible) {
+                            ctxValue.hideSelect();
+                          } else {
+                            ctxValue.showSelect();
+                          }
+
                           if (onClick) {
                             onClick();
                           }
@@ -364,7 +369,7 @@ function GroupedSelect(props: IGroupedSelect) {
                           </span>
                           <span className="absolute inset-y-0 right-0 u-vertical-center pr-2 pointer-events-none">
                             <FontAwesomeIcon
-                              icon="caret-down"
+                              icon={ctxValue.isVisible ? "caret-up" : "caret-down"}
                               className="h-5 w-5 text-gray-400"
                               aria-hidden="true"
                             />

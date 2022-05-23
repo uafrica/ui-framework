@@ -88,8 +88,10 @@ function DatePicker(props: IDatePicker) {
   );
 
   return (
-    <DatePickerCtx.Provider value={ctxValue}>
+    <DatePickerCtx.Provider value={ctxValue} key={ctxValue.isVisible.toString()}>
+      {/* @ts-ignore */}
       <Manager>
+        {/* @ts-ignore */}
         <Reference>
           {({ ref }) => (
             <div>
@@ -109,7 +111,7 @@ function DatePicker(props: IDatePicker) {
                 labelInline={labelInline}
                 containerClassName={containerClassName}
                 placeholder={placeholder}
-                appendIcon={disabled ? undefined : "caret-down"}
+                appendIcon={disabled ? undefined : ctxValue.isVisible ? "caret-up" : "caret-down"}
                 onAppendIconClick={() => {
                   ctxValue.toggleCalendar();
                 }}
@@ -119,7 +121,9 @@ function DatePicker(props: IDatePicker) {
             </div>
           )}
         </Reference>
+
         {!disabled && (
+          // @ts-ignore
           <Popper
             placement="bottom-start"
             innerRef={node => (popupNode.current = node)}
