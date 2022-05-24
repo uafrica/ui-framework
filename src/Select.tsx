@@ -301,17 +301,13 @@ function GroupedSelect(props: IGroupedSelect) {
             } else {
               // select all, ignore disabled options
               onChange &&
-                onChange(() => {
-                  try {
-                    flattenedOptions
-                      .filter((option: { value: string | number; disabled?: boolean }) => {
-                        return notSelectedDisabledOptions.indexOf(option.value) === -1;
-                      })
-                      .map(option => option.value);
-                  } catch (e) {
-                    console.log(e);
-                  }
-                });
+                onChange(
+                  (flattenedOptions ? flattenedOptions : [])
+                    .filter((option: { value: string | number; disabled?: boolean }) => {
+                      return notSelectedDisabledOptions.indexOf(option.value) === -1;
+                    })
+                    .map(option => option.value)
+                );
             }
           }}
         />
