@@ -124,12 +124,17 @@ function GroupedSelect(props: IGroupedSelect) {
 
     // Search
     searchTerm = searchTerm.toLowerCase();
-    let optionsLimited = optionGroup.options.filter((option: any) => {
-      if (typeof option.label === "string" && searchTerm) {
-        return option.label.toLowerCase().indexOf(searchTerm) >= 0;
-      }
-      return true;
-    });
+    let optionsLimited = [];
+    try {
+      optionsLimited = optionGroup.options.filter((option: any) => {
+        if (typeof option.label === "string" && searchTerm) {
+          return option.label.toLowerCase().indexOf(searchTerm) >= 0;
+        }
+        return true;
+      });
+    } catch (e) {
+      console.log(e);
+    }
 
     let optionsOmitted = 0;
 
@@ -234,12 +239,17 @@ function GroupedSelect(props: IGroupedSelect) {
     }
   }
 
-  let allOptionsSearched = flattenedOptions.filter((option: any) => {
-    if (typeof option?.label === "string" && searchTerm) {
-      return option.label.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0;
-    }
-    return true;
-  });
+  let allOptionsSearched = [];
+  try {
+    allOptionsSearched = flattenedOptions.filter((option: any) => {
+      if (typeof option?.label === "string" && searchTerm) {
+        return option.label.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0;
+      }
+      return true;
+    });
+  } catch (e) {
+    console.log(e);
+  }
 
   let _containerClassName = "mt-4";
 
@@ -259,42 +269,56 @@ function GroupedSelect(props: IGroupedSelect) {
   // Select all buttons
   let selectAllButton: any;
 
-  let disabledOptions = flattenedOptions
-    .filter((option: { value: string | number; disabled?: boolean }) => {
-      return option.disabled;
-    })
-    .map((option: { label: string; value: any; disabled?: boolean }) => {
-      return option.value;
-    });
+  let disabledOptions: any = [];
+  try {
+    disabledOptions = flattenedOptions
+      .filter((option: { value: string | number; disabled?: boolean }) => {
+        return option.disabled;
+      })
+      .map((option: { label: string; value: any; disabled?: boolean }) => {
+        return option.value;
+      });
+  } catch (e) {
+    console.log(e);
+  }
 
-  if (multiSelection) {
-    const selectedDisabledOptions = value.filter((v: any) => disabledOptions.includes(v));
-    const notSelectedDisabledOptions = disabledOptions.filter(
-      (v: any) => !selectedDisabledOptions.includes(v)
-    );
-    let allSelected = flattenedOptions.length - notSelectedDisabledOptions.length === value.length;
-    selectAllButton = (
-      <Button.Link
-        key="select-deselect"
-        title={allSelected ? "Deselect all" : "Select all"}
-        onClick={() => {
-          if (allSelected) {
-            // deselect all, ignore disabled options
-            onChange && onChange(selectedDisabledOptions);
-          } else {
-            // select all, ignore disabled options
-            onChange &&
-              onChange(
-                flattenedOptions
-                  .filter((option: { value: string | number; disabled?: boolean }) => {
-                    return notSelectedDisabledOptions.indexOf(option.value) === -1;
-                  })
-                  .map(option => option.value)
-              );
-          }
-        }}
-      />
-    );
+  try {
+    if (multiSelection) {
+      const selectedDisabledOptions = value.filter((v: any) => disabledOptions.includes(v));
+      const notSelectedDisabledOptions = disabledOptions.filter(
+        (v: any) => !selectedDisabledOptions.includes(v)
+      );
+      let allSelected =
+        flattenedOptions.length - notSelectedDisabledOptions.length === value.length;
+      selectAllButton = (
+        <Button.Link
+          key="select-deselect"
+          title={allSelected ? "Deselect all" : "Select all"}
+          onClick={() => {
+            if (allSelected) {
+              // deselect all, ignore disabled options
+              onChange && onChange(selectedDisabledOptions);
+            } else {
+              // select all, ignore disabled options
+              onChange &&
+                onChange(() => {
+                  try {
+                    flattenedOptions
+                      .filter((option: { value: string | number; disabled?: boolean }) => {
+                        return notSelectedDisabledOptions.indexOf(option.value) === -1;
+                      })
+                      .map(option => option.value);
+                  } catch (e) {
+                    console.log(e);
+                  }
+                });
+            }
+          }}
+        />
+      );
+    }
+  } catch (e) {
+    console.log(e);
   }
 
   let placement = "bottom-start";
@@ -310,7 +334,9 @@ function GroupedSelect(props: IGroupedSelect) {
 
           {/* Button that is clicked on to open the dropdown */}
           <GroupedSelectCtx.Provider value={ctxValue} key={ctxValue.isVisible.toString()}>
+            {/* @ts-ignore */}
             <Manager>
+              {/* @ts-ignore */}
               <Reference>
                 {({ ref }) => (
                   <div
@@ -381,6 +407,7 @@ function GroupedSelect(props: IGroupedSelect) {
                   </div>
                 )}
               </Reference>
+              {/* @ts-ignore */}
               <Popper
                 // @ts-ignore
                 placement={placement}
