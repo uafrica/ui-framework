@@ -27,7 +27,7 @@ function evaluateScroll(tabNavId: any, children: any) {
     let leftId = children[0]?.props.id ?? children[0]?.props.tabID;
     if (leftId) {
       let left: any = document.getElementById(leftId)?.getBoundingClientRect();
-      if (left.x < (nav?.x ?? 0)) {
+      if (left?.x < (nav?.x ?? 0)) {
         res.left = true;
       }
     }
@@ -37,7 +37,7 @@ function evaluateScroll(tabNavId: any, children: any) {
     if (rightId) {
       let right: any = document.getElementById(rightId)?.getBoundingClientRect();
 
-      if (right.x + right.width > screen.width) {
+      if (right?.x + right.width > screen.width) {
         res.right = true;
       }
     }
