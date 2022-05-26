@@ -1,4 +1,5 @@
-import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useEffect, useState } from "react";
 import { InfoButton } from "./InfoButton";
 
 // Interface
@@ -16,7 +17,32 @@ interface ITabs {
   children: any;
   activeTabID: string;
   onSelect: any;
-  wrapTabsForMobile?: boolean;
+}
+
+function evaluateScroll(tabNavId: any, children: any) {
+  let res = { left: false, right: false };
+  if (children.length > 0) {
+    let nav = document.getElementById(tabNavId)?.getBoundingClientRect();
+
+    let leftId = children[0]?.props.id ?? children[0]?.props.tabID;
+    if (leftId) {
+      let left: any = document.getElementById(leftId)?.getBoundingClientRect();
+      if (left.x < (nav?.x ?? 0)) {
+        res.left = true;
+      }
+    }
+
+    let rightId =
+      children[children.length - 1]?.props.id ?? children[children.length - 1]?.props.tabID;
+    if (rightId) {
+      let right: any = document.getElementById(rightId)?.getBoundingClientRect();
+
+      if (right.x + right.width > screen.width) {
+        res.right = true;
+      }
+    }
+  }
+  return res;
 }
 
 // Implementation
@@ -26,30 +52,42 @@ function Tab(props: ITab) {
 }
 
 function Primary(props: ITabs) {
+  let [overflowing, setOverflowing] = useState({ left: false, right: false });
+
+  let tabNavId = "tab_nav" + Math.random();
+  useEffect(() => {
+    setOverflowing(evaluateScroll(tabNavId, props.children));
+  }, [props.children]);
+
   let children = props.children;
   if (!Array.isArray(props.children)) {
     children = [props.children];
   }
 
   children = children.filter((child: any) => child && child.props);
+
   let activeTab = children.filter((child: any) => props.activeTabID === child.props.tabID);
 
   return (
     <div>
       <div>
-        <div className="border-b border-gray-200">
+        <div className="flex items-center border-b border-gray-200">
+          {overflowing.left && (
+            <FontAwesomeIcon icon={"chevron-left"} color="gray" className="m-1" />
+          )}
+
           <nav
-            className={`-mb-px flex ${
-              props.wrapTabsForMobile
-                ? " flex-col sm:flex-row space-y-1 sm:space-y-0 sm:space-x-8 "
-                : " space-x-8 "
-            }`}
+            id={tabNavId}
+            className={`-mb-px flex space-x-8 overflow-x-auto`}
+            onScroll={() => {
+              setOverflowing(evaluateScroll(tabNavId, props.children));
+            }}
             aria-label="Tabs"
           >
             {children.map((child: any) => (
               <div
                 key={child.props.tabID}
-                id={child.props.id}
+                id={child.props.id ?? child.props.tabID}
                 onClick={() => {
                   if (child.props.isClickable !== false) {
                     props.onSelect(child.props.tabID);
@@ -66,13 +104,21 @@ function Primary(props: ITabs) {
                   "  group inline-flex items-center py-3 px-1 border-b-2 font-bold"
                 }
               >
-                <span className={"flex flex-row space-x-4 items-center " + child.props.className}>
+                <span
+                  className={
+                    "flex flex-row space-x-4 items-center whitespace-nowrap " +
+                    child.props.className
+                  }
+                >
                   {child.props.title}{" "}
                   {child.props.info && <InfoButton>{child.props.info}</InfoButton>}
                 </span>
               </div>
             ))}
           </nav>
+          {overflowing.right && (
+            <FontAwesomeIcon icon={"chevron-right"} color="gray" className="m-1" />
+          )}
         </div>
         <React.Fragment key={props.activeTabID}>{activeTab}</React.Fragment>
       </div>
@@ -81,6 +127,13 @@ function Primary(props: ITabs) {
 }
 
 function Secondary(props: ITabs) {
+  let [overflowing, setOverflowing] = useState({ left: false, right: false });
+
+  let tabNavId = "tab_nav" + Math.random();
+  useEffect(() => {
+    setOverflowing(evaluateScroll(tabNavId, props.children));
+  }, [props.children]);
+
   let children = props.children;
   if (!Array.isArray(props.children)) {
     children = [props.children];
@@ -91,13 +144,14 @@ function Secondary(props: ITabs) {
 
   return (
     <div className="mt-8">
-      <div>
+      <div className="flex items-center">
+        {overflowing.left && <FontAwesomeIcon icon={"chevron-left"} color="gray" className="m-1" />}
         <nav
-          className={`flex ${
-            props.wrapTabsForMobile
-              ? " flex-col sm:flex-row space-y-1 sm:space-y-0 sm:space-x-4 "
-              : " space-x-4 "
-          } pb-2 border-b border-gray-200`}
+          onScroll={() => {
+            setOverflowing(evaluateScroll(tabNavId, props.children));
+          }}
+          id={tabNavId}
+          className={`flex space-x-4 overflow-x-auto pb-2 border-b border-gray-200`}
           aria-label="Tabs"
         >
           {children.map((child: any) => (
@@ -118,13 +172,20 @@ function Secondary(props: ITabs) {
                 "  px-3 py-2 font-medium rounded-md"
               }
             >
-              <span className={"u-vertical-center flex-row space-x-4 " + child.props.className}>
+              <span
+                className={
+                  "u-vertical-center flex-row space-x-4 whitespace-nowrap " + child.props.className
+                }
+              >
                 {child.props.title}{" "}
                 {child.props.info && <InfoButton>{child.props.info}</InfoButton>}
               </span>
             </div>
           ))}
         </nav>
+        {overflowing.right && (
+          <FontAwesomeIcon icon={"chevron-right"} color="gray" className="m-1" />
+        )}
       </div>
       <React.Fragment key={props.activeTabID}>{activeTab}</React.Fragment>
     </div>
