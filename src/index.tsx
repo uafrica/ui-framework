@@ -38,6 +38,8 @@ import { SavingOverlay } from "./SavingOverlay";
 import * as addressUtils from "./utils/addressUtils";
 import { useTabs } from "./hooks/useTabs";
 import { usePrevious } from "./hooks/usePrevious";
+import { useOnClickOutside } from "./hooks/useOnClickOutside";
+import { withError } from "./ErrorBoundary/withError";
 import "./index.scss";
 
 const DownloadButton = Button.Download;
@@ -90,5 +92,7 @@ export {
   IconWithBackground,
   addressUtils,
   useTabs,
-  usePrevious
+  usePrevious,
+  useOnClickOutside,
+  withError
 };

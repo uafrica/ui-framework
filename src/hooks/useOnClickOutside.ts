@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-export default function useOnClickOutside(
+function useOnClickOutside(
   ref: React.MutableRefObject<HTMLElement | undefined>,
   handler: Function
 ) {
@@ -21,3 +21,5 @@ export default function useOnClickOutside(
     };
   }, [ref, handler]);
 }
+
+export { useOnClickOutside };
