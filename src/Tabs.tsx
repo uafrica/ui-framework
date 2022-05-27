@@ -37,7 +37,7 @@ function evaluateScroll(tabNavId: any, children: any) {
     if (rightId) {
       let right: any = document.getElementById(rightId)?.getBoundingClientRect();
 
-      if (right?.x + right.width > screen.width) {
+      if (right?.x + right?.width > screen.width) {
         res.right = true;
       }
     }
