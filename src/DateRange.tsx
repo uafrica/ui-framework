@@ -31,9 +31,9 @@ function DateRange(props: {
 
   useEffect(() => {
     if (showRange && onRangeChange) {
-      onRangeChange(defaultDateFrom, defaultDateTo);
+      onRangeChange(dateFrom ?? defaultDateFrom, dateTo ?? defaultDateTo);
     } else if (onPeriodChange) {
-      onPeriodChange(defaultPeriod);
+      onPeriodChange(period ?? defaultPeriod);
     }
   }, [showRange]);
   return (
