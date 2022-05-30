@@ -1,51 +1,51 @@
-import { Message } from "./Message";
-import { PageHeading } from "./PageHeading";
-import { SectionHeading } from "./SectionHeading";
+import * as addressUtils from "./utils/addressUtils";
+import Accordion from "./Accordion";
+import CopyText from "./CopyText";
+import ResponsiveRow from "./ResponsiveRow";
+import SkeletonLoader from "./SkeletonLoaders";
+import Switch from "./Switch";
 import { Button } from "./Button";
 import { Card } from "./Card";
-import { Input } from "./Input";
+import { Checkbox } from "./Checkbox";
+import { Confirm } from "./Confirm";
 import { Counter } from "./Counter";
-import { NavItem, NavItemDivider } from "./NavItem";
-import { Loader } from "./Loader";
-import { Tabs } from "./Tabs";
+import { DatePicker } from "./datePicker/DatePicker";
+import { DateRange } from "./DateRange";
+import { Dropdown } from "./Dropdown";
+import { fas } from "@fortawesome/free-solid-svg-icons";
 import {
+  FiltersPanel,
+  ModalActionsPanel,
   PageActionsPanel,
   SectionActionsPanel,
-  TableActionsPanel,
-  FiltersPanel,
-  ModalActionsPanel
+  TableActionsPanel
 } from "./Panels";
-import { Dropdown } from "./Dropdown";
-import { Modal } from "./Modal";
-import { Select, GroupedSelect } from "./Select";
-import { Checkbox } from "./Checkbox";
-import { Radio } from "./Radio";
+import { GroupedSelect, Select } from "./Select";
 import { IconWithBackground } from "./IconWithBackground";
-import { Textarea } from "./Textarea";
 import { InfoButton } from "./InfoButton";
 import { InfoPopover } from "./InfoPopover";
-import { Table } from "./Table";
-import { Confirm } from "./Confirm";
+import { Input } from "./Input";
 import { Label, LabelWithValue } from "./Label";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { Loader } from "./Loader";
+import { Message } from "./Message";
+import { Modal } from "./Modal";
+import { NavItem, NavItemDivider } from "./NavItem";
+import { PageHeading } from "./PageHeading";
+import { Radio } from "./Radio";
 import { SavePanel, SavePanelContainer } from "./SavePanel";
-import Switch from "./Switch";
-import Accordion from "./Accordion";
-import ResponsiveRow from "./ResponsiveRow";
-import { DatePicker } from "./datePicker/DatePicker";
-import CopyText from "./CopyText";
-import SkeletonLoader from "./SkeletonLoaders";
 import { SavingOverlay } from "./SavingOverlay";
-import * as addressUtils from "./utils/addressUtils";
-import { useTabs } from "./hooks/useTabs";
-import { usePrevious } from "./hooks/usePrevious";
+import { SectionHeading } from "./SectionHeading";
+import { Table } from "./Table";
+import { Tabs } from "./Tabs";
+import { Textarea } from "./Textarea";
 import { useOnClickOutside } from "./hooks/useOnClickOutside";
+import { usePrevious } from "./hooks/usePrevious";
+import { useTabs } from "./hooks/useTabs";
 import { withError } from "./ErrorBoundary/withError";
 import "./index.scss";
 
 const DownloadButton = Button.Download;
-
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { fas } from "@fortawesome/free-solid-svg-icons";
 
 library.add(fas);
 
@@ -72,6 +72,7 @@ export {
   ModalActionsPanel,
   SectionActionsPanel,
   DownloadButton,
+  DateRange,
   Dropdown,
   Label,
   Checkbox,
