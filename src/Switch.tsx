@@ -7,14 +7,16 @@ interface IProps {
   onChange: any;
   label?: string;
   info?: string;
+  containerClassName?: string;
 }
 
 export default function Switch(props: IProps) {
-  let { checked, label, info, disabled } = props;
+  let { checked, label, info, disabled, containerClassName } = props;
 
   return (
     <div
-      className="u-vertical-center flex-row space-x-4"
+      className={"u-vertical-center flex-row space-x-4 " +
+      (containerClassName ? containerClassName : "")}
       onClick={() => {
         if (!disabled) {
           props.onChange();
