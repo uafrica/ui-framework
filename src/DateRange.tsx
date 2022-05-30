@@ -36,9 +36,21 @@ function DateRange(props: {
       onPeriodChange(period ?? defaultPeriod);
     }
   }, [showRange]);
+
   return (
     <div className={containerClassName ?? "flex flex-row space-x-4"}>
-      {showRange ? (
+      <Select
+        options={periodOptions ?? []}
+        onChange={(val: string) => {
+          if (onPeriodChange) {
+            onPeriodChange(val);
+          }
+        }}
+        placeholder={"Select period"}
+        value={period ?? defaultPeriod}
+        label={"Filter by period"}
+      />
+      {showRange && (
         <>
           <DatePicker
             label="From"
@@ -61,18 +73,6 @@ function DateRange(props: {
             dateFormat={"yyyy-MM-DD"}
           />
         </>
-      ) : (
-        <Select
-          options={periodOptions ?? []}
-          onChange={(val: string) => {
-            if (onPeriodChange) {
-              onPeriodChange(val);
-            }
-          }}
-          placeholder={"Select period"}
-          value={period ?? defaultPeriod}
-          label={"Filter by period"}
-        />
       )}
     </div>
   );
