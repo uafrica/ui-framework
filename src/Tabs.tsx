@@ -144,14 +144,14 @@ function Secondary(props: ITabs) {
 
   return (
     <div className="mt-8">
-      <div className="flex items-center">
+      <div className="flex items-center border-b border-gray-200">
         {overflowing.left && <FontAwesomeIcon icon={"chevron-left"} color="gray" className="m-1" />}
         <nav
           onScroll={() => {
             setOverflowing(evaluateScroll(tabNavId, props.children));
           }}
           id={tabNavId}
-          className={`flex space-x-4 overflow-x-auto pb-2 border-b border-gray-200`}
+          className={`flex space-x-4 overflow-x-auto pb-2 `}
           aria-label="Tabs"
         >
           {children.map((child: any) => (
