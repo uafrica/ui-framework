@@ -430,6 +430,7 @@ const CalendarButton: React.FC<{
   className?: string;
   style?: React.StyleHTMLAttributes<HTMLButtonElement>;
   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  children?: any;
 }> = props => {
   let children = null;
 

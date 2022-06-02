@@ -18,12 +18,23 @@ interface IProps {
   cancelText?: string;
   confirmButtonVariant?: string;
   showCancelButton?: boolean;
+  disableClickOutsideToClose?: boolean;
+  disablePressEscToClose?: boolean;
 }
 
 // Implementation
 function Confirm(props: IProps) {
-  let { confirmButtonVariant, showCancelButton, cancelText, body, children, title, confirmText } =
-    props;
+  let {
+    confirmButtonVariant,
+    showCancelButton,
+    cancelText,
+    body,
+    children,
+    title,
+    confirmText,
+    disableClickOutsideToClose,
+    disablePressEscToClose
+  } = props;
 
   let [isOpen, setOpen] = useState<boolean>(!!props.visible);
 
@@ -85,7 +96,14 @@ function Confirm(props: IProps) {
   return (
     <div onClick={onButtonClick} className="flex items-center">
       {children}
-      <Modal.Small show={isOpen} onHide={onClose} title={title} closeButton>
+      <Modal.Small
+        show={isOpen}
+        onHide={onClose}
+        title={title}
+        closeButton
+        disableClickOutsideToClose={disableClickOutsideToClose}
+        disablePressEscToClose={disablePressEscToClose}
+      >
         {body}
         <Button.ButtonsPanel>
           {cancelButton}
