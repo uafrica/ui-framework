@@ -71,7 +71,7 @@ function Primary(props: ITabs) {
   return (
     <div>
       <div>
-        <div className="flex items-center border-b border-gray-200">
+        <div className="flex items-center border-b border-gray-200 w-full">
           {overflowing.left && (
             <FontAwesomeIcon icon={"chevron-left"} color="gray" className="m-1" />
           )}
@@ -144,7 +144,7 @@ function Secondary(props: ITabs) {
 
   return (
     <div className="mt-8">
-      <div className="flex items-center border-b border-gray-200">
+      <div className="flex items-center border-b border-gray-200 w-full">
         {overflowing.left && <FontAwesomeIcon icon={"chevron-left"} color="gray" className="m-1" />}
         <nav
           onScroll={() => {
