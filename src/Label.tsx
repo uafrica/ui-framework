@@ -15,7 +15,6 @@ interface ILabelWithValue {
   noMargin?: boolean;
   info?: string;
   labelColor?: string;
-  valueContainerClassName?: string;
 }
 
 // Implementation
@@ -40,7 +39,7 @@ function Label(props: ILabel) {
 }
 
 function LabelWithValue(props: ILabelWithValue) {
-  let { label, value, noMargin, info, labelColor, valueContainerClassName } = props;
+  let { label, value, noMargin, info, labelColor } = props;
 
   return (
     <div className={"flex flex-row items-center flex-wrap " + (noMargin ? "" : " mb-2 pt-2")}>
@@ -53,7 +52,7 @@ function LabelWithValue(props: ILabelWithValue) {
       >
         {label}
       </label>
-      <div className={"ml-2 text-left " + (valueContainerClassName ? valueContainerClassName : "")}>{value}</div>
+      <div className="ml-2 text-left">{value}</div>
       {info && (
         <div>
           <InfoButton>{info}</InfoButton>
