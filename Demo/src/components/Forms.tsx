@@ -73,6 +73,7 @@ function Forms() {
         checked={inlineInput}
         onChange={() => setInlineInput(!inlineInput)}
         label="Toggle inline input"
+        containerClassName={"check-here-class"}
         info={!inlineInput ? "This will not work without state" : ""}
       />
       <div className="mt-5">
