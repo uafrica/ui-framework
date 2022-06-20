@@ -17,7 +17,7 @@
     "allowSyntheticDefaultImports": true,
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
-    "jsx": "react",
+    "jsx": "react-jsx",
     "noImplicitAny": true,
     "strictNullChecks": true,
     "noImplicitThis": true,
