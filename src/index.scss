@@ -146,11 +146,11 @@
 }
 
 .ua-filters-panel > * {
-  margin-left: 1rem;
+  margin-right: 1rem;
 }
 
 .ua-filters-panel > *:nth-child(1) {
-  margin-left: 0 !important;
+  margin-right: 1rem !important;
 }
 
 @media (max-width: 475px) {
