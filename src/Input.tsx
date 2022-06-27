@@ -151,7 +151,9 @@ function Input(props: IInputProps) {
       onKeyPress={onKeyPress}
       onKeyUp={onKeyUp}
       onBlur={(e: any) => {
-        e.target.placeholder = placeholder;
+        if (placeholder) {
+          e.target.placeholder = placeholder;
+        }
         onBlur && onBlur(e);
       }}
       step={step}
