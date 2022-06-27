@@ -57,6 +57,8 @@ function Forms() {
       <div className="max-w-md my-4 flex">
         <Input
           label="Price"
+          placeholder={"0.00"}
+          onBlur={(e: any) => console.log("value blured", e.target.value)}
           labelInline={inlineInput}
           appendText={"/kg"}
           prependText={"RRR"}
