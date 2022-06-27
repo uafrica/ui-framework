@@ -23,13 +23,20 @@ function useTabs(defaultTab: string, clearParams?: boolean) {
     }
   });
 
-  function onTabSelected(tab: any) {
+  // pass extra params through as object
+  function onTabSelected(tab: any, extraParams?: any, overrideClear?: boolean) {
     const queryParams = new URLSearchParams(location.search);
     queryParams.set("tab", tab);
 
+    if (extraParams) {
+      Object.keys(extraParams).map((item: any) => {
+        queryParams.set(`${item}`, extraParams[item]);
+      });
+    }
+
     history.push({
       pathname: location.pathname,
-      search: clearParams ? `tab=${tab}` : queryParams.toString()
+      search: clearParams && !overrideClear ? `tab=${tab}` : queryParams.toString()
     });
   }
 
