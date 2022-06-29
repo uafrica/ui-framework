@@ -56,7 +56,11 @@ function Row(props: any) {
 function HeadCol(props: any) {
   return (
     <th
-      className={tableHeadColClass + (props.center ? " text-center " : " text-left ")}
+      className={
+        tableHeadColClass +
+        (props.className ? props.className + " " : "") +
+        (props.center ? " text-center " : " text-left ")
+      }
       scope="col"
       {...props}
     >
@@ -71,7 +75,14 @@ function Body(props: any) {
 
 function Col(props: any) {
   return (
-    <td className={tableColClass + (props.center ? " text-center " : " text-left ")} {...props}>
+    <td
+      className={
+        tableColClass +
+        (props.className ? props.className + " " : "") +
+        (props.center ? " text-center " : " text-left ")
+      }
+      {...props}
+    >
       {props.children}
     </td>
   );
