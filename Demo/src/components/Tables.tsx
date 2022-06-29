@@ -7,14 +7,14 @@ function Tables() {
       <Table.Table>
         <Table.Head tableHeadColor={"bg-primary-100"}>
           <Table.Row>
-            <Table.HeadCol>Col one</Table.HeadCol>
+            <Table.HeadCol headColClass={"text-right"}>Col one</Table.HeadCol>
             <Table.HeadCol>Col two</Table.HeadCol>
             <Table.HeadCol>Col three</Table.HeadCol>
           </Table.Row>
         </Table.Head>
         <Table.Body>
           <Table.Row>
-            <Table.Col>Row one col one</Table.Col>
+            <Table.Col colClass={"text-right"}>Row one col one</Table.Col>
             <Table.Col>Row one col two</Table.Col>
             <Table.Col>Row one col three</Table.Col>
           </Table.Row>

@@ -35,11 +35,21 @@ interface IHeadProps {
   tableHeadColor?: string;
   restProps?: any;
   children: any;
+  headColClass?: string;
 }
 
 function Head(props: IHeadProps) {
   return (
-    <thead className={props.tableHeadColor ? props.tableHeadColor : tableHeadClass} {...props}>
+    <thead
+      className={
+        props.headColClass
+          ? props.headColClass + " "
+          : "" + props.tableHeadColor
+          ? props.tableHeadColor
+          : tableHeadClass
+      }
+      {...props}
+    >
       {props.children}
     </thead>
   );
@@ -53,10 +63,22 @@ function Row(props: any) {
   );
 }
 
-function HeadCol(props: any) {
+interface IHeadColProps {
+  restProps?: any;
+  children: any;
+  headColClass?: string;
+  center?: boolean;
+}
+
+function HeadCol(props: IHeadColProps) {
   return (
     <th
-      className={tableHeadColClass + (props.center ? " text-center " : " text-left ")}
+      className={
+        tableHeadColClass +
+        " " +
+        props.headColClass +
+        (props.center ? " text-center " : " text-left ")
+      }
       scope="col"
       {...props}
     >
@@ -69,9 +91,21 @@ function Body(props: any) {
   return <tbody>{props.children}</tbody>;
 }
 
-function Col(props: any) {
+interface IColProps {
+  restProps?: any;
+  children: any;
+  colClass?: string;
+  center?: boolean;
+}
+
+function Col(props: IColProps) {
   return (
-    <td className={tableColClass + (props.center ? " text-center " : " text-left ")} {...props}>
+    <td
+      className={
+        tableColClass + " " + props.colClass + (props.center ? " text-center " : " text-left ")
+      }
+      {...props}
+    >
       {props.children}
     </td>
   );
