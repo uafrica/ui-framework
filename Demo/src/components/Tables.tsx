@@ -7,7 +7,7 @@ function Tables() {
       <Table.Table>
         <Table.Head tableHeadColor={"bg-primary-100"}>
           <Table.Row>
-            <Table.HeadCol headColClass={"text-right"}>Col one</Table.HeadCol>
+            <Table.HeadCol style={{ textAlign: "right" }}>Col one</Table.HeadCol>
             <Table.HeadCol>Col two</Table.HeadCol>
             <Table.HeadCol>Col three</Table.HeadCol>
           </Table.Row>
