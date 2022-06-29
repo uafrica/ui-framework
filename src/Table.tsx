@@ -80,7 +80,7 @@ function HeadCol(props: IHeadColProps) {
         (props.center ? " text-center " : " text-left ")
       }
       scope="col"
-      {...props}
+      {...props.restProps}
     >
       {props.children}
     </th>
@@ -104,7 +104,7 @@ function Col(props: IColProps) {
       className={
         tableColClass + " " + props.colClass + (props.center ? " text-center " : " text-left ")
       }
-      {...props}
+      {...props.restProps}
     >
       {props.children}
     </td>
