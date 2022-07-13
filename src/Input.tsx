@@ -26,6 +26,7 @@ interface IInputProps {
   step?: any;
   min?: number;
   max?: number;
+  maxLength?: number;
   autoComplete?: any;
   disabled?: boolean;
   reference?: any;
@@ -97,6 +98,7 @@ function Input(props: IInputProps) {
     step,
     min,
     max,
+    maxLength,
     autoComplete,
     info,
     appendSelectProps,
@@ -159,6 +161,7 @@ function Input(props: IInputProps) {
       step={step}
       min={min}
       max={max}
+      maxLength={maxLength}
       autoComplete={autoComplete === "off" ? "something-chrome-does-not-know" : autoComplete} // setting autoComplete to off is not reliable
       className={
         "focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent shadow-sm block w-full border-gray-300 rounded-md " +
