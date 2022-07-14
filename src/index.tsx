@@ -10,6 +10,7 @@ import { Checkbox } from "./Checkbox";
 import { Confirm } from "./Confirm";
 import { Counter } from "./Counter";
 import { DatePicker } from "./datePicker/DatePicker";
+import { MonthPicker } from "./monthPicker/MonthPicker";
 import { DateRange } from "./DateRange";
 import { Dropdown } from "./Dropdown";
 import { fas } from "@fortawesome/free-solid-svg-icons";
@@ -59,6 +60,7 @@ export {
   Button,
   Card,
   DatePicker,
+  MonthPicker,
   Input,
   Counter,
   Modal,

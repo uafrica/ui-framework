@@ -1,22 +1,27 @@
 import { useEffect } from "react";
 import { DatePicker } from "./datePicker/DatePicker";
+import { MonthPicker } from "./monthPicker/MonthPicker";
 import { Select } from "./Select";
+import moment from "moment";
 
 function DateRange(props: {
   showRange?: boolean;
+  showMonth?: boolean;
   period?: string;
   defaultPeriod?: string;
-  dateFrom?: any;
-  defaultDateFrom?: any;
-  dateTo?: any;
-  defaultDateTo?: any;
+  dateFrom?: any; // used for range and/or month selection
+  defaultDateFrom?: any; // used for range and/or month selection
+  dateTo?: any; // used for range and/or month selection
+  defaultDateTo?: any; // used for range and/or month selection
   onPeriodChange?: Function;
   onRangeChange?: Function;
+  onMonthChange?: Function;
   periodOptions?: { label: string; value: string }[];
   containerClassName?: string;
 }) {
   let {
     showRange,
+    showMonth,
     period,
     defaultPeriod,
     dateFrom,
@@ -25,17 +30,19 @@ function DateRange(props: {
     defaultDateTo,
     onPeriodChange,
     onRangeChange,
+    onMonthChange,
     periodOptions,
     containerClassName
   } = props;
-
   useEffect(() => {
-    if (showRange && onRangeChange) {
+    if (showMonth && onMonthChange) {
+      onMonthChange(dateFrom ?? defaultDateFrom, dateTo ?? defaultDateTo);
+    } else if (showRange && onRangeChange) {
       onRangeChange(dateFrom ?? defaultDateFrom, dateTo ?? defaultDateTo);
     } else if (onPeriodChange) {
       onPeriodChange(period ?? defaultPeriod);
     }
-  }, [showRange]);
+  }, [showRange, showMonth]);
 
   return (
     <div className={containerClassName ?? "flex flex-row space-x-4"}>
@@ -73,6 +80,21 @@ function DateRange(props: {
             dateFormat={"yyyy-MM-DD"}
           />
         </>
+      )}
+      {showMonth && (
+        <div>
+          <MonthPicker
+            label="Select month"
+            dateFrom={dateFrom ?? defaultDateFrom}
+            onChange={(dateFrom: any) => {
+              if (onMonthChange) {
+                // @ts-ignore
+                let dateTo = new Date(moment(dateFrom).endOf("month"));
+                onMonthChange(dateFrom, dateTo);
+              }
+            }}
+          />
+        </div>
       )}
     </div>
   );
