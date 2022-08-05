@@ -2,7 +2,6 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { Button } from "./Button";
 import { PageHeading } from "./PageHeading";
 import { SectionHeading } from "./SectionHeading";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // Interface
 interface IProps {
@@ -59,22 +58,7 @@ function SectionActionsPanel(props: ISectionActionsPanel) {
   return (
     <div className={"u-panel " + (className ? className : "")}>
       {title && (
-        <SectionHeading toggleEditMode={toggleEditMode} hideEditMode={hideEditMode} noMarginBottom>
-          {icon && (
-            <div className="w-8">
-              <div
-                className={
-                  "rounded-full u-center h-8 w-8 bg-" + (iconColor ? iconColor : "black") + "-100"
-                }
-              >
-                <FontAwesomeIcon
-                  size="sm"
-                  icon={icon}
-                  className={"text-" + (iconColor ? iconColor : "black") + "-500"}
-                />
-              </div>
-            </div>
-          )}
+        <SectionHeading icon={icon} iconColor={iconColor} toggleEditMode={toggleEditMode} hideEditMode={hideEditMode} noMarginBottom>
           {title}
         </SectionHeading>
       )}
