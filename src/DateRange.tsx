@@ -36,7 +36,14 @@ function DateRange(props: {
   } = props;
   useEffect(() => {
     if (showMonth && onMonthChange) {
-      onMonthChange(dateFrom ?? defaultDateFrom, dateTo ?? defaultDateTo);
+      // ensure default values are from start to end of month
+      let defaultToMonth = Date.parse(
+        moment(defaultDateTo).endOf("month").format("YYYY-MM-DD HH:mm:ss")
+      );
+      let defaultFromMonth = Date.parse(
+        moment(defaultDateTo).startOf("month").format("YYYY-MM-DD HH:mm:ss")
+      );
+      onMonthChange(dateFrom ?? defaultFromMonth, dateTo ?? defaultToMonth);
     } else if (showRange && onRangeChange) {
       onRangeChange(dateFrom ?? defaultDateFrom, dateTo ?? defaultDateTo);
     } else if (onPeriodChange) {
