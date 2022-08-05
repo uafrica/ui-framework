@@ -25,6 +25,8 @@ interface ISectionActionsPanel {
   className?: string;
   toggleEditMode?: any;
   hideEditMode?: boolean;
+  icon?: IconProp;
+  iconColor?: string;
 }
 
 interface IFiltersPanel {
@@ -52,11 +54,11 @@ function TableActionsPanel(props: IProps) {
 }
 
 function SectionActionsPanel(props: ISectionActionsPanel) {
-  let { title, className, toggleEditMode, hideEditMode } = props;
+  let { title, className, toggleEditMode, hideEditMode, icon, iconColor } = props;
   return (
     <div className={"u-panel " + (className ? className : "")}>
       {title && (
-        <SectionHeading toggleEditMode={toggleEditMode} hideEditMode={hideEditMode} noMarginBottom>
+        <SectionHeading icon={icon} iconColor={iconColor} toggleEditMode={toggleEditMode} hideEditMode={hideEditMode} noMarginBottom>
           {title}
         </SectionHeading>
       )}
