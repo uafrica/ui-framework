@@ -57,6 +57,7 @@ interface IInputProps {
   showAsterisk?: boolean;
   noArrows?: boolean;
   disableNumericInputScroll?: boolean; // scrolling over a numeric input causes the input value to change
+  pointer?: boolean;
 }
 // Implementation
 function Input(props: IInputProps) {
@@ -109,7 +110,8 @@ function Input(props: IInputProps) {
     prependTextSize,
     showAsterisk,
     noArrows,
-    disableNumericInputScroll
+    disableNumericInputScroll,
+    pointer
   } = props;
 
   type = type ? type : "text";
@@ -169,7 +171,7 @@ function Input(props: IInputProps) {
         "focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent shadow-sm block w-full border-gray-300 rounded-md " +
         inputClasses +
         " " +
-        (disabled ? " bg-gray-100" : "")
+        (disabled ? " bg-gray-100" : "") + (pointer ? " cursor-pointer" : "")
       }
       onWheel={(e: any) => {
         if (disableNumericInputScroll) {
