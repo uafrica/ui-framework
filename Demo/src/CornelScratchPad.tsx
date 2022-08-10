@@ -27,6 +27,7 @@ function CornelScratchPad() {
           prependText="R"
           label="Price"
           disabled
+          pointer
           labelInline
           appendSelectProps={{
             popoverWidth: "w-96",

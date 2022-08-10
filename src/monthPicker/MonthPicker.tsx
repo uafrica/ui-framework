@@ -78,6 +78,7 @@ function MonthPicker(props: IMonthPicker) {
             <div>
               <Input
                 reference={ref}
+                pointer
                 onKeyPress={(e: any) => {
                   if (e.key === "Enter") {
                     ctxValue.toggleCalendar();
@@ -153,7 +154,7 @@ const Calendar: React.FC<CalendarProps> = React.forwardRef<HTMLDivElement, Calen
 
     return (
       <div
-        className="bg-white z-40 relative shadow-lg max-w-xs w-64 p-2 rounded-lg u-black-ring"
+        className="u-focus bg-white z-40 relative shadow-lg max-w-xs w-64 p-2 rounded-lg u-black-ring"
         ref={ref}
         data-placement={props.placement}
         // @ts-ignore
