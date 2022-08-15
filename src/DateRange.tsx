@@ -43,6 +43,12 @@ function DateRange(props: {
       let defaultFromMonth = Date.parse(
         moment(defaultDateTo).startOf("month").format("YYYY-MM-DD HH:mm:ss")
       );
+
+      if (dateTo) {
+        dateFrom = moment(dateTo).startOf("month").format("YYYY-MM-DD HH:mm:ss");
+        dateTo = moment(dateTo).endOf("month").format("YYYY-MM-DD HH:mm:ss");
+      }
+
       onMonthChange(dateFrom ?? defaultFromMonth, dateTo ?? defaultToMonth);
     } else if (showRange && onRangeChange) {
       onRangeChange(dateFrom ?? defaultDateFrom, dateTo ?? defaultDateTo);
