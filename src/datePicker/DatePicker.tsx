@@ -373,15 +373,27 @@ const MonthSelection: React.FC<{}> = _ => {
       }}
     >
       <div className="flex" style={{ gridColumn: "1/5" }}>
-        <CalendarButton chevron="left" onClick={() => prevYear()} />
+        <CalendarButton
+          chevron="left"
+          onClick={(e: any) => {
+            e.preventDefault();
+            prevYear();
+          }}
+        />
         <CalendarButton className="flex-grow" onClick={() => viewYears()}>
           {visible.year}
         </CalendarButton>
-        <CalendarButton chevron="right" onClick={() => nextYear()} />
+        <CalendarButton
+          chevron="right"
+          onClick={(e: any) => {
+            e.preventDefault();
+            nextYear();
+          }}
+        />
       </div>
 
       {monthNames.map((month, index) => (
-        <CalendarButton key="month" onClick={() => selectMonth(index)}>
+        <CalendarButton key={`month${index}`} onClick={() => selectMonth(index)}>
           {month.substring(0, 3)}
         </CalendarButton>
       ))}
@@ -401,7 +413,17 @@ const YearSelection: React.FC<{}> = _ => {
   let [minYear, maxYear] = [year - 6, year + 6];
 
   for (let i = minYear; i < maxYear; i++) {
-    years.push(<CalendarButton onClick={() => selectYear(i)}>{i}</CalendarButton>);
+    years.push(
+      <CalendarButton
+        key={`year${i}`}
+        onClick={(e: any) => {
+          e.preventDefault();
+          selectYear(i);
+        }}
+      >
+        {i}
+      </CalendarButton>
+    );
   }
 
   return (
@@ -415,9 +437,26 @@ const YearSelection: React.FC<{}> = _ => {
       }}
     >
       <div className="flex" style={{ gridColumn: "1/5" }}>
-        <CalendarButton chevron="left" onClick={() => prevDecade()} />
-        <CalendarButton className="flex-grow">{`${minYear} - ${maxYear - 1}`}</CalendarButton>
-        <CalendarButton chevron="right" onClick={() => nextDecade()} />
+        <CalendarButton
+          chevron="left"
+          onClick={(e: any) => {
+            e.preventDefault();
+            prevDecade();
+          }}
+        />
+        <CalendarButton
+          onClick={(e: any) => {
+            e.preventDefault();
+          }}
+          className="flex-grow"
+        >{`${minYear} - ${maxYear - 1}`}</CalendarButton>
+        <CalendarButton
+          chevron="right"
+          onClick={(e: any) => {
+            e.preventDefault();
+            nextDecade();
+          }}
+        />
       </div>
 
       {years}
