@@ -28,7 +28,7 @@ function PageHeading(props: IPageHeading) {
 }
 
 PageHeading.defaultProps = {
-  uppercase: true
+  uppercase: true // add default prop to true
 }
 
 export { PageHeading };
