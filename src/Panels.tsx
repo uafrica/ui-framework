@@ -17,6 +17,7 @@ interface IPageActionsPanelProps {
   className?: string;
   onClose?: any;
   icon?: IconProp;
+  uppercase?: boolean;
 }
 
 interface ISectionActionsPanel {
@@ -70,11 +71,11 @@ function SectionActionsPanel(props: ISectionActionsPanel) {
 }
 
 function PageActionsPanel(props: IPageActionsPanelProps) {
-  let { title, icon } = props;
+  let { title, icon, uppercase } = props;
 
   return (
     <div className="ua-page-actions-panel u-panel xs:pb-4">
-      {title && <PageHeading icon={icon}>{title}</PageHeading>}
+      {title && <PageHeading uppercase={uppercase} icon={icon}>{title}</PageHeading>}
       <div className="ua-page-actions-panel-children ml-0 xs:ml-auto u-reverse-flex-col-to-row items-start xs:items-center ">
         {props.children}
       </div>

@@ -40,7 +40,7 @@ function TabsPage() {
 
   return (
     <>
-      <PageHeading>uAfrica UI Component playground</PageHeading>
+      <PageHeading uppercase={false}>uAfrica UI Component playground</PageHeading>
       <Tabs.Primary activeTabID={activeTabID} onSelect={(tabID: string) => onTabSelected(tabID)}>
         <Tabs.Tab tabID={"forms"} title={"Forms"}>
           <Forms />
