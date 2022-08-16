@@ -44,9 +44,9 @@ function DateRange(props: {
         moment(defaultDateTo).startOf("month").format("YYYY-MM-DD HH:mm:ss")
       );
 
-      if (dateTo) {
-        dateFrom = moment(dateTo).startOf("month").format("YYYY-MM-DD HH:mm:ss");
-        dateTo = moment(dateTo).endOf("month").format("YYYY-MM-DD HH:mm:ss");
+      if (dateFrom) {
+        dateFrom = moment(dateFrom).startOf("month").format("YYYY-MM-DD HH:mm:ss");
+        dateTo = moment(dateFrom).endOf("month").format("YYYY-MM-DD HH:mm:ss");
       }
 
       onMonthChange(dateFrom ?? defaultFromMonth, dateTo ?? defaultToMonth);
