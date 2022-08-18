@@ -188,11 +188,7 @@ const Calendar: React.FC<CalendarProps> = React.forwardRef<HTMLDivElement, Calen
 );
 
 const TimeSelection: React.FC<{}> = _ => {
-  const {
-    selectHours,
-    selectMinutes,
-    time: { hours, minutes }
-  } = useContext(DatePickerCtx);
+  const { selectHours, selectMinutes, date } = useContext(DatePickerCtx);
   return (
     <div className="mt-1 text-center">
       <div>
@@ -207,16 +203,25 @@ const TimeSelection: React.FC<{}> = _ => {
             step={1}
             min={0}
             max={23}
-            value={hours}
+            defaultValue={moment(date).format("HH")}
             placeholder="hh"
             onChange={(e: any) => {
               let hours = e.target.value;
-              if (hours < 0) {
-                hours = 0;
-              } else if (hours > 23) {
-                hours = 23;
+              try {
+                hours = parseInt(hours);
+                if (isNaN(hours)) {
+                  selectHours(0);
+                  return;
+                }
+                if (hours < 0) {
+                  hours = 0;
+                } else if (hours > 23) {
+                  hours = 23;
+                }
+                selectHours(hours);
+              } catch (e) {
+                selectHours(0);
               }
-              selectHours(hours);
             }}
           />
         </div>
@@ -231,16 +236,25 @@ const TimeSelection: React.FC<{}> = _ => {
             step={1}
             min={0}
             max={59}
-            value={minutes}
+            defaultValue={moment(date).format("mm")}
             placeholder="mm"
             onChange={(e: any) => {
               let minutes = e.target.value;
-              if (minutes < 0) {
-                minutes = 0;
-              } else if (minutes > 59) {
-                minutes = 59;
+              try {
+                minutes = parseInt(minutes);
+                if (isNaN(minutes)) {
+                  selectMinutes(0);
+                  return;
+                }
+                if (minutes < 0) {
+                  minutes = 0;
+                } else if (minutes > 59) {
+                  minutes = 59;
+                }
+                selectMinutes(minutes);
+              } catch (e) {
+                selectMinutes(0);
               }
-              selectMinutes(minutes);
             }}
           />
         </div>
