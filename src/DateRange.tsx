@@ -45,8 +45,8 @@ function DateRange(props: {
       );
 
       if (dateFrom) {
-        dateFrom = moment(dateFrom).startOf("month").format("YYYY-MM-DD HH:mm:ss");
-        dateTo = moment(dateFrom).endOf("month").format("YYYY-MM-DD HH:mm:ss");
+        dateFrom = moment(dateFrom, "YYYY-MM-DD HH:mm:ss").startOf("month"); // removed .format("YYYY-MM-DD HH:mm:ss) to make things work on safari
+        dateTo = moment(dateFrom, "YYYY-MM-DD HH:mm:ss").endOf("month");
       }
 
       onMonthChange(dateFrom ?? defaultFromMonth, dateTo ?? defaultToMonth);
