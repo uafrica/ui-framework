@@ -50,7 +50,7 @@ const Base = ({
     } else {
       return;
     }
-  }, []);
+  }, [disablePressEscToClose]);
 
   function listenForEscape(e: any) {
     if (e.key === "Escape" && onHide !== undefined) {
