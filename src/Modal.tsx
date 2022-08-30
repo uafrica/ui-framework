@@ -55,7 +55,7 @@ const Base = ({
   function listenForEscape(e: any) {
     if (e.key === "Escape" && onHide !== undefined) {
       let elements = document.getElementsByClassName("uafrica-modal-overlay");
-      if (elements[elements.length - 1].id === modalId) {
+      if (elements.length > 0 && elements[elements.length - 1].id === modalId) {
         e.preventDefault();
         onHide();
       }
@@ -116,15 +116,15 @@ function Host(props: any) {
   return <div {...props} id={hostElementId} />;
 }
 function Small(props: ISmallMediumModalProps) {
-  return <Base {...props} className=" mt-14 small-modal" />;
+  return <Base {...props} className=" my-4 small-modal" />;
 }
 
 function Medium(props: ISmallMediumModalProps) {
-  return <Base {...props} className=" mt-14 medium-modal" />;
+  return <Base {...props} className=" my-4 medium-modal" />;
 }
 
 function Large(props: ISmallMediumModalProps) {
-  return <Base {...props} className=" mt-14 large-modal" />;
+  return <Base {...props} className=" my-4 large-modal" />;
 }
 
 function ButtonsPanel(props: any) {

@@ -7,7 +7,6 @@ import {
   Dropdown
 } from "../../../src";
 import { useState } from "react";
-import FailComponent from "./FailComponent";
 
 function Modals() {
   const [smallModal, setSmallModal] = useState<boolean>(false);
@@ -166,7 +165,6 @@ function Modals() {
         onHide={() => setSmallModal(false)}
         title="Small modal"
       >
-        <FailComponent />
         <Modal.ButtonsPanel>
           <Button.Cancel title="Cancel" onClick={() => setSmallModal(false)} />
           <Button.Primary
