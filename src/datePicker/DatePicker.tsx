@@ -293,10 +293,12 @@ const DateSelection: React.FC<{}> = _ => {
         }
         
         ${inRange ? "" : " text-gray-400 cursor-not-allowed"}`}
-        onClick={() => {
-          if (inRange) {
-            selectDate(i);
+        onClick={(e: any) => {
+          e.preventDefault();
+          if (!inRange) {
+            return;
           }
+          selectDate(i);
         }}
         style={{ textAlign: "center" }}
       >
