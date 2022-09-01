@@ -18,6 +18,7 @@ function DateRange(props: {
   onMonthChange?: Function;
   periodOptions?: { label: string; value: string }[];
   containerClassName?: string;
+  label?: string;
 }) {
   let {
     showRange,
@@ -32,7 +33,8 @@ function DateRange(props: {
     onRangeChange,
     onMonthChange,
     periodOptions,
-    containerClassName
+    containerClassName,
+    label
   } = props;
   useEffect(() => {
     if (showMonth && onMonthChange) {
@@ -68,7 +70,7 @@ function DateRange(props: {
         }}
         placeholder={"Select period"}
         value={period ?? defaultPeriod}
-        label={"Filter by period"}
+        label={label}
       />
       {showRange && (
         <>
@@ -111,6 +113,10 @@ function DateRange(props: {
       )}
     </div>
   );
+}
+
+DateRange.defaultProps = {
+  label: "Filter by period"
 }
 
 export { DateRange };
