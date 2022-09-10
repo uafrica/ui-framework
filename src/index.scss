@@ -84,8 +84,14 @@
   margin-left: -1rem;
 }
 
+.uafrica-modal-overlay {
+  z-index: 11;
+}
+
 .uafrica-modal {
   padding-top: 1rem;
+  z-index: 11;
+
   .content {
     max-height: calc(100vh - 60px) !important;
     max-width: calc(95vw) !important;
