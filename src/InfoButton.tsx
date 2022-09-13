@@ -116,6 +116,6 @@ export function useInfoButtonCtx(
 
   return {
     isVisible,
-    showInfo: () => setVisible(true)
+    showInfo: () => setVisible(!isVisible)
   };
 }
