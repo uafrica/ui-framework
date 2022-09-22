@@ -1,4 +1,5 @@
 import * as addressUtils from "./utils/addressUtils";
+import * as numberUtils from "./utils/numberUtils";
 import Accordion from "./Accordion";
 import CopyText from "./CopyText";
 import ResponsiveRow from "./ResponsiveRow";
@@ -94,6 +95,7 @@ export {
   SavePanelContainer,
   IconWithBackground,
   addressUtils,
+  numberUtils,
   useTabs,
   usePrevious,
   useOnClickOutside,
