@@ -145,8 +145,7 @@ function Input(props: IInputProps) {
       defaultValue={defaultValue}
       value={value}
       id={inputId}
-      readOnly={readOnly}
-      disabled={disabled}
+      readOnly={disabled || readOnly} // if we make the input disabled then react-hooks-form doesn't submit the defaultValue https://twitter.com/bluebill1049/status/1300231640392716288
       onChange={onChange}
       onClick={onClick}
       onFocus={(e: any) => {
@@ -171,7 +170,8 @@ function Input(props: IInputProps) {
         "focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent shadow-sm block w-full border-gray-300 rounded-md " +
         inputClasses +
         " " +
-        (disabled ? " bg-gray-100" : "") + (pointer ? " cursor-pointer" : "")
+        (disabled ? " bg-gray-100" : "") +
+        (pointer ? " cursor-pointer" : "")
       }
       onWheel={(e: any) => {
         if (disableNumericInputScroll) {
