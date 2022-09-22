@@ -10,7 +10,8 @@ import {
   Button,
   Dropdown,
   FiltersPanel,
-  LabelWithValue
+  LabelWithValue,
+  NewVersionAvailable
 } from "../../src";
 
 function CornelScratchPad() {
@@ -21,6 +22,7 @@ function CornelScratchPad() {
 
   return (
     <div>
+      <NewVersionAvailable />
       <div className="max-w-sm my-4">
         <Input
           showAsterisk
