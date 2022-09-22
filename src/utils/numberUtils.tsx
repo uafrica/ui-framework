@@ -62,6 +62,28 @@ export function formatNumber(amount: any, formatAsInteger: boolean, addSpaces: b
   return addSpaces ? numberWithSpaces(amount.toFixed(2)) : amount.toFixed(2);
 }
 
+export function formatNumberWithPercentage(
+  value: any,
+  formatAsInteger: boolean,
+  addSpaces: boolean
+) {
+  if (value === null || typeof value === "undefined") return "";
+  if (isNaN(value)) return "";
+
+  let isNegative = value < 0;
+  value = Math.abs(value);
+
+  let valueOutput;
+  if (formatAsInteger && Number.isInteger(value)) {
+    valueOutput = addSpaces ? numberWithSpaces(value) : value + "";
+  } else {
+    value = parseFloat(value);
+    valueOutput = addSpaces ? numberWithSpaces(value.toFixed(1)) : value.toFixed(1);
+  }
+
+  return (isNegative ? "- " : "") + valueOutput + " " + "%";
+}
+
 export function strToFloat(amount: string) {
   amount = amount.replaceAll(",", ".");
   return parseFloat(amount);
