@@ -24,7 +24,7 @@
     "build": "rollup -c",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "prepare": "husky install && craco build"
+    "prepare": "husky install && rollup -c"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "1.2.35",
