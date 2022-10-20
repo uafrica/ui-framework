@@ -262,6 +262,22 @@ LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
 OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
 ***************************************************************************** */
+/* global Reflect, Promise */
+
+var extendStatics = function(d, b) {
+    extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+    return extendStatics(d, b);
+};
+
+function __extends(d, b) {
+    if (typeof b !== "function" && b !== null)
+        throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+    extendStatics(d, b);
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+}
 
 var __assign = function() {
     __assign = Object.assign || function __assign(t) {
@@ -20267,8 +20283,64 @@ function NewVersionAvailable() {
             jsx("p", __assign({ className: "text-danger text-xs ml-3 -mt-2" }, { children: "Click here to update!" }), void 0)] }), void 0));
 }
 
+// @ts-ignore
+var StoreContext = createContext();
+// Properties stored in store
+// provider_settings
+// roles
+// user_settings
+// logged_in_user
+// impersonated_username
+// account
+// emitter
+var createStore = function (WrappedComponent) {
+    return /** @class */ (function (_super) {
+        __extends(class_1, _super);
+        function class_1() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.state = {
+                get: function (key) {
+                    return _this.state[key];
+                },
+                set: function (key, value, callback) {
+                    var state = _this.state;
+                    state[key] = value;
+                    if (typeof callback === "function") {
+                        callback();
+                    }
+                    _this.setState(state);
+                },
+                remove: function (key) {
+                    var state = _this.state;
+                    delete state[key];
+                    _this.setState(state);
+                }
+            };
+            return _this;
+        }
+        class_1.prototype.render = function () {
+            return (jsx(StoreContext.Provider, __assign({ value: this.state }, { children: jsx(WrappedComponent, __assign({}, this.props), void 0) }), void 0));
+        };
+        return class_1;
+    }(React__default.Component));
+};
+var withStore = function (WrappedComponent) {
+    return /** @class */ (function (_super) {
+        __extends(class_2, _super);
+        function class_2() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        class_2.prototype.render = function () {
+            var _this = this;
+            return (jsx(StoreContext.Consumer, { children: function (context) { return jsx(WrappedComponent, __assign({ store: context }, _this.props), void 0); } }, void 0));
+        };
+        return class_2;
+    }(React__default.Component));
+};
+var useStore = function () { return useContext(StoreContext); };
+
 var DownloadButton = Button$2.Download;
 library.add(_iconsCache);
 
-export { Accordion, Button$2 as Button, Card, Checkbox, Confirm, CopyText, Counter, DatePicker, DateRange, DownloadButton, Dropdown, FiltersPanel, GroupedSelect, IconWithBackground, InfoButton, InfoPopover, Input, Label$1 as Label, LabelWithValue, Loader, Message, Modal, ModalActionsPanel, MonthPicker, NavItem, NavItemDivider, NewVersionAvailable, PageActionsPanel, PageHeading, Radio, ResponsiveRow, SavePanel, SavePanelContainer, SavingOverlay, SectionActionsPanel, SectionHeading, Select, SkeletonLoader, Switch$1 as Switch, Table, TableActionsPanel, Tabs, Textarea, addressUtils, numberUtils, useOnClickOutside, usePrevious, useTabs, withError };
+export { Accordion, Button$2 as Button, Card, Checkbox, Confirm, CopyText, Counter, DatePicker, DateRange, DownloadButton, Dropdown, FiltersPanel, GroupedSelect, IconWithBackground, InfoButton, InfoPopover, Input, Label$1 as Label, LabelWithValue, Loader, Message, Modal, ModalActionsPanel, MonthPicker, NavItem, NavItemDivider, NewVersionAvailable, PageActionsPanel, PageHeading, Radio, ResponsiveRow, SavePanel, SavePanelContainer, SavingOverlay, SectionActionsPanel, SectionHeading, Select, SkeletonLoader, Switch$1 as Switch, Table, TableActionsPanel, Tabs, Textarea, addressUtils, createStore, numberUtils, useOnClickOutside, usePrevious, useStore, useTabs, withError, withStore };
 //# sourceMappingURL=index.es.js.map

@@ -46,6 +46,7 @@ import { usePrevious } from "./hooks/usePrevious";
 import { useTabs } from "./hooks/useTabs";
 import { withError } from "./ErrorBoundary/withError";
 import { NewVersionAvailable } from "./NewVersionAvailable";
+import {useStore, withStore, createStore} from "./store"
 import "./index.scss";
 
 const DownloadButton = Button.Download;
@@ -101,5 +102,8 @@ export {
   usePrevious,
   useOnClickOutside,
   withError,
-  NewVersionAvailable
+  NewVersionAvailable,
+  createStore,
+  withStore,
+  useStore
 };
