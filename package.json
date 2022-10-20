@@ -21,10 +21,10 @@
   "jsnext:main": "build/index.es.js",
   "scripts": {
     "start": "craco start",
-    "build": "rollup -c",
+    "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "prepare": "yarn build"
+    "prepare": "craco build"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "1.2.35",
