@@ -10,6 +10,8 @@ const StoreContext = createContext();
 // impersonated_username
 // account
 // emitter
+// To implement store from library, the entire project that uses the store component
+// has to be converted. I will not work here and there. It's all or nothing
 
 const createStore = (WrappedComponent: any) => {
   return class extends React.Component<any, any> {

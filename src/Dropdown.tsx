@@ -117,8 +117,6 @@ function DropdownMenu(props: IDropdown) {
     buttonStyle
   } = props;
 
-  const store: any = useStore()
-  console.log("store dropdown", store)
   const popupNode = useRef<HTMLElement>();
   const ctxValue = useDropdownMenuCtx(popupNode);
   if (!placement) {
