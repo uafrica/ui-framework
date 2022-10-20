@@ -1,6 +1,6 @@
 {
   "name": "uafrica-ui-framework",
-  "version": "1.2.139",
+  "version": "1.2.138",
   "description": "A ccd demustom set of UI components used by uAfrica.com, based on TailwindCSS and Headless UI",
   "license": "BSD-3-Clause",
   "repository": "uafrica/ui-framework",
@@ -21,10 +21,10 @@
   "jsnext:main": "build/index.es.js",
   "scripts": {
     "start": "craco start",
-    "build": "craco build",
+    "build": "rollup -c",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "prepare": "craco build"
+    "prepare": "husky install"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "1.2.35",
@@ -57,6 +57,7 @@
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-prettier": "3.4.0",
     "eslint-plugin-react-perf": "^3.3.0",
+    "husky": "^6.0.0",
     "prettier": "2.3.0",
     "pretty-quick": "3.1.0",
     "react-scripts": "4.0.1",
@@ -68,6 +69,11 @@
     "rollup-plugin-typescript2": "^0.30.0",
     "sass": "^1.36.0",
     "typescript": "4.2.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   },
   "keywords": [
     "uafrica",
