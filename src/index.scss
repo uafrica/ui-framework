@@ -184,10 +184,10 @@
   }
 }
 
-@media (max-height: 800px) {
+@media (max-height: 750px) {
   .uafrica-modal {
     .content {
-      max-height: calc(100vh - 90px) !important;
+      max-height: calc(100vh - 22vh) !important;
     }
   }
 }
