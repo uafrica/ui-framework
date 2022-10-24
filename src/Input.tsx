@@ -58,6 +58,7 @@ interface IInputProps {
   noArrows?: boolean;
   disableNumericInputScroll?: boolean; // scrolling over a numeric input causes the input value to change
   pointer?: boolean;
+  dataTest?: string;
 }
 // Implementation
 function Input(props: IInputProps) {
@@ -111,7 +112,8 @@ function Input(props: IInputProps) {
     showAsterisk,
     noArrows,
     disableNumericInputScroll,
-    pointer
+    pointer,
+    dataTest
   } = props;
 
   type = type ? type : "text";
@@ -178,6 +180,7 @@ function Input(props: IInputProps) {
           e.target.blur();
         }
       }}
+      data-test={dataTest}
     />
   );
 

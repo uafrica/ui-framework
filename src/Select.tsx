@@ -45,6 +45,7 @@ interface IBase {
   onDelete?: (label: any, value: any) => void; // Renders a delete button next to each option
   allowDeselect?: boolean; // single select mode does not allow for the deselection of an option by default, only switching to another option. override by setting this to true
   showAsterisk?: boolean;
+  dataTest?: string;
 }
 
 // Implementation
@@ -73,7 +74,8 @@ function GroupedSelect(props: IGroupedSelect) {
     onSearchFocus,
     noSearch,
     allowDeselect,
-    showAsterisk
+    showAsterisk,
+    dataTest
   } = props;
 
   const popupNode = useRef<HTMLElement>();
@@ -386,7 +388,7 @@ function GroupedSelect(props: IGroupedSelect) {
                           }
                           id={id}
                         >
-                          <span className="block truncate">
+                          <span className="block truncate" data-test={dataTest}>
                             {labelWithValue ? labelWithValue : placeholder}
                           </span>
                           <span className="absolute inset-y-0 right-0 u-vertical-center pr-2 pointer-events-none">

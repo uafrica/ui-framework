@@ -17,6 +17,7 @@ interface IMonthPicker {
   onChange: (date: Date) => void;
   onMonthPickerClose?: Function;
   disabled?: boolean;
+  dataTest?: string;
 }
 
 const monthNames = [
@@ -50,7 +51,8 @@ function MonthPicker(props: IMonthPicker) {
     onMonthPickerClose,
     disabled,
     minDate,
-    maxDate
+    maxDate,
+    dataTest
   } = props;
 
   let date = new Date();
@@ -90,6 +92,7 @@ function MonthPicker(props: IMonthPicker) {
                 value={dateFrom ? moment(date).format("MMMM YYYY") : ""}
                 readOnly
                 label={label}
+                dataTest={dataTest}
                 labelInline={labelInline}
                 containerClassName={containerClassName}
                 placeholder={placeholder}
