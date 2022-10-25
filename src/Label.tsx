@@ -16,7 +16,7 @@ interface ILabelWithValue {
   info?: string;
   labelColor?: string;
   doNotShowEnDash?: boolean;
-  dataTest?: string;
+  dataTest?: string | undefined;
 }
 
 // Implementation

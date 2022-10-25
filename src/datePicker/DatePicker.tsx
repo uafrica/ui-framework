@@ -22,7 +22,7 @@ interface IDatePicker {
   onChange: (date: Date) => void;
   onDatePickerClose?: Function;
   disabled?: boolean;
-  dataTest?: string;
+  dataTest?: string | undefined;
 }
 
 const daysOfWeekNames = [

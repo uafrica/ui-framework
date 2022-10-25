@@ -18,7 +18,7 @@ interface IProps {
   labelLeft?: boolean;
   labelRight?: boolean;
   textColor?: string;
-  dataTest?: string;
+  dataTest?: string | undefined;
 }
 
 function Checkbox(props: IProps) {

@@ -45,7 +45,7 @@ interface IBase {
   onDelete?: (label: any, value: any) => void; // Renders a delete button next to each option
   allowDeselect?: boolean; // single select mode does not allow for the deselection of an option by default, only switching to another option. override by setting this to true
   showAsterisk?: boolean;
-  dataTest?: string;
+  dataTest?: string | undefined;
 }
 
 // Implementation

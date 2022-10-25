@@ -17,7 +17,7 @@ interface IMonthPicker {
   onChange: (date: Date) => void;
   onMonthPickerClose?: Function;
   disabled?: boolean;
-  dataTest?: string;
+  dataTest?: string | undefined;
 }
 
 const monthNames = [

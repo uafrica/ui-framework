@@ -20,7 +20,7 @@ interface IInfoPopover {
   showPopover: boolean;
   onPopoverDismiss: Function;
   width?: string;
-  dataTest?: string;
+  dataTest?: string | undefined;
 }
 
 function InfoPopover(props: IInfoPopover) {

@@ -58,7 +58,7 @@ interface IInputProps {
   noArrows?: boolean;
   disableNumericInputScroll?: boolean; // scrolling over a numeric input causes the input value to change
   pointer?: boolean;
-  dataTest?: string;
+  dataTest?: string | undefined;
 }
 // Implementation
 function Input(props: IInputProps) {
