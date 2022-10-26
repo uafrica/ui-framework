@@ -256,7 +256,7 @@ var numberUtils = /*#__PURE__*/Object.freeze({
   strToFloat: strToFloat
 });
 
-/*! *****************************************************************************
+/******************************************************************************
 Copyright (c) Microsoft Corporation.
 
 Permission to use, copy, modify, and/or distribute this software for any
@@ -13573,62 +13573,6 @@ DateRange.defaultProps = {
     label: "Filter by period"
 };
 
-// @ts-ignore
-var StoreContext = React.createContext();
-// Properties stored in store
-// provider_settings
-// roles
-// user_settings
-// logged_in_user
-// impersonated_username
-// account
-// emitter
-var createStore = function (WrappedComponent) {
-    return /** @class */ (function (_super) {
-        __extends(class_1, _super);
-        function class_1() {
-            var _this = _super !== null && _super.apply(this, arguments) || this;
-            _this.state = {
-                get: function (key) {
-                    return _this.state[key];
-                },
-                set: function (key, value, callback) {
-                    var state = _this.state;
-                    state[key] = value;
-                    if (typeof callback === "function") {
-                        callback();
-                    }
-                    _this.setState(state);
-                },
-                remove: function (key) {
-                    var state = _this.state;
-                    delete state[key];
-                    _this.setState(state);
-                }
-            };
-            return _this;
-        }
-        class_1.prototype.render = function () {
-            return (jsxRuntime.jsx(StoreContext.Provider, __assign({ value: this.state }, { children: jsxRuntime.jsx(WrappedComponent, __assign({}, this.props), void 0) }), void 0));
-        };
-        return class_1;
-    }(React__default.Component));
-};
-var withStore = function (WrappedComponent) {
-    return /** @class */ (function (_super) {
-        __extends(class_2, _super);
-        function class_2() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        class_2.prototype.render = function () {
-            var _this = this;
-            return (jsxRuntime.jsx(StoreContext.Consumer, { children: function (context) { return jsxRuntime.jsx(WrappedComponent, __assign({ store: context }, _this.props), void 0); } }, void 0));
-        };
-        return class_2;
-    }(React__default.Component));
-};
-var useStore = function () { return React.useContext(StoreContext); };
-
 var DropdownMenuCtx = React.createContext({
     isVisible: false,
     showDropdownMenu: function () { },
@@ -13658,8 +13602,6 @@ function useDropdownMenuCtx(ref) {
 }
 function DropdownMenu(props) {
     var title = props.title, icon = props.icon, noBackground = props.noBackground, id = props.id, widthClass = props.widthClass, color = props.color, placement = props.placement, square = props.square, buttonWidth = props.buttonWidth, between = props.between, padding = props.padding, borderColor = props.borderColor, leftRounded = props.leftRounded, rightRounded = props.rightRounded, buttonStyle = props.buttonStyle;
-    var store = useStore();
-    console.log("store dropdown", store);
     var popupNode = React.useRef();
     var ctxValue = useDropdownMenuCtx(popupNode);
     if (!placement) {
@@ -20348,6 +20290,64 @@ function NewVersionAvailable() {
     return (jsxRuntime.jsxs("div", __assign({ className: "cursor-pointer", onClick: function () { return window.location.reload(); } }, { children: [jsxRuntime.jsx(Button$2.LinkDanger, { title: "New version available" }, void 0),
             jsxRuntime.jsx("p", __assign({ className: "text-danger text-xs ml-3 -mt-2" }, { children: "Click here to update!" }), void 0)] }), void 0));
 }
+
+// @ts-ignore
+var StoreContext = React.createContext();
+// Properties stored in store
+// provider_settings
+// roles
+// user_settings
+// logged_in_user
+// impersonated_username
+// account
+// emitter
+// To implement store from library, the entire project that uses the store component
+// has to be converted. I will not work here and there. It's all or nothing
+var createStore = function (WrappedComponent) {
+    return /** @class */ (function (_super) {
+        __extends(class_1, _super);
+        function class_1() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.state = {
+                get: function (key) {
+                    return _this.state[key];
+                },
+                set: function (key, value, callback) {
+                    var state = _this.state;
+                    state[key] = value;
+                    if (typeof callback === "function") {
+                        callback();
+                    }
+                    _this.setState(state);
+                },
+                remove: function (key) {
+                    var state = _this.state;
+                    delete state[key];
+                    _this.setState(state);
+                }
+            };
+            return _this;
+        }
+        class_1.prototype.render = function () {
+            return (jsxRuntime.jsx(StoreContext.Provider, __assign({ value: this.state }, { children: jsxRuntime.jsx(WrappedComponent, __assign({}, this.props), void 0) }), void 0));
+        };
+        return class_1;
+    }(React__default.Component));
+};
+var withStore = function (WrappedComponent) {
+    return /** @class */ (function (_super) {
+        __extends(class_2, _super);
+        function class_2() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        class_2.prototype.render = function () {
+            var _this = this;
+            return (jsxRuntime.jsx(StoreContext.Consumer, { children: function (context) { return jsxRuntime.jsx(WrappedComponent, __assign({ store: context }, _this.props), void 0); } }, void 0));
+        };
+        return class_2;
+    }(React__default.Component));
+};
+var useStore = function () { return React.useContext(StoreContext); };
 
 var DownloadButton = Button$2.Download;
 library.add(_iconsCache);

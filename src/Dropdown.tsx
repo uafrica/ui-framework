@@ -3,7 +3,6 @@ import { Menu, Transition } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { Manager, Popper, Reference } from "react-popper";
-import { useStore } from "./store";
 
 // Interface
 interface IDropdown {
