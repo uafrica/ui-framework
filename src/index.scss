@@ -93,7 +93,7 @@
   z-index: 11;
 
   .content {
-    max-height: calc(100vh - 60px) !important;
+    max-height: calc(100vh - 90px) !important;
     max-width: calc(95vw) !important;
   }
   .save-panel {
@@ -184,10 +184,10 @@
   }
 }
 
-@media (max-height: 500px) {
+@media (max-height: 750px) {
   .uafrica-modal {
     .content {
-      max-height: calc(100vh) !important;
+      max-height: calc(100vh - 22vh) !important;
     }
   }
 }

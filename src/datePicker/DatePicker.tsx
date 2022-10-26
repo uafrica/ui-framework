@@ -22,6 +22,7 @@ interface IDatePicker {
   onChange: (date: Date) => void;
   onDatePickerClose?: Function;
   disabled?: boolean;
+  dataTest?: string | undefined;
 }
 
 const daysOfWeekNames = [
@@ -68,7 +69,8 @@ function DatePicker(props: IDatePicker) {
     showTimeSelect,
     disabled,
     minDate,
-    maxDate
+    maxDate,
+    dataTest
   } = props;
 
   let date = new Date();
@@ -117,6 +119,7 @@ function DatePicker(props: IDatePicker) {
                 }}
                 appendIconColor="text-gray-400"
                 disabled={disabled}
+                dataTest={dataTest}
               />
             </div>
           )}

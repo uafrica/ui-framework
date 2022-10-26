@@ -20,6 +20,7 @@ interface IInfoPopover {
   showPopover: boolean;
   onPopoverDismiss: Function;
   width?: string;
+  dataTest?: string | undefined;
 }
 
 function InfoPopover(props: IInfoPopover) {
@@ -102,6 +103,7 @@ function InfoPopover(props: IInfoPopover) {
                   // @ts-ignore
                   style={style}
                   ref={ref}
+                  data-test={props.dataTest}
                 >
                   {popoverContent}
                 </div>
