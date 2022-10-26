@@ -248,6 +248,101 @@ var numberUtils = /*#__PURE__*/Object.freeze({
   strToFloat: strToFloat
 });
 
+function getErrorString(result) {
+    if (!result) {
+        return "";
+    }
+    if (result.code === 304 && Object.keys(result.error).length === 0) {
+        return "Nothing changed";
+    }
+    if (result.response) {
+        result = result.response;
+        if (result.data) {
+            result = result.data;
+        }
+    }
+    try {
+        result = JSON.parse(result);
+    }
+    catch (_) {
+        // no json, but a string
+    }
+    if (typeof result === "object") {
+        if (result.error && result.message) {
+            return result.message;
+        }
+        else if (!result.error) {
+            if (!result.message) {
+                return result ? result : "";
+            }
+            return result.message;
+        }
+        else if (result.error && result.error.message) {
+            try {
+                result = JSON.parse(result.error.message);
+                if (result.message) {
+                    return result.message;
+                }
+                return result;
+            }
+            catch (_) {
+                // no json, but a string
+            }
+            return result.error.message;
+        }
+        else if (!result.error.message) {
+            return result.error;
+        }
+        try {
+            var json = JSON.parse(result.error.message);
+            if (json.error) {
+                return json.error;
+            }
+            return result.error.message;
+        }
+        catch (e) {
+            return result.error.message;
+        }
+    }
+    else {
+        return result;
+    }
+}
+function getError(result, hideConsoleLog) {
+    var error = getErrorString(result);
+    if (error) {
+        if (error === "The user aborted a request.") {
+            return "";
+        }
+        if (!hideConsoleLog) {
+            console.log("Error", error, result.stack);
+        }
+        if (typeof error === "string") {
+            error = error.replaceAll("Username/client id combination", "Email"); // AWS terminology
+            error = error.replaceAll("Failed to fetch", "There is a problem with your internet connectivity");
+        }
+        else if (error.error) {
+            error = JSON.stringify(error);
+        }
+        else {
+            error = "";
+        }
+    }
+    return capitalize(error);
+}
+function capitalize(str) {
+    if (!str)
+        return "";
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+var generalUtils = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  capitalize: capitalize,
+  getError: getError,
+  getErrorString: getErrorString
+});
+
 /******************************************************************************
 Copyright (c) Microsoft Corporation.
 
@@ -2797,7 +2892,7 @@ function camelize(string) {
 
 var _excluded$1 = ["style"];
 
-function capitalize(val) {
+function capitalize$1(val) {
   return val.charAt(0).toUpperCase() + val.slice(1);
 }
 
@@ -2810,7 +2905,7 @@ function styleToObject(style) {
     var i = pair.indexOf(':');
     var prop = camelize(pair.slice(0, i));
     var value = pair.slice(i + 1).trim();
-    prop.startsWith('webkit') ? acc[capitalize(prop)] = value : acc[prop] = value;
+    prop.startsWith('webkit') ? acc[capitalize$1(prop)] = value : acc[prop] = value;
     return acc;
   }, {});
 }
@@ -20143,6 +20238,134 @@ function useTabs(defaultTab, clearParams) {
     return { activeTabID: activeTabID, onTabSelected: onTabSelected };
 }
 
+// @ts-ignore
+var StoreContext = createContext();
+// Properties stored in store
+// provider_settings
+// roles
+// user_settings
+// logged_in_user
+// impersonated_username
+// account
+// emitter
+// To implement store from library, the entire project that uses the store component
+// has to be converted. I will not work here and there. It's all or nothing
+var createStore = function (WrappedComponent) {
+    return /** @class */ (function (_super) {
+        __extends(class_1, _super);
+        function class_1() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.state = {
+                get: function (key) {
+                    return _this.state[key];
+                },
+                set: function (key, value, callback) {
+                    var state = _this.state;
+                    state[key] = value;
+                    if (typeof callback === "function") {
+                        callback();
+                    }
+                    _this.setState(state);
+                },
+                remove: function (key) {
+                    var state = _this.state;
+                    delete state[key];
+                    _this.setState(state);
+                }
+            };
+            return _this;
+        }
+        class_1.prototype.render = function () {
+            return (jsx(StoreContext.Provider, __assign({ value: this.state }, { children: jsx(WrappedComponent, __assign({}, this.props), void 0) }), void 0));
+        };
+        return class_1;
+    }(React__default.Component));
+};
+var withStore = function (WrappedComponent) {
+    return /** @class */ (function (_super) {
+        __extends(class_2, _super);
+        function class_2() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        class_2.prototype.render = function () {
+            var _this = this;
+            return (jsx(StoreContext.Consumer, { children: function (context) { return jsx(WrappedComponent, __assign({ store: context }, _this.props), void 0); } }, void 0));
+        };
+        return class_2;
+    }(React__default.Component));
+};
+var useStore = function () { return useContext(StoreContext); };
+
+function useSignedRequest(_a) {
+    var _this = this;
+    var method = _a.method, url = _a.url, data = _a.data, headers = _a.headers, disallowDuplicateCancel = _a.disallowDuplicateCancel, retryCounter = _a.retryCounter, fetchOnMount = _a.fetchOnMount, options = _a.options, initialLoadingState = _a.initialLoadingState, signedRequest = _a.signedRequest;
+    var _b = options !== null && options !== void 0 ? options : {}, onSuccess = _b.onSuccess, onError = _b.onError;
+    var store = useStore();
+    var _c = useState(null), response = _c[0], setResponse = _c[1];
+    var _d = useState(""), error = _d[0], setError = _d[1];
+    var _e = useState(initialLoadingState !== null && initialLoadingState !== void 0 ? initialLoadingState : true), isLoading = _e[0], setIsLoading = _e[1];
+    useEffect(function () {
+        // Do not fetch on mount by default
+        if (fetchOnMount) {
+            fetchData();
+        }
+    }, [method, url, data, headers, disallowDuplicateCancel, retryCounter, fetchOnMount]);
+    var fetchData = function (params, disableLoadingState) { return __awaiter(_this, void 0, void 0, function () {
+        var fetchRes, fetchError, args, res, e_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    // Do not display or pass through loading state for the function
+                    if (!disableLoadingState) {
+                        setIsLoading(true);
+                    }
+                    setError(null);
+                    args = {};
+                    if (params) {
+                        args = params;
+                    }
+                    else {
+                        args = data;
+                    }
+                    _a.label = 1;
+                case 1:
+                    _a.trys.push([1, 3, 4, 5]);
+                    return [4 /*yield*/, signedRequest(store, url, method, args, headers, disallowDuplicateCancel, retryCounter)];
+                case 2:
+                    res = _a.sent();
+                    if (res.ok) {
+                        setResponse(res.data);
+                        fetchRes = res.data;
+                        if (onSuccess) {
+                            onSuccess(res.data);
+                        }
+                    }
+                    if (!res.ok) {
+                        setError(getError(res, true));
+                        fetchError = getError(res, true);
+                        if (onError) {
+                            onError(getError(res, true));
+                        }
+                    }
+                    return [3 /*break*/, 5];
+                case 3:
+                    e_1 = _a.sent();
+                    setError(getError(e_1, true));
+                    fetchError = getError(e_1, true);
+                    if (onError) {
+                        onError(getError(e_1, true));
+                    }
+                    return [3 /*break*/, 5];
+                case 4:
+                    setIsLoading(false);
+                    return [7 /*endfinally*/];
+                case 5: return [2 /*return*/, { fetchRes: fetchRes, fetchError: fetchError }];
+            }
+        });
+    }); };
+    return { response: response, error: error, isLoading: isLoading, fetchData: fetchData };
+}
+
 function _setPrototypeOf(o, p) {
   _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) {
     o.__proto__ = p;
@@ -20283,66 +20506,8 @@ function NewVersionAvailable() {
             jsx("p", __assign({ className: "text-danger text-xs ml-3 -mt-2" }, { children: "Click here to update!" }), void 0)] }), void 0));
 }
 
-// @ts-ignore
-var StoreContext = createContext();
-// Properties stored in store
-// provider_settings
-// roles
-// user_settings
-// logged_in_user
-// impersonated_username
-// account
-// emitter
-// To implement store from library, the entire project that uses the store component
-// has to be converted. I will not work here and there. It's all or nothing
-var createStore = function (WrappedComponent) {
-    return /** @class */ (function (_super) {
-        __extends(class_1, _super);
-        function class_1() {
-            var _this = _super !== null && _super.apply(this, arguments) || this;
-            _this.state = {
-                get: function (key) {
-                    return _this.state[key];
-                },
-                set: function (key, value, callback) {
-                    var state = _this.state;
-                    state[key] = value;
-                    if (typeof callback === "function") {
-                        callback();
-                    }
-                    _this.setState(state);
-                },
-                remove: function (key) {
-                    var state = _this.state;
-                    delete state[key];
-                    _this.setState(state);
-                }
-            };
-            return _this;
-        }
-        class_1.prototype.render = function () {
-            return (jsx(StoreContext.Provider, __assign({ value: this.state }, { children: jsx(WrappedComponent, __assign({}, this.props), void 0) }), void 0));
-        };
-        return class_1;
-    }(React__default.Component));
-};
-var withStore = function (WrappedComponent) {
-    return /** @class */ (function (_super) {
-        __extends(class_2, _super);
-        function class_2() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        class_2.prototype.render = function () {
-            var _this = this;
-            return (jsx(StoreContext.Consumer, { children: function (context) { return jsx(WrappedComponent, __assign({ store: context }, _this.props), void 0); } }, void 0));
-        };
-        return class_2;
-    }(React__default.Component));
-};
-var useStore = function () { return useContext(StoreContext); };
-
 var DownloadButton = Button$2.Download;
 library.add(_iconsCache);
 
-export { Accordion, Button$2 as Button, Card, Checkbox, Confirm, CopyText, Counter, DatePicker, DateRange, DownloadButton, Dropdown, FiltersPanel, GroupedSelect, IconWithBackground, InfoButton, InfoPopover, Input, Label$1 as Label, LabelWithValue, Loader, Message, Modal, ModalActionsPanel, MonthPicker, NavItem, NavItemDivider, NewVersionAvailable, PageActionsPanel, PageHeading, Radio, ResponsiveRow, SavePanel, SavePanelContainer, SavingOverlay, SectionActionsPanel, SectionHeading, Select, SkeletonLoader, Switch$1 as Switch, Table, TableActionsPanel, Tabs, Textarea, addressUtils, createStore, numberUtils, useOnClickOutside, usePrevious, useStore, useTabs, withError, withStore };
+export { Accordion, Button$2 as Button, Card, Checkbox, Confirm, CopyText, Counter, DatePicker, DateRange, DownloadButton, Dropdown, FiltersPanel, GroupedSelect, IconWithBackground, InfoButton, InfoPopover, Input, Label$1 as Label, LabelWithValue, Loader, Message, Modal, ModalActionsPanel, MonthPicker, NavItem, NavItemDivider, NewVersionAvailable, PageActionsPanel, PageHeading, Radio, ResponsiveRow, SavePanel, SavePanelContainer, SavingOverlay, SectionActionsPanel, SectionHeading, Select, SkeletonLoader, Switch$1 as Switch, Table, TableActionsPanel, Tabs, Textarea, addressUtils, createStore, generalUtils, numberUtils, useOnClickOutside, usePrevious, useSignedRequest, useStore, useTabs, withError, withStore };
 //# sourceMappingURL=index.es.js.map

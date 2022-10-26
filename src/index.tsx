@@ -1,5 +1,6 @@
 import * as addressUtils from "./utils/addressUtils";
 import * as numberUtils from "./utils/numberUtils";
+import * as generalUtils from "./utils/generalUtils";
 import Accordion from "./Accordion";
 import CopyText from "./CopyText";
 import ResponsiveRow from "./ResponsiveRow";
@@ -44,9 +45,10 @@ import { Textarea } from "./Textarea";
 import { useOnClickOutside } from "./hooks/useOnClickOutside";
 import { usePrevious } from "./hooks/usePrevious";
 import { useTabs } from "./hooks/useTabs";
+import { useSignedRequest } from "./hooks/useSignedRequest";
 import { withError } from "./ErrorBoundary/withError";
 import { NewVersionAvailable } from "./NewVersionAvailable";
-import {useStore, withStore, createStore} from "./store"
+import { useStore, withStore, createStore } from "./store";
 import "./index.scss";
 
 const DownloadButton = Button.Download;
@@ -98,6 +100,7 @@ export {
   IconWithBackground,
   addressUtils,
   numberUtils,
+  generalUtils,
   useTabs,
   usePrevious,
   useOnClickOutside,
@@ -105,5 +108,6 @@ export {
   NewVersionAvailable,
   createStore,
   withStore,
-  useStore
+  useStore,
+  useSignedRequest
 };
