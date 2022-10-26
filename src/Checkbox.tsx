@@ -18,6 +18,7 @@ interface IProps {
   labelLeft?: boolean;
   labelRight?: boolean;
   textColor?: string;
+  dataTest?: string | undefined;
 }
 
 function Checkbox(props: IProps) {
@@ -38,7 +39,8 @@ function Checkbox(props: IProps) {
     hoverTitle,
     noPadding,
     disabled,
-    textColor
+    textColor,
+    dataTest
   } = props;
 
   const labelEl = (
@@ -79,6 +81,7 @@ function Checkbox(props: IProps) {
           }}
           title={hoverTitle}
           type="checkbox"
+          data-test={dataTest}
           className={
             "u-focus " +
             (disabled

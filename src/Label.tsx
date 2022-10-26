@@ -16,6 +16,7 @@ interface ILabelWithValue {
   info?: string;
   labelColor?: string;
   doNotShowEnDash?: boolean;
+  dataTest?: string | undefined;
 }
 
 // Implementation
@@ -40,7 +41,7 @@ function Label(props: ILabel) {
 }
 
 function LabelWithValue(props: ILabelWithValue) {
-  let { label, value, noMargin, info, labelColor, doNotShowEnDash } = props;
+  let { label, value, noMargin, info, labelColor, doNotShowEnDash, dataTest } = props;
 
   return (
     <div className={"flex flex-row items-center flex-wrap " + (noMargin ? "" : " mb-2 pt-2")}>
@@ -53,7 +54,7 @@ function LabelWithValue(props: ILabelWithValue) {
       >
         {label}
       </label>
-      <div className="ml-2 text-left">
+      <div className="ml-2 text-left" data-test={dataTest}>
         {doNotShowEnDash ? value : value !== undefined && value !== "" ? value : "–"}
       </div>
       {info && (
