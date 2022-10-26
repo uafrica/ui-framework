@@ -77,7 +77,8 @@ async function signedRequest(
   args?: any,
   headers?: any,
   disallowDuplicateCancel?: boolean,
-  retryCounter?: number
+  retryCounter?: number,
+  configUrl?: string
 ): Promise<any> {
   const maxRetries = 3;
   const _retryCounter: number = retryCounter ?? 0;
@@ -115,9 +116,12 @@ async function signedRequest(
       }
     }
 
-    let url = `https://${store.config.api}${path}`;
-    if (store.config.api.indexOf("localhost") >= 0) {
-      url = `http://${store.config.api}${path}`;
+    let url: string = "";
+
+    if (store.configUrl) {
+      url = `http://${store.configUrl}${path}`;
+    } else if (configUrl) {
+      url = `http://${configUrl}${path}`;
     }
 
     // Options for the signature version 4 signing
