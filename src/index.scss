@@ -78,6 +78,14 @@
   }
 }
 
+/* BANNER */
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
 /* SAVE PANEL */
 .save-panel {
   width: calc(100% - 15em);

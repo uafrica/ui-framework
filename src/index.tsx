@@ -49,6 +49,7 @@ import { useSignedRequest } from "./hooks/useSignedRequest";
 import { withError } from "./ErrorBoundary/withError";
 import { NewVersionAvailable } from "./NewVersionAvailable";
 import { useStore, withStore, createStore } from "./store";
+import { Banner } from "./Banner";
 import "./index.scss";
 
 const DownloadButton = Button.Download;
@@ -109,5 +110,6 @@ export {
   createStore,
   withStore,
   useStore,
-  useSignedRequest
+  useSignedRequest,
+  Banner
 };
