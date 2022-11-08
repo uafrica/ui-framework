@@ -13,6 +13,9 @@ const StoreContext = createContext();
 // To implement store from library, the entire project that uses the store component
 // has to be converted. I will not work here and there. It's all or nothing
 
+// NOTE: If you want to use this store configuration in your project, do not have the same setup in you local repo.
+// I.e. if you want to use the StoreContext declared, you have to use one of them, not both
+
 const createStore = (WrappedComponent: any) => {
   return class extends React.Component<any, any> {
     state: any = {
