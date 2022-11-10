@@ -257,3 +257,27 @@
 .text-danger {
   color: #dc2626;
 }
+
+/* PAGINATION */
+.page-info {
+  display: inline-block;
+  margin: 3px 10px;
+  white-space: nowrap;
+}
+
+.page-jump {
+  display: inline-block;
+  margin-right: 5px;
+
+  & input {
+    width: 70px;
+    text-align: center;
+    border-radius: 0.2rem;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+  }
+}
+
+.total-pages {
+  box-sizing: border-box;
+  margin-left: 5px;
+}
