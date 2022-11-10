@@ -46,10 +46,12 @@ import { useOnClickOutside } from "./hooks/useOnClickOutside";
 import { usePrevious } from "./hooks/usePrevious";
 import { useTabs } from "./hooks/useTabs";
 import { useSignedRequest } from "./hooks/useSignedRequest";
-import { withError } from "./ErrorBoundary/withError";
+import { withError } from "./errorBoundary/withError";
 import { NewVersionAvailable } from "./NewVersionAvailable";
 import { useStore, withStore, createStore } from "./store";
 import { Banner } from "./Banner";
+import { Pagination } from "./Pagination";
+import { useGetPagination } from "./hooks/useGetPagination";
 import "./index.scss";
 
 const DownloadButton = Button.Download;
@@ -111,5 +113,7 @@ export {
   withStore,
   useStore,
   useSignedRequest,
-  Banner
+  Banner,
+  Pagination,
+  useGetPagination
 };
