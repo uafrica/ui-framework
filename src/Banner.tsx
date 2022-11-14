@@ -39,7 +39,7 @@ function Banner(props: IProps) {
     return (
       isMultiline && (
         <div
-          className={`whitespace-nowrap cursor-pointer text-gray-700 italic`}
+          className={`whitespace-nowrap cursor-pointer font-normal italic`}
           onClick={() => {
             setShowMore(!showMore);
           }}
