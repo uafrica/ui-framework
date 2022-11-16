@@ -46,6 +46,7 @@ interface IBase {
   allowDeselect?: boolean; // single select mode does not allow for the deselection of an option by default, only switching to another option. override by setting this to true
   showAsterisk?: boolean;
   dataTest?: string | undefined;
+  showAllButton?: boolean; // conditionally display a button to show all available options
 }
 
 // Implementation
@@ -75,7 +76,8 @@ function GroupedSelect(props: IGroupedSelect) {
     noSearch,
     allowDeselect,
     showAsterisk,
-    dataTest
+    dataTest,
+    showAllButton
   } = props;
 
   const popupNode = useRef<HTMLElement>();
@@ -83,6 +85,8 @@ function GroupedSelect(props: IGroupedSelect) {
 
   // State for searching
   let [searchTerm, setSearchTerm] = useState<string>("");
+
+  const [showAllDisabled, setShowAllDisabled] = useState<boolean>(false);
 
   // Happens when an item is selected
   function onSelectToggle(_value: any) {
@@ -120,8 +124,8 @@ function GroupedSelect(props: IGroupedSelect) {
     }
   }
 
-  // renders a option group with its list of options
-  function renderOptionGroup(optionGroup: IOptionGroup) {
+  // renders an option group with its list of options
+  function renderOptionGroup(optionGroup: IOptionGroup, showAllClicked?: boolean) {
     let limit = 100;
 
     // Search
@@ -140,8 +144,13 @@ function GroupedSelect(props: IGroupedSelect) {
 
     let optionsOmitted = 0;
 
+    // Disable show all button if should show and available options are less than the limit
+    if (showAllButton && optionsLimited.length <= limit) {
+      setShowAllDisabled(true);
+    }
+
     // Limit results
-    if (optionsLimited.length > limit) {
+    if (!showAllClicked && optionsLimited.length > limit) {
       optionsOmitted = optionsLimited.length - limit;
       optionsLimited = optionsLimited.slice(0, limit);
     }
@@ -152,7 +161,7 @@ function GroupedSelect(props: IGroupedSelect) {
           <div className="text-gray-600 uppercase text-xs p-2 mt-4">{optionGroup.label}</div>
         )}
         {optionsLimited.map((option: any) => {
-          let selected = false;
+          let selected;
           if (multiSelection) {
             selected = value.indexOf(option.value) >= 0;
           } else {
@@ -453,11 +462,26 @@ function GroupedSelect(props: IGroupedSelect) {
                           <div className="pl-2 mt-2">No options</div>
                         )}
                         {optionGroups.map((optionGroup: IOptionGroup) => {
-                          return renderOptionGroup(optionGroup);
+                          if (showAllDisabled) {
+                            return renderOptionGroup(optionGroup, showAllDisabled);
+                          } else {
+                            return renderOptionGroup(optionGroup);
+                          }
                         })}
                       </div>
                       {buttons && (
                         <div className="-ml-1 border-t border-gray-200 pt-1">{buttons}</div>
+                      )}
+                      {showAllButton && (
+                        <div className="-ml-1 border-t border-gray-200 pt-1">
+                          <Button.Link
+                            disabled={showAllDisabled} // disable button if show all is clicked
+                            title="Show all"
+                            onClick={() => {
+                              setShowAllDisabled(true);
+                            }}
+                          />
+                        </div>
                       )}
                     </div>
                   ) : null
