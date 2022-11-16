@@ -86,7 +86,7 @@ function GroupedSelect(props: IGroupedSelect) {
   // State for searching
   let [searchTerm, setSearchTerm] = useState<string>("");
 
-  const [showAll, setShowAll] = useState<boolean>(false);
+  const [showAllDisabled, setShowAllDisabled] = useState<boolean>(false);
 
   // Happens when an item is selected
   function onSelectToggle(_value: any) {
@@ -146,7 +146,7 @@ function GroupedSelect(props: IGroupedSelect) {
 
     // Disable show all button if should show and available options are less than the limit
     if (showAllButton && optionsLimited.length <= limit) {
-      setShowAll(true);
+      setShowAllDisabled(true);
     }
 
     // Limit results
@@ -462,8 +462,8 @@ function GroupedSelect(props: IGroupedSelect) {
                           <div className="pl-2 mt-2">No options</div>
                         )}
                         {optionGroups.map((optionGroup: IOptionGroup) => {
-                          if (showAll) {
-                            return renderOptionGroup(optionGroup, showAll);
+                          if (showAllDisabled) {
+                            return renderOptionGroup(optionGroup, showAllDisabled);
                           } else {
                             return renderOptionGroup(optionGroup);
                           }
@@ -475,10 +475,10 @@ function GroupedSelect(props: IGroupedSelect) {
                       {showAllButton && (
                         <div className="-ml-1 border-t border-gray-200 pt-1">
                           <Button.Link
-                            disabled={showAll} // disable button if show all is clicked
+                            disabled={showAllDisabled} // disable button if show all is clicked
                             title="Show all"
                             onClick={() => {
-                              setShowAll(true);
+                              setShowAllDisabled(true);
                             }}
                           />
                         </div>
