@@ -86,6 +86,8 @@ function GroupedSelect(props: IGroupedSelect) {
   // State for searching
   let [searchTerm, setSearchTerm] = useState<string>("");
 
+  // State for the show all button
+  const [showAllClicked, setShowAllClicked] = useState<boolean>(false);
   const [showAllDisabled, setShowAllDisabled] = useState<boolean>(false);
 
   // Happens when an item is selected
@@ -125,7 +127,7 @@ function GroupedSelect(props: IGroupedSelect) {
   }
 
   // renders an option group with its list of options
-  function renderOptionGroup(optionGroup: IOptionGroup, showAllClicked?: boolean) {
+  function renderOptionGroup(optionGroup: IOptionGroup, shouldShowAllResults?: boolean) {
     let limit = 100;
 
     // Search
@@ -144,13 +146,21 @@ function GroupedSelect(props: IGroupedSelect) {
 
     let optionsOmitted = 0;
 
-    // Disable show all button if should show and available options are less than the limit
-    if (showAllButton && optionsLimited.length <= limit) {
+    /** Disable the show all button if:
+     * - the show all button has been clicked
+     * - OR
+     * - the available options are less than or equal to the set limit
+     */
+    if (shouldShowAllResults) {
       setShowAllDisabled(true);
+    } else if (showAllButton && searchTerm.length >= 0 && optionsLimited.length <= limit) {
+      setShowAllDisabled(true);
+    } else {
+      setShowAllDisabled(false);
     }
 
     // Limit results
-    if (!showAllClicked && optionsLimited.length > limit) {
+    if (!shouldShowAllResults && optionsLimited.length > limit) {
       optionsOmitted = optionsLimited.length - limit;
       optionsLimited = optionsLimited.slice(0, limit);
     }
@@ -462,8 +472,8 @@ function GroupedSelect(props: IGroupedSelect) {
                           <div className="pl-2 mt-2">No options</div>
                         )}
                         {optionGroups.map((optionGroup: IOptionGroup) => {
-                          if (showAllDisabled) {
-                            return renderOptionGroup(optionGroup, showAllDisabled);
+                          if (showAllClicked) {
+                            return renderOptionGroup(optionGroup, showAllClicked);
                           } else {
                             return renderOptionGroup(optionGroup);
                           }
@@ -478,7 +488,7 @@ function GroupedSelect(props: IGroupedSelect) {
                             disabled={showAllDisabled} // disable button if show all is clicked
                             title="Show all"
                             onClick={() => {
-                              setShowAllDisabled(true);
+                              setShowAllClicked(true);
                             }}
                           />
                         </div>
