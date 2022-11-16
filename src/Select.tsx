@@ -124,8 +124,8 @@ function GroupedSelect(props: IGroupedSelect) {
     }
   }
 
-  // renders a option group with its list of options
-  function renderOptionGroup(optionGroup: IOptionGroup) {
+  // renders an option group with its list of options
+  function renderOptionGroup(optionGroup: IOptionGroup, showAllClicked?: boolean) {
     let limit = 100;
 
     // Search
@@ -161,7 +161,7 @@ function GroupedSelect(props: IGroupedSelect) {
           <div className="text-gray-600 uppercase text-xs p-2 mt-4">{optionGroup.label}</div>
         )}
         {optionsLimited.map((option: any) => {
-          let selected = false;
+          let selected;
           if (multiSelection) {
             selected = value.indexOf(option.value) >= 0;
           } else {
