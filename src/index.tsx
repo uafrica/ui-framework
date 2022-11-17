@@ -13,6 +13,7 @@ import { Confirm } from "./Confirm";
 import { Counter } from "./Counter";
 import { DatePicker } from "./datePicker/DatePicker";
 import { MonthPicker } from "./monthPicker/MonthPicker";
+import { MultiTable } from "./multiTable/MultiTable";
 import { DateRange } from "./DateRange";
 import { Dropdown } from "./Dropdown";
 import { fas } from "@fortawesome/free-solid-svg-icons";
@@ -69,6 +70,7 @@ export {
   Card,
   DatePicker,
   MonthPicker,
+  MultiTable,
   Input,
   Counter,
   Modal,
