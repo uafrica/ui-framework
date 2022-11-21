@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from "uuid";
+
 function getErrorString(result: any): string {
   if (!result) {
     return "";
@@ -90,4 +92,61 @@ function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export { capitalize, getError, getErrorString };
+function getUUIDFilename(url: string) {
+  let lastDotIndex = url.lastIndexOf(".");
+  let lastQuestionIndex = url.lastIndexOf("?");
+  let extension;
+
+  if (lastDotIndex >= 0) {
+    if (lastQuestionIndex >= 0) {
+      extension = url.substring(lastDotIndex, lastQuestionIndex);
+    } else {
+      extension = url.substring(lastDotIndex);
+    }
+  }
+  if (!extension) {
+    extension = ".png";
+  }
+
+  return uuidv4() + extension;
+}
+
+function isCsv(file: any): RegExpExecArray | null | false {
+  if (!file) return false;
+
+  let validationRegex = /(\.csv)$/i;
+  return validationRegex.exec(file.name.toLowerCase());
+}
+
+function isImage(file: any): RegExpExecArray | null | false {
+  if (!file) {
+    return false;
+  }
+
+  var validationRegex = /(\.jpg|\.jpeg|\.png)$/i;
+  return validationRegex.exec(file.name.toLowerCase());
+}
+
+function isKML(file: any): RegExpExecArray | null | false {
+  if (!file) return false;
+
+  var validationRegex = /(\.kml)$/i;
+  return validationRegex.exec(file.name.toLowerCase());
+}
+
+function isPdf(file: any): RegExpExecArray | null | false {
+  if (!file) return false;
+
+  var validationRegex = /(\.pdf)$/i;
+  return validationRegex.exec(file.name.toLowerCase());
+}
+
+function reverseArray(arr: any[]): any[] {
+  var newArray = [];
+  for (var i = arr.length - 1; i >= 0; i--) {
+    newArray.push(arr[i]);
+  }
+  return newArray;
+}
+
+export { capitalize, getError, getErrorString, getUUIDFilename, isImage, isCsv, isKML, isPdf, reverseArray };

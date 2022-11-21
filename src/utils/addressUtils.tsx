@@ -185,11 +185,56 @@ function validateGoogleAddressType(addressObj: any, invalidTypes: string[]): boo
   return isValid;
 }
 
+function cleanProvince(province: string) {
+  if (province) {
+    province = province.replaceAll("KwaZulu-Natal", "KZN");
+    province = province.replaceAll("KwaZulu Natal", "KZN");
+    province = province.replaceAll("NL", "KZN");
+    province = province.replaceAll("GT", "GP");
+    province = province.replaceAll("Gauteng", "GP");
+    province = province.replaceAll("Freestate", "FS");
+    province = province.replaceAll("Free State", "FS");
+    province = province.replaceAll("Limpopo", "LP");
+    province = province.replaceAll("Mpumalanga", "MP");
+    province = province.replaceAll("North West", "NW");
+    province = province.replaceAll("Eastern Cape", "EC");
+    province = province.replaceAll("Western Cape", "WC");
+    province = province.replaceAll("Northern Cape", "NC");
+    province = province.replaceAll("Eastern-Cape", "EC");
+    province = province.replaceAll("Western-Cape", "WC");
+    province = province.replaceAll("Northern-Cape", "NC");
+
+    return province;
+  }
+  return;
+}
+
+function provinceAbbreviationToName(province: string) {
+  if (province) {
+    province = province.replaceAll("KZN", "KwaZulu-Natal");
+    province = province.replaceAll("NL", "KwaZulu-Natal");
+    province = province.replaceAll("GP", "Gauteng");
+    province = province.replaceAll("GT", "Gauteng");
+    province = province.replaceAll("FS", "Free State");
+    province = province.replaceAll("LP", "Limpopo");
+    province = province.replaceAll("MP", "Mpumalanga");
+    province = province.replaceAll("NW", "North West");
+    province = province.replaceAll("EC", "Eastern Cape");
+    province = province.replaceAll("WC", "Western Cape");
+    province = province.replaceAll("NC", "Northern Cape");
+    return province;
+  }
+
+  return;
+}
+
 export {
   addressObjFromGoogleResult,
   formatEnteredAddress,
   formatEnteredAddressLine,
   generateEnteredAddress,
   validateGoogleAddressType,
-  validateAddress
+  validateAddress,
+  cleanProvince,
+  provinceAbbreviationToName
 };
