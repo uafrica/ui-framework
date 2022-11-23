@@ -5,7 +5,7 @@ import { useStore } from "store";
 // This works even if you do not have the store configured from the library. But should have a useStore function
 
 // Arguments passed through should be of type object
-type MyObject = {
+type ObjectType = {
   [k: string]: any;
 };
 
@@ -20,15 +20,13 @@ interface IProps {
   signedRequest: Function;
   method: "GET" | "POST" | "DELETE" | "PATCH" | "PUT";
   url: string;
-  data?: MyObject;
+  data?: ObjectType;
   headers?: any;
   disallowDuplicateCancel?: boolean;
   retryCounter?: number;
-  fetchOnMount?: boolean;
-  options?: {
-    onSuccess?: Function;
-    onError?: Function;
-  };
+  fetchOnInit?: boolean;
+  onSuccess?: Function;
+  onError?: Function;
   initialLoadingState?: boolean;
 }
 
@@ -39,12 +37,12 @@ export function useSignedRequest({
   headers,
   disallowDuplicateCancel,
   retryCounter,
-  fetchOnMount,
-  options,
+  fetchOnInit,
+  onSuccess,
+  onError,
   initialLoadingState,
   signedRequest
 }: IProps) {
-  let { onSuccess, onError } = options ?? {};
   const store = useStore();
   const [response, setResponse] = useState<any>(null);
   const [error, setError] = useState<string | null>("");
@@ -52,20 +50,23 @@ export function useSignedRequest({
 
   useEffect(() => {
     // Do not fetch on mount by default
-    if (fetchOnMount) {
-      fetchData();
-    }
+    const fetchData = async () => {
+      if (fetchOnInit) {
+        await makeRequest();
+      }
+    };
+    fetchData();
   }, []);
 
-  const fetchData = async (params?: MyObject, disableLoadingState?: boolean) => {
+  const makeRequest = async (params?: ObjectType, disableLoadingState?: boolean) => {
     // Do not display or pass through loading state for the function
     if (!disableLoadingState) {
       setIsLoading(true);
     }
 
     setError(null);
-    let fetchRes: any;
-    let fetchError: any;
+    let responseData: any;
+    let errorData: any;
 
     let args: any = {};
 
@@ -88,21 +89,21 @@ export function useSignedRequest({
 
       if (res.ok) {
         setResponse(res.data);
-        fetchRes = res.data;
+        responseData = res.data;
         if (onSuccess) {
           onSuccess(res.data);
         }
       }
       if (!res.ok) {
         setError(getError(res, true));
-        fetchError = getError(res, true);
+        errorData = getError(res, true);
         if (onError) {
           onError(getError(res, true));
         }
       }
     } catch (e) {
       setError(getError(e, true));
-      fetchError = getError(e, true);
+      errorData = getError(e, true);
       if (onError) {
         onError(getError(e, true));
       }
@@ -110,8 +111,8 @@ export function useSignedRequest({
       setIsLoading(false);
     }
 
-    return { fetchRes, fetchError };
+    return { responseData, errorData };
   };
 
-  return { response, error, isLoading, fetchData };
+  return { response, error, isLoading, makeRequest };
 }

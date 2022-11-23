@@ -1,28 +1,26 @@
-declare type MyObject = {
+declare type ObjectType = {
     [k: string]: any;
 };
 interface IProps {
     signedRequest: Function;
     method: "GET" | "POST" | "DELETE" | "PATCH" | "PUT";
     url: string;
-    data?: MyObject;
+    data?: ObjectType;
     headers?: any;
     disallowDuplicateCancel?: boolean;
     retryCounter?: number;
-    fetchOnMount?: boolean;
-    options?: {
-        onSuccess?: Function;
-        onError?: Function;
-    };
+    fetchOnInit?: boolean;
+    onSuccess?: Function;
+    onError?: Function;
     initialLoadingState?: boolean;
 }
-export declare function useSignedRequest({ method, url, data, headers, disallowDuplicateCancel, retryCounter, fetchOnMount, options, initialLoadingState, signedRequest }: IProps): {
+export declare function useSignedRequest({ method, url, data, headers, disallowDuplicateCancel, retryCounter, fetchOnInit, onSuccess, onError, initialLoadingState, signedRequest }: IProps): {
     response: any;
     error: string | null;
     isLoading: boolean;
-    fetchData: (params?: MyObject | undefined, disableLoadingState?: boolean | undefined) => Promise<{
-        fetchRes: any;
-        fetchError: any;
+    makeRequest: (params?: ObjectType | undefined, disableLoadingState?: boolean | undefined) => Promise<{
+        responseData: any;
+        errorData: any;
     }>;
 };
 export {};

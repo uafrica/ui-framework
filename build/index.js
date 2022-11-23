@@ -20535,20 +20535,30 @@ var useStore = function () { return React.useContext(StoreContext); };
 
 function useSignedRequest(_a) {
     var _this = this;
-    var method = _a.method, url = _a.url, data = _a.data, headers = _a.headers, disallowDuplicateCancel = _a.disallowDuplicateCancel, retryCounter = _a.retryCounter, fetchOnMount = _a.fetchOnMount, options = _a.options, initialLoadingState = _a.initialLoadingState, signedRequest = _a.signedRequest;
-    var _b = options !== null && options !== void 0 ? options : {}, onSuccess = _b.onSuccess, onError = _b.onError;
+    var method = _a.method, url = _a.url, data = _a.data, headers = _a.headers, disallowDuplicateCancel = _a.disallowDuplicateCancel, retryCounter = _a.retryCounter, fetchOnInit = _a.fetchOnInit, onSuccess = _a.onSuccess, onError = _a.onError, initialLoadingState = _a.initialLoadingState, signedRequest = _a.signedRequest;
     var store = useStore();
-    var _c = React.useState(null), response = _c[0], setResponse = _c[1];
-    var _d = React.useState(""), error = _d[0], setError = _d[1];
-    var _e = React.useState(initialLoadingState !== null && initialLoadingState !== void 0 ? initialLoadingState : true), isLoading = _e[0], setIsLoading = _e[1];
+    var _b = React.useState(null), response = _b[0], setResponse = _b[1];
+    var _c = React.useState(""), error = _c[0], setError = _c[1];
+    var _d = React.useState(initialLoadingState !== null && initialLoadingState !== void 0 ? initialLoadingState : true), isLoading = _d[0], setIsLoading = _d[1];
     React.useEffect(function () {
         // Do not fetch on mount by default
-        if (fetchOnMount) {
-            fetchData();
-        }
+        var fetchData = function () { return __awaiter(_this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!fetchOnInit) return [3 /*break*/, 2];
+                        return [4 /*yield*/, makeRequest()];
+                    case 1:
+                        _a.sent();
+                        _a.label = 2;
+                    case 2: return [2 /*return*/];
+                }
+            });
+        }); };
+        fetchData();
     }, []);
-    var fetchData = function (params, disableLoadingState) { return __awaiter(_this, void 0, void 0, function () {
-        var fetchRes, fetchError, args, res, e_1;
+    var makeRequest = function (params, disableLoadingState) { return __awaiter(_this, void 0, void 0, function () {
+        var responseData, errorData, args, res, e_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -20572,14 +20582,14 @@ function useSignedRequest(_a) {
                     res = _a.sent();
                     if (res.ok) {
                         setResponse(res.data);
-                        fetchRes = res.data;
+                        responseData = res.data;
                         if (onSuccess) {
                             onSuccess(res.data);
                         }
                     }
                     if (!res.ok) {
                         setError(getError(res, true));
-                        fetchError = getError(res, true);
+                        errorData = getError(res, true);
                         if (onError) {
                             onError(getError(res, true));
                         }
@@ -20588,7 +20598,7 @@ function useSignedRequest(_a) {
                 case 3:
                     e_1 = _a.sent();
                     setError(getError(e_1, true));
-                    fetchError = getError(e_1, true);
+                    errorData = getError(e_1, true);
                     if (onError) {
                         onError(getError(e_1, true));
                     }
@@ -20596,11 +20606,11 @@ function useSignedRequest(_a) {
                 case 4:
                     setIsLoading(false);
                     return [7 /*endfinally*/];
-                case 5: return [2 /*return*/, { fetchRes: fetchRes, fetchError: fetchError }];
+                case 5: return [2 /*return*/, { responseData: responseData, errorData: errorData }];
             }
         });
     }); };
-    return { response: response, error: error, isLoading: isLoading, fetchData: fetchData };
+    return { response: response, error: error, isLoading: isLoading, makeRequest: makeRequest };
 }
 
 function _setPrototypeOf(o, p) {
