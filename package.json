@@ -38,7 +38,8 @@
     "react-content-loader": "6.0.3",
     "react-error-boundary": "^3.1.4",
     "react-popper": "^2.2.5",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
+    "uuid": "^9.0.0"
   },
   "peerDependencies": {
     "@popperjs/core": "^2.9.2",
@@ -54,6 +55,7 @@
     "@types/react": "17.0.5",
     "@types/react-dom": "17.0.5",
     "@types/react-router-dom": "5.1.7",
+    "@types/uuid": "^8.3.4",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-prettier": "3.4.0",
     "eslint-plugin-react-perf": "^3.3.0",
