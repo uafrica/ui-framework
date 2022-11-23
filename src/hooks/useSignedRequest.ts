@@ -55,7 +55,7 @@ export function useSignedRequest({
     if (fetchOnMount) {
       fetchData();
     }
-  }, [method, url, data, headers, disallowDuplicateCancel, retryCounter, fetchOnMount]);
+  }, []);
 
   const fetchData = async (params?: MyObject, disableLoadingState?: boolean) => {
     // Do not display or pass through loading state for the function

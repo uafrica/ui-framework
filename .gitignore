@@ -106,5 +106,5 @@ dist
 # Jetbrains workplace
 .idea/*
 
-build
+#build
 .DS_Store
