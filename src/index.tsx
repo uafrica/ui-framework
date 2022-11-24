@@ -1,4 +1,5 @@
 import * as addressUtils from "./utils/addressUtils";
+import * as cacheUtils from "./utils/cacheUtils";
 import * as numberUtils from "./utils/numberUtils";
 import * as generalUtils from "./utils/generalUtils";
 import Accordion from "./Accordion";
@@ -104,6 +105,7 @@ export {
   SavePanelContainer,
   IconWithBackground,
   addressUtils,
+  cacheUtils,
   numberUtils,
   generalUtils,
   useTabs,
