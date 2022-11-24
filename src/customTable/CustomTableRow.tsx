@@ -1,11 +1,11 @@
 import React, { createContext, useEffect, useState, ReactNode, useRef } from "react";
-import "./MultiTable.scss";
-import * as multiTableUtils from "./multiTableUtils";
+import "./CustomTable.scss";
+import * as customTableUtils from "./customTableUtils";
 import { Manager, Reference, Popper } from "react-popper";
 import { createPortal } from "react-dom";
 import { IColumn } from "./column.interface";
 
-function MultiTableRow(props: {
+function CustomTableRow(props: {
   rowId: any;
   columnOrder: string[];
   onRowClicked?: Function;
@@ -52,7 +52,7 @@ function MultiTableRow(props: {
               <tr
                 ref={ref}
                 id={rowId.toString()}
-                className={"multi-table-tr hover:bg-gray-100 "}
+                className={"custom-table-tr hover:bg-gray-100 "}
                 onContextMenu={e => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -69,10 +69,10 @@ function MultiTableRow(props: {
                 }}
               >
                 {columnOrder.map((columnId: string) => {
-                  let column: IColumn = multiTableUtils.getColumnById(columns, columnId);
+                  let column: IColumn = customTableUtils.getColumnById(columns, columnId);
 
                   let columnContentStyle: any = {};
-                  let columnWidth = multiTableUtils.getColumnWidth(columnWidths, columnId);
+                  let columnWidth = customTableUtils.getColumnWidth(columnWidths, columnId);
                   if (columnWidth) {
                     columnContentStyle.width = columnWidth + "px";
                     columnContentStyle.whiteSpace = "nowrap";
@@ -84,15 +84,15 @@ function MultiTableRow(props: {
                       id={columnId ?? ""}
                       key={columnId}
                       className={
-                        "multi-table-td pr-4 py-1 " +
-                        (onRowClicked && multiTableUtils.isColumnClickable(column)
+                        "custom-table-td pr-4 py-1 " +
+                        (onRowClicked && customTableUtils.isColumnClickable(column)
                           ? "cursor-pointer"
                           : "")
                       }
                       onClick={() => {
                         onShowMenu(null);
 
-                        if (onRowClicked && multiTableUtils.isColumnClickable(column)) {
+                        if (onRowClicked && customTableUtils.isColumnClickable(column)) {
                           onRowClicked({ index: dataIndex, row: rowData });
                         }
                       }}
@@ -163,7 +163,7 @@ function MultiTableRow(props: {
   return render();
 }
 
-export default MultiTableRow;
+export default CustomTableRow;
 
 function Portal(props: { children: ReactNode }) {
   let { children } = props;

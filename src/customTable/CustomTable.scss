@@ -1,4 +1,4 @@
-.multi-table-container {
+.custom-table-container {
   background-color: white;
   box-shadow: 4px 1px 12px 2px #ececec;
 }
@@ -8,7 +8,7 @@
   overflow: auto;
 }
 
-.multi-table {
+.custom-table {
   font: 13px Montserrat !important;
   width: 100%;
 }
@@ -19,7 +19,7 @@
   border-collapse: collapse;
 }
 
-.multi-table-tr {
+.custom-table-tr {
   text-align: left;
 }
 
@@ -27,9 +27,9 @@
   white-space: nowrap;
 }
 
-.multi-table-head {
-  .multi-table-tr {
-    .multi-table-th {
+.custom-table-head {
+  .custom-table-tr {
+    .custom-table-th {
       height: 39px;
       border-bottom: 1px solid lightgray;
       transform: uppercase;
@@ -37,7 +37,7 @@
   }
 }
 
-.multi-table-th {
+.custom-table-th {
   overflow: hidden;
   text-overflow: ellipsis;
   color: #111827;
@@ -49,7 +49,7 @@
   border-right: none !important;
 }
 
-.multi-table-td {
+.custom-table-td {
   white-space: nowrap;
 }
 

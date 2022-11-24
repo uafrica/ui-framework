@@ -32,7 +32,7 @@ function cloneColumnTable(tableId: any, list: any) {
       // @ts-ignore
       const th = headerCell.cloneNode(true);
       let newRow = document.createElement("tr");
-      newRow.classList.add("multi-table-tr");
+      newRow.classList.add("custom-table-tr");
 
       newRow.appendChild(th);
       newTable.appendChild(newRow);
@@ -47,7 +47,7 @@ function cloneColumnTable(tableId: any, list: any) {
         newCell.style.height = `${height}px`;
 
         newRow = document.createElement("tr");
-        newRow.classList.add("multi-table-tr");
+        newRow.classList.add("custom-table-tr");
 
         newRow.appendChild(newCell);
 
@@ -86,7 +86,7 @@ function cloneRowTable(tableId: any, list: any) {
       newTable.style.width = `${width}px`;
 
       const newRow = document.createElement("tr");
-      newRow.classList.add("multi-table-tr");
+      newRow.classList.add("custom-table-tr");
       const cells = [].slice.call(originalRow.children);
       cells.forEach(function (cell) {
         // @ts-ignore

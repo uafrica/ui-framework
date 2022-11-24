@@ -1,24 +1,25 @@
 import { useEffect, useRef, useState } from "react";
-import { Checkbox } from "./../Checkbox";
-import { Loader } from "./../Loader";
-import { Pagination } from "./../Pagination";
+import { Checkbox } from "../Checkbox";
+import { Loader } from "../Loader";
+import { Pagination } from "../Pagination";
 
-import "./MultiTable.scss";
-import * as multiTableUtils from "./multiTableUtils";
+import "./CustomTable.scss";
+import * as customTableUtils from "./customTableUtils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import MultiTableRow from "./MultiTableRow";
+import CustomTableRow from "./CustomTableRow";
 import { IColumn } from "./column.interface";
 import { IRow } from "./row.interface";
+import { clearInterval } from "timers";
 
-function MultiTable(props: {
+function CustomTable(props: {
   id: string;
   columns: IColumn[];
   columnOrder?: string[];
   columnWidths?: { id: string; value?: number }[];
-  pageSize: number;
-  loadFunction: Function;
-  loadFunctionArguments?: any;
-  draggableRows?: boolean;
+  pageSize: number; // initialPageSize or add to useeffect
+  fetchFunction: Function;
+  fetchFunctionArguments?: any; // call fetch not load
+  draggableRows?: boolean; // nonDraggable rows
   rowUniqueIdentifier?: string; // default "id"
   onPageSizeChanged?: Function;
   onRowClicked?: Function;
@@ -30,11 +31,12 @@ function MultiTable(props: {
   noPagination?: boolean;
   scrollableX?: boolean;
   rightClickMenuContent?: any;
+  autoRefreshInterval?: number;
 }) {
   let {
     id,
-    loadFunction,
-    loadFunctionArguments,
+    fetchFunction,
+    fetchFunctionArguments,
     draggableRows,
     onPageSizeChanged,
     onRowClicked,
@@ -45,11 +47,13 @@ function MultiTable(props: {
     onDataChanged,
     noPagination,
     scrollableX,
-    rightClickMenuContent
+    rightClickMenuContent,
+    autoRefreshInterval
   } = props;
-  const topRef: any = useRef();
-  const rowUniqueIdentifier = props.rowUniqueIdentifier ?? "id";
-  const defaultPageSize = 20;
+  let topRef: any = useRef();
+  let rowUniqueIdentifier = props.rowUniqueIdentifier ?? "id";
+  let defaultPageSize = 20;
+  let interval: any;
 
   // loading
   let [isInitialising, setIsInitialising] = useState<boolean>(true);
@@ -60,7 +64,7 @@ function MultiTable(props: {
   // table render
   let [columns, setColumns] = useState<IColumn[]>(props.columns);
   let [columnOrder, setColumnOrder] = useState<string[]>(
-    multiTableUtils.initialiseColumnOrder(props.columns, props.columnOrder)
+    customTableUtils.initialiseColumnOrder(props.columns, props.columnOrder)
   );
   let [rowOrder, setRowOrder] = useState<any[]>([]);
   let [columnWidths, setColumnWidths] = useState<{ id: string; value?: number }[]>(
@@ -96,11 +100,17 @@ function MultiTable(props: {
   useEffect(() => {
     load(true, page, pageSize);
     manageStaticColumns(props.columns);
+    if (autoRefreshInterval) {
+      startAutoRefreshInterval();
+    }
+    return ()=>{
+      clearInterval(interval)
+    }
   }, []);
 
   useEffect(() => {
     load(true, page, pageSize);
-  }, [loadFunctionArguments, orderingArguments]);
+  }, [fetchFunctionArguments, orderingArguments]);
 
   useEffect(() => {
     // column resize
@@ -128,17 +138,23 @@ function MultiTable(props: {
     }
   }, [draggingRowIndex]);
 
-  const dragColumnMouseMoveHandler = function (e: any) {
-    const table = document.getElementById(props.id);
-    const scrollableContainer = document.getElementById(props.id + "_scrollable_container");
+  function startAutoRefreshInterval() {
+    interval = setInterval(() => {
+      load(false, page, pageSize);
+    }, autoRefreshInterval);
+  }
+
+  function dragColumnMouseMoveHandler(e: any) {
+    let table = document.getElementById(props.id);
+    let scrollableContainer = document.getElementById(props.id + "_scrollable_container");
     // @ts-ignore
-    var rect = table.getBoundingClientRect();
+    let rect = table.getBoundingClientRect();
 
     if (!isDraggingStarted) {
       isDraggingStarted = true;
       setIsDraggingStarted(true);
 
-      list = multiTableUtils.cloneColumnTable(props.id, list);
+      list = customTableUtils.cloneColumnTable(props.id, list);
 
       draggingElement = [].slice.call(list.children)[draggingColumnIndex];
 
@@ -161,26 +177,26 @@ function MultiTable(props: {
     }
     draggingElement.style.left = `${left}px`;
 
-    const previousElement = draggingElement.previousElementSibling;
-    const nextElement = placeholder.nextElementSibling;
+    let previousElement = draggingElement.previousElementSibling;
+    let nextElement = placeholder.nextElementSibling;
 
-    if (previousElement && multiTableUtils.isOnLeft(draggingElement, previousElement)) {
-      multiTableUtils.swap(placeholder, draggingElement);
-      multiTableUtils.swap(placeholder, previousElement);
+    if (previousElement && customTableUtils.isOnLeft(draggingElement, previousElement)) {
+      customTableUtils.swap(placeholder, draggingElement);
+      customTableUtils.swap(placeholder, previousElement);
       return;
     }
 
-    if (nextElement && multiTableUtils.isOnLeft(nextElement, draggingElement)) {
-      multiTableUtils.swap(nextElement, placeholder);
-      multiTableUtils.swap(nextElement, draggingElement);
+    if (nextElement && customTableUtils.isOnLeft(nextElement, draggingElement)) {
+      customTableUtils.swap(nextElement, placeholder);
+      customTableUtils.swap(nextElement, draggingElement);
     }
 
     setDraggingElement(draggingElement);
     setPlaceholder(placeholder);
-  };
+  }
 
-  const dragColumnMouseUpHandler = function () {
-    const table = document.getElementById(props.id);
+  function dragColumnMouseUpHandler() {
+    let table = document.getElementById(props.id);
 
     if (table) {
       placeholder && placeholder.parentNode.removeChild(placeholder);
@@ -192,7 +208,7 @@ function MultiTable(props: {
       setDraggingElement(draggingElement);
 
       // @ts-ignore
-      const endColumnIndex = [].slice.call(list.children).indexOf(draggingElement);
+      let endColumnIndex = [].slice.call(list.children).indexOf(draggingElement);
 
       isDraggingStarted = false;
       setIsDraggingStarted(false);
@@ -201,7 +217,7 @@ function MultiTable(props: {
       setList(list);
 
       table.querySelectorAll("tr").forEach(function (row) {
-        const cells = [].slice.call(row.querySelectorAll("th, td"));
+        let cells = [].slice.call(row.querySelectorAll("th, td"));
         draggingColumnIndex > endColumnIndex
           ? // @ts-ignore
             cells[endColumnIndex].parentNode.insertBefore(
@@ -222,17 +238,17 @@ function MultiTable(props: {
       document.removeEventListener("mouseup", dragColumnMouseUpHandler);
       setColumnEventListenersAdded(false);
     }
-  };
+  }
 
   function dragRowMouseMoveHandler(e: any) {
-    const table = document.getElementById(props.id);
+    let table = document.getElementById(props.id);
     // @ts-ignore
-    var rect = table.getBoundingClientRect();
+    let rect = table.getBoundingClientRect();
 
     if (!isDraggingStarted) {
       isDraggingStarted = true;
 
-      list = multiTableUtils.cloneRowTable(props.id, list);
+      list = customTableUtils.cloneRowTable(props.id, list);
 
       draggingElement = [].slice.call(list.children)[draggingRowIndex + 1];
       draggingElement.classList.add("dragging");
@@ -254,22 +270,22 @@ function MultiTable(props: {
     }
     draggingElement.style.top = `${top}px`;
 
-    const previousElement: any = draggingElement.previousElementSibling;
-    const nextElement: any = placeholder.nextElementSibling;
+    let previousElement: any = draggingElement.previousElementSibling;
+    let nextElement: any = placeholder.nextElementSibling;
 
     if (
       previousElement &&
       previousElement.previousElementSibling &&
-      multiTableUtils.isAbove(draggingElement, previousElement)
+      customTableUtils.isAbove(draggingElement, previousElement)
     ) {
-      multiTableUtils.swap(placeholder, draggingElement);
-      multiTableUtils.swap(placeholder, previousElement);
+      customTableUtils.swap(placeholder, draggingElement);
+      customTableUtils.swap(placeholder, previousElement);
       return;
     }
 
-    if (nextElement && multiTableUtils.isAbove(nextElement, draggingElement)) {
-      multiTableUtils.swap(nextElement, placeholder);
-      multiTableUtils.swap(nextElement, draggingElement);
+    if (nextElement && customTableUtils.isAbove(nextElement, draggingElement)) {
+      customTableUtils.swap(nextElement, placeholder);
+      customTableUtils.swap(nextElement, draggingElement);
     }
 
     setDraggingElement(draggingElement);
@@ -277,7 +293,7 @@ function MultiTable(props: {
   }
 
   function dragRowMouseUpHandler() {
-    const table = document.getElementById(props.id);
+    let table = document.getElementById(props.id);
 
     if (table) {
       placeholder && placeholder.parentNode.removeChild(placeholder);
@@ -288,7 +304,7 @@ function MultiTable(props: {
       draggingElement.style.removeProperty("position");
 
       // @ts-ignore
-      const endRowIndex = [].slice.call(list.children).indexOf(draggingElement);
+      let endRowIndex = [].slice.call(list.children).indexOf(draggingElement);
 
       isDraggingStarted = false;
 
@@ -316,7 +332,7 @@ function MultiTable(props: {
     }
   }
 
-  const resizeColumnMouseMoveHandler = function (e: any) {
+  function resizeColumnMouseMoveHandler(e: any) {
     let newWidth = e.clientX - resizeColumnStartX + resizeColumnStartWidth;
 
     columnWidths.forEach(c => {
@@ -325,9 +341,9 @@ function MultiTable(props: {
       }
     });
     changeColumnWidths(columnWidths);
-  };
+  }
 
-  const resizeColumnMouseUpHandler = function () {
+  function resizeColumnMouseUpHandler() {
     document.removeEventListener("mousemove", resizeColumnMouseMoveHandler);
     document.removeEventListener("mouseup", resizeColumnMouseUpHandler);
 
@@ -336,7 +352,7 @@ function MultiTable(props: {
     setResizeColumnId("");
     setResizeColumnStartWidth(0);
     setResizeColumnStartX(0);
-  };
+  }
 
   function changePageSize(size: number) {
     setPageSize(size);
@@ -379,7 +395,7 @@ function MultiTable(props: {
   }
 
   function updateColumnOrder() {
-    const table = document.getElementById(props.id);
+    let table = document.getElementById(props.id);
     if (table) {
       let newColumnOrder = [].slice.call(table.querySelectorAll("th")).map((e: any) => {
         return e.id;
@@ -389,7 +405,7 @@ function MultiTable(props: {
   }
 
   function updateRowOrder() {
-    const table = document.getElementById(props.id);
+    let table = document.getElementById(props.id);
     if (table) {
       let order = [].slice.call(table.querySelectorAll("tr")).map((e: any) => {
         return e.id;
@@ -439,7 +455,7 @@ function MultiTable(props: {
         cell: (row: IRow) => {
           return (
             <Checkbox
-              checked={multiTableUtils.isRowSelected(
+              checked={customTableUtils.isRowSelected(
                 selectedRowIdentifiers,
                 row.original[rowUniqueIdentifier]
               )}
@@ -512,7 +528,7 @@ function MultiTable(props: {
   }
 
   async function load(reset: boolean, page: number, pageSize: number) {
-    if (loadFunction) {
+    if (fetchFunction) {
       if (reset) {
         setIsLoading(true);
       }
@@ -520,7 +536,7 @@ function MultiTable(props: {
 
       let offset = pageSize * (_page - 1);
       let pages = 0;
-      let args = loadFunctionArguments ?? {};
+      let args = fetchFunctionArguments ?? {};
       if (!noPagination) {
         args.offset = offset;
         args.limit = pageSize;
@@ -530,7 +546,7 @@ function MultiTable(props: {
         args = { ...args, ...orderingArguments };
       }
 
-      let { data, count, error } = await loadFunction(args);
+      let { data, count, error } = await fetchFunction(args);
 
       if (!noPagination) {
         pages = Math.ceil(count / pageSize);
@@ -557,26 +573,26 @@ function MultiTable(props: {
         className={scrollableX ? "scrollable-table-container" : ""}
         id={id + "_scrollable_container"}
       >
-        <table id={id} className="multi-table">
-          <thead className="multi-table-head">
-            <tr className="multi-table-tr">
+        <table id={id} className="custom-table">
+          <thead className="custom-table-head">
+            <tr className="custom-table-tr">
               {columnOrder.map((columnId: string, columnIndex: number) => {
-                let column: IColumn = multiTableUtils.getColumnById(columns, columnId);
+                let column: IColumn = customTableUtils.getColumnById(columns, columnId);
                 let columnStyle: any = {};
                 let columnContentStyle: any = {};
-                let columnWidth = multiTableUtils.getColumnWidth(columnWidths, columnId);
+                let columnWidth = customTableUtils.getColumnWidth(columnWidths, columnId);
                 if (columnWidth) {
                   columnContentStyle.width = columnWidth + "px";
                   columnContentStyle.whiteSpace = "nowrap";
                   columnContentStyle.overflow = "hidden";
                   columnContentStyle.textOverflow = "ellipsis";
                 }
-                if (multiTableUtils.isColumnDraggable(column)) {
+                if (customTableUtils.isColumnDraggable(column)) {
                   columnStyle.cursor = "move";
                 } else {
                   columnStyle.cursor = "auto";
                 }
-                if (multiTableUtils.isColumnSortable(column)) {
+                if (customTableUtils.isColumnSortable(column)) {
                   columnContentStyle.cursor = "pointer";
                 } else {
                   columnContentStyle.cursor = "auto";
@@ -588,12 +604,12 @@ function MultiTable(props: {
                     id={columnId}
                     key={columnId}
                     onMouseDown={() => {
-                      if (multiTableUtils.isColumnDraggable(column)) {
+                      if (customTableUtils.isColumnDraggable(column)) {
                         setDraggingColumnIndex(columnIndex);
                       }
                     }}
                     className={
-                      "multi-table-th lex flex-row justify-between items-center bg-gray-200"
+                      "custom-table-th lex flex-row justify-between items-center bg-gray-200"
                     }
                   >
                     <div className="flex flex-row justify-between items-center">
@@ -601,7 +617,7 @@ function MultiTable(props: {
                         <div
                           style={columnContentStyle}
                           onMouseDown={(e: any) => {
-                            if (multiTableUtils.isColumnSortable(column)) {
+                            if (customTableUtils.isColumnSortable(column)) {
                               e.stopPropagation();
                               let args = { order: "DESC", order_by: column.accessor };
                               if (orderingArguments.order === "DESC") {
@@ -614,7 +630,7 @@ function MultiTable(props: {
                           {typeof column.header === "function" ? column.header() : column.header}
                         </div>
                       </div>
-                      {multiTableUtils.isColumnResizable(column) ? (
+                      {customTableUtils.isColumnResizable(column) ? (
                         <div
                           title="Click and drag to resize"
                           className="resizer"
@@ -650,11 +666,11 @@ function MultiTable(props: {
             </tr>
           </thead>
 
-          <tbody className="multi-table-tbody">
+          <tbody className="custom-table-tbody">
             {rowOrder.map((rowId: any, dataIndex: number) => {
-              let rowData = multiTableUtils.getDataByRowId(data, rowUniqueIdentifier, rowId);
+              let rowData = customTableUtils.getDataByRowId(data, rowUniqueIdentifier, rowId);
               return (
-                <MultiTableRow
+                <CustomTableRow
                   key={rowId}
                   onShowMenu={(rowId: any) => {
                     setShowMenuRowId(rowId);
@@ -713,7 +729,7 @@ function MultiTable(props: {
       {isLoading ? (
         <Loader.Inline />
       ) : (
-        <div ref={topRef} className=" multi-table-container">
+        <div ref={topRef} className=" custom-table-container">
           {renderTable()}
           {renderPagination()}
         </div>
@@ -722,4 +738,4 @@ function MultiTable(props: {
   );
 }
 
-export { MultiTable };
+export { CustomTable };
