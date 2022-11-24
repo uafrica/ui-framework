@@ -9,17 +9,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CustomTableRow from "./CustomTableRow";
 import { IColumn } from "./column.interface";
 import { IRow } from "./row.interface";
-import { clearInterval } from "timers";
 
 function CustomTable(props: {
   id: string;
   columns: IColumn[];
   columnOrder?: string[];
   columnWidths?: { id: string; value?: number }[];
-  pageSize: number; // initialPageSize or add to useeffect
+  pageSize?: number;
   fetchFunction: Function;
-  fetchFunctionArguments?: any; // call fetch not load
-  draggableRows?: boolean; // nonDraggable rows
+  fetchFunctionArguments?: any;
+  draggableRows?: boolean;
   rowUniqueIdentifier?: string; // default "id"
   onPageSizeChanged?: Function;
   onRowClicked?: Function;
@@ -99,18 +98,29 @@ function CustomTable(props: {
 
   useEffect(() => {
     load(true, page, pageSize);
-    manageStaticColumns(props.columns);
     if (autoRefreshInterval) {
       startAutoRefreshInterval();
     }
-    return ()=>{
-      clearInterval(interval)
-    }
+    return () => {
+      if (autoRefreshInterval) {
+        clearInterval(interval);
+      }
+    };
   }, []);
+
+  useEffect(() => {
+    manageStaticColumns(columns);
+  }, [data, selectedRowIdentifiers]);
 
   useEffect(() => {
     load(true, page, pageSize);
   }, [fetchFunctionArguments, orderingArguments]);
+
+  useEffect(() => {
+    if (props.pageSize) {
+      changePageSize(props.pageSize);
+    }
+  }, [props.pageSize]);
 
   useEffect(() => {
     // column resize
@@ -148,7 +158,9 @@ function CustomTable(props: {
     let table = document.getElementById(props.id);
     let scrollableContainer = document.getElementById(props.id + "_scrollable_container");
     // @ts-ignore
-    let rect = table.getBoundingClientRect();
+    let tableBoundaries = table.getBoundingClientRect();
+    // @ts-ignore
+    let scrollableContainerBoundaries = scrollableContainer.getBoundingClientRect();
 
     if (!isDraggingStarted) {
       isDraggingStarted = true;
@@ -159,6 +171,7 @@ function CustomTable(props: {
       draggingElement = [].slice.call(list.children)[draggingColumnIndex];
 
       draggingElement.classList.add("dragging");
+      draggingElement.classList.add("dragging-column");
 
       placeholder = document.createElement("div");
       placeholder.classList.add("placeholder");
@@ -169,12 +182,34 @@ function CustomTable(props: {
     draggingElement.style.position = "absolute";
     draggingElement.style.top = `0px`;
     let left = 0;
-    let amountScrolled = scrollableContainer?.scrollLeft ?? 0;
-    if (e.clientX - rect.x > 0 && e.clientX - rect.x <= rect.width - rect.x) {
-      left = e.clientX - rect.x - amountScrolled;
-    } else if (e.clientX - rect.x > rect.width - rect.x) {
-      left = rect.width - rect.x - amountScrolled;
+
+    if (
+      scrollableContainerBoundaries.left < e.clientX &&
+      e.clientX <= scrollableContainerBoundaries.right
+    ) {
+      // in scroll range
+    } else if (scrollableContainerBoundaries.right < e.clientX) {
+      // scroll forward
+      // @ts-ignore
+      scrollableContainer.scrollLeft += 5;
+    } else if (scrollableContainerBoundaries.left > e.clientX) {
+      // scroll back
+      // @ts-ignore
+      scrollableContainer.scrollLeft -= 5;
     }
+
+    let amountScrolled = scrollableContainer?.scrollLeft ?? 0;
+
+    if (tableBoundaries.left <= e.clientX && e.clientX <= tableBoundaries.right) {
+      left = e.clientX + amountScrolled - scrollableContainerBoundaries.left;
+    } else if (tableBoundaries.left > e.clientX) {
+      // max left reached
+      left = 0;
+    } else if (e.clientX > tableBoundaries.right) {
+      // max right reached
+      left = tableBoundaries.right + amountScrolled - scrollableContainerBoundaries.left;
+    }
+
     draggingElement.style.left = `${left}px`;
 
     let previousElement = draggingElement.previousElementSibling;
@@ -197,25 +232,21 @@ function CustomTable(props: {
 
   function dragColumnMouseUpHandler() {
     let table = document.getElementById(props.id);
-
     if (table) {
       placeholder && placeholder.parentNode.removeChild(placeholder);
       setPlaceholder(placeholder);
-      draggingElement.classList.remove("dragging");
-      draggingElement.style.removeProperty("top");
-      draggingElement.style.removeProperty("left");
-      draggingElement.style.removeProperty("position");
+      draggingElement?.classList.remove("dragging");
+      draggingElement?.classList.remove("dragging-column");
+      draggingElement?.style.removeProperty("top");
+      draggingElement?.style.removeProperty("left");
+      draggingElement?.style.removeProperty("position");
       setDraggingElement(draggingElement);
-
       // @ts-ignore
       let endColumnIndex = [].slice.call(list.children).indexOf(draggingElement);
-
       isDraggingStarted = false;
       setIsDraggingStarted(false);
-
       list.parentNode.removeChild(list);
       setList(list);
-
       table.querySelectorAll("tr").forEach(function (row) {
         let cells = [].slice.call(row.querySelectorAll("th, td"));
         draggingColumnIndex > endColumnIndex
@@ -231,11 +262,11 @@ function CustomTable(props: {
               cells[endColumnIndex].nextSibling
             );
       });
-
       table.style.removeProperty("visibility");
       updateColumnOrder();
       document.removeEventListener("mousemove", dragColumnMouseMoveHandler);
       document.removeEventListener("mouseup", dragColumnMouseUpHandler);
+      setDraggingColumnIndex(undefined);
       setColumnEventListenersAdded(false);
     }
   }
@@ -243,7 +274,7 @@ function CustomTable(props: {
   function dragRowMouseMoveHandler(e: any) {
     let table = document.getElementById(props.id);
     // @ts-ignore
-    let rect = table.getBoundingClientRect();
+    let tableBoundaries = table.getBoundingClientRect();
 
     if (!isDraggingStarted) {
       isDraggingStarted = true;
@@ -263,11 +294,16 @@ function CustomTable(props: {
 
     draggingElement.style.left = `0px`;
     let top = 0;
-    if (e.clientY - rect.y > 0 && e.clientY - rect.y <= rect.height - rect.y) {
-      top = e.clientY - rect.y;
-    } else if (e.clientY - rect.y > rect.height - rect.y) {
-      top = rect.height - rect.y;
+    let tableHeaderHeight = 39;
+    let mouseY = e.clientY;
+    if (tableBoundaries.top <= mouseY && mouseY <= tableBoundaries.bottom) {
+      top = e.clientY - tableBoundaries.top;
+    } else if (tableBoundaries.top > mouseY) {
+      top = tableBoundaries.top - tableHeaderHeight;
+    } else if (mouseY > tableBoundaries.bottom) {
+      top = tableBoundaries.bottom - tableBoundaries.top - tableHeaderHeight;
     }
+
     draggingElement.style.top = `${top}px`;
 
     let previousElement: any = draggingElement.previousElementSibling;
@@ -419,8 +455,11 @@ function CustomTable(props: {
   }
 
   function manageStaticColumns(columns: IColumn[]) {
+    let newColumns = [...columns];
+    let newColumnOrder = [...columnOrder];
+
     if (onSelectionChanged) {
-      let selectColumnIndex = columnOrder.indexOf("select");
+      let selectColumnIndex = newColumnOrder.indexOf("select");
 
       let selectAllColumn = {
         width: 30,
@@ -483,16 +522,16 @@ function CustomTable(props: {
       };
 
       if (selectColumnIndex < 0) {
-        columns.splice(0, 0, selectAllColumn);
-        columnOrder.splice(0, 0, "select");
+        newColumns.splice(0, 0, selectAllColumn);
+        newColumnOrder.splice(0, 0, "select");
       } else {
-        columns.splice(selectColumnIndex, 1, selectAllColumn);
-        columnOrder.splice(selectColumnIndex, 1, "select");
+        newColumns.splice(selectColumnIndex, 1, selectAllColumn);
+        newColumnOrder.splice(selectColumnIndex, 1, "select");
       }
     }
 
     if (draggableRows) {
-      let rowDragColumnIndex = columnOrder.indexOf("rowDrag");
+      let rowDragColumnIndex = newColumnOrder.indexOf("rowDrag");
       let rowDragColumn = {
         width: 30,
         id: "rowDrag",
@@ -516,15 +555,16 @@ function CustomTable(props: {
         }
       };
       if (rowDragColumnIndex < 0) {
-        columns.splice(0, 0, rowDragColumn);
-        columnOrder.splice(0, 0, "rowDrag");
+        newColumns.splice(0, 0, rowDragColumn);
+        newColumnOrder.splice(0, 0, "rowDrag");
       } else {
-        columns.splice(rowDragColumnIndex, 1, rowDragColumn);
-        columnOrder.splice(rowDragColumnIndex, 1, "rowDrag");
+        newColumns.splice(rowDragColumnIndex, 1, rowDragColumn);
+        newColumnOrder.splice(rowDragColumnIndex, 1, "rowDrag");
       }
     }
-    setColumns([...columns]);
-    setColumnOrder([...columnOrder]);
+
+    setColumns([...newColumns]);
+    setColumnOrder([...newColumnOrder]);
   }
 
   async function load(reset: boolean, page: number, pageSize: number) {
