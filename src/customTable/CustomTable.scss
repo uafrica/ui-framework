@@ -1,0 +1,90 @@
+.custom-table-container {
+  background-color: white;
+  box-shadow: 4px 1px 12px 2px #ececec;
+}
+
+.scrollable-table-container {
+  width: 100%;
+  overflow: auto;
+}
+
+.custom-table {
+  font: 13px Montserrat !important;
+  width: 100%;
+}
+
+.clone-table {
+  font: 13px Montserrat !important;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.custom-table-tr {
+  text-align: left;
+}
+
+.whitespace-nowrap {
+  white-space: nowrap;
+}
+
+.custom-table-head {
+  .custom-table-tr {
+    .custom-table-th {
+      height: 39px;
+      border-bottom: 1px solid lightgray;
+      transform: uppercase;
+    }
+  }
+}
+
+.custom-table-th {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #111827;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  background-color: #f9fafb;
+  border-left: none !important;
+  border-right: none !important;
+}
+
+.custom-table-td {
+  white-space: nowrap;
+}
+
+.draggable {
+  cursor: move;
+  user-select: none;
+}
+
+.placeholder {
+  background-color: lightgray;
+  border: 2px dashed gray;
+}
+
+.clone-list {
+  display: flex;
+}
+
+.dragging {
+  background: white;
+  border: 2px dashed gray;
+  z-index: 999;
+}
+
+.resizer {
+  height: 39px;
+  width: 5px;
+  cursor: col-resize;
+}
+
+.resizer-placeholder {
+  height: 39px;
+  width: 5px;
+  cursor: default;
+}
+
+.resizable {
+  background-color: lightgray !important;
+}
