@@ -6,6 +6,7 @@
 .scrollable-table-container {
   width: 100%;
   overflow: auto;
+  position: relative;
 }
 
 .custom-table {
@@ -60,16 +61,24 @@
 
 .placeholder {
   background-color: lightgray;
-  border: 2px dashed gray;
+  border: 1px dashed gray;
 }
 
 .clone-list {
   display: flex;
 }
 
+.dragging-column{
+  .custom-table-td,
+  .custom-table-th {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
 .dragging {
   background: white;
-  border: 2px dashed gray;
+  border: 1px dashed gray;
   z-index: 999;
 }
 
