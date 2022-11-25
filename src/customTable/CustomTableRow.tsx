@@ -101,7 +101,7 @@ function CustomTableRow(props: {
                         e.stopPropagation();
                       }}
                     >
-                      <div style={columnContentStyle}>
+                      <div style={columnContentStyle} className="flex flex-row items-center">
                         {column.cell
                           ? column.cell({
                               original: rowData,
