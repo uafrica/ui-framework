@@ -2,6 +2,7 @@ import * as addressUtils from "./utils/addressUtils";
 import * as cacheUtils from "./utils/cacheUtils";
 import * as numberUtils from "./utils/numberUtils";
 import * as generalUtils from "./utils/generalUtils";
+import * as navUtils from "./utils/navUtils"
 import Accordion from "./Accordion";
 import CopyText from "./CopyText";
 import ResponsiveRow from "./ResponsiveRow";
@@ -108,6 +109,7 @@ export {
   cacheUtils,
   numberUtils,
   generalUtils,
+  navUtils,
   useTabs,
   usePrevious,
   useOnClickOutside,
