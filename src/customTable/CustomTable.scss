@@ -31,6 +31,9 @@
 .custom-table-head {
   .custom-table-tr {
     .custom-table-th {
+      font: 12px Montserrat !important;
+      letter-spacing: 0.07em;
+      padding: 0;
       height: 39px;
       border-bottom: 1px solid lightgray;
       transform: uppercase;
@@ -68,7 +71,7 @@
   display: flex;
 }
 
-.dragging-column{
+.dragging-column {
   .custom-table-td,
   .custom-table-th {
     padding-left: 10px;
@@ -86,6 +89,10 @@
   height: 39px;
   width: 5px;
   cursor: col-resize;
+}
+
+.resizer:hover {
+  background-color: lightgray;
 }
 
 .resizer-placeholder {

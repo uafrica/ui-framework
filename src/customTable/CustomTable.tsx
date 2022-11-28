@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CustomTableRow from "./CustomTableRow";
 import { IColumn } from "./column.interface";
 import { IRow } from "./row.interface";
+import { Message } from "../Message";
 
 function CustomTable(props: {
   id: string;
@@ -58,7 +59,7 @@ function CustomTable(props: {
   let [isInitialising, setIsInitialising] = useState<boolean>(true);
   let [isLoading, setIsLoading] = useState<boolean>(false);
   let [data, setData] = useState<any[]>([]);
-  let [error, setError] = useState<any[]>([]);
+  let [error, setError] = useState<any[]>();
   let [orderingArguments, setOrderingArguments] = useState<any>({});
   // table render
   let [columns, setColumns] = useState<IColumn[]>(props.columns);
@@ -101,6 +102,7 @@ function CustomTable(props: {
     if (autoRefreshInterval) {
       startAutoRefreshInterval();
     }
+
     return () => {
       if (autoRefreshInterval) {
         clearInterval(interval);
@@ -113,12 +115,14 @@ function CustomTable(props: {
   }, [data, selectedRowIdentifiers]);
 
   useEffect(() => {
-    load(true, page, pageSize);
+    if (!isInitialising) {
+      load(true, page, pageSize);
+    }
   }, [fetchFunctionArguments, orderingArguments]);
 
   useEffect(() => {
-    if (props.pageSize) {
-      changePageSize(props.pageSize);
+    if (props.pageSize && props.pageSize !== pageSize) {
+      changePageSize(props.pageSize, !isInitialising);
     }
   }, [props.pageSize]);
 
@@ -390,12 +394,14 @@ function CustomTable(props: {
     setResizeColumnStartX(0);
   }
 
-  function changePageSize(size: number) {
+  function changePageSize(size: number, doLoad: boolean) {
     setPageSize(size);
     if (onPageSizeChanged && !isInitialising) {
       onPageSizeChanged(size);
     }
-    load(true, 1, size);
+    if (doLoad) {
+      load(true, 1, size);
+    }
   }
 
   function changeColumnOrder(order: string[]) {
@@ -622,7 +628,8 @@ function CustomTable(props: {
                 let columnContentStyle: any = {};
                 let columnWidth = customTableUtils.getColumnWidth(columnWidths, columnId);
                 if (columnWidth) {
-                  columnContentStyle.width = columnWidth + "px";
+                  columnContentStyle.maxWidth = columnWidth + "px";
+                  columnStyle.width = columnWidth + "px";
                   columnContentStyle.whiteSpace = "nowrap";
                   columnContentStyle.overflow = "hidden";
                   columnContentStyle.textOverflow = "ellipsis";
@@ -652,8 +659,8 @@ function CustomTable(props: {
                       "custom-table-th lex flex-row justify-between items-center bg-gray-200"
                     }
                   >
-                    <div className="flex flex-row justify-between items-center">
-                      <div className="flex flex-row justify-between whitespace-nowrap">
+                    <div className="flex flex-row justify-between items-center ">
+                      <div className="flex flex-row justify-between whitespace-nowrap mx-2">
                         <div
                           style={columnContentStyle}
                           onMouseDown={(e: any) => {
@@ -754,7 +761,7 @@ function CustomTable(props: {
         pages={totalPages}
         setActive={setPage}
         setRows={(val: any) => {
-          changePageSize(val);
+          changePageSize(val, true);
           setPage(1);
         }}
         rows={pageSize}
@@ -763,19 +770,23 @@ function CustomTable(props: {
     );
   }
 
-  return (
-    <div>
-      {error}
-      {isLoading ? (
-        <Loader.Inline />
-      ) : (
-        <div ref={topRef} className="custom-table-container">
-          {renderTable()}
-          {renderPagination()}
-        </div>
-      )}
-    </div>
-  );
+  function render() {
+    return (
+      <div>
+        {error && <Message.Error>{error}</Message.Error>}
+        {isLoading ? (
+          <Loader.Inline />
+        ) : (
+          <div ref={topRef} className=" custom-table-container">
+            {renderTable()}
+            {renderPagination()}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  return render();
 }
 
 export { CustomTable };
