@@ -1,3 +1,5 @@
+import {INavItem} from "../interfaces/navitem.interface"
+
 function checkIfUserHasAccessToNavSection(section: INavItem[]) {
   if (section) {
     let hasAccessToSection = false;
@@ -14,11 +16,3 @@ function checkIfUserHasAccessToNavSection(section: INavItem[]) {
 }
 
 export {checkIfUserHasAccessToNavSection}
-
-export interface INavItem {
-  displayCondition: boolean;
-  displayName: string;
-  hasAccess: boolean;
-  icon: string;
-  path: string;
-}
