@@ -15,7 +15,7 @@ function checkIfUserHasAccessToNavSection(section: INavItem[]) {
 
 export {checkIfUserHasAccessToNavSection}
 
-interface INavItem {
+export interface INavItem {
   displayCondition: boolean;
   displayName: string;
   hasAccess: boolean;
