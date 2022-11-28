@@ -121,7 +121,7 @@ function CustomTable(props: {
   }, [fetchFunctionArguments, orderingArguments]);
 
   useEffect(() => {
-    if (props.pageSize) {
+    if (props.pageSize && props.pageSize !== pageSize) {
       changePageSize(props.pageSize, !isInitialising);
     }
   }, [props.pageSize]);
@@ -628,7 +628,8 @@ function CustomTable(props: {
                 let columnContentStyle: any = {};
                 let columnWidth = customTableUtils.getColumnWidth(columnWidths, columnId);
                 if (columnWidth) {
-                  columnContentStyle.width = columnWidth + "px";
+                  columnContentStyle.maxWidth = columnWidth + "px";
+                  columnStyle.width = columnWidth + "px";
                   columnContentStyle.whiteSpace = "nowrap";
                   columnContentStyle.overflow = "hidden";
                   columnContentStyle.textOverflow = "ellipsis";
@@ -658,8 +659,8 @@ function CustomTable(props: {
                       "custom-table-th lex flex-row justify-between items-center bg-gray-200"
                     }
                   >
-                    <div className="flex flex-row justify-between items-center">
-                      <div className="flex flex-row justify-between whitespace-nowrap">
+                    <div className="flex flex-row justify-between items-center ">
+                      <div className="flex flex-row justify-between whitespace-nowrap mx-2">
                         <div
                           style={columnContentStyle}
                           onMouseDown={(e: any) => {

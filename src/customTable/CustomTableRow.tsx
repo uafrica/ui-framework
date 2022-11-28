@@ -84,7 +84,7 @@ function CustomTableRow(props: {
                       id={columnId ?? ""}
                       key={columnId}
                       className={
-                        "custom-table-td pr-4 py-1 " +
+                        "custom-table-td pr-4 py-2 mx-1 " +
                         (onRowClicked && customTableUtils.isColumnClickable(column)
                           ? "cursor-pointer"
                           : "")
@@ -101,7 +101,7 @@ function CustomTableRow(props: {
                         e.stopPropagation();
                       }}
                     >
-                      <div style={columnContentStyle} className="flex flex-row items-center">
+                      <div style={columnContentStyle} className="flex flex-row items-center mx-2">
                         {column.cell
                           ? column.cell({
                               original: rowData,
