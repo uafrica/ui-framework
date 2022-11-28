@@ -1,5 +1,5 @@
-function upsertItem(store: any, storeName: string, item: any) {
-  let items = store.cache[storeName];
+function upsertItem(store: any, cacheKey: string, item: any) {
+  let items = store.cache[cacheKey];
   if (items) {
     let updated = false;
     items.forEach((t: any, i: number) => {
@@ -13,12 +13,12 @@ function upsertItem(store: any, storeName: string, item: any) {
       items.push(item);
     }
 
-    store.set(storeName, items);
+    store.set(cacheKey, items);
   }
 }
 
-function deleteItems(store: any, storeName: string, ids: number[]) {
-  let items = store.cache[storeName];
+function deleteItems(store: any, cacheKey: string, ids: number[]) {
+  let items = store.cache[cacheKey];
 
   if (items) {
     ids.forEach((id: number) => {
@@ -28,17 +28,17 @@ function deleteItems(store: any, storeName: string, ids: number[]) {
         }
       });
     });
-    store.set(storeName, items);
+    store.set(cacheKey, items);
   }
 }
 
-function getFromStore(store: any, storeName: string) {
-  return store?.cache[storeName] ?? [];
+function getFromStore(store: any, cacheKey: string) {
+  return store?.cache[cacheKey] ?? [];
 }
 
-function setInStore(store: any, storeName: string, data: any[]) {
+function setInStore(store: any, cacheKey: string, data: any[]) {
   let cacheData = store.cache ?? {};
-  cacheData[storeName] = data ?? [];
+  cacheData[cacheKey] = data ?? [];
   store.set("cache", cacheData);
 }
 
