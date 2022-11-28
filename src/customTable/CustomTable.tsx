@@ -769,7 +769,7 @@ function CustomTable(props: {
       {isLoading ? (
         <Loader.Inline />
       ) : (
-        <div ref={topRef} className=" custom-table-container">
+        <div ref={topRef} className="custom-table-container">
           {renderTable()}
           {renderPagination()}
         </div>
