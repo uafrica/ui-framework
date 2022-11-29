@@ -10,6 +10,7 @@ import CustomTableRow from "./CustomTableRow";
 import { IColumn } from "./column.interface";
 import { IRow } from "./row.interface";
 import { Message } from "../Message";
+import { TableActionsPanel } from "./../Panels";
 
 function CustomTable(props: {
   id: string;
@@ -32,6 +33,8 @@ function CustomTable(props: {
   scrollableX?: boolean;
   rightClickMenuContent?: any;
   autoRefreshInterval?: number;
+  renderTableActionsHeader?: Function;
+  renderTableActionsChildren?: Function;
 }) {
   let {
     id,
@@ -78,6 +81,7 @@ function CustomTable(props: {
   let [selectedRowIdentifiers, setSelectedRowIdentifiers] = useState<string[]>([]);
   let [allRowsSelected, setAllRowsSelected] = useState<boolean>(false);
   // pagination
+  let [count, setCount] = useState<number>(1);
   let [page, setPage] = useState<number>(1);
   let [totalPages, setTotalPages] = useState<number>(0);
   let [pageSize, setPageSize] = useState<number>(props.pageSize ?? defaultPageSize);
@@ -98,11 +102,9 @@ function CustomTable(props: {
   let [resizeColumnStartX, setResizeColumnStartX] = useState<number>(0);
 
   useEffect(() => {
-    load(true, page, pageSize);
     if (autoRefreshInterval) {
       startAutoRefreshInterval();
     }
-
     return () => {
       if (autoRefreshInterval) {
         clearInterval(interval);
@@ -115,10 +117,14 @@ function CustomTable(props: {
   }, [data, selectedRowIdentifiers]);
 
   useEffect(() => {
+    load(true, page, pageSize);
+  }, [fetchFunctionArguments]);
+
+  useEffect(() => {
     if (!isInitialising) {
       load(true, page, pageSize);
     }
-  }, [fetchFunctionArguments, orderingArguments]);
+  }, [orderingArguments]);
 
   useEffect(() => {
     if (props.pageSize && props.pageSize !== pageSize) {
@@ -596,6 +602,7 @@ function CustomTable(props: {
 
       if (!noPagination) {
         pages = Math.ceil(count / pageSize);
+        setCount(count);
         setPage(_page);
         setTotalPages(pages);
       }
@@ -772,6 +779,24 @@ function CustomTable(props: {
     );
   }
 
+  function renderTableActions() {
+    let title = "";
+    if (props.renderTableActionsHeader) {
+      title = props.renderTableActionsHeader(data, count, page, pageSize, isLoading);
+    }
+
+    if (props.renderTableActionsHeader || props.renderTableActionsChildren) {
+      return (
+        props.renderTableActionsHeader && (
+          <TableActionsPanel title={title}>
+            {props.renderTableActionsChildren && props.renderTableActionsChildren(data, isLoading)}
+          </TableActionsPanel>
+        )
+      );
+    }
+    return null;
+  }
+
   function render() {
     return (
       <div>
@@ -779,9 +804,13 @@ function CustomTable(props: {
         {isLoading ? (
           <Loader.Inline />
         ) : (
-          <div ref={topRef} className=" custom-table-container rounded-lg">
-            {renderTable()}
-            {renderPagination()}
+          <div>
+            {renderTableActions()}
+
+            <div ref={topRef} className=" custom-table-container rounded-lg">
+              {renderTable()}
+              {renderPagination()}
+            </div>
           </div>
         )}
       </div>
