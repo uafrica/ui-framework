@@ -616,7 +616,7 @@ function CustomTable(props: {
   function renderTable() {
     return (
       <div
-        className={scrollableX ? "scrollable-table-container" : ""}
+        className={"rounded-lg " + (scrollableX ? "scrollable-table-container" : "")}
         id={id + "_scrollable_container"}
       >
         <table id={id} className="custom-table">
@@ -628,7 +628,11 @@ function CustomTable(props: {
                 let columnContentStyle: any = {};
                 let columnWidth = customTableUtils.getColumnWidth(columnWidths, columnId);
                 if (columnWidth) {
-                  columnContentStyle.maxWidth = columnWidth + "px";
+                  if (scrollableX) {
+                    columnContentStyle.width = columnWidth + "px";
+                  } else {
+                    columnContentStyle.maxWidth = columnWidth + "px";
+                  }
                   columnStyle.width = columnWidth + "px";
                   columnContentStyle.whiteSpace = "nowrap";
                   columnContentStyle.overflow = "hidden";
@@ -655,9 +659,7 @@ function CustomTable(props: {
                         setDraggingColumnIndex(columnIndex);
                       }
                     }}
-                    className={
-                      "custom-table-th lex flex-row justify-between items-center bg-gray-200"
-                    }
+                    className={"custom-table-th justify-between items-center bg-gray-100"}
                   >
                     <div className="flex flex-row justify-between items-center ">
                       <div className="flex flex-row justify-between whitespace-nowrap mx-2">
@@ -777,7 +779,7 @@ function CustomTable(props: {
         {isLoading ? (
           <Loader.Inline />
         ) : (
-          <div ref={topRef} className=" custom-table-container">
+          <div ref={topRef} className=" custom-table-container rounded-lg">
             {renderTable()}
             {renderPagination()}
           </div>

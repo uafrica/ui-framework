@@ -28,26 +28,18 @@
   white-space: nowrap;
 }
 
-.custom-table-head {
-  .custom-table-tr {
-    .custom-table-th {
-      font: 12px Montserrat !important;
-      letter-spacing: 0.07em;
-      padding: 0;
-      height: 39px;
-      border-bottom: 1px solid lightgray;
-      transform: uppercase;
-    }
-  }
-}
-
 .custom-table-th {
+  font: 12px Montserrat !important;
+  letter-spacing: 0.07em;
+  padding: 0;
+  height: 39px !important;
+  border-bottom: 1px solid #eee;
+  transform: uppercase;
+
   overflow: hidden;
   text-overflow: ellipsis;
   color: #111827;
   font-weight: 300;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
   background-color: #f9fafb;
   border-left: none !important;
   border-right: none !important;
