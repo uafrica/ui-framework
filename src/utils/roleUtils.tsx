@@ -97,4 +97,4 @@ function fillRole(user: IGenericUser, latestRoleResponse: any, store: any) {
   }
 }
 
-export { hasRole, getUserPermissions, hasAllPermissions, hasAnyPermission, hasPermissionInArray, hasPermission, hasCommonElement, getRole };
+export { hasRole, getUserPermissions, hasAllPermissions, hasAnyPermission, hasPermissionInArray, hasPermission, hasCommonElement, getRole, fillRole };

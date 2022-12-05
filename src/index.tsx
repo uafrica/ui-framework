@@ -4,6 +4,7 @@ import * as numberUtils from "./utils/numberUtils";
 import * as generalUtils from "./utils/generalUtils";
 import * as navUtils from "./utils/navUtils";
 import * as validationUtils from "./utils/validationUtils";
+import * as roleUtils from "./utils/roleUtils"
 import * as interfaces from "./interfaces/index";
 import Accordion from "./Accordion";
 import CopyText from "./CopyText";
@@ -125,5 +126,6 @@ export {
   Banner,
   Pagination,
   useGetPagination,
-  validationUtils
+  validationUtils,
+  roleUtils
 };
