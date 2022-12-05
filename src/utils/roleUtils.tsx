@@ -90,7 +90,7 @@ function fillRole(user: IGenericUser, latestRoleResponse: any, store: any) {
   let rolesResponse = latestRoleResponse ? latestRoleResponse : store.roles;
   if (!rolesResponse) return;
 
-  let roles = rolesResponse.filter((role: IRole) => role.id === user.role_id);
+  let roles = rolesResponse.filter((role: IGenericRole) => role.id === user.role_id);
 
   if (roles.length > 0) {
     user.role = roles[0];
