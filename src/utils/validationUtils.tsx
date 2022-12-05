@@ -5,6 +5,9 @@
 const emailRegex =
   /^((([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})),?;? ?)+$/;
 
+// Regex to check for valid URL
+const URLRegex = /^(?=.*[a-z])[a-zA-Z0-9()\s.'-]+$/i;
+
 const contactNumberRegex =
   /^((([+]{1}[0-9]{10,12})|([0-9]{10}))|[+]?1?\(?\d{3}[\-\)\.\s]?\d{3}[\-\.\s]?\d{4}|[+]?1?\(?\d{4}[\-\)\.\s]?\d{3}[\-\.\s]?\d{4})[-\s\.]*?$/;
 
@@ -22,4 +25,4 @@ async function validateContactNumber(value: string) {
   return Boolean(valid);
 }
 
-export { validateEmail, validateContactNumber, emailRegex, contactNumberRegex };
+export { validateEmail, validateContactNumber, emailRegex, contactNumberRegex, URLRegex };
