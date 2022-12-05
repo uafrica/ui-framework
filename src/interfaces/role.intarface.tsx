@@ -1,4 +1,4 @@
-export interface IRole {
+export interface IGenericRole {
   id?: number | undefined;
   name: string;
   permissions: any;
