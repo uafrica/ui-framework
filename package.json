@@ -1,6 +1,6 @@
 {
   "name": "uafrica-ui-framework",
-  "version": "1.2.165",
+  "version": "1.2.166",
   "description": "A ccd demustom set of UI components used by uAfrica.com, based on TailwindCSS and Headless UI",
   "license": "BSD-3-Clause",
   "repository": "uafrica/ui-framework",

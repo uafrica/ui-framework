@@ -12,4 +12,5 @@ export interface IGenericUser {
   status: string;
   access_key: string;
   cognito_sub: string;
+  api_key?: string;
 }
