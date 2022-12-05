@@ -2,8 +2,9 @@ import * as addressUtils from "./utils/addressUtils";
 import * as cacheUtils from "./utils/cacheUtils";
 import * as numberUtils from "./utils/numberUtils";
 import * as generalUtils from "./utils/generalUtils";
-import * as navUtils from "./utils/navUtils"
-import * as interfaces from "./interfaces/index"
+import * as navUtils from "./utils/navUtils";
+import * as validationUtils from "./utils/validationUtils";
+import * as interfaces from "./interfaces/index";
 import Accordion from "./Accordion";
 import CopyText from "./CopyText";
 import ResponsiveRow from "./ResponsiveRow";
@@ -123,5 +124,6 @@ export {
   useSignedRequest,
   Banner,
   Pagination,
-  useGetPagination
+  useGetPagination,
+  validationUtils
 };
