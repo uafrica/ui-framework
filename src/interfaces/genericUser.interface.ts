@@ -14,3 +14,4 @@ export interface IGenericUser {
   cognito_sub: string;
   api_key?: string;
 }
+

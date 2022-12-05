@@ -1,4 +1,5 @@
 import { IGenericUser } from "../interfaces";
+import { IRole } from "../interfaces/role.intarface";
 
 function hasRole(user: IGenericUser | undefined, rolesToContain: string[]): boolean {
   if (!user || !user.role) return false;
@@ -70,4 +71,30 @@ function hasCommonElement(arr1: any[], arr2: any[]): boolean {
   return arr1.some(item => arr2.includes(item));
 }
 
-export { hasRole, getUserPermissions, hasAllPermissions, hasAnyPermission, hasPermissionInArray, hasPermission, hasCommonElement };
+function getRole(user: IGenericUser | undefined, roles: any[]) {
+  if (!user) return;
+
+  let rolesFound = roles.filter(role => role.id === user.role_id);
+
+  // If role id does not exist on user
+  if (rolesFound.length === 0 && user?.role?.id) {
+    rolesFound = roles.filter(role => role.id === user.role.id);
+  }
+
+  if (rolesFound.length > 0) {
+    return rolesFound[0];
+  }
+}
+
+function fillRole(user: IGenericUser, latestRoleResponse: any, store: any) {
+  let rolesResponse = latestRoleResponse ? latestRoleResponse : store.roles;
+  if (!rolesResponse) return;
+
+  let roles = rolesResponse.filter((role: IRole) => role.id === user.role_id);
+
+  if (roles.length > 0) {
+    user.role = roles[0];
+  }
+}
+
+export { hasRole, getUserPermissions, hasAllPermissions, hasAnyPermission, hasPermissionInArray, hasPermission, hasCommonElement, getRole };
