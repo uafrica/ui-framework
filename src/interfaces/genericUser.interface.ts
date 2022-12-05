@@ -13,5 +13,6 @@ export interface IGenericUser {
   access_key: string;
   cognito_sub: string;
   api_key?: string;
+  secret_key?: string;
 }
 
