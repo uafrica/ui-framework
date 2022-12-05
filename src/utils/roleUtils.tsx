@@ -1,5 +1,5 @@
 import { IGenericUser } from "../interfaces";
-import { IRole } from "../interfaces/role.intarface";
+import { IGenericRole } from "../interfaces";
 
 function hasRole(user: IGenericUser | undefined, rolesToContain: string[]): boolean {
   if (!user || !user.role) return false;
