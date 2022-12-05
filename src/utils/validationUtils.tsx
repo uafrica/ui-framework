@@ -5,8 +5,8 @@
 const emailRegex =
   /^((([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})),?;? ?)+$/;
 
-const mobileRegex =
-  /^((\(0\d\d\)[\s-]?\d{3}[\s-]?\d{4})|(0\d\d[\s-]+\d{3}[\s-]+\d{4})|(0\d{9})|(\+\d{1,3}\s?[\(\s]?\d\d[\)\s]?[\s-]?\d{3}[\s-]?\d{4}))$/;
+const contactNumberRegex =
+  /^((([+]{1}[0-9]{10,12})|([0-9]{10}))|[+]?1?\(?\d{3}[\-\)\.\s]?\d{3}[\-\.\s]?\d{4}|[+]?1?\(?\d{4}[\-\)\.\s]?\d{3}[\-\.\s]?\d{4})[-\s\.]*?$/;
 
 async function validateEmail(value: string) {
   let valid = value.length === 0 || emailRegex.exec(value);
@@ -22,4 +22,4 @@ async function validateContactNumber(value: string) {
   return Boolean(valid);
 }
 
-export { validateEmail, validateContactNumber, emailRegex, mobileRegex };
+export { validateEmail, validateContactNumber, emailRegex, contactNumberRegex };
