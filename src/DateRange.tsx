@@ -19,6 +19,7 @@ function DateRange(props: {
   periodOptions?: { label: string; value: string }[];
   containerClassName?: string;
   label?: string;
+  disabled?: boolean;
 }) {
   let {
     showRange,
@@ -34,7 +35,8 @@ function DateRange(props: {
     onMonthChange,
     periodOptions,
     containerClassName,
-    label
+    label,
+    disabled
   } = props;
   useEffect(() => {
     if (showMonth && onMonthChange) {
@@ -71,6 +73,7 @@ function DateRange(props: {
         placeholder={"Select period"}
         value={period ?? defaultPeriod}
         label={label}
+        disabled={disabled}
       />
       {showRange && (
         <>
