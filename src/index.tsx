@@ -58,6 +58,7 @@ import { useStore, withStore, createStore } from "./store";
 import { Banner } from "./Banner";
 import { Pagination } from "./Pagination";
 import { useGetPagination } from "./hooks/useGetPagination";
+import { WeekdaySelect } from "./WeekdaySelect";
 import "./index.scss";
 
 const DownloadButton = Button.Download;
@@ -127,5 +128,6 @@ export {
   Pagination,
   useGetPagination,
   validationUtils,
-  roleUtils
+  roleUtils,
+  WeekdaySelect
 };
