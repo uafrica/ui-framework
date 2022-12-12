@@ -21,28 +21,14 @@ function deleteItems(store: any, cacheKey: string, ids: number[]) {
   let items = store.cache[cacheKey];
 
   if (items) {
-    try {
-      ids.forEach((id: number) => {
-        items.forEach((t: any, i: number) => {
-          if (t.id === id) {
-            items.splice(i, 1);
-          }
-        });
+    ids.forEach((id: number) => {
+      items.forEach((t: any, i: number) => {
+        if (t.id === id) {
+          items.splice(i, 1);
+        }
       });
-      store.set(cacheKey, items);
-    } catch (e) {
-      // catch in the event of the tags being stored using the id as the key in the cache
-      let itemValues: any[] = Object.values(items)
-      ids.forEach((id: number) => {
-        itemValues.forEach((t: any, i: number) => {
-          if (t.id === id) {
-            itemValues.splice(i, 1);
-          }
-        });
-      });
-      let newTags: any = _.keyBy(itemValues, "id")
-      setInStore(store, cacheKey, newTags)
-    }
+    });
+    store.set(cacheKey, items);
   }
 }
 
