@@ -158,6 +158,18 @@ function CustomTable(props: {
     }
   }, [draggingRowIndex]);
 
+  function updateRow(value: any, dataIndex: number) {
+    data[dataIndex] = value;
+    setData([...data]);
+  }
+
+  function removeRow(dataIndex: number) {
+    data.splice(dataIndex, 1);
+    rowOrder.splice(dataIndex, 1);
+    setData([...data]);
+    setRowOrder([...rowOrder]);
+  }
+
   function startAutoRefreshInterval() {
     interval = setInterval(() => {
       load(false, page, pageSize);
@@ -742,6 +754,8 @@ function CustomTable(props: {
                   rightClickMenuContent={rightClickMenuContent}
                   columns={columns}
                   columnWidths={columnWidths}
+                  updateRow={updateRow}
+                  removeRow={removeRow}
                 />
               );
             })}

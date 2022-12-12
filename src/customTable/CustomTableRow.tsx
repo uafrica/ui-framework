@@ -18,6 +18,8 @@ function CustomTableRow(props: {
   rightClickMenuContent: any;
   columns: IColumn[];
   columnWidths: { id: string; value?: number }[];
+  updateRow: Function;
+  removeRow: Function;
 }) {
   let {
     rowId,
@@ -93,7 +95,16 @@ function CustomTableRow(props: {
                         onShowMenu(null);
 
                         if (onRowClicked && customTableUtils.isColumnClickable(column)) {
-                          onRowClicked({ index: dataIndex, row: rowData });
+                          onRowClicked({
+                            index: dataIndex,
+                            row: rowData,
+                            updateRow: (value: any) => {
+                              props.updateRow(value, dataIndex);
+                            },
+                            removeRow: () => {
+                              props.removeRow(dataIndex);
+                            }
+                          });
                         }
                       }}
                       onMouseDown={(e: any) => {
@@ -107,8 +118,10 @@ function CustomTableRow(props: {
                               original: rowData,
                               index: dataIndex,
                               updateRow: (value: any) => {
-                                data[dataIndex] = value;
-                                setData([...data]);
+                                props.updateRow(value, dataIndex);
+                              },
+                              removeRow: () => {
+                                props.removeRow(dataIndex);
                               }
                             })
                           : rowData[column.accessor]}
