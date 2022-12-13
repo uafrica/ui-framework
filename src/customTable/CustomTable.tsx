@@ -864,7 +864,8 @@ function CustomTable(props: {
 
   function renderContextMenu() {
     return (
-      showMenu && (
+      showMenu &&
+      (contextMenuHeader || contextMenuItems) && (
         <Dropdown.ContextMenu id="table-dropdown-menu">
           <div
             id="context-content"
