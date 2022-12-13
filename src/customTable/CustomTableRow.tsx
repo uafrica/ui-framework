@@ -48,7 +48,7 @@ function CustomTableRow(props: {
                 if (onRowClicked && customTableUtils.isColumnClickable(column)) {
                   onRowClicked({
                     index: dataIndex,
-                    row: rowData,
+                    original: rowData,
                     updateRow: (value: any) => {
                       props.updateRow(value, dataIndex);
                     },
