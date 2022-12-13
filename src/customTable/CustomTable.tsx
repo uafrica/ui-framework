@@ -11,6 +11,7 @@ import { IColumn } from "./column.interface";
 import { IRow } from "./row.interface";
 import { Message } from "../Message";
 import { TableActionsPanel } from "./../Panels";
+import { Dropdown } from "./../Dropdown";
 
 function CustomTable(props: {
   id: string;
@@ -31,7 +32,8 @@ function CustomTable(props: {
   onDataChanged?: Function;
   noPagination?: boolean;
   scrollableX?: boolean;
-  rightClickMenuContent?: any;
+  contextMenuItems?: Function;
+  contextMenuHeader?: Function;
   autoRefreshInterval?: number;
   renderTableActionsHeader?: Function;
   renderTableActionsChildren?: Function;
@@ -50,7 +52,8 @@ function CustomTable(props: {
     onDataChanged,
     noPagination,
     scrollableX,
-    rightClickMenuContent,
+    contextMenuItems,
+    contextMenuHeader,
     autoRefreshInterval
   } = props;
   let topRef: any = useRef();
@@ -86,7 +89,11 @@ function CustomTable(props: {
   let [totalPages, setTotalPages] = useState<number>(0);
   let [pageSize, setPageSize] = useState<number>(props.pageSize ?? defaultPageSize);
   // menu
-  let [showMenuRowId, setShowMenuRowId] = useState<any>();
+  let [showMenu, setShowMenu] = useState<boolean>(false);
+  let [contextMenuMaxHeight, setContextMenuMaxHeight] = useState<any>();
+  let [clickPosition, setClickPosition] = useState<any>({ x: 0, y: 0 });
+  let [activeRow, setActiveRow] = useState<any>({ rowData: null, dataIndex: null });
+
   // dragging
   let [list, setList] = useState<any>();
   let [draggingElement, setDraggingElement] = useState<any>();
@@ -105,7 +112,10 @@ function CustomTable(props: {
     if (autoRefreshInterval) {
       startAutoRefreshInterval();
     }
+    document.addEventListener("mousedown", hideMenu);
+
     return () => {
+      document.removeEventListener("mousedown", hideMenu);
       if (autoRefreshInterval) {
         clearInterval(interval);
       }
@@ -157,6 +167,21 @@ function CustomTable(props: {
       document.addEventListener("mouseup", dragRowMouseUpHandler);
     }
   }, [draggingRowIndex]);
+
+  useEffect(() => {
+    // context menu position
+    repositionMenu();
+  }, [clickPosition]);
+
+  function hideMenu(e: any) {
+    var table = document.getElementById(id);
+    var contextMenu = document.getElementById("table-dropdown-menu");
+
+    if (table && !table.contains(e.target) && contextMenu && !contextMenu.contains(e.target)) {
+      // do not show menu if click was outside table container
+      setShowMenu(false);
+    }
+  }
 
   function updateRow(value: any, dataIndex: number) {
     data[dataIndex] = value;
@@ -632,6 +657,29 @@ function CustomTable(props: {
     }
   }
 
+  function repositionMenu() {
+    // witchcraft to prevent long context menus from falling off bottom of screen
+    let contextMenuElement = document.getElementById("table-dropdown-menu");
+    let contextMenuContentElement = document.getElementById("context-content");
+    if (!contextMenuElement || !contextMenuContentElement) return;
+    const height = contextMenuContentElement.clientHeight + 20;
+    var space = window.innerHeight - clickPosition.y;
+    contextMenuElement.style.position = "fixed";
+
+    if (height > space) {
+      setContextMenuMaxHeight(window.innerHeight);
+      let top = 0;
+      if (window.innerHeight - height > 0) {
+        top = window.innerHeight - height;
+      }
+      contextMenuElement.style.top = `${top}px`;
+      contextMenuElement.style.left = `${clickPosition.x}px`;
+    } else {
+      contextMenuElement.style.top = `${clickPosition.y}px`;
+      contextMenuElement.style.left = `${clickPosition.x}px`;
+    }
+  }
+
   function renderTable() {
     return (
       <div
@@ -740,10 +788,9 @@ function CustomTable(props: {
               return (
                 <CustomTableRow
                   key={rowId}
-                  onShowMenu={(rowId: any) => {
-                    setShowMenuRowId(rowId);
+                  onShowMenu={(show: boolean) => {
+                    setShowMenu(show);
                   }}
-                  showMenu={showMenuRowId === rowId}
                   rowId={rowId}
                   columnOrder={columnOrder}
                   onRowClicked={onRowClicked}
@@ -751,11 +798,15 @@ function CustomTable(props: {
                   rowData={rowData}
                   data={data}
                   setData={changeData}
-                  rightClickMenuContent={rightClickMenuContent}
                   columns={columns}
                   columnWidths={columnWidths}
                   updateRow={updateRow}
                   removeRow={removeRow}
+                  onRightClick={(event: any, rowData: any, dataIndex: number) => {
+                    setActiveRow({ rowData, dataIndex });
+                    setShowMenu(true);
+                    setClickPosition({ x: event?.pageX, y: event?.pageY });
+                  }}
                 />
               );
             })}
@@ -811,6 +862,54 @@ function CustomTable(props: {
     return null;
   }
 
+  function renderContextMenu() {
+    return (
+      showMenu && (
+        <Dropdown.ContextMenu id="table-dropdown-menu">
+          <div
+            id="context-content"
+            style={{
+              maxHeight: contextMenuMaxHeight,
+              overflowY: "scroll"
+            }}
+          >
+            {contextMenuHeader && (
+              <>
+                <label className="text-center block pb-2">
+                  {contextMenuHeader({
+                    original: activeRow.rowData,
+                    index: activeRow.dataIndex,
+                    updateRow: (value: any) => {
+                      updateRow(value, activeRow.dataIndex);
+                    },
+                    removeRow: () => {
+                      removeRow(activeRow.dataIndex);
+                    }
+                  })}
+                </label>
+                <hr />
+              </>
+            )}
+            {contextMenuItems && (
+              <label className="text-left block">
+                {contextMenuItems({
+                  original: activeRow.rowData,
+                  index: activeRow.dataIndex,
+                  updateRow: (value: any) => {
+                    updateRow(value, activeRow.dataIndex);
+                  },
+                  removeRow: () => {
+                    removeRow(activeRow.dataIndex);
+                  }
+                })}
+              </label>
+            )}
+          </div>
+        </Dropdown.ContextMenu>
+      )
+    );
+  }
+
   function render() {
     return (
       <div>
@@ -824,6 +923,7 @@ function CustomTable(props: {
             <div ref={topRef} className=" custom-table-container rounded-lg">
               {renderTable()}
               {renderPagination()}
+              {renderContextMenu()}
             </div>
           </div>
         )}
