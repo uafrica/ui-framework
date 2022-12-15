@@ -36,10 +36,26 @@ function getFromStore(store: any, cacheKey: string) {
   return store?.cache[cacheKey] ?? [];
 }
 
+function getFromStoreWhereKeyMatchesValues(
+  store: any,
+  cacheKey: string,
+  key: string,
+  values: any[]
+) {
+  let data = store?.cache[cacheKey] ?? [];
+  let filteredData: any[] = [];
+  data.forEach((d: any) => {
+    if (values.indexOf(d[key]) > -1) {
+      filteredData.push(d);
+    }
+  });
+  return filteredData;
+}
+
 function setInStore(store: any, cacheKey: string, data: any[]) {
   let cacheData = store.cache ?? {};
   cacheData[cacheKey] = data ?? [];
   store.set("cache", cacheData);
 }
 
-export { upsertItem, deleteItems, getFromStore, setInStore };
+export { upsertItem, deleteItems, getFromStore, setInStore, getFromStoreWhereKeyMatchesValues };
