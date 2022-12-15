@@ -37,6 +37,7 @@ function CustomTable(props: {
   autoRefreshInterval?: number;
   renderTableActionsHeader?: Function;
   renderTableActionsChildren?: Function;
+  setTableFunctions?: Function;
 }) {
   let {
     id,
@@ -54,7 +55,8 @@ function CustomTable(props: {
     scrollableX,
     contextMenuItems,
     contextMenuHeader,
-    autoRefreshInterval
+    autoRefreshInterval,
+    setTableFunctions
   } = props;
   let topRef: any = useRef();
   let rowUniqueIdentifier = props.rowUniqueIdentifier ?? "id";
@@ -107,6 +109,21 @@ function CustomTable(props: {
   let [resizeColumnId, setResizeColumnId] = useState<string>("");
   let [resizeColumnStartWidth, setResizeColumnStartWidth] = useState<number>(0);
   let [resizeColumnStartX, setResizeColumnStartX] = useState<number>(0);
+  let insertRowRef = useRef(insertRow);
+  let refreshRef = useRef(refresh);
+  
+  useEffect(() => {
+    if (setTableFunctions) {
+      setTableFunctions({
+        insertRow: (object: any, index?: number) => {
+          insertRowRef.current(data, rowOrder, object, index ?? 0);
+        },
+        refresh: () => {
+          refreshRef.current();
+        }
+      });
+    }
+  }, [data, rowOrder]);
 
   useEffect(() => {
     if (autoRefreshInterval) {
@@ -172,6 +189,18 @@ function CustomTable(props: {
     // context menu position
     repositionMenu();
   }, [clickPosition]);
+
+  function refresh() {
+    load(false, page, pageSize);
+  }
+
+  function insertRow(data: any[], rowOrder: any[], object: any, index: number) {
+    data.splice(index, 0, object);
+    rowOrder.splice(index, 0, object[rowUniqueIdentifier]);
+
+    setData([...data]);
+    setRowOrder([...rowOrder]);
+  }
 
   function hideMenu(e: any) {
     var table = document.getElementById(id);

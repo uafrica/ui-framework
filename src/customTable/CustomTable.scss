@@ -22,6 +22,8 @@
 
 .custom-table-tr {
   text-align: left;
+  border-bottom: none;
+
 }
 
 .whitespace-nowrap {
@@ -63,6 +65,7 @@
 }
 
 .dragging-column {
+
   .custom-table-td,
   .custom-table-th {
     padding-left: 10px;
