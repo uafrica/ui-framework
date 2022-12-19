@@ -220,7 +220,7 @@ function showError(error: Error | string | undefined): ReactElement | null {
   return <Message.Error>{errorMessage}</Message.Error>;
 }
 
-function shorten(str: string, count: number): string {
+function shorten(str: string | null | undefined, count: number): string {
   if (!str) {
     return "";
   }

@@ -18,13 +18,13 @@ function shortenFromNow(str: string): string {
   return str;
 }
 
-function pgFormatDate(date: string | Date | Moment): string {
+function pgFormatDate(date: string | Date | Moment | undefined): string {
   if (!date) return "";
   let momentDate: Moment = moment(date);
   return momentDate.format("YYYY-MM-DD HH:mm:ssZ");
 }
 
-function humanFormatTime(date: string | Date | Moment, includeSeconds?: boolean): any {
+function humanFormatTime(date: string | Date | Moment | undefined, includeSeconds?: boolean): any {
   if (!date) return "";
   let momentDate: Moment = moment(date);
   if (momentDate.isValid()) {
@@ -34,25 +34,31 @@ function humanFormatTime(date: string | Date | Moment, includeSeconds?: boolean)
   }
 }
 
-function humanFormatDateTime(date: string | Date | Moment, includeSeconds?: boolean): string {
+function humanFormatDateTime(
+  date: string | Date | Moment | undefined,
+  includeSeconds?: boolean
+): string {
   if (!date) return "";
   let momentDate: Moment = moment(date);
   return momentDate.format("D MMM YYYY HH:mm" + (includeSeconds ? ":ss" : ""));
 }
 
-function humanFormatDateTimeToFormat(date: string | Date | Moment, format: string): string {
+function humanFormatDateTimeToFormat(
+  date: string | Date | Moment | undefined,
+  format: string
+): string {
   if (!date) return "";
   let momentDate: Moment = moment(date);
   return momentDate.format(format);
 }
 
-function humanFormatDate(date: string | Date | Moment): string {
+function humanFormatDate(date: string | Date | Moment | undefined): string {
   if (!date) return "";
   let momentDate: Moment = moment(date);
   return momentDate.format("D MMM YYYY");
 }
 
-function humanFormatDateWithDay(date: string | Date | Moment): string {
+function humanFormatDateWithDay(date: string | Date | Moment | undefined): string {
   if (!date) return "";
   let momentDate: Moment = moment(date);
   return momentDate.format("ddd, D MMM YYYY");
