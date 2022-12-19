@@ -220,6 +220,18 @@ function showError(error: Error | string | undefined): ReactElement | null {
   return <Message.Error>{errorMessage}</Message.Error>;
 }
 
+function shorten(str: string, count: number): string {
+  if (!str) {
+    return "";
+  }
+
+  if (str.length < count) {
+    return str;
+  }
+
+  return str.substr(0, count - 3) + "...";
+}
+
 export {
   capitalize,
   getError,
@@ -235,5 +247,6 @@ export {
   stopImpersonation,
   checkTokenExpired,
   checkAccountClosed,
-  checkMaintenanceMode
+  checkMaintenanceMode,
+  shorten
 };
