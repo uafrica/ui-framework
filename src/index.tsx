@@ -130,5 +130,6 @@ export {
   useGetPagination,
   validationUtils,
   roleUtils,
+  tableUtils,
   WeekdaySelect
 };
