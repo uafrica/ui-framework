@@ -5,6 +5,7 @@ import * as generalUtils from "./utils/generalUtils";
 import * as navUtils from "./utils/navUtils";
 import * as validationUtils from "./utils/validationUtils";
 import * as roleUtils from "./utils/roleUtils"
+import * as tableUtils from "./utils/tableUtils"
 import * as interfaces from "./interfaces/index";
 import Accordion from "./Accordion";
 import CopyText from "./CopyText";
