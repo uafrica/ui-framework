@@ -86,7 +86,7 @@ function getTableCountDivWithDateRangeIndication(
 
   let timeRangeString = "";
   if (absolute_query === "month") {
-    timeRangeString = "for the selected month";
+    timeRangeString = " for the selected month";
   } else if (absolute_query === "date_range") {
     // date range
     let duration = moment.duration(moment(endDate).diff(moment(startDate)));
