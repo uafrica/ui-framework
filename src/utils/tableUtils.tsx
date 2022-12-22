@@ -1,4 +1,4 @@
-import  * as numberUtils from "./numberUtils";
+import * as numberUtils from "./numberUtils";
 import { Loader } from "./../Loader";
 
 import { Link } from "react-router-dom";
@@ -58,8 +58,12 @@ function getTableCountDivWithDateRangeIndication(
   absolute_query?: string,
   startDate?: any,
   endDate?: any,
-  absoluteQueryOptions?: any
+  absoluteQueryOptions?: any,
+  isBold?: boolean
 ) {
+  if (isBold !== undefined) {
+    isBold = true;
+  }
   if (!absolute_query) {
     absolute_query = "date_range";
   }
@@ -124,10 +128,10 @@ function getTableCountDivWithDateRangeIndication(
         <Loader.Inline title="Loading" />
       ) : (
         <span className="no-print">
-          <strong>
+          <div className={isBold ? "font-bold" : ""}>
             {displayString}
             {timeRangeString}
-          </strong>
+          </div>
         </span>
       )}
     </div>
