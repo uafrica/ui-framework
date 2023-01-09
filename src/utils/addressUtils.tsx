@@ -6,41 +6,51 @@ function addressObjFromGoogleResult(place: any): {
   zone: any;
   country: any;
   code: any;
+  lat_lng: any;
   lat: any;
   lng: any;
+  types: string[];
 } {
   // Copied from google API developer guide
-  const googleComponentForm: any = {
+  const googleComponentShortOrLong: any = {
     street_number: "short_name",
     route: "long_name",
     sublocality_level_1: "long_name",
     sublocality_level_2: "long_name",
     locality: "long_name",
     administrative_area_level_2: "short_name",
-    administrative_area_level_1: "short_name",
+    administrative_area_level_1: "long_name",
     country: "short_name",
     postal_code: "short_name"
   };
 
   var googleAddressObj: any = {};
   googleAddressObj.lat_lng = {
-    lat: place.geometry.location.lat(),
-    lng: place.geometry.location.lng()
+    lat:
+      typeof place.geometry.location.lat === "function"
+        ? place.geometry.location.lat()
+        : place.geometry.location.lat,
+    lng:
+      typeof place.geometry.location.lng === "function"
+        ? place.geometry.location.lng()
+        : place.geometry.location.lng
   };
 
-  for (let i = 0; i < place.address_components.length; i++) {
-    let addressType = place.address_components[i].types[0];
-    // get the long/short version of the place address component base on componentForm
-    if (googleComponentForm[addressType]) {
-      googleAddressObj[addressType] = place.address_components[i][googleComponentForm[addressType]];
-    }
+  for (var i = 0; i < place.address_components.length; i++) {
+    place.address_components[i].types.forEach((addressType: any) => {
+      // get the long/short version of the place address component base on componentForm
+      if (googleComponentShortOrLong[addressType]) {
+        googleAddressObj[addressType] =
+          place.address_components[i][googleComponentShortOrLong[addressType]];
+      }
+    });
   }
 
   // Map to names expected by address form
-  let streetAddress = googleAddressObj.street_number
+  var streetAddress = googleAddressObj.street_number
     ? googleAddressObj.street_number + " " + googleAddressObj.route
     : googleAddressObj.route;
-  let company = place.types.includes("establishment") ? place.name : "";
+  var company = place.types.includes("establishment") ? place.name : "";
 
   let localArea = [];
 
@@ -52,20 +62,11 @@ function addressObjFromGoogleResult(place: any): {
     localArea.push(googleAddressObj.sublocality_level_2);
   }
 
-  let city: any;
-
-  if (googleAddressObj.locality) {
-    city = googleAddressObj.locality;
-  }
-
-  if (!localArea || localArea.length === 0) {
+  if (googleAddressObj.locality && localArea.length === 0) {
     localArea.push(googleAddressObj.locality);
-    city = null;
   }
 
-  if (!city) {
-    city = googleAddressObj.administrative_area_level_2;
-  }
+  let city = googleAddressObj.administrative_area_level_2;
 
   const addressObj = {
     company,
@@ -75,12 +76,13 @@ function addressObjFromGoogleResult(place: any): {
     code: googleAddressObj.postal_code,
     zone: googleAddressObj.administrative_area_level_1,
     country: googleAddressObj.country,
-    lat: parseFloat(googleAddressObj.lat_lng.lat.toFixed(6)),
-    lng: parseFloat(googleAddressObj.lat_lng.lng.toFixed(6)),
-    entered_address: ""
+    lat_lng: googleAddressObj.lat_lng,
+    lat: googleAddressObj.lat_lng.lat,
+    lng: googleAddressObj.lat_lng.lng,
+    entered_address: "",
+    types: place.types
   };
 
-  // @ts-ignore
   addressObj.entered_address = generateEnteredAddress(addressObj);
 
   return addressObj;
