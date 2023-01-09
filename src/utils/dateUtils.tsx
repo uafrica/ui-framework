@@ -99,6 +99,14 @@ function formatDateTodayTomorrow(dateString: string): string {
   return humanFormatDateWithDay(date);
 }
 
+function timeslotAsInt(time: string): number {
+  if (!time) return 0;
+
+  return parseInt(time.replace(":", ""));
+}
+
+// Check for getTimeslots() if it will work on SL and BG
+
 export {
   shortenFromNow,
   pgFormatDate,
@@ -109,5 +117,6 @@ export {
   humanFormatDateWithDay,
   humanFormatBetweenDates,
   getMinutesBetweenDates,
-  formatDateTodayTomorrow
+  formatDateTodayTomorrow,
+  timeslotAsInt
 };

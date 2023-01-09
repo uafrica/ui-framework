@@ -241,10 +241,12 @@ function humanReadableToKey(string: string): string {
   return key;
 }
 
-function keyToHumanReadable(key: string): string {
+function keyToHumanReadable(key: string | undefined): string {
   if (!key) return "";
 
-  var keyHumanReadable = key.replaceAll("_", " ");
+  let keyHumanReadable = key.replaceAll("_", " ");
+  keyHumanReadable = keyHumanReadable.replaceAll("sender", "collection");
+  keyHumanReadable = keyHumanReadable.replaceAll("receiver", "delivery");
   keyHumanReadable = keyHumanReadable.replaceAll("-", " ");
 
   // camelcase to sentence case
@@ -263,7 +265,7 @@ function cleanURL(url: string): string {
   return cleanURL;
 }
 
-function cleanPhone(phone: string): string {
+function cleanPhone(phone: string, removeSpaces?: boolean): string {
   if (!phone) return "";
 
   const countryCode = "27";
@@ -288,6 +290,10 @@ function cleanPhone(phone: string): string {
       cleanPhone.substr(5, 3) +
       " " +
       cleanPhone.substr(8, 4);
+  }
+
+  if (removeSpaces) {
+    cleanPhone = cleanPhone.replaceAll(" ", "");
   }
 
   return cleanPhone;
