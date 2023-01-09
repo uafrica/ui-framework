@@ -232,6 +232,27 @@ function shorten(str: string | null | undefined, count: number): string {
   return str.substr(0, count - 3) + "...";
 }
 
+function humanReadableToKey(string: string): string {
+  if (!string) {
+    return "";
+  }
+  var key = string.replaceAll(" ", "_").toLowerCase();
+
+  return key;
+}
+
+function keyToHumanReadable(key: string): string {
+  if (!key) return "";
+
+  var keyHumanReadable = key.replaceAll("_", " ");
+  keyHumanReadable = keyHumanReadable.replaceAll("-", " ");
+
+  // camelcase to sentence case
+  keyHumanReadable = keyHumanReadable.replace(/([A-Z])/g, " $1").trim();
+
+  return keyHumanReadable.charAt(0).toUpperCase() + keyHumanReadable.slice(1).toLowerCase();
+}
+
 export {
   capitalize,
   getError,
@@ -248,5 +269,7 @@ export {
   checkTokenExpired,
   checkAccountClosed,
   checkMaintenanceMode,
-  shorten
+  shorten,
+  humanReadableToKey,
+  keyToHumanReadable
 };
