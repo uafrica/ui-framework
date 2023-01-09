@@ -304,6 +304,12 @@ function defaultString(str: string): string {
   return str;
 }
 
+function padLeadingZeros(num: number, size: number): string {
+  var s = num + "";
+  while (s.length < size) s = "0" + s;
+  return s;
+}
+
 export {
   capitalize,
   getError,
@@ -325,5 +331,6 @@ export {
   keyToHumanReadable,
   cleanURL,
   cleanPhone,
-  defaultString
+  defaultString,
+  padLeadingZeros
 };
