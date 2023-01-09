@@ -299,6 +299,13 @@ function cleanPhone(phone: string, removeSpaces?: boolean): string {
   return cleanPhone;
 }
 
+function cleanUsername(username: string): string {
+  // eslint-disable-next-line
+  let onlyAscii = username.replace(/[^\x00-\x7F]/g, "");
+  let nonWhitespace = onlyAscii.replace(/\s/g, "");
+  return nonWhitespace.toLowerCase();
+}
+
 function defaultString(str: string): string {
   if (!str) return "";
   return str;
@@ -338,5 +345,6 @@ export {
   cleanPhone,
   defaultString,
   padLeadingZeros,
-  clone
+  clone,
+  cleanUsername
 };

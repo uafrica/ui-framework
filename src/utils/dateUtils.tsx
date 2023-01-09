@@ -1,4 +1,5 @@
 import moment, { Moment } from "moment";
+import { clone } from "./generalUtils";
 
 function shortenFromNow(str: string): string {
   if (str === "a few seconds ago") str = "now";
@@ -105,7 +106,68 @@ function timeslotAsInt(time: string): number {
   return parseInt(time.replace(":", ""));
 }
 
-// Check for getTimeslots() if it will work on SL and BG
+function getTimeslots(
+  startTime?: string,
+  endTime?: string,
+  removeFirst?: boolean,
+  removeLast?: boolean
+): { id: number; display: string }[] {
+  let startTimeClone = clone(startTime);
+  let endTimeClone = clone(endTime);
+  let minHour;
+  let maxHour;
+  let minHourExcludeHour;
+  let maxHourExcludeHalfHour;
+
+  if (!startTimeClone) {
+    startTimeClone = "08:00"; // default
+  }
+
+  if (!endTimeClone) {
+    endTimeClone = "17:00"; // default
+  }
+
+  minHour = parseInt(startTimeClone.substr(0, 2));
+  maxHour = parseInt(endTimeClone.substr(0, 2));
+  if (minHour < 8 || minHour > 17 || minHour > maxHour) {
+    minHour = 8;
+    startTimeClone = "08:00";
+  }
+  if (maxHour < 8 || maxHour > 17 || maxHour < minHour) {
+    maxHour = 17;
+    endTimeClone = "17:00";
+  }
+
+  minHourExcludeHour = parseInt(startTimeClone.substr(3, 2)) > 0;
+  maxHourExcludeHalfHour = parseInt(endTimeClone.substr(3, 2)) === 0;
+
+  let timeslots = [];
+  for (let i = minHour; i <= maxHour; i++) {
+    if (i !== minHour || !minHourExcludeHour) {
+      timeslots.push({
+        id: i,
+        display: (i < 10 ? "0" + i : i) + ":00"
+      });
+    }
+
+    if (i !== maxHour || !maxHourExcludeHalfHour) {
+      timeslots.push({
+        id: i + 0.5,
+        display: (i < 10 ? "0" + i : i) + ":30"
+      });
+    }
+  }
+
+  if (removeFirst) {
+    timeslots.shift();
+  }
+
+  if (removeLast) {
+    timeslots.pop();
+  }
+
+  return timeslots;
+}
 
 function orderDays(days: any[]) {
   // order the days
@@ -138,5 +200,6 @@ export {
   getMinutesBetweenDates,
   formatDateTodayTomorrow,
   timeslotAsInt,
-  orderDays
+  orderDays,
+  getTimeslots
 };
