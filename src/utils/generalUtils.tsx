@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { Message } from "../Message";
 import { ReactElement } from "react";
+import { useMediaQuery } from "react-responsive";
 
 // Used to check current app version
 
@@ -322,6 +323,24 @@ function clone(obj: any): any {
   return JSON.parse(JSON.stringify(obj));
 }
 
+function swapValues(obj: any, prop1: string, prop2: string) {
+  let originalProp1 = obj[prop1];
+  obj[prop1] = obj[prop2];
+  obj[prop2] = originalProp1;
+}
+
+function isScreenDesktopSize(): boolean {
+  // check if screen size is less than 992px (smaller than 992 gets rearranged for mobile)
+  return useMediaQuery({ query: "( min-width: 992px)" });
+}
+
+function kebabCaseToSentenceCase(originalString: string) {
+  let formattedString = originalString.replaceAll("-", " ");
+  formattedString = capitalize(formattedString.toLowerCase());
+
+  return formattedString;
+}
+
 export {
   capitalize,
   getError,
@@ -346,5 +365,8 @@ export {
   defaultString,
   padLeadingZeros,
   clone,
-  cleanUsername
+  cleanUsername,
+  swapValues,
+  isScreenDesktopSize,
+  kebabCaseToSentenceCase
 };
