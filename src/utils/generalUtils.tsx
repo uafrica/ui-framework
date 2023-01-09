@@ -253,6 +253,51 @@ function keyToHumanReadable(key: string): string {
   return keyHumanReadable.charAt(0).toUpperCase() + keyHumanReadable.slice(1).toLowerCase();
 }
 
+function cleanURL(url: string): string {
+  if (!url) return "";
+
+  let cleanURL = url.replace("http://", "https://").trim();
+  if (!cleanURL.startsWith("https://")) {
+    cleanURL = "https://" + cleanURL;
+  }
+  return cleanURL;
+}
+
+function cleanPhone(phone: string): string {
+  if (!phone) return "";
+
+  const countryCode = "27";
+
+  var cleanPhone = phone.replaceAll(" ", "");
+  // convert e.g. 0027 to +27
+  if (cleanPhone.indexOf("00" + countryCode) === 0) {
+    cleanPhone = "+27" + cleanPhone.substr(4);
+  }
+
+  // convert e.g. 076 to +2776
+  if (cleanPhone.indexOf("0") === 0) {
+    cleanPhone = "+27" + cleanPhone.substr(1);
+  }
+
+  if (cleanPhone.length === 12) {
+    cleanPhone =
+      cleanPhone.substr(0, 3) +
+      " " +
+      cleanPhone.substr(3, 2) +
+      " " +
+      cleanPhone.substr(5, 3) +
+      " " +
+      cleanPhone.substr(8, 4);
+  }
+
+  return cleanPhone;
+}
+
+function defaultString(str: string): string {
+  if (!str) return "";
+  return str;
+}
+
 export {
   capitalize,
   getError,
@@ -271,5 +316,8 @@ export {
   checkMaintenanceMode,
   shorten,
   humanReadableToKey,
-  keyToHumanReadable
+  keyToHumanReadable,
+  cleanURL,
+  cleanPhone,
+  defaultString
 };
