@@ -107,6 +107,25 @@ function timeslotAsInt(time: string): number {
 
 // Check for getTimeslots() if it will work on SL and BG
 
+function orderDays(days: any[]) {
+  // order the days
+  const sorter: any = {
+    monday: 1,
+    tuesday: 2,
+    wednesday: 3,
+    thursday: 4,
+    friday: 5,
+    saturday: 6,
+    sunday: 7
+  };
+
+  days.sort(function sortByDay(a, b) {
+    let day1 = a.name.toLowerCase();
+    let day2 = b.name.toLowerCase();
+    return sorter[day1] - sorter[day2];
+  });
+}
+
 export {
   shortenFromNow,
   pgFormatDate,
@@ -118,5 +137,6 @@ export {
   humanFormatBetweenDates,
   getMinutesBetweenDates,
   formatDateTodayTomorrow,
-  timeslotAsInt
+  timeslotAsInt,
+  orderDays
 };

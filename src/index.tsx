@@ -4,9 +4,10 @@ import * as numberUtils from "./utils/numberUtils";
 import * as generalUtils from "./utils/generalUtils";
 import * as navUtils from "./utils/navUtils";
 import * as validationUtils from "./utils/validationUtils";
-import * as roleUtils from "./utils/roleUtils"
-import * as tableUtils from "./utils/tableUtils"
-import * as dateUtils from "./utils/dateUtils"
+import * as roleUtils from "./utils/roleUtils";
+import * as tableUtils from "./utils/tableUtils";
+import * as dateUtils from "./utils/dateUtils";
+import * as tagUtils from "./utils/tagUtils";
 import * as interfaces from "./interfaces/index";
 import Accordion from "./Accordion";
 import CopyText from "./CopyText";
@@ -133,5 +134,6 @@ export {
   roleUtils,
   tableUtils,
   dateUtils,
+  tagUtils,
   WeekdaySelect
 };
