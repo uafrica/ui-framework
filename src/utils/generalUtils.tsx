@@ -310,6 +310,11 @@ function padLeadingZeros(num: number, size: number): string {
   return s;
 }
 
+function clone(obj: any): any {
+  if (!obj) return;
+  return JSON.parse(JSON.stringify(obj));
+}
+
 export {
   capitalize,
   getError,
@@ -332,5 +337,6 @@ export {
   cleanURL,
   cleanPhone,
   defaultString,
-  padLeadingZeros
+  padLeadingZeros,
+  clone
 };
