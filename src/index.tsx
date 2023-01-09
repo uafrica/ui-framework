@@ -55,6 +55,7 @@ import { useOnClickOutside } from "./hooks/useOnClickOutside";
 import { usePrevious } from "./hooks/usePrevious";
 import { useTabs } from "./hooks/useTabs";
 import { useSignedRequest } from "./hooks/useSignedRequest";
+import { useMediaQuery } from "./hooks/useMediaQuery";
 import { withError } from "./errorBoundary/withError";
 import { NewVersionAvailable } from "./NewVersionAvailable";
 import { useStore, withStore, createStore } from "./store";
@@ -127,6 +128,7 @@ export {
   withStore,
   useStore,
   useSignedRequest,
+  useMediaQuery,
   Banner,
   Pagination,
   useGetPagination,

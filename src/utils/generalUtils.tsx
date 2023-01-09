@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { Message } from "../Message";
 import { ReactElement } from "react";
-import { useMediaQuery } from "react-responsive";
+import { useMediaQuery } from "../hooks/useMediaQuery";
 
 // Used to check current app version
 
@@ -331,7 +331,7 @@ function swapValues(obj: any, prop1: string, prop2: string) {
 
 function isScreenDesktopSize(): boolean {
   // check if screen size is less than 992px (smaller than 992 gets rearranged for mobile)
-  return useMediaQuery({ query: "( min-width: 992px)" });
+  return useMediaQuery("( min-width: 992px)");
 }
 
 function kebabCaseToSentenceCase(originalString: string) {
