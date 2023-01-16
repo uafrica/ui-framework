@@ -575,6 +575,19 @@ function omitPropsFromObj(obj: any, ...props: any) {
   return result;
 }
 
+const duplicateObjectsInArray = (arr: any[], key: string) => {
+  let newArrEl: any[] = [];
+  arr.forEach((el: any) => {
+    let array = Array(parseInt(el[key]))
+      .fill(0)
+      .map(() => {
+        return Object.assign({}, el);
+      });
+    newArrEl = newArrEl.concat(array);
+  });
+  return newArrEl;
+};
+
 export {
   capitalize,
   getError,
@@ -615,5 +628,6 @@ export {
   differenceBetweenObjects,
   mergeArrays,
   getObjectByPropertyWithValue,
-  omitPropsFromObj
+  omitPropsFromObj,
+  duplicateObjectsInArray
 };
