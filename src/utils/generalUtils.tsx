@@ -341,6 +341,38 @@ function kebabCaseToSentenceCase(originalString: string) {
   return formattedString;
 }
 
+const browserVersions = {
+  chrome: "97.0.4692", // 2022-01-04
+  crios: "97.0.4692", // 2022-01-04
+  safari: "15.4", // 2022-03-14
+  ios: "15.4", // 2022-03-14
+  firefox: "96.0", // 2022-01-11
+  fxios: "96.0", // 2022-01-11
+  edge: "97.0.1072.55", // 2022-01-06
+  "edge-chromium": "97.0.1072.55", // 2022-01-06
+  "edge-ios": "97.0.1072.55" // 2022-01-06
+};
+
+function isBrowserOutdated(browserName: string, browserVersion: string) {
+  let recentBrowserVersions: any = browserVersions;
+  try {
+    if (recentBrowserVersions[browserName]) {
+      let recentVersion = Number(recentBrowserVersions[browserName].split(".")[0]);
+      let _browserVersion = Number(browserVersion.split(".")[0]);
+      if (recentVersion > _browserVersion) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  } catch (e) {
+    console.log("isBrowserOutdated:", e);
+    return false;
+  }
+}
+
 export {
   capitalize,
   getError,
@@ -368,5 +400,6 @@ export {
   cleanUsername,
   swapValues,
   isScreenDesktopSize,
-  kebabCaseToSentenceCase
+  kebabCaseToSentenceCase,
+  isBrowserOutdated
 };
