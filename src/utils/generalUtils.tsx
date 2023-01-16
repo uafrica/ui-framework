@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Message } from "../Message";
 import { ReactElement } from "react";
 import { useMediaQuery } from "../hooks/useMediaQuery";
+import { detect } from "detect-browser";
 
 // Used to check current app version
 
@@ -71,7 +72,7 @@ function serialize(obj: any): string {
   let str =
     "?" +
     Object.keys(obj)
-      .reduce(function (a: string[], k: string) {
+      .reduce(function(a: string[], k: string) {
         let value = obj[k];
         if (Array.isArray(value)) {
           value = encodeURIComponent(JSON.stringify(value));
@@ -378,7 +379,7 @@ async function getDataUrl(file: any): Promise<unknown> {
   reader.readAsDataURL(file);
 
   return new Promise(resolve => {
-    reader.onloadend = function () {
+    reader.onloadend = function() {
       resolve(reader.result);
     };
   });
@@ -420,6 +421,160 @@ function getBrowserIcon(browserName: string) {
   return icon;
 }
 
+function IsJsonString(str: any) {
+  try {
+    JSON.parse(str);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+function parseFieldsAsFloatsInsideObject(objData: any, arr: string[]) {
+  // myData represents the array of values that will be matched to the arr fed to the function
+  let myData: any = [];
+  // Parse values in an object based on the array passed. The array should include the fields that you wanna parse
+  Object.keys(objData)
+    // get order of arrays correct
+    .sort((a, b) => arr.indexOf(a) - arr.indexOf(b))
+    .filter(el => callback(el, arr))
+    .forEach(el => {
+      let elData;
+      if (IsJsonString(objData[el])) {
+        elData = parseFloat(objData[el]);
+      } else {
+        elData = objData[el];
+      }
+      myData = myData.concat(elData);
+    });
+
+  function callback(el: any, arr: string[]) {
+    return arr.indexOf(el) >= 0;
+  }
+
+  let retObj: any = arr.reduce((obj, arr, index) => ({ ...obj, [arr]: myData[index] }), {});
+
+  return { ...objData, ...retObj };
+}
+
+function getFileExtension(filename: string): string | undefined {
+  return filename.split(".").pop();
+}
+
+function openInNewTab(url: string, store: any) {
+  let newWindow = window.open(url, "_blank");
+  newWindow && newWindow.focus();
+
+  if (!newWindow || newWindow.closed || typeof newWindow.closed == "undefined") {
+    const browser = detect();
+    let docs: string | null = null;
+
+    switch (browser?.name) {
+      case "chrome":
+        docs =
+          "https://support.google.com/chrome/answer/95472?hl=en&co=GENIE.Platform%3DDesktop#zippy=%2Callow-pop-ups-and-redirects-from-a-site";
+        break;
+      case "firefox":
+        docs =
+          "https://support.mozilla.org/en-US/kb/pop-blocker-settings-exceptions-troubleshooting#w_pop-up-blocker-settings";
+        break;
+      case "safari":
+        docs = "https://support.apple.com/en-za/guide/safari/sfri40696/mac";
+
+        break;
+      default:
+        docs = null;
+    }
+
+    store.emitter.emit("showAlert", {
+      title: `Popups are blocked for ${window.location.origin}`,
+      body: (
+        <div>
+          <div className="flex justify-center pb-6 pt-4 ">
+            <div className="rounded-full bg-yellow-100 p-4">
+              <FontAwesomeIcon icon="exclamation-triangle" size="2x" className="text-yellow" />
+            </div>
+          </div>
+          <div className="pb-4">
+            We tried to open{" "}
+            <a href={url} target="_blank" className="text-primary cursor-pointer font-bold">
+              {url}
+            </a>{" "}
+            in a new tab, but unfortunately popus are blocked by your browser.
+          </div>
+          <div>
+            To unblock popups for this site, follow the{" "}
+            {docs ? (
+              <a href={docs} target="_blank" className="text-primary cursor-pointer font-bold">
+                instructions
+              </a>
+            ) : (
+              "instructions"
+            )}{" "}
+            on how to allow popups for your browser.
+          </div>
+        </div>
+      ),
+      showOkButton: true,
+      showCancelButton: false,
+      okButtonVariant: "primary",
+      okButtonText: "Okay, thanks",
+      return: async () => {
+      }
+    });
+  }
+}
+
+function calculateSum(items: any[], field: string, decimals?: number) {
+  if (!items) {
+    return "–";
+  }
+  return items
+    .filter(item => item !== undefined)
+    .map(item => item[field])
+    .reduce((a: any, b: any) => a + b)
+    .toFixed(decimals === undefined ? 2 : decimals);
+}
+
+function differenceBetweenObjects(origObj: any, newObj: any) {
+  function changes(newObj: any, origObj: any) {
+    let arrayIndexCounter = 0;
+    return _.transform(newObj, function(result, value, key) {
+      if (!_.isEqual(value, origObj[key])) {
+        let resultKey = _.isArray(origObj) ? arrayIndexCounter++ : key;
+
+        // @ts-ignore
+        result[resultKey] =
+          _.isObject(value) && _.isObject(origObj[key]) ? changes(value, origObj[key]) : value;
+      }
+    });
+  }
+
+  return changes(newObj, origObj);
+}
+
+function mergeArrays(arr1: any[], arr2: any[], val: string) {
+  arr1 && arr1.map(obj => (arr2 && arr2.find(p => p[val] === obj[val])) || obj);
+}
+
+function getObjectByPropertyWithValue(array: any[], property: string, value: any): any {
+  let obj = null;
+  array.forEach((o: any) => {
+    if (o[property] === value) {
+      obj = o;
+    }
+  });
+  return obj;
+}
+
+function omitPropsFromObj(obj: any, ...props: any) {
+  const result = { ...obj };
+  props.forEach(function(prop: any) {
+    delete result[prop];
+  });
+  return result;
+}
+
 export {
   capitalize,
   getError,
@@ -452,5 +607,13 @@ export {
   getDataUrl,
   displayString,
   isNotEmpty,
-  getBrowserIcon
+  getBrowserIcon,
+  getFileExtension,
+  parseFieldsAsFloatsInsideObject,
+  openInNewTab,
+  calculateSum,
+  differenceBetweenObjects,
+  mergeArrays,
+  getObjectByPropertyWithValue,
+  omitPropsFromObj
 };

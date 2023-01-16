@@ -2,6 +2,7 @@ import * as addressUtils from "./utils/addressUtils";
 import * as cacheUtils from "./utils/cacheUtils";
 import * as numberUtils from "./utils/numberUtils";
 import * as generalUtils from "./utils/generalUtils";
+import * as stringUtils from "./utils/stringUtils";
 import * as navUtils from "./utils/navUtils";
 import * as validationUtils from "./utils/validationUtils";
 import * as roleUtils from "./utils/roleUtils";
@@ -117,6 +118,7 @@ export {
   cacheUtils,
   numberUtils,
   generalUtils,
+  stringUtils,
   navUtils,
   interfaces,
   useTabs,
