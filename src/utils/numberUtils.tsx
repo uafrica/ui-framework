@@ -1,4 +1,4 @@
-export function formatNumberWithCurrency(
+function formatNumberWithCurrency(
   amount: any,
   forceAsInteger: boolean,
   addSpaces: boolean,
@@ -32,7 +32,7 @@ export function formatNumberWithCurrency(
   return (isNegative ? "- " : "") + currency + " " + amountOutput;
 }
 
-export function formatWeight(weight: any) {
+function formatWeight(weight: any) {
   if (weight === null || typeof weight === "undefined") return "";
   if (isNaN(weight) || weight === 0) return "–";
 
@@ -47,7 +47,7 @@ export function formatWeight(weight: any) {
   return weightOutput + "kg";
 }
 
-export function formatNumber(amount: any, formatAsInteger: boolean, addSpaces: boolean) {
+function formatNumber(amount: any, formatAsInteger: boolean, addSpaces: boolean) {
   if (amount === null || typeof amount === "undefined") return "";
 
   amount = amount.toString().replace(/\s/g, "");
@@ -65,7 +65,7 @@ export function formatNumber(amount: any, formatAsInteger: boolean, addSpaces: b
   return addSpaces ? numberWithSpaces(amount.toFixed(2)) : amount.toFixed(2);
 }
 
-export function formatNumberWithPercentage(
+function formatNumberWithPercentage(
   value: any,
   formatAsInteger: boolean,
   addSpaces: boolean
@@ -87,7 +87,7 @@ export function formatNumberWithPercentage(
   return (isNegative ? "- " : "") + valueOutput + " " + "%";
 }
 
-export function strToFloat(amount: string) {
+function strToFloat(amount: string) {
   amount = amount.replaceAll(",", ".");
   return parseFloat(amount);
 }
@@ -99,8 +99,47 @@ function numberWithSpaces(x: number) {
   return parts.join(".");
 }
 
-export function roundAndFormatNumberWithSpaces(value: any, maxDecimals: number) {
+function roundAndFormatNumberWithSpaces(value: any, maxDecimals: number) {
   let d = Math.pow(10, maxDecimals);
   value = Math.round(value * d) / d;
   return numberWithSpaces(value);
 }
+
+// formats number to be displayed as eg. 12k instead of 12000
+function abbreviatedNumber(num: number, digits: number) {
+  let isNegative = false;
+  if (num < 0) {
+    isNegative = true;
+  }
+  num = Math.abs(num);
+  const lookup = [
+    { value: 1, symbol: "" },
+    { value: 1e3, symbol: "k" },
+    { value: 1e6, symbol: "M" },
+    { value: 1e9, symbol: "G" },
+    { value: 1e12, symbol: "T" },
+    { value: 1e15, symbol: "P" },
+    { value: 1e18, symbol: "E" }
+  ];
+  const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+  var item = lookup
+    .slice()
+    .reverse()
+    .find(function(item) {
+      return num >= item.value;
+    });
+
+  return item
+    ? (isNegative ? "-" : "") + (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol
+    : "0";
+}
+
+export {
+  formatNumberWithCurrency,
+  formatWeight,
+  formatNumber,
+  roundAndFormatNumberWithSpaces,
+  strToFloat,
+  formatNumberWithPercentage,
+  abbreviatedNumber
+};

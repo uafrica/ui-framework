@@ -373,6 +373,53 @@ function isBrowserOutdated(browserName: string, browserVersion: string) {
   }
 }
 
+async function getDataUrl(file: any): Promise<unknown> {
+  let reader = new FileReader();
+  reader.readAsDataURL(file);
+
+  return new Promise(resolve => {
+    reader.onloadend = function () {
+      resolve(reader.result);
+    };
+  });
+}
+
+function displayString(str: any) {
+  if (str && str.length > 0) {
+    return str;
+  }
+  return "–";
+}
+
+function isNotEmpty(value: any) {
+  return value !== null && value !== undefined && value !== "";
+}
+
+function getBrowserIcon(browserName: string) {
+  let icon: any = "window-maximize";
+  switch (browserName.toLowerCase()) {
+    case "chrome":
+    case "crios":
+      icon = "fa-brands fa-chrome";
+      break;
+    case "fxios":
+    case "firefox":
+      icon = "fa-brands fa-firefox-browser";
+      break;
+    case "edge":
+    case "edge-ios":
+    case "edge-chromium":
+      icon = "fa-brands fa-edge";
+      break;
+    case "safari":
+    case "ios":
+      icon = "fa-brands fa-safari";
+      break;
+  }
+
+  return icon;
+}
+
 export {
   capitalize,
   getError,
@@ -401,5 +448,9 @@ export {
   swapValues,
   isScreenDesktopSize,
   kebabCaseToSentenceCase,
-  isBrowserOutdated
+  isBrowserOutdated,
+  getDataUrl,
+  displayString,
+  isNotEmpty,
+  getBrowserIcon
 };
