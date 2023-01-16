@@ -98,3 +98,9 @@ function numberWithSpaces(x: number) {
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   return parts.join(".");
 }
+
+export function roundAndFormatNumberWithSpaces(value: any, maxDecimals: number) {
+  let d = Math.pow(10, maxDecimals);
+  value = Math.round(value * d) / d;
+  return numberWithSpaces(value);
+}
