@@ -3,6 +3,7 @@ import { Message } from "../Message";
 import { ReactElement } from "react";
 import { useMediaQuery } from "../hooks/useMediaQuery";
 import { detect } from "detect-browser";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // Used to check current app version
 
