@@ -50,6 +50,9 @@ export function formatWeight(weight: any) {
 export function formatNumber(amount: any, formatAsInteger: boolean, addSpaces: boolean) {
   if (amount === null || typeof amount === "undefined") return "";
 
+  amount = amount.toString().replace(/\s/g, "");
+  amount = Number(amount);
+
   if (formatAsInteger && Number.isInteger(amount)) {
     // @ts-ignore
     return addSpaces ? numberWithSpaces(amount + "") : amount + "";
