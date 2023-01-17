@@ -556,7 +556,7 @@ function differenceBetweenObjects(origObj: any, newObj: any) {
 }
 
 function mergeArrays(arr1: any[], arr2: any[], val: string) {
-  arr1 && arr1.map(obj => (arr2 && arr2.find(p => p[val] === obj[val])) || obj);
+  return arr1 && arr1.map(obj => (arr2 && arr2.find(p => p[val] === obj[val])) || obj);
 }
 
 function getObjectByPropertyWithValue(array: any[], property: string, value: any): any {
