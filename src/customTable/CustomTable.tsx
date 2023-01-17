@@ -111,7 +111,24 @@ function CustomTable(props: {
   let [resizeColumnStartX, setResizeColumnStartX] = useState<number>(0);
   let insertRowRef = useRef(insertRow);
   let refreshRef = useRef(refresh);
-  
+
+  useEffect(() => {
+    // rerun when props.columnOrder
+    // when the parent component only sets the widths on mount and not in the useState hook call
+    setColumnOrder(customTableUtils.initialiseColumnOrder(props.columns, props.columnOrder));
+  }, [props.columnOrder]);
+
+  useEffect(() => {
+    // when the parent component only sets the widths on mount and not in the useState hook call
+    setColumnWidths(
+      props.columnWidths && props.columnWidths.length > 0
+        ? props.columnWidths
+        : props.columns.map(column => {
+            return { id: column.id, value: column.width };
+          })
+    );
+  }, [props.columnWidths]);
+
   useEffect(() => {
     if (setTableFunctions) {
       setTableFunctions({
