@@ -1,5 +1,6 @@
 import { IGenericUser } from "../interfaces";
 import { IGenericRole } from "../interfaces";
+import * as cacheUtils from "./cacheUtils";
 
 function hasRole(user: IGenericUser | undefined, rolesToContain: string[]): boolean {
   if (!user || !user.role) return false;
@@ -87,7 +88,9 @@ function getRole(user: IGenericUser | undefined, roles: any[]) {
 }
 
 function fillRole(user: IGenericUser, latestRoleResponse: any, store: any) {
-  let rolesResponse = latestRoleResponse ? latestRoleResponse : store.roles;
+  let rolesResponse = latestRoleResponse
+    ? latestRoleResponse
+    : cacheUtils.getFromStore(store, "roles");
   if (!rolesResponse) return;
 
   let roles = rolesResponse.filter((role: IGenericRole) => role.id === user.role_id);
@@ -97,4 +100,14 @@ function fillRole(user: IGenericUser, latestRoleResponse: any, store: any) {
   }
 }
 
-export { hasRole, getUserPermissions, hasAllPermissions, hasAnyPermission, hasPermissionInArray, hasPermission, hasCommonElement, getRole, fillRole };
+export {
+  hasRole,
+  getUserPermissions,
+  hasAllPermissions,
+  hasAnyPermission,
+  hasPermissionInArray,
+  hasPermission,
+  hasCommonElement,
+  getRole,
+  fillRole
+};
