@@ -768,7 +768,7 @@ function CustomTable(props: {
                     id={columnId}
                     key={columnId}
                     onMouseDown={() => {
-                      if (customTableUtils.isColumnDraggable(column)) {
+                      if (customTableUtils.isColumnDraggable(column) && !isLoading) {
                         setDraggingColumnIndex(columnIndex);
                       }
                     }}
@@ -779,7 +779,7 @@ function CustomTable(props: {
                         <div
                           style={columnContentStyle}
                           onMouseDown={(e: any) => {
-                            if (customTableUtils.isColumnSortable(column)) {
+                            if (customTableUtils.isColumnSortable(column) && !isLoading) {
                               e.stopPropagation();
                               let args = { order: "DESC", order_by: column.accessor };
                               if (orderingArguments.order === "DESC") {
@@ -802,7 +802,7 @@ function CustomTable(props: {
                             e.stopPropagation();
                             let columnElement = document.getElementById(column.id);
 
-                            if (columnElement) {
+                            if (columnElement && !isLoading) {
                               columnElement?.classList.add("resizable");
 
                               let columnStyles = window.getComputedStyle(columnElement);
@@ -833,6 +833,7 @@ function CustomTable(props: {
               let rowData = customTableUtils.getDataByRowId(data, rowUniqueIdentifier, rowId);
               return (
                 <CustomTableRow
+                  isLoading={isLoading}
                   key={rowId}
                   onShowMenu={(show: boolean) => {
                     setShowMenu(show);
@@ -961,7 +962,7 @@ function CustomTable(props: {
     return (
       <div>
         {error && <Message.Error>{error}</Message.Error>}
-        {isLoading ? (
+        {isLoading && data.length === 0 ? (
           <Loader.Inline />
         ) : (
           <div>

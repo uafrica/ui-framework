@@ -16,13 +16,28 @@ function CustomTableRow(props: {
   updateRow: Function;
   removeRow: Function;
   onRightClick: any;
+  isLoading: boolean;
 }) {
-  let { rowId, columnOrder, onRowClicked, dataIndex, rowData, onShowMenu, columns, columnWidths } =
-    props;
+  let {
+    rowId,
+    columnOrder,
+    onRowClicked,
+    dataIndex,
+    rowData,
+    onShowMenu,
+    columns,
+    columnWidths,
+    isLoading
+  } = props;
 
   function render() {
     return (
-      <tr id={rowId.toString()} className={"custom-table-tr hover:bg-gray-100 "}>
+      <tr
+        id={rowId.toString()}
+        className={
+          "custom-table-tr hover:bg-gray-100 " + (isLoading ? "bg-gray-50 text-gray-300" : "")
+        }
+      >
         {columnOrder.map((columnId: string) => {
           let column: IColumn = customTableUtils.getColumnById(columns, columnId);
 
@@ -45,7 +60,7 @@ function CustomTableRow(props: {
               onClick={() => {
                 onShowMenu(false);
 
-                if (onRowClicked && customTableUtils.isColumnClickable(column)) {
+                if (onRowClicked && customTableUtils.isColumnClickable(column) && !isLoading) {
                   onRowClicked({
                     index: dataIndex,
                     original: rowData,
@@ -61,7 +76,9 @@ function CustomTableRow(props: {
               onContextMenu={(e: any) => {
                 e.preventDefault();
                 e.stopPropagation();
-                props.onRightClick(e, rowData, dataIndex);
+                if (!isLoading) {
+                  props.onRightClick(e, rowData, dataIndex);
+                }
               }}
               onMouseDown={(e: any) => {
                 e.preventDefault();
