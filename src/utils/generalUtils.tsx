@@ -338,7 +338,7 @@ function isScreenDesktopSize(): boolean {
 }
 
 function kebabCaseToSentenceCase(originalString: string) {
-  let formattedString = originalString.replaceAll("-", " ");
+  let formattedString = originalString.replaceAll("-", " ").replaceAll("_", " ")
   formattedString = capitalize(formattedString.toLowerCase());
 
   return formattedString;
