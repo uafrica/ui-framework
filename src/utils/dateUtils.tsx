@@ -22,7 +22,7 @@ function shortenFromNow(str: string): string {
 function pgFormatDate(date: string | Date | Moment | undefined): string {
   if (!date) return "";
   let momentDate: Moment = moment(date);
-  return momentDate.format("YYYY-MM-DD HH:mm:ss");
+  return momentDate.format("YYYY-MM-DD HH:mm:ssZ");
 }
 
 function humanFormatTime(date: string | Date | Moment | undefined, includeSeconds?: boolean): any {
