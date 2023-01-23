@@ -150,4 +150,5 @@ For some background on how it was compiled follow https://www.pluralsight.com/gu
 
 ## Additional documentation
 [CustomTable](https://github.com/uafrica/ui-framework/blob/main/src/docs/CustomTable.md)
+
 [Pagination](https://github.com/uafrica/ui-framework/blob/main/src/docs/Pagination.md)
