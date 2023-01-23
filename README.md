@@ -147,3 +147,7 @@ module.exports = {
 8. Change the colors of primary to your appropriate primary color
 
 For some background on how it was compiled follow https://www.pluralsight.com/guides/react-typescript-module-create
+
+## Additional documentation
+[CustomTable](https://github.com/uafrica/ui-framework/blob/main/src/docs/CustomTable.md)
+[Pagination](https://github.com/uafrica/ui-framework/blob/main/src/docs/Pagination.md)
