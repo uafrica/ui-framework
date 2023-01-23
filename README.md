@@ -149,6 +149,6 @@ module.exports = {
 For some background on how it was compiled follow https://www.pluralsight.com/guides/react-typescript-module-create
 
 ## Additional documentation
-[CustomTable](https://github.com/uafrica/ui-framework/blob/main/src/docs/CustomTable.md)
+[CustomTable](https://github.com/uafrica/ui-framework/blob/main/docs/CustomTable.md)
 
-[Pagination](https://github.com/uafrica/ui-framework/blob/main/src/docs/Pagination.md)
+[Pagination](https://github.com/uafrica/ui-framework/blob/main/docs/Pagination.md)
