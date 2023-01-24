@@ -285,3 +285,9 @@ setTableFunctions={(f: {insertRow: Function, refresh: Function})=>{
 	// set functions in state variable
 }}
 ```
+
+**noDataText**?: string
+Text to display when no rows are returned. Defaults to "No data"
+```
+noDataText="No data to disaplay on this table"
+```

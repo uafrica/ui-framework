@@ -98,3 +98,10 @@
 .resizable {
   background-color: lightgray !important;
 }
+
+.no-data {
+  position: absolute;
+  left: 50%;
+  margin-top: 50px;
+  z-index: 60;
+}
