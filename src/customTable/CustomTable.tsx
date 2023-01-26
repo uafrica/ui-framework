@@ -38,6 +38,7 @@ function CustomTable(props: {
   renderTableActionsHeader?: Function;
   renderTableActionsChildren?: Function;
   setTableFunctions?: Function;
+  noDataText?: string;
 }) {
   let {
     id,
@@ -56,7 +57,8 @@ function CustomTable(props: {
     contextMenuItems,
     contextMenuHeader,
     autoRefreshInterval,
-    setTableFunctions
+    setTableFunctions,
+    noDataText
   } = props;
   let topRef: any = useRef();
   let rowUniqueIdentifier = props.rowUniqueIdentifier ?? "id";
@@ -725,6 +727,13 @@ function CustomTable(props: {
       contextMenuElement.style.left = `${clickPosition.x}px`;
     }
   }
+  function renderEmptyRow() {
+    return (
+      <tr>
+        <td colSpan={columnOrder.length} className="h-12"></td>
+      </tr>
+    );
+  }
 
   function renderTable() {
     return (
@@ -829,34 +838,36 @@ function CustomTable(props: {
           </thead>
 
           <tbody className="custom-table-tbody">
-            {rowOrder.map((rowId: any, dataIndex: number) => {
-              let rowData = customTableUtils.getDataByRowId(data, rowUniqueIdentifier, rowId);
-              return (
-                <CustomTableRow
-                  isLoading={isLoading}
-                  key={rowId}
-                  onShowMenu={(show: boolean) => {
-                    setShowMenu(show);
-                  }}
-                  rowId={rowId}
-                  columnOrder={columnOrder}
-                  onRowClicked={onRowClicked}
-                  dataIndex={dataIndex}
-                  rowData={rowData}
-                  data={data}
-                  setData={changeData}
-                  columns={columns}
-                  columnWidths={columnWidths}
-                  updateRow={updateRow}
-                  removeRow={removeRow}
-                  onRightClick={(event: any, rowData: any, dataIndex: number) => {
-                    setActiveRow({ rowData, dataIndex });
-                    setShowMenu(true);
-                    setClickPosition({ x: event?.pageX, y: event?.pageY });
-                  }}
-                />
-              );
-            })}
+            {rowOrder && rowOrder.length > 0
+              ? rowOrder.map((rowId: any, dataIndex: number) => {
+                  let rowData = customTableUtils.getDataByRowId(data, rowUniqueIdentifier, rowId);
+                  return (
+                    <CustomTableRow
+                      isLoading={isLoading}
+                      key={rowId}
+                      onShowMenu={(show: boolean) => {
+                        setShowMenu(show);
+                      }}
+                      rowId={rowId}
+                      columnOrder={columnOrder}
+                      onRowClicked={onRowClicked}
+                      dataIndex={dataIndex}
+                      rowData={rowData}
+                      data={data}
+                      setData={changeData}
+                      columns={columns}
+                      columnWidths={columnWidths}
+                      updateRow={updateRow}
+                      removeRow={removeRow}
+                      onRightClick={(event: any, rowData: any, dataIndex: number) => {
+                        setActiveRow({ rowData, dataIndex });
+                        setShowMenu(true);
+                        setClickPosition({ x: event?.pageX, y: event?.pageY });
+                      }}
+                    />
+                  );
+                })
+              : renderEmptyRow()}
           </tbody>
         </table>
       </div>
@@ -865,29 +876,31 @@ function CustomTable(props: {
 
   function renderPagination() {
     return (
-      <Pagination
-        handler={(val: any) => {
-          let _page = page;
-          if (val < 1) {
-            _page = 1;
-          } else if (val <= totalPages) {
-            _page = val;
-          } else {
-            _page = totalPages;
-          }
-          setPage(_page);
-          load(false, _page, pageSize);
-        }}
-        active={page}
-        pages={totalPages}
-        setActive={setPage}
-        setRows={(val: any) => {
-          changePageSize(val, true);
-          setPage(1);
-        }}
-        rows={pageSize}
-        scrollRef={topRef}
-      />
+      <div className="-mt-3">
+        <Pagination
+          handler={(val: any) => {
+            let _page = page;
+            if (val < 1) {
+              _page = 1;
+            } else if (val <= totalPages) {
+              _page = val;
+            } else {
+              _page = totalPages;
+            }
+            setPage(_page);
+            load(false, _page, pageSize);
+          }}
+          active={page}
+          pages={totalPages}
+          setActive={setPage}
+          setRows={(val: any) => {
+            changePageSize(val, true);
+            setPage(1);
+          }}
+          rows={pageSize}
+          scrollRef={topRef}
+        />
+      </div>
     );
   }
 
@@ -968,7 +981,8 @@ function CustomTable(props: {
           <div>
             {renderTableActions()}
 
-            <div ref={topRef} className=" custom-table-container rounded-lg">
+            <div ref={topRef} className=" custom-table-container rounded-lg relative">
+              {rowOrder && rowOrder.length === 0 && <div className="no-data">{noDataText?? "No data"}</div>}
               {renderTable()}
               {renderPagination()}
               {renderContextMenu()}
