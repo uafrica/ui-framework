@@ -85,7 +85,7 @@ function CustomTableRow(props: {
                 e.stopPropagation();
               }}
             >
-              <div style={columnContentStyle} className="flex flex-row items-center mx-2">
+              <div style={columnContentStyle} className="items-center mx-2 ">
                 {column.cell
                   ? column.cell({
                       original: rowData,
