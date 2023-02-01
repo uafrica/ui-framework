@@ -4,7 +4,7 @@ import { ReactElement } from "react";
 import { useMediaQuery } from "../hooks/useMediaQuery";
 import { detect } from "detect-browser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import _ from "lodash"
+import _ from "lodash";
 
 // Used to check current app version
 
@@ -74,7 +74,7 @@ function serialize(obj: any): string {
   let str =
     "?" +
     Object.keys(obj)
-      .reduce(function(a: string[], k: string) {
+      .reduce(function (a: string[], k: string) {
         let value = obj[k];
         if (Array.isArray(value)) {
           value = encodeURIComponent(JSON.stringify(value));
@@ -338,7 +338,7 @@ function isScreenDesktopSize(): boolean {
 }
 
 function kebabCaseToSentenceCase(originalString: string) {
-  let formattedString = originalString.replaceAll("-", " ").replaceAll("_", " ")
+  let formattedString = originalString.replaceAll("-", " ");
   formattedString = capitalize(formattedString.toLowerCase());
 
   return formattedString;
@@ -381,7 +381,7 @@ async function getDataUrl(file: any): Promise<unknown> {
   reader.readAsDataURL(file);
 
   return new Promise(resolve => {
-    reader.onloadend = function() {
+    reader.onloadend = function () {
       resolve(reader.result);
     };
   });
@@ -521,8 +521,7 @@ function openInNewTab(url: string, store: any) {
       showCancelButton: false,
       okButtonVariant: "primary",
       okButtonText: "Okay, thanks",
-      return: async () => {
-      }
+      return: async () => {}
     });
   }
 }
@@ -541,7 +540,7 @@ function calculateSum(items: any[], field: string, decimals?: number) {
 function differenceBetweenObjects(origObj: any, newObj: any) {
   function changes(newObj: any, origObj: any) {
     let arrayIndexCounter = 0;
-    return _.transform(newObj, function(result, value, key) {
+    return _.transform(newObj, function (result, value, key) {
       if (!_.isEqual(value, origObj[key])) {
         let resultKey = _.isArray(origObj) ? arrayIndexCounter++ : key;
 
@@ -571,7 +570,7 @@ function getObjectByPropertyWithValue(array: any[], property: string, value: any
 
 function omitPropsFromObj(obj: any, ...props: any) {
   const result = { ...obj };
-  props.forEach(function(prop: any) {
+  props.forEach(function (prop: any) {
     delete result[prop];
   });
   return result;
