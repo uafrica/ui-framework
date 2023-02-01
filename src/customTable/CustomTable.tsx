@@ -39,6 +39,7 @@ function CustomTable(props: {
   renderTableActionsChildren?: Function;
   setTableFunctions?: Function;
   noDataText?: string;
+  loadOnPageChange?: boolean;
 }) {
   let {
     id,
@@ -58,7 +59,8 @@ function CustomTable(props: {
     contextMenuHeader,
     autoRefreshInterval,
     setTableFunctions,
-    noDataText
+    noDataText,
+    loadOnPageChange
   } = props;
   let topRef: any = useRef();
   let rowUniqueIdentifier = props.rowUniqueIdentifier ?? "id";
@@ -664,9 +666,9 @@ function CustomTable(props: {
     setColumnOrder([...newColumnOrder]);
   }
 
-  async function load(reset: boolean, page: number, pageSize: number) {
+  async function load(reset: boolean, page: number, pageSize: number, shouldLoad?: boolean) {
     if (fetchFunction) {
-      if (reset) {
+      if (reset || shouldLoad) {
         setIsLoading(true);
       }
       let _page = reset ? 1 : page;
@@ -888,7 +890,7 @@ function CustomTable(props: {
               _page = totalPages;
             }
             setPage(_page);
-            load(false, _page, pageSize);
+            load(false, _page, pageSize, loadOnPageChange);
           }}
           active={page}
           pages={totalPages}
@@ -982,7 +984,9 @@ function CustomTable(props: {
             {renderTableActions()}
 
             <div ref={topRef} className=" custom-table-container rounded-lg relative">
-              {rowOrder && rowOrder.length === 0 && <div className="no-data">{noDataText?? "No data"}</div>}
+              {rowOrder && rowOrder.length === 0 && (
+                <div className="no-data">{noDataText ?? "No data"}</div>
+              )}
               {renderTable()}
               {renderPagination()}
               {renderContextMenu()}
