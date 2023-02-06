@@ -49,8 +49,8 @@ function DateRange(props: {
       );
 
       if (dateFrom) {
-        dateFrom = moment(dateFrom, "YYYY-MM-DD HH:mm:ss").startOf("month"); // removed .format("YYYY-MM-DD HH:mm:ss) to make things work on safari
-        dateTo = moment(dateFrom, "YYYY-MM-DD HH:mm:ss").endOf("month");
+        dateFrom = moment(dateFrom).startOf("month").format("YYYY-MM-DD HH:mm:ss"); // removed .format("YYYY-MM-DD HH:mm:ss) to make things work on safari
+        dateTo = moment(dateFrom).endOf("month").format("YYYY-MM-DD HH:mm:ss"); // added .format back because safari seems to be working again
       }
 
       onMonthChange(dateFrom ?? defaultFromMonth, dateTo ?? defaultToMonth);
@@ -120,6 +120,6 @@ function DateRange(props: {
 
 DateRange.defaultProps = {
   label: "Filter by period"
-}
+};
 
 export { DateRange };
