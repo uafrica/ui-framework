@@ -68,7 +68,8 @@ function formatNumber(amount: any, formatAsInteger: boolean, addSpaces: boolean)
 function formatNumberWithPercentage(
   value: any,
   formatAsInteger: boolean,
-  addSpaces: boolean
+  addSpaces: boolean,
+  toFixedDigits?: number
 ) {
   if (value === null || typeof value === "undefined") return "";
   if (isNaN(value)) return "";
@@ -81,7 +82,7 @@ function formatNumberWithPercentage(
     valueOutput = addSpaces ? numberWithSpaces(value) : value + "";
   } else {
     value = parseFloat(value);
-    valueOutput = addSpaces ? numberWithSpaces(value.toFixed(1)) : value.toFixed(1);
+    valueOutput = addSpaces ? numberWithSpaces(value.toFixed(toFixedDigits?? 1)) : value.toFixed(toFixedDigits?? 1);
   }
 
   return (isNegative ? "- " : "") + valueOutput + " " + "%";
