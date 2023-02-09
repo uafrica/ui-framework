@@ -113,15 +113,6 @@ function checkMaintenanceMode(store: any, response: any) {
   }
 }
 
-async function stopImpersonation() {
-  if (localStorage.impersonated_username) {
-    alert(`Could not impersonate ${localStorage.impersonated_username}.`);
-    localStorage.removeItem("impersonated_username");
-    localStorage.removeItem("impersonated_user");
-    window.location.href = "/accounts";
-  }
-}
-
 function getErrorString(result: any): string {
   if (!result) {
     return "";
@@ -601,7 +592,6 @@ export {
   isPdf,
   reverseArray,
   serialize,
-  stopImpersonation,
   checkTokenExpired,
   checkAccountClosed,
   checkMaintenanceMode,
