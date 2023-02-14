@@ -57,7 +57,7 @@ function CustomTableRow(props: {
                 "custom-table-td pr-4 py-2 mx-1 " +
                 (onRowClicked && customTableUtils.isColumnClickable(column) ? "cursor-pointer" : "")
               }
-              onClick={() => {
+              onClick={(e: any) => {
                 onShowMenu(false);
 
                 if (onRowClicked && customTableUtils.isColumnClickable(column) && !isLoading) {
@@ -69,7 +69,8 @@ function CustomTableRow(props: {
                     },
                     removeRow: () => {
                       props.removeRow(dataIndex);
-                    }
+                    },
+                    e: e
                   });
                 }
               }}
