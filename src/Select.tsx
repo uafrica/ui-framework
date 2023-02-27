@@ -46,7 +46,9 @@ interface IBase {
   allowDeselect?: boolean; // single select mode does not allow for the deselection of an option by default, only switching to another option. override by setting this to true
   showAsterisk?: boolean;
   dataTest?: string | undefined;
-  showAllButton?: boolean; // conditionally display a button to show all available options
+  showAllButton?: boolean;// conditionally display a button to show all available options
+  showAllSelectedText?: boolean;// show "All selected" if the options selected is equal to the amount of options in the array
+  allSelectedText?: string | undefined; // custom all selected text
 }
 
 // Implementation
@@ -77,7 +79,9 @@ function GroupedSelect(props: IGroupedSelect) {
     allowDeselect,
     showAsterisk,
     dataTest,
-    showAllButton
+    showAllButton,
+    showAllSelectedText,
+    allSelectedText
   } = props;
 
   const popupNode = useRef<HTMLElement>();
@@ -249,6 +253,8 @@ function GroupedSelect(props: IGroupedSelect) {
         if (selectedItem) {
           labelWithValue = selectedItem.label;
         }
+      } else if (value.length === flattenedOptions.length && showAllSelectedText) {
+        labelWithValue = allSelectedText ?? "All selected"
       } else if (value.length > 1) {
         labelWithValue = value.length + " selected";
       }
@@ -322,13 +328,13 @@ function GroupedSelect(props: IGroupedSelect) {
             } else {
               // select all, ignore disabled options
               onChange &&
-                onChange(
-                  (flattenedOptions ? flattenedOptions : [])
-                    .filter((option: { value: string | number; disabled?: boolean }) => {
-                      return notSelectedDisabledOptions.indexOf(option.value) === -1;
-                    })
-                    .map(option => option.value)
-                );
+              onChange(
+                (flattenedOptions ? flattenedOptions : [])
+                  .filter((option: { value: string | number; disabled?: boolean }) => {
+                    return notSelectedDisabledOptions.indexOf(option.value) === -1;
+                  })
+                  .map(option => option.value)
+              );
             }
           }}
         />
