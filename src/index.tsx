@@ -1,28 +1,30 @@
 import * as addressUtils from "./utils/addressUtils";
 import * as cacheUtils from "./utils/cacheUtils";
-import * as numberUtils from "./utils/numberUtils";
-import * as generalUtils from "./utils/generalUtils";
-import * as stringUtils from "./utils/stringUtils";
-import * as navUtils from "./utils/navUtils";
-import * as validationUtils from "./utils/validationUtils";
-import * as roleUtils from "./utils/roleUtils";
-import * as tableUtils from "./utils/tableUtils";
 import * as dateUtils from "./utils/dateUtils";
-import * as tagUtils from "./utils/tagUtils";
+import * as generalUtils from "./utils/generalUtils";
 import * as interfaces from "./interfaces/index";
+import * as mapUtils from "./utils/mapUtils";
+import * as navUtils from "./utils/navUtils";
+import * as numberUtils from "./utils/numberUtils";
+import * as roleUtils from "./utils/roleUtils";
+import * as stringUtils from "./utils/stringUtils";
+import * as tableUtils from "./utils/tableUtils";
+import * as tagUtils from "./utils/tagUtils";
+import * as validationUtils from "./utils/validationUtils";
 import Accordion from "./Accordion";
 import CopyText from "./CopyText";
 import ResponsiveRow from "./ResponsiveRow";
 import SkeletonLoader from "./SkeletonLoaders";
 import Switch from "./Switch";
+import { Banner } from "./Banner";
 import { Button } from "./Button";
 import { Card } from "./Card";
 import { Checkbox } from "./Checkbox";
 import { Confirm } from "./Confirm";
 import { Counter } from "./Counter";
-import { DatePicker } from "./datePicker/DatePicker";
-import { MonthPicker } from "./monthPicker/MonthPicker";
+import { createStore, useStore, withStore } from "./store";
 import { CustomTable } from "./customTable/CustomTable";
+import { DatePicker } from "./datePicker/DatePicker";
 import { DateRange } from "./DateRange";
 import { Dropdown } from "./Dropdown";
 import { fas } from "@fortawesome/free-solid-svg-icons";
@@ -41,10 +43,14 @@ import { Input } from "./Input";
 import { Label, LabelWithValue } from "./Label";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { Loader } from "./Loader";
+import { Map } from "./map/Map";
 import { Message } from "./Message";
 import { Modal } from "./Modal";
+import { MonthPicker } from "./monthPicker/MonthPicker";
 import { NavItem, NavItemDivider } from "./NavItem";
+import { NewVersionAvailable } from "./NewVersionAvailable";
 import { PageHeading } from "./PageHeading";
+import { Pagination } from "./Pagination";
 import { Radio } from "./Radio";
 import { SavePanel, SavePanelContainer } from "./SavePanel";
 import { SavingOverlay } from "./SavingOverlay";
@@ -52,18 +58,14 @@ import { SectionHeading } from "./SectionHeading";
 import { Table } from "./Table";
 import { Tabs } from "./Tabs";
 import { Textarea } from "./Textarea";
+import { useGetPagination } from "./hooks/useGetPagination";
+import { useMediaQuery } from "./hooks/useMediaQuery";
 import { useOnClickOutside } from "./hooks/useOnClickOutside";
 import { usePrevious } from "./hooks/usePrevious";
-import { useTabs } from "./hooks/useTabs";
 import { useSignedRequest } from "./hooks/useSignedRequest";
-import { useMediaQuery } from "./hooks/useMediaQuery";
-import { withError } from "./errorBoundary/withError";
-import { NewVersionAvailable } from "./NewVersionAvailable";
-import { useStore, withStore, createStore } from "./store";
-import { Banner } from "./Banner";
-import { Pagination } from "./Pagination";
-import { useGetPagination } from "./hooks/useGetPagination";
+import { useTabs } from "./hooks/useTabs";
 import { WeekdaySelect } from "./WeekdaySelect";
+import { withError } from "./errorBoundary/withError";
 import "./index.scss";
 
 const DownloadButton = Button.Download;
@@ -90,6 +92,7 @@ export {
   NavItem,
   NavItemDivider,
   Loader,
+  Map,
   Tabs,
   PageActionsPanel,
   ModalActionsPanel,
@@ -119,6 +122,7 @@ export {
   numberUtils,
   generalUtils,
   stringUtils,
+  mapUtils,
   navUtils,
   interfaces,
   useTabs,

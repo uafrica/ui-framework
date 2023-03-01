@@ -1,5 +1,7 @@
-import { INavItem } from "./navitem.interface";
-import { IGenericUser } from "./genericUser.interface";
 import { IGenericRole } from "./genericRole.interface";
+import { IGenericUser } from "./genericUser.interface";
+import { IMarker } from "./marker.interface";
+import { INavItem } from "./navitem.interface";
+import { IPolygon } from "./polygon.interface";
 
-export type { INavItem, IGenericUser, IGenericRole };
+export type { IGenericRole, IGenericUser, IMarker, INavItem, IPolygon };
