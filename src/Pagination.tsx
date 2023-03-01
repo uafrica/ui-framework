@@ -67,12 +67,18 @@ function Pagination({
                 onChange={(e: any) => {
                   setPageVal(e.target.value);
                 }}
-                onBlur={() => {
+                onBlur={(e: any) => {
+                  if (parseInt(e.target.value) === pageVal) {
+                    return;
+                  }
                   setActive(pageVal);
                   handler(pageVal);
                   scrollRef?.current?.scrollIntoView();
                 }}
                 onKeyDown={(e: any) => {
+                  if (parseInt(e.target.value) === pageVal) {
+                    return;
+                  }
                   if (e.key === "Enter" && active !== pageVal) {
                     setActive(pageVal);
                     handler(pageVal);
