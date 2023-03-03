@@ -8,6 +8,8 @@ export interface IMarker {
     tooltip?: Function;
     tooltipXOffset?: number;
     tooltipYOffset?: number;
+    isDraggable?: boolean;
   };
-  onClick?: Function
+  onClick?: Function;
+  onDragEnd?: Function;
 }

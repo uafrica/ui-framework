@@ -21,14 +21,16 @@ function Map(props: {
   onPolygonUpdated?: Function;
   onPolygonCreated?: Function;
   selectedPolygon?: IPolygon | null;
-  onPolygonSelectionChanged: Function;
+  onPolygonSelectionChanged?: Function;
   bounds?: google.maps.LatLngBounds;
   toolbarLeft?: any;
   toolbarMiddle?: any;
   toolbarRight?: any;
   editMode: "draw" | "select" | null;
-  onEditModeChange: Function;
+  onEditModeChange?: Function;
   customToolbarButtons?: any[];
+  defaultZoom?: number;
+  onMapClick?: Function;
 }) {
   let {
     polygons,
@@ -43,7 +45,8 @@ function Map(props: {
     toolbarMiddle,
     toolbarRight,
     editMode,
-    customToolbarButtons
+    customToolbarButtons,
+    defaultZoom
   } = props;
   const snapDistanceThreshold = 30;
 
@@ -57,12 +60,16 @@ function Map(props: {
     }
   }, [bounds]);
 
-  function enterEditMode() {
-    props.onEditModeChange("select");
+  function enterEditMode(mode?: "select" | "draw") {
+    if (props.onEditModeChange) {
+      props.onEditModeChange(mode ?? "select");
+    }
   }
 
   function exitEditMode() {
-    props.onEditModeChange(null);
+    if (props.onEditModeChange) {
+      props.onEditModeChange(null);
+    }
   }
 
   function snapPointToPolygon(
@@ -298,14 +305,16 @@ function Map(props: {
             key={index}
             zIndex={index}
             onClick={(e: google.maps.PolyMouseEvent, polygon: IPolygon) => {
-              props.onPolygonSelectionChanged(polygon, true);
-              refitBounds(polygon);
+              if (props.onPolygonSelectionChanged) {
+                props.onPolygonSelectionChanged(polygon, true);
+                refitBounds(polygon);
 
-              if (!readonly) {
-                enterEditMode();
-              }
-              if (props.onPolygonClicked) {
-                props.onPolygonClicked(e, polygon);
+                if (!readonly) {
+                  enterEditMode();
+                }
+                if (props.onPolygonClicked) {
+                  props.onPolygonClicked(e, polygon);
+                }
               }
             }}
             onMouseOver={(e: google.maps.PolyMouseEvent, polygon: IPolygon) => {
@@ -343,7 +352,17 @@ function Map(props: {
       let markerGroup = markersGrouped[key];
 
       return (
-        <Marker key={key} markerGroup={markerGroup} onMouseOver={() => {}} onMouseOut={() => {}} />
+        <Marker
+          key={key}
+          markerGroup={markerGroup}
+          onMouseOver={() => {}}
+          onMouseOut={() => {}}
+          onDragEnd={(e: google.maps.MapMouseEvent, marker: IMarker) => {
+            if (markerGroup[0].onDragEnd) {
+              markerGroup[0].onDragEnd(e, marker);
+            }
+          }}
+        />
       );
     });
   }
@@ -362,10 +381,10 @@ function Map(props: {
                   setDoSnap(!doSnap);
                 }}
                 onSelectModeClicked={() => {
-                  props.onEditModeChange("select");
+                  enterEditMode("select");
                 }}
                 onDrawModeClicked={() => {
-                  props.onEditModeChange("draw");
+                  enterEditMode("draw");
                 }}
                 editMode={editMode}
                 customToolbarButtons={customToolbarButtons}
@@ -403,7 +422,7 @@ function Map(props: {
           id="bob_map"
           mapContainerStyle={mapContainerStyle ?? {}}
           center={center}
-          zoom={5}
+          zoom={defaultZoom ?? 5}
           onLoad={map => {
             setMap(map);
           }}
@@ -416,11 +435,16 @@ function Map(props: {
               strictBounds: true
             }
           }}
+          onClick={(e: google.maps.MapMouseEvent) => {
+            if (props.onMapClick) {
+              props.onMapClick(e);
+            }
+          }}
         >
           {editMode === "draw" && (
             <DrawingManager
               onPolygonComplete={(polygon: google.maps.Polygon) => {
-                props.onEditModeChange("select");
+                enterEditMode("select");
                 let paths = mapUtils.getPathFromGooglePolygon(polygon);
 
                 let _polygon: IPolygon = {
@@ -450,7 +474,9 @@ function Map(props: {
                   props.onPolygonCreated(_polygon);
                 }
 
-                props.onPolygonSelectionChanged(_polygon, true);
+                if (props.onPolygonSelectionChanged) {
+                  props.onPolygonSelectionChanged(_polygon, true);
+                }
               }}
               drawingMode={window.google.maps.drawing.OverlayType.POLYGON}
               options={{

@@ -10,6 +10,7 @@ function Marker(props: {
   onClick?: Function;
   onMouseOver: Function;
   onMouseOut: Function;
+  onDragEnd: Function;
 }) {
   let { markerGroup } = props;
 
@@ -70,6 +71,10 @@ function Marker(props: {
     return markerGroup.length > 0 ? (
       <>
         <GoogleMapsMarker
+          draggable={markerGroup[0]?.options?.isDraggable}
+          onDragEnd={(e: google.maps.MapMouseEvent) => {
+            props.onDragEnd(e, markerGroup[0]);
+          }}
           onClick={(e: google.maps.MapMouseEvent) => {
             if (markerGroup.length === 1) {
               onMarkerClicked(e, markerGroup[0]);
