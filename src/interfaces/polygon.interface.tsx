@@ -12,6 +12,7 @@ export interface IPolygon {
     tooltip?: Function;
     tooltipXOffset?: number;
     tooltipYOffset?: number;
+    isEditable?: Function
   };
   onClick?: Function
 }

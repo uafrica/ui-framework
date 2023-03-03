@@ -26,6 +26,8 @@ function Map(props: {
   toolbarLeft?: any;
   toolbarMiddle?: any;
   toolbarRight?: any;
+  editMode: "draw" | "select" | null;
+  onEditModeChange: Function;
 }) {
   let {
     polygons,
@@ -38,13 +40,13 @@ function Map(props: {
     mapContainerStyle,
     toolbarLeft,
     toolbarMiddle,
-    toolbarRight
+    toolbarRight,
+    editMode
   } = props;
   const snapDistanceThreshold = 30;
 
   let [map, setMap] = useState<any>();
   let [doSnap, setDoSnap] = useState<boolean>(false);
-  let [editMode, setEditMode] = useState<"draw" | "select" | null>(null);
   let [center, setCenter] = useState(defaultCenter);
 
   useEffect(() => {
@@ -54,11 +56,11 @@ function Map(props: {
   }, [bounds]);
 
   function enterEditMode() {
-    setEditMode("select");
+    props.onEditModeChange("select");
   }
 
   function exitEditMode() {
-    setEditMode(null);
+    props.onEditModeChange(null);
   }
 
   function snapPointToPolygon(
@@ -358,10 +360,10 @@ function Map(props: {
                   setDoSnap(!doSnap);
                 }}
                 onSelectModeClicked={() => {
-                  setEditMode("select");
+                  props.onEditModeChange("select");
                 }}
                 onDrawModeClicked={() => {
-                  setEditMode("draw");
+                  props.onEditModeChange("draw");
                 }}
                 editMode={editMode}
               />
@@ -415,7 +417,7 @@ function Map(props: {
           {editMode === "draw" && (
             <DrawingManager
               onPolygonComplete={(polygon: google.maps.Polygon) => {
-                setEditMode("select");
+                props.onEditModeChange("select");
                 let paths = mapUtils.getPathFromGooglePolygon(polygon);
 
                 let _polygon: IPolygon = {

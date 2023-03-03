@@ -165,24 +165,13 @@ function closePolygon(path: { lat: number; lng: number }[]) {
   return path;
 }
 
-function countLatLngs(arr: any[]) {
-  let count = 0;
-  if (Array.isArray(arr)) {
-    arr.forEach(polygon => {
-      count += polygon.length;
-    });
-  }
+function canEditPolygonVertices(paths: { lat: number; lng: number }[][], maxNodeCount: number) {
+  let count: number = 0;
+  paths.forEach(path => {
+    count += path.length;
+  });
 
-  return count;
-}
-
-function canEditPolygonVertices(arr: { lat: number; lng: number }[], store: any) {
-  let maxNodeCount = 300;
-  if (store.provider_settings.map_max_node_count) {
-    maxNodeCount = store.provider_settings.map_max_node_count;
-  }
-
-  return countLatLngs(arr) < maxNodeCount;
+  return count <= maxNodeCount;
 }
 
 function getPathFromGooglePolygon(polygonRef: any) {

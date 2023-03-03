@@ -89,7 +89,9 @@ function Polygon(props: {
               setPolygonRef(ref);
             }
           }}
-          editable={editable}
+          editable={
+            editable && (polygon?.options?.isEditable ? polygon.options.isEditable(polygon) : true)
+          }
           onClick={(e: google.maps.PolyMouseEvent) => {
             if (props.onClick) {
               props.onClick(e, polygon);
