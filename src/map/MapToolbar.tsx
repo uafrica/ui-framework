@@ -6,8 +6,9 @@ function MapToolbar(props: {
   onDrawModeClicked: Function;
   doSnap: boolean;
   onSnapToggle: Function;
+  customToolbarButtons?: any[];
 }) {
-  let { editMode, doSnap } = props;
+  let { editMode, doSnap, customToolbarButtons } = props;
 
   if (!editMode) return null;
 
@@ -37,6 +38,11 @@ function MapToolbar(props: {
           props.onSnapToggle();
         }}
       />
+
+      {customToolbarButtons &&
+        customToolbarButtons.map(button => {
+          return button;
+        })}
     </div>
   );
 }

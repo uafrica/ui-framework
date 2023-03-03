@@ -28,6 +28,7 @@ function Map(props: {
   toolbarRight?: any;
   editMode: "draw" | "select" | null;
   onEditModeChange: Function;
+  customToolbarButtons?: any[];
 }) {
   let {
     polygons,
@@ -41,7 +42,8 @@ function Map(props: {
     toolbarLeft,
     toolbarMiddle,
     toolbarRight,
-    editMode
+    editMode,
+    customToolbarButtons
   } = props;
   const snapDistanceThreshold = 30;
 
@@ -366,6 +368,7 @@ function Map(props: {
                   props.onEditModeChange("draw");
                 }}
                 editMode={editMode}
+                customToolbarButtons={customToolbarButtons}
               />
             )}
           </div>
