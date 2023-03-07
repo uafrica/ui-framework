@@ -10,8 +10,8 @@ import CustomTableRow from "./CustomTableRow";
 import { IColumn } from "./column.interface";
 import { IRow } from "./row.interface";
 import { Message } from "../Message";
-import { TableActionsPanel } from "./../Panels";
-import { Dropdown } from "./../Dropdown";
+import { TableActionsPanel } from "../Panels";
+import { Dropdown } from "../Dropdown";
 
 function CustomTable(props: {
   id: string;
@@ -881,11 +881,12 @@ function CustomTable(props: {
       <div className="-mt-3">
         <Pagination
           handler={(val: any) => {
-            let _page = page;
-            if (val < 1) {
+            let _page
+            const parsedVal: number = parseInt(val);
+            if (parsedVal < 1) {
               _page = 1;
-            } else if (val <= totalPages) {
-              _page = val;
+            } else if (parsedVal <= totalPages) {
+              _page = parsedVal;
             } else {
               _page = totalPages;
             }
@@ -896,7 +897,8 @@ function CustomTable(props: {
           pages={totalPages}
           setActive={setPage}
           setRows={(val: any) => {
-            changePageSize(val, true);
+            const parsedVal: number = parseInt(val);
+            changePageSize(parsedVal, true);
             setPage(1);
           }}
           rows={pageSize}
