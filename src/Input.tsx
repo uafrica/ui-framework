@@ -151,17 +151,21 @@ function Input(props: IInputProps) {
       onChange={onChange}
       onClick={onClick}
       onFocus={(e: any) => {
-        e.target.placeholder = "";
-        onFocus && onFocus(e);
+        if (!disabled) {
+          e.target.placeholder = "";
+          onFocus && onFocus(e);
+        }
       }}
       placeholder={placeholder}
       onKeyPress={onKeyPress}
       onKeyUp={onKeyUp}
       onBlur={(e: any) => {
-        if (placeholder) {
-          e.target.placeholder = placeholder;
+        if (!disabled) {
+          if (placeholder) {
+            e.target.placeholder = placeholder;
+          }
+          onBlur && onBlur(e);
         }
-        onBlur && onBlur(e);
       }}
       step={step}
       min={min}
