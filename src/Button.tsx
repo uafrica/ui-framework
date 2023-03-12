@@ -37,6 +37,7 @@ interface ILinkProps {
   to?: string;
   target?: string;
   noPadding?: boolean;
+  tabIndex?: number | undefined;
 }
 
 interface ILinkBaseProps extends ILinkProps {
@@ -179,7 +180,7 @@ function BaseLink(props: ILinkBaseProps) {
       );
     }
     return (
-      <RouterLink to={props.to}>
+      <RouterLink to={props.to} tabIndex={props.tabIndex}>
         <BaseButton {...props} buttonTypeClassNames={linkClassNames} />
       </RouterLink>
     );
