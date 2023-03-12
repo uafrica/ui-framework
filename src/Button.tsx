@@ -10,6 +10,7 @@ interface IButtonProps {
   isLoading?: boolean;
   icon?: IconProp;
   iconSize?: SizeProp;
+  tabIndex?: number | undefined;
   onClick?: any;
   center?: boolean;
   className?: string;
@@ -219,10 +220,10 @@ function BaseButton(props: IButtonBaseProps) {
 
   return (
     <button
-      tabIndex={0}
       id={id}
       disabled={disabledOrLoading}
       onClick={props.onClick}
+      tabIndex={props.tabIndex ?? 0}
       type={type ? type : "button"}
       title={hoverTitle}
       className={
