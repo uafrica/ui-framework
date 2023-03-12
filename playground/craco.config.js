@@ -2,7 +2,7 @@ const path = require("path");
 const enableImportsFromExternalPaths = require("./src/enableImportsFromExternalPaths");
 
 // Paths to the code you want to use
-const uAfricaLib = path.resolve(__dirname, "../src");
+const thisLib = path.resolve(__dirname, "../src");
 
 module.exports = {
   style: {
@@ -14,7 +14,7 @@ module.exports = {
     {
       plugin: {
         overrideWebpackConfig: ({ webpackConfig }) => {
-          enableImportsFromExternalPaths(webpackConfig, [uAfricaLib]);
+          enableImportsFromExternalPaths(webpackConfig, [thisLib]);
           return webpackConfig;
         }
       }

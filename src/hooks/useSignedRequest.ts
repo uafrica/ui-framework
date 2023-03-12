@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { getError } from "../utils/generalUtils";
-import { useStore } from "store";
+import { useStore } from "../store";
 
 // This works even if you do not have the store configured from the library. But should have a useStore function
 

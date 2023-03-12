@@ -1,17 +1,16 @@
 {
-  "name": "uafrica-ui-framework",
+  "name": "bob-group-ui-framework",
   "version": "1.2.221",
-  "description": "A ccd demustom set of UI components used by uAfrica.com, based on TailwindCSS and Headless UI",
+  "description": "A ccd demustom set of UI components used by Bob Group, based on TailwindCSS and Headless UI",
   "license": "BSD-3-Clause",
   "repository": "uafrica/ui-framework",
   "bugs": {
     "url": "https://github.com/uafrica/ui-framework/issues",
-    "email": "cornel@uafrica.com"
+    "email": "cornel@bob.co.za"
   },
   "author": {
     "name": "Cornel Rautenbach",
-    "email": "cornel@uafrica.com",
-    "url": "http://cornelrautenbach.com"
+    "email": "cornel@bob.co.za"
   },
   "main": "build/index.js",
   "files": [

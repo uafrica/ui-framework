@@ -1,6 +1,6 @@
-# uAfrica.com UI framework
+# Bob Group UI framework
 
-A custom set of React UI components used by uAfrica.com, based on TailwindCSS and Headless UI
+A custom set of React UI components used by Bob Group, based on TailwindCSS and Headless UI
 
 To add the framework to your project (assuming that your project is using Create React App):
 
@@ -149,6 +149,7 @@ module.exports = {
 For some background on how it was compiled follow https://www.pluralsight.com/guides/react-typescript-module-create
 
 ## Additional documentation
+
 [CustomTable](https://github.com/uafrica/ui-framework/blob/main/docs/CustomTable.md)
 
 [Pagination](https://github.com/uafrica/ui-framework/blob/main/docs/Pagination.md)

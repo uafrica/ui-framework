@@ -1,7 +1,7 @@
 {
-  "name": "uafrica-ui-framework-demo",
+  "name": "bob-group-ui-framework-demo",
   "version": "1.0.0",
-  "description": "A demo of the UI components used by uAfrica.com, based on TailwindCSS and Headless UI",
+  "description": "A demo of the UI components used by Bob Group, based on TailwindCSS and Headless UI",
   "license": "BSD-3-Clause",
   "repository": "uafrica/ui-framework",
   "bugs": {
@@ -10,18 +10,21 @@
   },
   "author": {
     "name": "Cornel Rautenbach",
-    "email": "cornel@uafrica.com",
-    "url": "http://cornelrautenbach.com"
+    "email": "cornel@bob.co.za"
   },
   "scripts": {
     "start": "craco start"
   },
   "dependencies": {
     "@popperjs/core": "^2.9.2",
+    "@react-google-maps/api": "^2.18.1",
     "@tailwindcss/forms": "^0.3.3",
+    "@types/google-map-react": "^2.1.7",
+    "@types/google.maps": "^3.52.2",
     "react": "16.14.0",
     "react-dom": "16.13.1",
     "react-router-dom": "5.2.0",
+    "react-sticky-mouse-tooltip": "^0.0.1",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   },
   "devDependencies": {
@@ -43,6 +46,7 @@
   },
   "keywords": [
     "uafrica",
+    "bob group",
     "framework",
     "react",
     "tailwindcss",
