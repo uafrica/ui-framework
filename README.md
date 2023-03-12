@@ -4,7 +4,7 @@ A custom set of React UI components used by Bob Group, based on TailwindCSS and 
 
 To add the framework to your project (assuming that your project is using Create React App):
 
-1. `yarn add uafrica-ui-framework`
+1. `yarn add bob-group-ui-framework`
 2. `yarn add -D @craco/craco`
 3. Add the following to the top of your main SCSS file:
 
@@ -21,7 +21,7 @@ html {
 4. Add the following to your `index.js` file
 
 ```
-import "uafrica-ui-framework/build/index.css";
+import "bob-group-ui-framework/build/index.css";
 ```
 
 5. Replace your npm scripts (in package.json) with:
