@@ -55,31 +55,31 @@ function Banner(props: IProps) {
       className={`${backgroundColorClass} p-4 flex justify-between items-center ${textColorClass} font-bold sticky top-0 z-20 -mt-6 mb-4 -mx-4`}
     >
       {typeof children === "string" ? (
-        <div className="flex items-center">
-          {icon && (
-            <FontAwesomeIcon
-              // @ts-ignore
-              icon={icon}
-              className={iconClassName ?? ""}
-            />
-          )}
+        <div className="flex flex-row justify-between space-x-4 items-center w-full">
+          <div className="flex items-center ">
+            {icon && (
+              <FontAwesomeIcon
+                // @ts-ignore
+                icon={icon}
+                className={iconClassName ?? ""}
+              />
+            )}
 
-          <div
-            className={
-              "link-container flex " + (showMore ? "flex-row space-x-4" : "flex-col space-y-4")
-            }
-          >
-            {
+            <div
+              className={
+                "link-container flex " + (showMore ? "flex-row space-x-4" : "flex-col space-y-4")
+              }
+            >
               <>
                 <div
                   id={bannerId}
                   dangerouslySetInnerHTML={{ __html: children }}
                   className={"uafrica-banner " + (showMore ? "line-clamp-1" : "")}
                 />
-                {renderShowMore()}
               </>
-            }
+            </div>
           </div>
+          {renderShowMore()}
         </div>
       ) : (
         children
