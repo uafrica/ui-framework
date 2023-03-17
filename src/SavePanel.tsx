@@ -12,6 +12,7 @@ interface ISavePanel {
   className?: string;
   cancelChanges?: any;
   saveChanges: any;
+  callToActionAtBottom?: boolean;
 }
 
 interface ISavePanelContainer {
@@ -40,7 +41,9 @@ function SavePanel(props: ISavePanel) {
     >
       <div
         className={
-          "flex flex-col-reverse sm:flex-row my-1 w-full " +
+          `flex ${
+            props.callToActionAtBottom ? "flex-col" : "flex-col-reverse "
+          } sm:flex-row my-1 w-full ` +
           (!(!savingChanges && props.cancelChanges) ? "justify-end" : "justify-between")
         }
       >
