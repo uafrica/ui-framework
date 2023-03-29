@@ -46,9 +46,10 @@ interface IBase {
   allowDeselect?: boolean; // single select mode does not allow for the deselection of an option by default, only switching to another option. override by setting this to true
   showAsterisk?: boolean;
   dataTest?: string | undefined;
-  showAllButton?: boolean;// conditionally display a button to show all available options
-  showAllSelectedText?: boolean;// show "All selected" if the options selected is equal to the amount of options in the array
+  showAllButton?: boolean; // conditionally display a button to show all available options
+  showAllSelectedText?: boolean; // show "All selected" if the options selected is equal to the amount of options in the array
   allSelectedText?: string | undefined; // custom all selected text
+  popoverHeight?: string;
 }
 
 // Implementation
@@ -81,7 +82,8 @@ function GroupedSelect(props: IGroupedSelect) {
     dataTest,
     showAllButton,
     showAllSelectedText,
-    allSelectedText
+    allSelectedText,
+    popoverHeight
   } = props;
 
   const popupNode = useRef<HTMLElement>();
@@ -254,7 +256,7 @@ function GroupedSelect(props: IGroupedSelect) {
           labelWithValue = selectedItem.label;
         }
       } else if (value.length === flattenedOptions.length && showAllSelectedText) {
-        labelWithValue = allSelectedText ?? "All selected"
+        labelWithValue = allSelectedText ?? "All selected";
       } else if (value.length > 1) {
         labelWithValue = value.length + " selected";
       }
@@ -328,13 +330,13 @@ function GroupedSelect(props: IGroupedSelect) {
             } else {
               // select all, ignore disabled options
               onChange &&
-              onChange(
-                (flattenedOptions ? flattenedOptions : [])
-                  .filter((option: { value: string | number; disabled?: boolean }) => {
-                    return notSelectedDisabledOptions.indexOf(option.value) === -1;
-                  })
-                  .map(option => option.value)
-              );
+                onChange(
+                  (flattenedOptions ? flattenedOptions : [])
+                    .filter((option: { value: string | number; disabled?: boolean }) => {
+                      return notSelectedDisabledOptions.indexOf(option.value) === -1;
+                    })
+                    .map(option => option.value)
+                );
             }
           }}
         />
@@ -473,7 +475,11 @@ function GroupedSelect(props: IGroupedSelect) {
                           {selectAllButton}
                         </div>
                       )}
-                      <div className={"mt-2 mb-2 max-h-52 overflow-y-auto"}>
+                      <div
+                        className={`mt-2 mb-2 ${
+                          popoverHeight ? popoverHeight : "max-h-52 "
+                        } overflow-y-auto`}
+                      >
                         {allOptionsSearched.length === 0 && (
                           <div className="pl-2 mt-2">No options</div>
                         )}
