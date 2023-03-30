@@ -368,13 +368,17 @@ function isBrowserOutdated(browserName: string, browserVersion: string) {
 }
 
 async function getDataUrl(file: any): Promise<unknown> {
-  let reader = new FileReader();
-  reader.readAsDataURL(file);
+  return new Promise((resolve, reject) => {
+    try {
+      let reader = new FileReader();
+      reader.readAsDataURL(file);
 
-  return new Promise(resolve => {
-    reader.onloadend = function () {
-      resolve(reader.result);
-    };
+      reader.onloadend = function () {
+        resolve(reader.result);
+      };
+    } catch (e) {
+      reject(e);
+    }
   });
 }
 
