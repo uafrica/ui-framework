@@ -200,7 +200,7 @@ function getError(result: any, hideConsoleLog?: boolean | null): string {
     }
   }
 
-  if (error.trim() === "the account has been closed") return ""; // handled by the 423 code
+  if (error && error?.trim() === "the account has been closed") return ""; // handled by the 423 code
 
   return capitalize(error);
 }
