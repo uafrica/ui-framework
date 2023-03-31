@@ -12,6 +12,7 @@ import { IRow } from "./row.interface";
 import { Message } from "../Message";
 import { TableActionsPanel } from "../Panels";
 import { Dropdown } from "../Dropdown";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 function CustomTable(props: {
   id: string;
@@ -40,6 +41,7 @@ function CustomTable(props: {
   setTableFunctions?: Function;
   noDataText?: string;
   loadOnPageChange?: boolean;
+  rowOrderIcon?: IconProp;
 }) {
   let {
     id,
@@ -60,7 +62,8 @@ function CustomTable(props: {
     autoRefreshInterval,
     setTableFunctions,
     noDataText,
-    loadOnPageChange
+    loadOnPageChange,
+    rowOrderIcon
   } = props;
   let topRef: any = useRef();
   let rowUniqueIdentifier = props.rowUniqueIdentifier ?? "id";
@@ -456,7 +459,8 @@ function CustomTable(props: {
             rows[endRowIndex].nextSibling
           );
 
-      updateRowOrder();
+      // pass starting and ending index to update the row order
+      updateRowOrder(draggingRowIndex, endRowIndex - 1);
       table.style.removeProperty("visibility");
       document.removeEventListener("mousemove", dragRowMouseMoveHandler);
       document.removeEventListener("mouseup", dragRowMouseUpHandler);
@@ -539,14 +543,19 @@ function CustomTable(props: {
     }
   }
 
-  function updateRowOrder() {
+  function updateRowOrder(startingIndex: any, endingIndex: any) {
     let table = document.getElementById(props.id);
     if (table) {
       let order = [].slice.call(table.querySelectorAll("tr")).map((e: any) => {
         return e.id;
       });
-      let newRowOrder = [...order].slice(1);
-      setRowOrder(newRowOrder);
+      let newRowOrder = {
+        order: [...order].slice(1),
+        startingIndex: startingIndex,
+        endingIndex: endingIndex
+      };
+
+      setRowOrder(newRowOrder.order);
       if (onRowOrderChanged && !isInitialising) {
         onRowOrderChanged(newRowOrder);
       }
@@ -639,7 +648,14 @@ function CustomTable(props: {
         sortable: false,
         isClickable: false,
         isRightClickable: false,
-        header: <FontAwesomeIcon icon="sort" className="ml-4" title="Drag rows" />,
+        header: (
+          <FontAwesomeIcon
+            // @ts-ignore
+            icon={`${rowOrderIcon ? rowOrderIcon : "sort"}`}
+            className="ml-4"
+            title="Drag rows"
+          />
+        ),
         cell: (row: IRow) => {
           return (
             <div
@@ -648,7 +664,11 @@ function CustomTable(props: {
                 setDraggingRowIndex(row.index);
               }}
             >
-              <FontAwesomeIcon icon="sort" className="ml-4 " />
+              <FontAwesomeIcon
+                // @ts-ignore
+                icon={`${rowOrderIcon ? rowOrderIcon : "sort"}`}
+                className="ml-4 "
+              />
             </div>
           );
         }
@@ -881,7 +901,7 @@ function CustomTable(props: {
       <div className="-mt-3">
         <Pagination
           handler={(val: any) => {
-            let _page
+            let _page;
             const parsedVal: number = parseInt(val);
             if (parsedVal < 1) {
               _page = 1;
