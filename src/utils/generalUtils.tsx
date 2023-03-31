@@ -200,7 +200,7 @@ function getError(result: any, hideConsoleLog?: boolean | null): string {
     }
   }
 
-  if (error.trim() === "the account has been closed") return ""; // handled by the 423 code
+  if (error && error?.trim() === "the account has been closed") return ""; // handled by the 423 code
 
   return capitalize(error);
 }
@@ -368,13 +368,17 @@ function isBrowserOutdated(browserName: string, browserVersion: string) {
 }
 
 async function getDataUrl(file: any): Promise<unknown> {
-  let reader = new FileReader();
-  reader.readAsDataURL(file);
+  return new Promise((resolve, reject) => {
+    try {
+      let reader = new FileReader();
+      reader.readAsDataURL(file);
 
-  return new Promise(resolve => {
-    reader.onloadend = function () {
-      resolve(reader.result);
-    };
+      reader.onloadend = function () {
+        resolve(reader.result);
+      };
+    } catch (e) {
+      reject(e);
+    }
   });
 }
 

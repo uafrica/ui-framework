@@ -98,29 +98,33 @@ function GroupedSelect(props: IGroupedSelect) {
 
   // Happens when an item is selected
   function onSelectToggle(_value: any) {
-    let newValue = _value;
+    try {
+      let newValue = _value;
 
-    // Multi select
-    if (multiSelection) {
-      newValue = JSON.parse(JSON.stringify(value));
+      // Multi select
+      if (multiSelection) {
+        newValue = JSON.parse(JSON.stringify(value));
 
-      let currentIndex = newValue.indexOf(_value);
-      if (currentIndex >= 0) {
-        newValue.splice(currentIndex, 1);
-      } else {
-        newValue.push(_value);
-      }
-    }
-    // Single select
-    else {
-      if (allowDeselect) {
-        if (newValue === value) {
-          newValue = undefined;
+        let currentIndex = newValue.indexOf(_value);
+        if (currentIndex >= 0) {
+          newValue.splice(currentIndex, 1);
+        } else {
+          newValue.push(_value);
         }
       }
-    }
+      // Single select
+      else {
+        if (allowDeselect) {
+          if (newValue === value) {
+            newValue = undefined;
+          }
+        }
+      }
 
-    onChange && onChange(newValue);
+      onChange && onChange(newValue);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   function clickOption(option: any) {
