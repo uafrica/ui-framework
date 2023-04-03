@@ -82,7 +82,9 @@ function formatNumberWithPercentage(
     valueOutput = addSpaces ? numberWithSpaces(value) : value + "";
   } else {
     value = parseFloat(value);
-    valueOutput = addSpaces ? numberWithSpaces(value.toFixed(toFixedDigits?? 1)) : value.toFixed(toFixedDigits?? 1);
+    valueOutput = addSpaces
+      ? numberWithSpaces(value.toFixed(toFixedDigits ?? 1))
+      : value.toFixed(toFixedDigits ?? 1);
   }
 
   return (isNegative ? "- " : "") + valueOutput + " " + "%";
@@ -126,13 +128,32 @@ function abbreviatedNumber(num: number, digits: number) {
   var item = lookup
     .slice()
     .reverse()
-    .find(function(item) {
+    .find(function (item) {
       return num >= item.value;
     });
 
   return item
     ? (isNegative ? "-" : "") + (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol
     : "0";
+}
+
+function getPrimeNumbersBetween(min: number, max: number) {
+  const result = Array(max + 1)
+    .fill(0)
+    .map((_, i) => i);
+  for (let i = 2; i <= Math.sqrt(max + 1); i++) {
+    for (let j = i ** 2; j < max + 1; j += i) delete result[j];
+  }
+  return Object.values(result.slice(Math.max(min, 2)));
+}
+
+function getRandomNumberBetween(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+function getRandomPrimeBetween(min: number, max: number) {
+  const primes = getPrimeNumbersBetween(min, max);
+  return primes[getRandomNumberBetween(0, primes.length - 1)];
 }
 
 export {
@@ -142,5 +163,8 @@ export {
   roundAndFormatNumberWithSpaces,
   strToFloat,
   formatNumberWithPercentage,
-  abbreviatedNumber
+  abbreviatedNumber,
+  getPrimeNumbersBetween,
+  getRandomNumberBetween,
+  getRandomPrimeBetween
 };
