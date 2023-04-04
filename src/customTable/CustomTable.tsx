@@ -42,6 +42,7 @@ function CustomTable(props: {
   noDataText?: string;
   loadOnPageChange?: boolean;
   rowOrderIcon?: IconProp;
+  persistPage?: boolean;
 }) {
   let {
     id,
@@ -63,7 +64,8 @@ function CustomTable(props: {
     setTableFunctions,
     noDataText,
     loadOnPageChange,
-    rowOrderIcon
+    rowOrderIcon,
+    persistPage
   } = props;
   let topRef: any = useRef();
   let rowUniqueIdentifier = props.rowUniqueIdentifier ?? "id";
@@ -168,7 +170,11 @@ function CustomTable(props: {
   }, [data, selectedRowIdentifiers]);
 
   useEffect(() => {
-    load(true, page, pageSize);
+    if (persistPage) {
+      load(false, page, pageSize);
+    } else {
+      load(true, page, pageSize);
+    }
   }, [fetchFunctionArguments]);
 
   useEffect(() => {
