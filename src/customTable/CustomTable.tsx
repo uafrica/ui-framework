@@ -339,7 +339,7 @@ function CustomTable(props: {
   function dragColumnMouseUpHandler() {
     let table = document.getElementById(props.id);
     if (table) {
-      placeholder && placeholder.parentNode.removeChild(placeholder);
+      placeholder && placeholder.parentNode?.removeChild(placeholder);
       setPlaceholder(placeholder);
       draggingElement?.classList.remove("dragging");
       draggingElement?.classList.remove("dragging-column");
@@ -351,7 +351,7 @@ function CustomTable(props: {
       let endColumnIndex = [].slice.call(list.children).indexOf(draggingElement);
       isDraggingStarted = false;
       setIsDraggingStarted(false);
-      list.parentNode.removeChild(list);
+      list.parentNode?.removeChild(list);
       setList(list);
       table.querySelectorAll("tr").forEach(function (row) {
         let cells = [].slice.call(row.querySelectorAll("th, td"));
@@ -438,7 +438,7 @@ function CustomTable(props: {
     let table = document.getElementById(props.id);
 
     if (table) {
-      placeholder && placeholder.parentNode.removeChild(placeholder);
+      placeholder && placeholder.parentNode?.removeChild(placeholder);
 
       draggingElement.classList.remove("dragging");
       draggingElement.style.removeProperty("top");
@@ -450,7 +450,7 @@ function CustomTable(props: {
 
       isDraggingStarted = false;
 
-      list.parentNode.removeChild(list);
+      list.parentNode?.removeChild(list);
 
       let rows = [].slice.call(table.querySelectorAll("tr"));
 
