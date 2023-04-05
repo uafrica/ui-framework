@@ -63,7 +63,7 @@ function Checkbox(props: IProps) {
     <div className="flex items-start">
       <div
         id={id}
-        onClick={disabled ? null : onClick}
+        onClick={disabled ? null : onClick ?? null}
         key={key}
         className={
           (noPadding ? "" : "py-2 px-1 ") +
@@ -76,7 +76,7 @@ function Checkbox(props: IProps) {
         <input
           onKeyPress={(e: any) => {
             if (e.key === "Enter") {
-              disabled ? null : onClick(e);
+              disabled ? null : onClick ? onClick(e) : null;
             }
           }}
           title={hoverTitle}
