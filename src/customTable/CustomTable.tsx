@@ -898,33 +898,35 @@ function CustomTable(props: {
 
   function renderPagination() {
     return (
-      <div className="-mt-3">
-        <Pagination
-          handler={(val: any) => {
-            let _page;
-            const parsedVal: number = parseInt(val);
-            if (parsedVal < 1) {
-              _page = 1;
-            } else if (parsedVal <= totalPages) {
-              _page = parsedVal;
-            } else {
-              _page = totalPages;
-            }
-            setPage(_page);
-            load(false, _page, pageSize, loadOnPageChange);
-          }}
-          active={page}
-          pages={totalPages}
-          setActive={setPage}
-          setRows={(val: any) => {
-            const parsedVal: number = parseInt(val);
-            changePageSize(parsedVal, true);
-            setPage(1);
-          }}
-          rows={pageSize}
-          scrollRef={topRef}
-        />
-      </div>
+      !noPagination && (
+        <div className="-mt-3">
+          <Pagination
+            handler={(val: any) => {
+              let _page;
+              const parsedVal: number = parseInt(val);
+              if (parsedVal < 1) {
+                _page = 1;
+              } else if (parsedVal <= totalPages) {
+                _page = parsedVal;
+              } else {
+                _page = totalPages;
+              }
+              setPage(_page);
+              load(false, _page, pageSize, loadOnPageChange);
+            }}
+            active={page}
+            pages={totalPages}
+            setActive={setPage}
+            setRows={(val: any) => {
+              const parsedVal: number = parseInt(val);
+              changePageSize(parsedVal, true);
+              setPage(1);
+            }}
+            rows={pageSize}
+            scrollRef={topRef}
+          />
+        </div>
+      )
     );
   }
 
