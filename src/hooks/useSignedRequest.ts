@@ -65,7 +65,7 @@ export function useSignedRequest({
     let errorData: any;
     if (disallowRequest) {
       setIsLoading(false);
-      return;
+      return { responseData, errorData };
     }
     // Do not display or pass through loading state for the function
     if (!disableLoadingState) {
