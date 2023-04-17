@@ -42,6 +42,7 @@ function CustomTable(props: {
   noDataText?: string;
   loadOnPageChange?: boolean;
   rowOrderIcon?: IconProp;
+  persistPage?: boolean;
 }) {
   let {
     id,
@@ -63,7 +64,8 @@ function CustomTable(props: {
     setTableFunctions,
     noDataText,
     loadOnPageChange,
-    rowOrderIcon
+    rowOrderIcon,
+    persistPage
   } = props;
   let topRef: any = useRef();
   let rowUniqueIdentifier = props.rowUniqueIdentifier ?? "id";
@@ -168,7 +170,11 @@ function CustomTable(props: {
   }, [data, selectedRowIdentifiers]);
 
   useEffect(() => {
-    load(true, page, pageSize);
+    if (persistPage) {
+      load(false, page, pageSize);
+    } else {
+      load(true, page, pageSize);
+    }
   }, [fetchFunctionArguments]);
 
   useEffect(() => {
@@ -333,7 +339,7 @@ function CustomTable(props: {
   function dragColumnMouseUpHandler() {
     let table = document.getElementById(props.id);
     if (table) {
-      placeholder && placeholder.parentNode.removeChild(placeholder);
+      placeholder && placeholder.parentNode?.removeChild(placeholder);
       setPlaceholder(placeholder);
       draggingElement?.classList.remove("dragging");
       draggingElement?.classList.remove("dragging-column");
@@ -345,7 +351,7 @@ function CustomTable(props: {
       let endColumnIndex = [].slice.call(list.children).indexOf(draggingElement);
       isDraggingStarted = false;
       setIsDraggingStarted(false);
-      list.parentNode.removeChild(list);
+      list.parentNode?.removeChild(list);
       setList(list);
       table.querySelectorAll("tr").forEach(function (row) {
         let cells = [].slice.call(row.querySelectorAll("th, td"));
@@ -432,7 +438,7 @@ function CustomTable(props: {
     let table = document.getElementById(props.id);
 
     if (table) {
-      placeholder && placeholder.parentNode.removeChild(placeholder);
+      placeholder && placeholder.parentNode?.removeChild(placeholder);
 
       draggingElement.classList.remove("dragging");
       draggingElement.style.removeProperty("top");
@@ -444,7 +450,7 @@ function CustomTable(props: {
 
       isDraggingStarted = false;
 
-      list.parentNode.removeChild(list);
+      list.parentNode?.removeChild(list);
 
       let rows = [].slice.call(table.querySelectorAll("tr"));
 
