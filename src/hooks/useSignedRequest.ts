@@ -28,6 +28,7 @@ interface IProps {
   onSuccess?: Function;
   onError?: Function;
   initialLoadingState?: boolean;
+  disallowRequest?: boolean;
 }
 
 export function useSignedRequest({
@@ -41,7 +42,8 @@ export function useSignedRequest({
   onSuccess,
   onError,
   initialLoadingState,
-  signedRequest
+  signedRequest,
+  disallowRequest = false
 }: IProps) {
   const store = useStore();
   const [response, setResponse] = useState<any>(null);
@@ -59,6 +61,10 @@ export function useSignedRequest({
   }, []);
 
   const makeRequest = async (params?: ObjectType, disableLoadingState?: boolean) => {
+    if (disallowRequest) {
+      setIsLoading(false);
+      return;
+    }
     // Do not display or pass through loading state for the function
     if (!disableLoadingState) {
       setIsLoading(true);
