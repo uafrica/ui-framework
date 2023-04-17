@@ -61,6 +61,8 @@ export function useSignedRequest({
   }, []);
 
   const makeRequest = async (params?: ObjectType, disableLoadingState?: boolean) => {
+    let responseData: any;
+    let errorData: any;
     if (disallowRequest) {
       setIsLoading(false);
       return;
@@ -71,8 +73,6 @@ export function useSignedRequest({
     }
 
     setError(null);
-    let responseData: any;
-    let errorData: any;
 
     let args: any = {};
 
