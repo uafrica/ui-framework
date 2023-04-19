@@ -23,7 +23,6 @@
 .custom-table-tr {
   text-align: left;
   border-bottom: none;
-
 }
 
 .whitespace-nowrap {
@@ -31,7 +30,8 @@
 }
 
 .custom-table-th {
-  font: 12px Montserrat !important;
+  font-family: Montserrat !important;
+  font-size: 12px;
   letter-spacing: 0.07em;
   padding: 0;
   height: 39px !important;
@@ -41,7 +41,7 @@
   text-overflow: ellipsis;
   color: #111827;
   font-weight: 300;
-  background-color: #F7F9FA;
+  background-color: #f7f9fa;
   border-left: none !important;
   border-right: none !important;
 }
@@ -65,7 +65,6 @@
 }
 
 .dragging-column {
-
   .custom-table-td,
   .custom-table-th {
     padding-left: 10px;
