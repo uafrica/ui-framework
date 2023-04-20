@@ -15,7 +15,7 @@ interface IInfoPopover {
     | "bottom"
     | "left"
     | "right";
-  children:  any | any[];
+  children?: React.ReactNode
   popoverContent: any;
   showPopover: boolean;
   onPopoverDismiss: Function;
