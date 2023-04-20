@@ -291,3 +291,19 @@ Text to display when no rows are returned. Defaults to "No data"
 ```
 noDataText="No data to disaplay on this table"
 ```
+
+**persistPage**?: boolean
+Determines whether or not to maintain the current pagination state upon updating or deleting data.
+```persistPage={true}```
+
+**loadOnPageChange**?: boolean;
+Determines whether or not to display a loading indicator while waiting for the endpoint to return response data upon paginating through the page
+```
+loadOnPageChange={true}
+```
+
+**rowOrderIcon**?: IconProp
+Specifies the icon to be used for dragging rows, selected from the font-awesome library.
+```
+rowOrderIcon={"arrow-up"}
+```
