@@ -1,7 +1,7 @@
 {
   "name": "bob-group-ui-framework",
-  "version": "1.2.242",
-  "description": "A ccd demustom set of UI components used by Bob Group, based on TailwindCSS and Headless UI",
+  "version": "1.2.249-do-not-use",
+  "description": "A custom set of UI components used by Bob Group, based on TailwindCSS and Headless UI",
   "license": "BSD-3-Clause",
   "repository": "uafrica/ui-framework",
   "bugs": {
@@ -13,74 +13,51 @@
     "email": "cornel@bob.co.za"
   },
   "main": "build/index.js",
-  "files": [
-    "build"
-  ],
-  "module": "build/index.es.js",
-  "jsnext:main": "build/index.es.js",
-  "scripts": {
-    "start": "craco start",
-    "build": "rollup -c",
-    "test": "craco test",
-    "eject": "react-scripts eject",
-    "prepare": "husky install"
-  },
+  "types": "src/index.d.ts",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "1.2.35",
     "@fortawesome/free-solid-svg-icons": "5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.18",
-    "@headlessui/react": "^1.3.0",
+    "@headlessui/react": "^1.7.14",
+    "@popperjs/core": "^2.11.7",
     "@react-google-maps/api": "^2.18.1",
-    "@tailwindcss/forms": "^0.3.3",
-    "autoprefixer": "9.8.6",
+    "craco": "^0.0.3",
     "detect-browser": "^5.3.0",
-    "moment": "2.29.1",
-    "postcss": "7.0.36",
-    "react-content-loader": "6.0.3",
-    "react-error-boundary": "^3.1.4",
-    "react-popper": "^2.2.5",
-    "react-sticky-mouse-tooltip": "0.0.1",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
-    "uuid": "^9.0.0"
-  },
-  "peerDependencies": {
-    "@popperjs/core": "^2.9.2",
-    "@react-google-maps/api": "2.12.0",
-    "lodash": "4.17.21",
-    "node-sass": "^4.14.1",
-    "react": "16.14.0",
-    "react-dom": "16.13.1",
-    "react-router-dom": "5.2.0"
-  },
-  "devDependencies": {
-    "@craco/craco": "^6.2.0",
-    "@types/google.maps": "^3.43.3",
-    "@types/lodash": "^4.14.191",
-    "@types/node": "15.0.3",
-    "@types/react": "17.0.5",
-    "@types/react-dom": "17.0.5",
-    "@types/react-router-dom": "5.1.7",
-    "@types/uuid": "^8.3.4",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-prettier": "3.4.0",
-    "eslint-plugin-react-perf": "^3.3.0",
-    "husky": "^6.0.0",
+    "moment": "^2.29.4",
+    "node-sass": "8",
     "prettier": "2.3.0",
     "pretty-quick": "3.1.0",
-    "react-scripts": "4.0.1",
-    "rollup": "^1.32.1",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-peer-deps-external": "^2.2.4",
-    "rollup-plugin-scss": "^3.0.0",
-    "rollup-plugin-typescript2": "^0.30.0",
-    "sass": "^1.36.0",
-    "typescript": "4.2.4"
+    "react": "^18.2.0",
+    "react-content-loader": "^6.2.1",
+    "react-dom": "^18.2.0",
+    "react-error-boundary": "^4.0.4",
+    "react-popper": "^2.3.0",
+    "react-router-dom": "5.2.0",
+    "react-scripts": "5.0.1",
+    "react-sticky-mouse-tooltip": "^0.0.1",
+    "uuid": "^9.0.0",
+    "web-vitals": "^2.1.4"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
+  "devDependencies": {
+    "@types/lodash": "^4.14.191",
+    "@types/react": "18.0.10",
+    "@types/react-dom": "18.0.5",
+    "@types/react-router-dom": "5.1.7",
+    "@types/uuid": "^8.3.4",
+    "tailwindcss": "^3.3.1",
+    "typescript": "^5.0.4"
+  },
+  "scripts": {
+    "start": "craco start",
+    "build": "tsc src/**/*.ts --listEmittedFiles --declaration src/index.tsx --allowJs --emitDeclarationOnly --outDir types --jsx 'react-jsx' --skipLibCheck --esModuleInterop true; craco build",
+    "eject": "craco eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
   },
   "keywords": [
     "uafrica",
@@ -89,9 +66,16 @@
     "tailwindcss",
     "headless-ui"
   ],
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not op_mini all"
-  ]
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }

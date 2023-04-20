@@ -1,0 +1,11 @@
+declare function formatNumberWithCurrency(amount: any, forceAsInteger: boolean, addSpaces: boolean, currency?: string): any;
+declare function formatWeight(weight: any): string;
+declare function formatNumber(amount: any, formatAsInteger: boolean, addSpaces: boolean): any;
+declare function formatNumberWithPercentage(value: any, formatAsInteger: boolean, addSpaces: boolean, toFixedDigits?: number): string;
+declare function strToFloat(amount: string): number;
+declare function roundAndFormatNumberWithSpaces(value: any, maxDecimals: number): string;
+declare function abbreviatedNumber(num: number, digits: number): string;
+declare function getPrimeNumbersBetween(min: number, max: number): number[];
+declare function getRandomNumberBetween(min: number, max: number): number;
+declare function getRandomPrimeBetween(min: number, max: number): number;
+export { formatNumberWithCurrency, formatWeight, formatNumber, roundAndFormatNumberWithSpaces, strToFloat, formatNumberWithPercentage, abbreviatedNumber, getPrimeNumbersBetween, getRandomNumberBetween, getRandomPrimeBetween };

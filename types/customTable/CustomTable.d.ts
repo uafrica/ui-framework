@@ -1,0 +1,37 @@
+import "./CustomTable.scss";
+import { IColumn } from "./column.interface";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+declare function CustomTable(props: {
+    id: string;
+    columns: IColumn[];
+    columnOrder?: string[];
+    columnWidths?: {
+        id: string;
+        value?: number;
+    }[];
+    pageSize?: number;
+    fetchFunction: Function;
+    fetchFunctionArguments?: any;
+    draggableRows?: boolean;
+    rowUniqueIdentifier?: string;
+    onPageSizeChanged?: Function;
+    onRowClicked?: Function;
+    onSelectionChanged?: Function;
+    onColumnOrderChanged?: Function;
+    onRowOrderChanged?: Function;
+    onColumnWidthsChanged?: Function;
+    onDataChanged?: Function;
+    noPagination?: boolean;
+    scrollableX?: boolean;
+    contextMenuItems?: Function;
+    contextMenuHeader?: Function;
+    autoRefreshInterval?: number;
+    renderTableActionsHeader?: Function;
+    renderTableActionsChildren?: Function;
+    setTableFunctions?: Function;
+    noDataText?: string;
+    loadOnPageChange?: boolean;
+    rowOrderIcon?: IconProp;
+    persistPage?: boolean;
+}): JSX.Element;
+export { CustomTable };

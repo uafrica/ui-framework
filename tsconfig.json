@@ -23,8 +23,7 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true
+    "isolatedModules": true
   },
   "include": ["src"],
   "exclude": ["node_modules", "build"]

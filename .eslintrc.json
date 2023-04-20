@@ -1,4 +1,4 @@
 {
   "extends": ["prettier"],
-  "plugins": ["react-perf"]
+  "plugins": ["react"]
 }

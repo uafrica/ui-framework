@@ -2,12 +2,8 @@
   "compilerOptions": {
     "outDir": "build",
     "module": "esnext",
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "target": "ESNext",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "baseUrl": "src/",
     "declaration": true,
     "esModuleInterop": true,
@@ -17,7 +13,7 @@
     "allowSyntheticDefaultImports": true,
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
-    "jsx": "react-jsx",
+    "jsx": "react",
     "noImplicitAny": true,
     "strictNullChecks": true,
     "noImplicitThis": true,
@@ -30,10 +26,6 @@
     "isolatedModules": true,
     "noEmit": true
   },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["src"],
+  "exclude": ["node_modules"]
 }

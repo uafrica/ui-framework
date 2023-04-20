@@ -1,4 +1,3 @@
-
 function formatToSnakeCase(sentence: string | undefined): string {
   if (!sentence) return "";
 
@@ -9,4 +8,9 @@ function formatToSnakeCase(sentence: string | undefined): string {
     .join("_");
 }
 
-export {formatToSnakeCase}
+// @ts-ignore
+function replaceAll(target: string, search: string, replacement: string) {
+  return target.replace(new RegExp(search, "g"), replacement);
+}
+
+export { formatToSnakeCase, replaceAll };

@@ -1,0 +1,11 @@
+import { IGenericUser } from "../interfaces";
+declare function hasRole(user: IGenericUser | undefined, rolesToContain: string[]): boolean;
+declare function getUserPermissions(user: IGenericUser | undefined): string[];
+declare function hasAllPermissions(user: IGenericUser | undefined, permissions: string[]): boolean;
+declare function hasPermission(user: IGenericUser | undefined, permission: string): boolean;
+declare function hasAnyPermission(user: IGenericUser | undefined, permissions: string[]): boolean;
+declare function hasPermissionInArray(userPermissions: string[], permission: string): boolean;
+declare function hasCommonElement(arr1: any[], arr2: any[]): boolean;
+declare function getRole(user: IGenericUser | undefined, roles: any[]): any;
+declare function fillRole(user: IGenericUser, latestRoleResponse: any, store: any): void;
+export { hasRole, getUserPermissions, hasAllPermissions, hasAnyPermission, hasPermissionInArray, hasPermission, hasCommonElement, getRole, fillRole };

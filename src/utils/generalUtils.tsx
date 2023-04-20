@@ -5,6 +5,7 @@ import { useMediaQuery } from "../hooks/useMediaQuery";
 import { detect } from "detect-browser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import _ from "lodash";
+import { replaceAll } from "./stringUtils";
 
 // Used to check current app version
 
@@ -190,8 +191,9 @@ function getError(result: any, hideConsoleLog?: boolean | null): string {
     }
 
     if (typeof error === "string") {
-      error = error.replaceAll("Username/client id combination", "Email"); // AWS terminology
-      error = error.replaceAll(
+      error = replaceAll(error, "Username/client id combination", "Email"); // AWS terminology
+      error = replaceAll(
+        error,
         "Failed to fetch",
         "There is a problem with your internet connectivity"
       );
@@ -231,7 +233,7 @@ function humanReadableToKey(string: string): string {
   if (!string) {
     return "";
   }
-  var key = string.replaceAll(" ", "_").toLowerCase();
+  var key = replaceAll(string, " ", "_").toLowerCase();
 
   return key;
 }
@@ -239,10 +241,10 @@ function humanReadableToKey(string: string): string {
 function keyToHumanReadable(key: string | undefined): string {
   if (!key) return "";
 
-  let keyHumanReadable = key.replaceAll("_", " ");
-  keyHumanReadable = keyHumanReadable.replaceAll("sender", "collection");
-  keyHumanReadable = keyHumanReadable.replaceAll("receiver", "delivery");
-  keyHumanReadable = keyHumanReadable.replaceAll("-", " ");
+  let keyHumanReadable = replaceAll(key, "_", " ");
+  keyHumanReadable = replaceAll(keyHumanReadable, "sender", "collection");
+  keyHumanReadable = replaceAll(keyHumanReadable, "receiver", "delivery");
+  keyHumanReadable = replaceAll(keyHumanReadable, "-", " ");
 
   // camelcase to sentence case
   keyHumanReadable = keyHumanReadable.replace(/([A-Z])/g, " $1").trim();
@@ -265,7 +267,7 @@ function cleanPhone(phone: string, removeSpaces?: boolean): string {
 
   const countryCode = "27";
 
-  var cleanPhone = phone.replaceAll(" ", "");
+  var cleanPhone = replaceAll(phone, " ", "");
   // convert e.g. 0027 to +27
   if (cleanPhone.indexOf("00" + countryCode) === 0) {
     cleanPhone = "+27" + cleanPhone.substr(4);
@@ -288,7 +290,7 @@ function cleanPhone(phone: string, removeSpaces?: boolean): string {
   }
 
   if (removeSpaces) {
-    cleanPhone = cleanPhone.replaceAll(" ", "");
+    cleanPhone = replaceAll(cleanPhone, " ", "");
   }
 
   return cleanPhone;
@@ -329,7 +331,7 @@ function isScreenDesktopSize(): boolean {
 }
 
 function kebabCaseToSentenceCase(originalString: string) {
-  let formattedString = originalString.replaceAll("-", " ");
+  let formattedString = replaceAll(originalString, "-", " ");
   formattedString = capitalize(formattedString.toLowerCase());
 
   return formattedString;
