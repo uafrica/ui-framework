@@ -250,9 +250,9 @@ function keyToHumanReadable(key: string | undefined): string {
   let sentenceCaseKey =
     keyHumanReadable.charAt(0).toUpperCase() + keyHumanReadable.slice(1).toLowerCase();
 
-  sentenceCaseKey = replaceAll(keyHumanReadable, "Bob box", "Bob Box");
-  sentenceCaseKey = replaceAll(keyHumanReadable, "Bob pay", "Bob Pay");
-  sentenceCaseKey = replaceAll(keyHumanReadable, "Bob go", "Bob Go");
+  sentenceCaseKey = sentenceCaseKey.replaceAll("Bob box", "Bob Box");
+  sentenceCaseKey = sentenceCaseKey.replaceAll("Bob pay", "Bob Pay");
+  sentenceCaseKey = sentenceCaseKey.replaceAll("Bob go", "Bob Go");
 
   return sentenceCaseKey;
 }
