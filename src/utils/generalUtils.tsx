@@ -5,6 +5,8 @@ import { useMediaQuery } from "../hooks/useMediaQuery";
 import { detect } from "detect-browser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import _ from "lodash";
+import * as dateUtils from "./dateUtils";
+import moment from "moment";
 
 // Used to check current app version
 
@@ -591,6 +593,50 @@ const duplicateObjectsInArray = (arr: any[], key: string) => {
   return newArrEl;
 };
 
+function addFiltersToArgsCheck(
+  filters: any,
+  args: any,
+  wildCardedColumns?: string[],
+  dontChangeDates?: boolean
+) {
+  if (!wildCardedColumns) wildCardedColumns = [];
+
+  Object.keys(filters).forEach(key => {
+    if (filters[key] && (!Array.isArray(filters[key]) || filters[key].length > 0)) {
+      var val = filters[key];
+
+      if (key === "start_date" || key === "date" || key === "from_invoice_date") {
+        if (dontChangeDates) {
+          val = dateUtils.pgFormatDate(moment(val));
+        } else {
+          val = dateUtils.pgFormatDate(moment(val).startOf("day"));
+        }
+      }
+
+      if (key === "end_date" || key === "to_invoice_date") {
+        if (dontChangeDates) {
+          val = dateUtils.pgFormatDate(moment(val));
+        } else {
+          val = dateUtils.pgFormatDate(moment(val).endOf("day"));
+        }
+      }
+
+      if (Array.isArray(filters[key])) {
+        args[key] = JSON.stringify(val);
+        // @ts-ignore
+      } else if (wildCardedColumns.indexOf(key) === -1) {
+        args[key] = val;
+      } else {
+        // Encode with % wildcard (postgres) at the begining and end of the argument
+        // The encoding is need because args are put into the query URL
+        args[key] = "%" + val + "%";
+      }
+    }
+  });
+
+  return args;
+}
+
 export {
   capitalize,
   getError,
@@ -631,5 +677,6 @@ export {
   mergeArrays,
   getObjectByPropertyWithValue,
   omitPropsFromObj,
-  duplicateObjectsInArray
+  duplicateObjectsInArray,
+  addFiltersToArgsCheck
 };
