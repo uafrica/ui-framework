@@ -247,7 +247,14 @@ function keyToHumanReadable(key: string | undefined): string {
   // camelcase to sentence case
   keyHumanReadable = keyHumanReadable.replace(/([A-Z])/g, " $1").trim();
 
-  return keyHumanReadable.charAt(0).toUpperCase() + keyHumanReadable.slice(1).toLowerCase();
+  let sentenceCaseKey =
+    keyHumanReadable.charAt(0).toUpperCase() + keyHumanReadable.slice(1).toLowerCase();
+
+  sentenceCaseKey = sentenceCaseKey.replaceAll("Bob box", "Bob Box");
+  sentenceCaseKey = sentenceCaseKey.replaceAll("Bob pay", "Bob Pay");
+  sentenceCaseKey = sentenceCaseKey.replaceAll("Bob go", "Bob Go");
+
+  return sentenceCaseKey;
 }
 
 function cleanURL(url: string): string {
