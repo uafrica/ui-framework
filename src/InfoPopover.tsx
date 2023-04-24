@@ -15,7 +15,7 @@ interface IInfoPopover {
     | "bottom"
     | "left"
     | "right";
-  children?: any;
+  children: any;
   popoverContent: any;
   showPopover: boolean;
   onPopoverDismiss: Function;
