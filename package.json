@@ -13,7 +13,6 @@
     "email": "cornel@bob.co.za"
   },
   "main": "build/index.js",
-  "types": "build/index.d.ts",
   "files": [
     "build"
   ],
