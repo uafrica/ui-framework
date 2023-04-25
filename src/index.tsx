@@ -64,6 +64,9 @@ import { useOnClickOutside } from "./hooks/useOnClickOutside";
 import { usePrevious } from "./hooks/usePrevious";
 import { useSignedRequest } from "./hooks/useSignedRequest";
 import { useTabs } from "./hooks/useTabs";
+import { useFilters } from "./hooks/useFilters";
+import { useDebounce } from "./hooks/useDebounce";
+import { useLocationState } from "./hooks/useLocationState";
 import { WeekdaySelect } from "./WeekdaySelect";
 import { withError } from "./errorBoundary/withError";
 import "./index.scss";
@@ -134,6 +137,9 @@ export {
   withStore,
   useStore,
   useSignedRequest,
+  useDebounce,
+  useFilters,
+  useLocationState,
   useMediaQuery,
   Banner,
   Pagination,
