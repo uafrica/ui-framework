@@ -174,6 +174,15 @@ function canEditPolygonVertices(paths: { lat: number; lng: number }[][], maxNode
   return count <= maxNodeCount;
 }
 
+function polygonExceedsMinimumNodes(paths: { lat: number; lng: number }[][], minNodeCount: number) {
+  let count: number = 0;
+  paths.forEach(path => {
+    count += path.length;
+  });
+
+  return count >= minNodeCount;
+}
+
 function getPathFromGooglePolygon(polygonRef: any) {
   let paths: any[] = [];
   polygonRef.getPaths().forEach((polygon: any) => {
@@ -327,6 +336,7 @@ export {
   getPathFromGeometryJSON,
   getPathFromGooglePolygon,
   canEditPolygonVertices,
+  polygonExceedsMinimumNodes,
   pointWithPaddedBounds,
   refitBoundsOfMap,
   closePolygon,
