@@ -65,6 +65,7 @@
 }
 
 .dragging-column {
+
   .custom-table-td,
   .custom-table-th {
     padding-left: 10px;
@@ -101,6 +102,7 @@
 .no-data {
   position: absolute;
   left: 50%;
-  margin-top: 50px;
-  z-index: 60;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  z-index: 10;
 }
