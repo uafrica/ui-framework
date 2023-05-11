@@ -37,7 +37,7 @@ function Marker(props: {
           {markerGroup.map((marker, index: number) => {
             return (
               <div
-                className={marker.onClick ? "cursor-pointer" : ""}
+                className={marker.onClick ? "cursor-pointer hover:bg-gray-100 rounded-md" : ""}
                 key={index}
                 onClick={(e: any) => {
                   onMarkerClicked(e, marker);
