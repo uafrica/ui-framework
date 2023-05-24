@@ -53,12 +53,23 @@ function Map(props: {
   let [map, setMap] = useState<any>();
   let [doSnap, setDoSnap] = useState<boolean>(false);
   let [center, setCenter] = useState(defaultCenter);
+  let [isMapLoaded, setIsMapLoaded] = useState(false);
 
   useEffect(() => {
-    if (bounds) {
+    if (bounds && isMapLoaded) {
       map.fitBounds(bounds);
     }
   }, [bounds]);
+
+  useEffect(() => {
+    if (!isMapLoaded && map !== undefined) {
+      // map initial load
+      setIsMapLoaded(true);
+      if (bounds) {
+        map.fitBounds(bounds);
+      }
+    }
+  }, [map]);
 
   function enterEditMode(mode?: "select" | "draw") {
     if (props.onEditModeChange) {
