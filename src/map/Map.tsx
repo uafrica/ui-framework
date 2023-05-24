@@ -31,6 +31,7 @@ function Map(props: {
   customToolbarButtons?: any[];
   defaultZoom?: number;
   onMapClick?: Function;
+  mapOptions?: google.maps.MapOptions;
 }) {
   let {
     polygons,
@@ -46,7 +47,8 @@ function Map(props: {
     toolbarRight,
     editMode,
     customToolbarButtons,
-    defaultZoom
+    defaultZoom,
+    mapOptions
   } = props;
   const snapDistanceThreshold = 30;
 
@@ -54,6 +56,7 @@ function Map(props: {
   let [doSnap, setDoSnap] = useState<boolean>(false);
   let [center, setCenter] = useState(defaultCenter);
   let [isMapLoaded, setIsMapLoaded] = useState(false);
+  let [options, setOptions] = useState({});
 
   useEffect(() => {
     if (bounds && isMapLoaded) {
@@ -70,6 +73,23 @@ function Map(props: {
       }
     }
   }, [map]);
+
+  useEffect(() => {
+    let options: google.maps.MapOptions = {
+      disableDefaultUI: true,
+      zoomControl: true,
+      gestureHandling: disableScrollZoom ? "cooperative" : "greedy",
+      restriction: {
+        latLngBounds: { north: 85, south: -85, west: -180, east: 180 },
+        strictBounds: true
+      }
+    };
+    if (mapOptions) {
+      options = { ...options, ...mapOptions };
+    }
+
+    setOptions({ ...options });
+  }, [mapOptions]);
 
   function enterEditMode(mode?: "select" | "draw") {
     if (props.onEditModeChange) {
@@ -437,15 +457,7 @@ function Map(props: {
           onLoad={map => {
             setMap(map);
           }}
-          options={{
-            disableDefaultUI: true,
-            zoomControl: true,
-            gestureHandling: disableScrollZoom ? "cooperative" : "greedy",
-            restriction: {
-              latLngBounds: { north: 85, south: -85, west: -180, east: 180 },
-              strictBounds: true
-            }
-          }}
+          options={options}
           onClick={(e: google.maps.MapMouseEvent) => {
             if (props.onMapClick) {
               props.onMapClick(e);
