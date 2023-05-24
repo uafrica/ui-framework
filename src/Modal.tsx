@@ -82,7 +82,7 @@ const Base = ({
         ref={ref}
         {...props}
       >
-        <div className="overflow-auto content p-6 pb-1 pt-0 ">
+        <div className="overflow-auto content px-6 py-0">
           {icon && (
             <div className="h-12 w-12 rounded-full bg-red-100 sm:mr-4 sm:h-10 sm:w-10">
               <FontAwesomeIcon icon={icon} />
