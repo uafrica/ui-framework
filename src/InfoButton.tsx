@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Manager, Reference, Popper } from "react-popper";
 import { createContext, useEffect, useState, ReactNode } from "react";
 import { createPortal } from "react-dom";
+import { IconName } from "@fortawesome/free-solid-svg-icons";
 
 interface IInfoButton {
   placement?:
@@ -17,10 +18,11 @@ interface IInfoButton {
     | "right";
   children: any;
   className?: string;
+  icon?: IconName;
 }
 
 function InfoButton(props: IInfoButton) {
-  let { placement, children, className } = props;
+  let { placement, children, className, icon } = props;
   if (!placement) {
     placement = "auto";
   }
@@ -41,7 +43,10 @@ function InfoButton(props: IInfoButton) {
                   ctxValue.showInfo();
                 }}
               >
-                <FontAwesomeIcon icon="info-circle" className={className ? className : ""} />
+                <FontAwesomeIcon
+                  icon={icon ?? "info-circle"}
+                  className={className ? className : ""}
+                />
               </div>
             )}
           </Reference>
