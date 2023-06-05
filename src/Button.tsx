@@ -230,7 +230,7 @@ function BaseButton(props: IButtonBaseProps) {
       className={
         (leftRounded ? "rounded-r h-9" : rightRounded ? "rounded-l h-9" : "rounded-full h-9 ") +
         buttonTypeClassNames +
-        " " +
+        " items-center " +
         (center ? " block mx-auto " : "") +
         (className ? className : "") +
         (disabledOrLoading ? " opacity-50 pointer-events-none" : "")
