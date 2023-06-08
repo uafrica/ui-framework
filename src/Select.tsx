@@ -86,6 +86,10 @@ function GroupedSelect(props: IGroupedSelect) {
     popoverHeight
   } = props;
 
+  if (placeholder === undefined) {
+    placeholder = "Select";
+  }
+
   const popupNode = useRef<HTMLElement>();
   const ctxValue = useGroupedSelectCtx(popupNode, onSearchBlur);
 
