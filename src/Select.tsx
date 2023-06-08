@@ -176,71 +176,73 @@ function GroupedSelect(props: IGroupedSelect) {
     }
 
     return (
-      <div key={optionGroup.label} className="mb-4">
-        {optionGroup.label && (
-          <div className="text-gray-600 uppercase text-xs p-2 mt-4">{optionGroup.label}</div>
-        )}
-        {optionsLimited.map((option: any) => {
-          let selected;
-          if (multiSelection) {
-            selected = value.indexOf(option.value) >= 0;
-          } else {
-            selected = value === option.value;
-          }
+      optionsLimited.length > 0 && (
+        <div key={optionGroup.label} className="mb-4">
+          {optionGroup.label && (
+            <div className="text-gray-600 uppercase text-xs p-2 mt-4">{optionGroup.label}</div>
+          )}
+          {optionsLimited.map((option: any) => {
+            let selected;
+            if (multiSelection) {
+              selected = value.indexOf(option.value) >= 0;
+            } else {
+              selected = value === option.value;
+            }
 
-          return (
-            <div key={option.value} className="flex flex-row items-center">
-              <div
-                tabIndex={0}
-                onKeyPress={e => {
-                  if (e.key === "Enter") {
+            return (
+              <div key={option.value} className="flex flex-row items-center">
+                <div
+                  tabIndex={0}
+                  onKeyPress={e => {
+                    if (e.key === "Enter") {
+                      clickOption(option);
+                    }
+                  }}
+                  onClick={() => {
                     clickOption(option);
-                  }
-                }}
-                onClick={() => {
-                  clickOption(option);
-                }}
-                className={
-                  "flex-1 select-none relative py-2 pl-2 pr-9 hover:bg-gray-100 focus:bg-gray-100 u-focus rounded-md mt-1 mx-1  " +
-                  (selected ? "bg-gray-100" : "text-gray-900") +
-                  (option.disabled === true ? " cursor-not-allowed " : " cursor-pointer ")
-                }
-              >
-                <span
+                  }}
                   className={
-                    "flex flex-wrap " +
-                    (selected ? "font-semibold" : "font-normal") +
-                    (option.disabled === true ? " text-gray-500 " : "")
+                    "flex-1 select-none relative py-2 pl-2 pr-9 hover:bg-gray-100 focus:bg-gray-100 u-focus rounded-md mt-1 mx-1  " +
+                    (selected ? "bg-gray-100" : "text-gray-900") +
+                    (option.disabled === true ? " cursor-not-allowed " : " cursor-pointer ")
                   }
                 >
-                  {option.label}
-                </span>
-
-                {selected ? (
                   <span
                     className={
-                      "absolute inset-y-0 right-0 u-vertical-center pr-4 " +
-                      (option.disabled === true ? " text-gray-500 " : " text-primary-600 ")
+                      "flex flex-wrap " +
+                      (selected ? "font-semibold" : "font-normal") +
+                      (option.disabled === true ? " text-gray-500 " : "")
                     }
                   >
-                    <FontAwesomeIcon icon="check" className="h-5 w-5" aria-hidden="true" />
+                    {option.label}
                   </span>
-                ) : null}
+
+                  {selected ? (
+                    <span
+                      className={
+                        "absolute inset-y-0 right-0 u-vertical-center pr-4 " +
+                        (option.disabled === true ? " text-gray-500 " : " text-primary-600 ")
+                      }
+                    >
+                      <FontAwesomeIcon icon="check" className="h-5 w-5" aria-hidden="true" />
+                    </span>
+                  ) : null}
+                </div>
+                {onDelete && !option.disableDelete && option.disabled !== true && (
+                  <span className="u-vertical-center p-2 text-red hover:text-red-700 cursor-pointer">
+                    <FontAwesomeIcon
+                      icon="trash"
+                      title="Delete"
+                      onClick={() => onDelete && onDelete(option.label, option.value)}
+                    />
+                  </span>
+                )}
               </div>
-              {onDelete && !option.disableDelete && option.disabled !== true && (
-                <span className="u-vertical-center p-2 text-red hover:text-red-700 cursor-pointer">
-                  <FontAwesomeIcon
-                    icon="trash"
-                    title="Delete"
-                    onClick={() => onDelete && onDelete(option.label, option.value)}
-                  />
-                </span>
-              )}
-            </div>
-          );
-        })}
-        {optionsOmitted > 0 && <div className="pl-2 mt-2">+ {optionsOmitted} more</div>}
-      </div>
+            );
+          })}
+          {optionsOmitted > 0 && <div className="pl-2 mt-2">+ {optionsOmitted} more</div>}
+        </div>
+      )
     );
   }
 
