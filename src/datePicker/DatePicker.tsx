@@ -75,6 +75,10 @@ function DatePicker(props: IDatePicker) {
     info
   } = props;
 
+  if (placeholder === undefined) {
+    placeholder = "Select";
+  }
+
   let date = new Date();
   if (selected) {
     date = moment(selected).toDate();
