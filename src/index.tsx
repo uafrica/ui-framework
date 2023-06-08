@@ -53,6 +53,7 @@ import { PageHeading } from "./PageHeading";
 import { Pagination } from "./Pagination";
 import { Radio } from "./Radio";
 import { SavePanel, SavePanelContainer } from "./SavePanel";
+import { SearchInput } from "./SearchInput";
 import { SavingOverlay } from "./SavingOverlay";
 import { SectionHeading } from "./SectionHeading";
 import { Table } from "./Table";
@@ -111,6 +112,7 @@ export {
   Textarea,
   Table,
   SavePanel,
+  SearchInput,
   Switch,
   TableActionsPanel,
   FiltersPanel,
