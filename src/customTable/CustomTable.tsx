@@ -13,6 +13,7 @@ import { Message } from "../Message";
 import { TableActionsPanel } from "../Panels";
 import { Dropdown } from "../Dropdown";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { Button } from "../Button";
 
 function CustomTable(props: {
   id: string;
@@ -43,6 +44,7 @@ function CustomTable(props: {
   loadOnPageChange?: boolean;
   rowOrderIcon?: IconProp;
   persistPage?: boolean;
+  showRefreshButton?: boolean;
 }) {
   let {
     id,
@@ -65,7 +67,8 @@ function CustomTable(props: {
     noDataText,
     loadOnPageChange,
     rowOrderIcon,
-    persistPage
+    persistPage,
+    showRefreshButton
   } = props;
   let topRef: any = useRef();
   let rowUniqueIdentifier = props.rowUniqueIdentifier ?? "id";
@@ -220,8 +223,8 @@ function CustomTable(props: {
     repositionMenu();
   }, [clickPosition]);
 
-  function refresh() {
-    load(false, page, pageSize);
+  function refresh(shouldLoad?: boolean) {
+    load(false, page, pageSize, shouldLoad);
   }
 
   function insertRow(data: any[], rowOrder: any[], object: any, index: number) {
@@ -947,6 +950,16 @@ function CustomTable(props: {
         props.renderTableActionsHeader && (
           <TableActionsPanel title={title}>
             {props.renderTableActionsChildren && props.renderTableActionsChildren(data, isLoading)}
+            {showRefreshButton && (
+              <Button.Link
+                color="black"
+                title="Refresh"
+                onClick={() => {
+                  refreshRef.current(true);
+                }}
+                icon="redo-alt"
+              />
+            )}
           </TableActionsPanel>
         )
       );
