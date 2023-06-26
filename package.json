@@ -1,6 +1,6 @@
 {
   "name": "bob-group-ui-framework",
-  "version": "1.2.270",
+  "version": "1.2.271",
   "description": "A custom set of UI components used by Bob Group, based on TailwindCSS and Headless UI",
   "license": "BSD-3-Clause",
   "repository": "uafrica/ui-framework",

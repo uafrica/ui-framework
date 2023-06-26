@@ -123,6 +123,7 @@ function CustomTable(props: {
   let [resizeColumnStartX, setResizeColumnStartX] = useState<number>(0);
   let insertRowRef = useRef(insertRow);
   let refreshRef = useRef(refresh);
+  let fetchFunctionArgumentsRef = useRef(fetchFunctionArguments);
 
   useEffect(() => {
     // rerun when props.columnOrder
@@ -173,6 +174,7 @@ function CustomTable(props: {
   }, [data, selectedRowIdentifiers]);
 
   useEffect(() => {
+    fetchFunctionArgumentsRef.current = fetchFunctionArguments;
     if (persistPage) {
       load(false, page, pageSize);
     } else {
@@ -700,7 +702,7 @@ function CustomTable(props: {
 
       let offset = pageSize * (_page - 1);
       let pages = 0;
-      let args = fetchFunctionArguments ?? {};
+      let args = fetchFunctionArgumentsRef.current ?? {};
       if (!noPagination) {
         args.offset = offset;
         args.limit = pageSize;
