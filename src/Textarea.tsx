@@ -30,6 +30,7 @@ interface ITextarea {
   fixed?: boolean;
   rows?: any;
   maxLength?: number;
+  dataTest?: string | undefined;
 }
 
 // Implementation
@@ -55,7 +56,8 @@ function Textarea(props: ITextarea) {
     rows,
     optional,
     disabled,
-    maxLength
+    maxLength,
+    dataTest
   } = props;
 
   return (
@@ -87,6 +89,7 @@ function Textarea(props: ITextarea) {
         disabled={disabled}
         ref={register}
         maxLength={maxLength}
+        data-test={dataTest}
       />
       {validationError &&
         (errorMessage && validationError.type === "required" ? (
