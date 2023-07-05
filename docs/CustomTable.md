@@ -167,6 +167,19 @@ Triggers whenever a row is clicked.
 		// do stuff with the row eg. open modal
 	}}
 ```
+
+**rowStyleFunction**?: Function 
+Used to set custom styling to a table body row
+```
+	rowStyleFunction={(row: {
+		index: number;
+		original: any; // full row object
+	}) => {
+		// do stuff to determine style
+		// eg. return {border: '2px solid red'}
+	}}
+```
+
 **onSelectionChanged**?: Function
 Triggers whenever the selection of rows changes.
 ```

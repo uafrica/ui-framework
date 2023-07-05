@@ -45,6 +45,7 @@ function CustomTable(props: {
   rowOrderIcon?: IconProp;
   persistPage?: boolean;
   showRefreshButton?: boolean;
+  rowStyleFunction?: Function;
 }) {
   let {
     id,
@@ -68,7 +69,8 @@ function CustomTable(props: {
     loadOnPageChange,
     rowOrderIcon,
     persistPage,
-    showRefreshButton
+    showRefreshButton,
+    rowStyleFunction
   } = props;
   let topRef: any = useRef();
   let rowUniqueIdentifier = props.rowUniqueIdentifier ?? "id";
@@ -876,6 +878,7 @@ function CustomTable(props: {
                   let rowData = customTableUtils.getDataByRowId(data, rowUniqueIdentifier, rowId);
                   return (
                     <CustomTableRow
+                      rowStyleFunction={rowStyleFunction}
                       isLoading={isLoading}
                       key={rowId}
                       onShowMenu={(show: boolean) => {

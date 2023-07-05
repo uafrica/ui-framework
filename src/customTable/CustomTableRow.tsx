@@ -17,6 +17,7 @@ function CustomTableRow(props: {
   removeRow: Function;
   onRightClick: any;
   isLoading: boolean;
+  rowStyleFunction?: Function;
 }) {
   let {
     rowId,
@@ -27,12 +28,18 @@ function CustomTableRow(props: {
     onShowMenu,
     columns,
     columnWidths,
-    isLoading
+    isLoading,
+    rowStyleFunction
   } = props;
 
   function render() {
+    let rowStyle = {};
+    if (rowStyleFunction) {
+      rowStyle = rowStyleFunction({ index: dataIndex, original: rowData });
+    }
     return (
       <tr
+        style={rowStyle}
         id={rowId.toString()}
         className={
           "custom-table-tr hover:bg-gray-100 " + (isLoading ? "bg-gray-50 text-gray-300" : "")
