@@ -21,6 +21,7 @@ function DateRange(props: {
   label?: string;
   disabled?: boolean;
   showTimeSelect?: boolean;
+  dateFormat?: string;
 }) {
   let {
     showRange,
@@ -38,7 +39,8 @@ function DateRange(props: {
     containerClassName,
     label,
     disabled,
-    showTimeSelect
+    showTimeSelect,
+    dateFormat
   } = props;
   useEffect(() => {
     if (showMonth && onMonthChange) {
@@ -88,7 +90,7 @@ function DateRange(props: {
                 onRangeChange(val, dateTo);
               }
             }}
-            dateFormat={"yyyy-MM-DD"}
+            dateFormat={dateFormat ?? "yyyy-MM-DD"}
           />
           <DatePicker
             showTimeSelect={showTimeSelect}
@@ -99,7 +101,7 @@ function DateRange(props: {
                 onRangeChange(dateFrom, val);
               }
             }}
-            dateFormat={"yyyy-MM-DD"}
+            dateFormat={dateFormat ?? "yyyy-MM-DD"}
           />
         </>
       )}
