@@ -44,7 +44,7 @@ function CustomTable(props: {
   loadOnPageChange?: boolean;
   rowOrderIcon?: IconProp;
   persistPage?: boolean;
-  showRefreshButton?: boolean;
+  hideRefreshButton?: boolean;
   rowStyleFunction?: Function;
 }) {
   let {
@@ -69,7 +69,7 @@ function CustomTable(props: {
     loadOnPageChange,
     rowOrderIcon,
     persistPage,
-    showRefreshButton,
+    hideRefreshButton = false,
     rowStyleFunction
   } = props;
   let topRef: any = useRef();
@@ -955,7 +955,7 @@ function CustomTable(props: {
         props.renderTableActionsHeader && (
           <TableActionsPanel title={title}>
             {props.renderTableActionsChildren && props.renderTableActionsChildren(data, isLoading)}
-            {showRefreshButton && (
+            {!hideRefreshButton && (
               <Button.Link
                 color="black"
                 title="Refresh"

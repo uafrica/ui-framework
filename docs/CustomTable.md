@@ -321,8 +321,8 @@ Specifies the icon to be used for dragging rows, selected from the font-awesome 
 rowOrderIcon={"arrow-up"}
 ```
 
-**showRefreshButton**?: boolean
-Adds a refresh button to the table
+**hideRefreshButton**?: boolean
+Hides the default refresh button on the table
 ```
-showRefreshButton
+hideRefreshButton
 ```
