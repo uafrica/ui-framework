@@ -2,10 +2,10 @@ import { Button } from "./Button";
 
 // Interface
 interface ISavePanel {
-  somethingChanged: boolean;
+  hasSomethingChanged: boolean;
   saveError?: any;
-  savingChanges: boolean;
-  saved?: boolean;
+  isSavingChanges: boolean;
+  isSaved?: boolean;
   saveDisabledText?: string;
   saveText?: string;
   cancelText?: string;
@@ -22,10 +22,10 @@ interface ISavePanelContainer {
 
 function SavePanel(props: ISavePanel) {
   const {
-    somethingChanged,
+    hasSomethingChanged,
     saveError,
-    savingChanges,
-    saved,
+    isSavingChanges,
+    isSaved,
     saveDisabledText,
     saveText,
     cancelText,
@@ -44,10 +44,10 @@ function SavePanel(props: ISavePanel) {
           `flex ${
             props.callToActionAtBottom ? "flex-col" : "flex-col-reverse "
           } sm:flex-row my-1 w-full ` +
-          (!(!savingChanges && props.cancelChanges) ? "justify-end" : "justify-between")
+          (!(!isSavingChanges && props.cancelChanges) ? "justify-end" : "justify-between")
         }
       >
-        {!savingChanges && props.cancelChanges && (
+        {!isSavingChanges && props.cancelChanges && (
           <div className="ml-2 mr-2 sm:mr-0 mt-4 sm:mt-0">
             <Button.Cancel
               id="cancel_button"
@@ -65,11 +65,11 @@ function SavePanel(props: ISavePanel) {
             className="sm:w-auto w-full"
             id="save_button"
             onClick={props.saveChanges}
-            isDisabled={savingChanges || !somethingChanged || Boolean(saveDisabledText)}
+            isDisabled={isSavingChanges || !hasSomethingChanged || Boolean(saveDisabledText)}
             hoverTitle={saveDisabledText}
-            isLoading={savingChanges}
-            title={saved && !somethingChanged ? "Saved" : saveText ? saveText : "Save"}
-            icon={saved && !somethingChanged ? "check" : undefined}
+            isLoading={isSavingChanges}
+            title={isSaved && !hasSomethingChanged ? "Saved" : saveText ? saveText : "Save"}
+            icon={isSaved && !hasSomethingChanged ? "check" : undefined}
             loadingTitle="Saving"
           />
         </div>

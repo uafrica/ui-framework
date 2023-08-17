@@ -65,7 +65,7 @@ function CustomTable(props: {
     contextMenuHeader,
     autoRefreshInterval,
     setTableFunctions,
-    showNoDataText,
+    showNoDataText: noResultsText,
     loadOnPageChange,
     rowOrderIcon,
     persistPage,
@@ -1038,7 +1038,7 @@ function CustomTable(props: {
 
             <div ref={topRef} className=" custom-table-container rounded-lg relative">
               {rowOrder && rowOrder.length === 0 && (
-                <div className="no-data">{showNoDataText ?? "No data"}</div>
+                <div className="no-data">{noResultsText ?? "No data"}</div>
               )}
               {renderTable()}
               {renderPagination()}
