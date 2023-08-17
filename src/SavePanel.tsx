@@ -65,7 +65,7 @@ function SavePanel(props: ISavePanel) {
             className="sm:w-auto w-full"
             id="save_button"
             onClick={props.saveChanges}
-            disabled={savingChanges || !somethingChanged || Boolean(saveDisabledText)}
+            isDisabled={savingChanges || !somethingChanged || Boolean(saveDisabledText)}
             hoverTitle={saveDisabledText}
             isLoading={savingChanges}
             title={saved && !somethingChanged ? "Saved" : saveText ? saveText : "Save"}

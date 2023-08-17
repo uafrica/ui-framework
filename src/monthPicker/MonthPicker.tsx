@@ -1,4 +1,3 @@
-
 import React, { useRef, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Manager, Reference, Popper } from "react-popper";
@@ -9,14 +8,14 @@ import { Input } from "../Input";
 interface IMonthPicker {
   dateFrom: Date;
   label?: string;
-  labelInline?: boolean;
+  isLabelInline?: boolean;
   placeholder?: string;
   containerClassName?: string;
   minDate?: Date;
   maxDate?: Date;
   onChange: (date: Date) => void;
   onMonthPickerClose?: Function;
-  disabled?: boolean;
+  isDisabled?: boolean;
   dataTest?: string | undefined;
 }
 
@@ -44,12 +43,12 @@ function MonthPicker(props: IMonthPicker) {
   let {
     dateFrom,
     label,
-    labelInline,
+    isLabelInline,
     placeholder,
     containerClassName,
     onChange,
     onMonthPickerClose,
-    disabled,
+    isDisabled,
     minDate,
     maxDate,
     dataTest
@@ -77,10 +76,9 @@ function MonthPicker(props: IMonthPicker) {
         {/* @ts-ignore */}
         <Reference>
           {({ ref }) => (
-            <div>
+            <div className="pointer">
               <Input
                 reference={ref}
-                pointer
                 onKeyPress={(e: any) => {
                   if (e.key === "Enter") {
                     ctxValue.toggleCalendar();
@@ -90,24 +88,24 @@ function MonthPicker(props: IMonthPicker) {
                   ctxValue.toggleCalendar();
                 }}
                 value={dateFrom ? moment(date).format("MMMM YYYY") : ""}
-                readOnly
+                isReadOnly
                 label={label}
                 dataTest={dataTest}
-                labelInline={labelInline}
+                isLabelInline={isLabelInline}
                 containerClassName={containerClassName}
                 placeholder={placeholder}
-                appendIcon={disabled ? undefined : ctxValue.isVisible ? "caret-up" : "caret-down"}
+                appendIcon={isDisabled ? undefined : ctxValue.isVisible ? "caret-up" : "caret-down"}
                 onAppendIconClick={() => {
                   ctxValue.toggleCalendar();
                 }}
                 appendIconColor="text-gray-400"
-                disabled={disabled}
+                isDisabled={isDisabled}
               />
             </div>
           )}
         </Reference>
 
-        {!disabled && (
+        {!isDisabled && (
           // @ts-ignore
           <Popper
             placement="bottom-start"

@@ -7,7 +7,7 @@ type ObjectType = {
 };
 interface IUseFilters {
   defaultFilters: ObjectType; // default filters to be added initially
-  insertUrl?: boolean; // should the filters be appended to the url
+  shouldAppendToURL?: boolean; // should the filters be appended to the url
   filtersChangeCallback?: Function; // function that runs after a filter change
   overrideDefaultFilters?: boolean; // should the default filters be overridden by the url filters
   advancedFilterNames?: ObjectType; // advanced filters to be shown
@@ -16,7 +16,7 @@ interface IUseFilters {
 
 export function useFilters({
   defaultFilters,
-  insertUrl = true,
+  shouldAppendToURL = true,
   filtersChangeCallback,
   overrideDefaultFilters = true,
   advancedFilterNames = {},
@@ -114,7 +114,7 @@ export function useFilters({
       delete clonedFilters[key];
     }
 
-    if (insertUrl) {
+    if (shouldAppendToURL) {
       insertUrlParam(clonedFilters);
     }
 

@@ -23,7 +23,7 @@ interface IOptionGroup {
 
 interface IBase {
   label?: any;
-  labelInline?: boolean;
+  isLabelInline?: boolean;
   labelClassName?: string;
   className?: string;
   containerClassName?: string;
@@ -37,10 +37,10 @@ interface IBase {
   onClick?: () => void;
   onSearchBlur?: () => void;
   onSearchFocus?: () => void;
-  disabled?: boolean;
-  noSearch?: boolean;
+  isDisabled?: boolean;
+  disableSearch?: boolean;
   placeholder?: any;
-  multiSelection?: boolean;
+  isMultiSelection?: boolean;
   buttons?: any; // If you want an add option buttons to the bottom of the list, add Button.Link elements
   onDelete?: (label: any, value: any) => void; // Renders a delete button next to each option
   allowDeselect?: boolean; // single select mode does not allow for the deselection of an option by default, only switching to another option. override by setting this to true
@@ -57,17 +57,17 @@ function GroupedSelect(props: IGroupedSelect) {
   let {
     label,
     labelClassName,
-    disabled,
+    isDisabled,
     id,
     placeholder,
     popoverWidth,
     value,
     optionGroups,
-    labelInline,
+    isLabelInline,
     noMargin,
     className,
     buttonWidth,
-    multiSelection,
+    isMultiSelection,
     containerClassName,
     info,
     buttons,
@@ -76,7 +76,7 @@ function GroupedSelect(props: IGroupedSelect) {
     onClick,
     onSearchBlur,
     onSearchFocus,
-    noSearch,
+    disableSearch,
     allowDeselect,
     showAsterisk,
     dataTest,
@@ -106,7 +106,7 @@ function GroupedSelect(props: IGroupedSelect) {
       let newValue = _value;
 
       // Multi select
-      if (multiSelection) {
+      if (isMultiSelection) {
         newValue = JSON.parse(JSON.stringify(value));
 
         let currentIndex = newValue.indexOf(_value);
@@ -134,7 +134,7 @@ function GroupedSelect(props: IGroupedSelect) {
   function clickOption(option: any) {
     if (option.disabled !== true) {
       onSelectToggle(option.value);
-      if (!multiSelection) {
+      if (!isMultiSelection) {
         ctxValue.hideSelect();
       }
     }
@@ -187,7 +187,7 @@ function GroupedSelect(props: IGroupedSelect) {
           )}
           {optionsLimited.map((option: any) => {
             let selected;
-            if (multiSelection) {
+            if (isMultiSelection) {
               selected = value.indexOf(option.value) >= 0;
             } else {
               selected = value === option.value;
@@ -259,7 +259,7 @@ function GroupedSelect(props: IGroupedSelect) {
   let labelWithValue: string = "";
 
   if (value) {
-    if (multiSelection) {
+    if (isMultiSelection) {
       if (value.length === 1) {
         let selectedItem = flattenedOptions.find((option: any) => option.value === value[0]);
         if (selectedItem) {
@@ -292,7 +292,7 @@ function GroupedSelect(props: IGroupedSelect) {
 
   let _containerClassName = "mt-4";
 
-  if (noMargin || labelInline) {
+  if (noMargin || isLabelInline) {
     _containerClassName = "";
   }
 
@@ -322,7 +322,7 @@ function GroupedSelect(props: IGroupedSelect) {
   }
 
   try {
-    if (multiSelection) {
+    if (isMultiSelection) {
       const selectedDisabledOptions = value.filter((v: any) => disabledOptions.includes(v));
       const notSelectedDisabledOptions = disabledOptions.filter(
         (v: any) => !selectedDisabledOptions.includes(v)
@@ -360,9 +360,9 @@ function GroupedSelect(props: IGroupedSelect) {
   return (
     <div className={_containerClassName} onClick={(e: any) => e.stopPropagation()}>
       <Popover>
-        <div className={labelInline ? "flex flex-row items-center space-x-4" : ""}>
+        <div className={isLabelInline ? "flex flex-row items-center space-x-4" : ""}>
           {label && (
-            <Label className={labelClassName} noMargin={labelInline}>
+            <Label className={labelClassName} noMargin={isLabelInline}>
               {label} {showAsterisk && " *"} {info && <InfoButton>{info}</InfoButton>}
             </Label>
           )}
@@ -396,7 +396,7 @@ function GroupedSelect(props: IGroupedSelect) {
                         onClick={(e: any) => {
                           e.stopPropagation();
 
-                          if (disabled) return;
+                          if (isDisabled) return;
 
                           if (ctxValue.isVisible) {
                             ctxValue.hideSelect();
@@ -421,7 +421,7 @@ function GroupedSelect(props: IGroupedSelect) {
                         <div
                           className={
                             "relative border border-gray-300 rounded-md shadow-sm pl-3 pr-6 py-2 text-left w-full " +
-                            (disabled ? "bg-gray-100" : "bg-white cursor-pointer")
+                            (isDisabled ? "bg-gray-100" : "bg-white cursor-pointer")
                           }
                           id={id}
                         >
@@ -467,11 +467,11 @@ function GroupedSelect(props: IGroupedSelect) {
                         (popoverWidth ? popoverWidth : "w-72")
                       }
                     >
-                      {!noSearch && (
+                      {!disableSearch && (
                         <Input
-                          autoFocus={false} // set too false to not make page jump on initial open
+                          shouldAutoFocus={false} // set too false to not make page jump on initial open
                           autoComplete="off"
-                          inputId="ui-framework-search"
+                          inputID="ui-framework-search"
                           containerClassName="mt-4 w-full"
                           onBlur={onSearchBlur}
                           onFocus={onSearchFocus}
@@ -507,7 +507,7 @@ function GroupedSelect(props: IGroupedSelect) {
                       {showAllButton && (
                         <div className="-ml-1 border-t border-gray-200 pt-1">
                           <Button.Link
-                            disabled={showAllDisabled} // disable button if show all is clicked
+                            isDisabled={showAllDisabled} // disable button if show all is clicked
                             title="Show all"
                             onClick={() => {
                               setShowAllClicked(true);

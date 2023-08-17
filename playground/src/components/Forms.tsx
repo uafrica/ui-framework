@@ -59,7 +59,7 @@ function Forms() {
           label="Price"
           placeholder={"0.00"}
           onBlur={(e: any) => console.log("value blured", e.target.value)}
-          labelInline={inlineInput}
+          isLabelInline={inlineInput}
           appendText={"/kg"}
           prependText={"RRR"}
           inputClassName="pl-11"
@@ -72,7 +72,7 @@ function Forms() {
       </div>
 
       <Switch
-        checked={inlineInput}
+        isChecked={inlineInput}
         onChange={() => setInlineInput(!inlineInput)}
         label="Toggle inline input"
         containerClassName={"check-here-class"}
@@ -80,7 +80,7 @@ function Forms() {
       />
       <div className="mt-5">
         <Switch
-          checked={showInputCode}
+          isChecked={showInputCode}
           onChange={() => setShowInputCode(!showInputCode)}
           label="Toggle input code example"
         />
@@ -91,7 +91,7 @@ function Forms() {
             <code>{`  <Input
     prependText="R"
     label="Price"
-    labelInline
+    isLabelInline
     appendSelectProps={{
       popoverWidth: "w-96",
       buttonWidth: "w-24",
@@ -114,7 +114,7 @@ function Forms() {
       <Input
         prependText="R"
         label="Price"
-        labelInline
+        isLabelInline
         appendSelectProps={{
           popoverWidth: "w-96",
           buttonWidth: "w-24",
@@ -139,10 +139,10 @@ function Forms() {
     return (
       <DatePicker
         label={label}
-        labelInline
+        isLabelInline
         placeholder={`${label} Date`}
         dateFormat={"yyyy-MM-DD"}
-        selected={val}
+        selectedDate={val}
         onChange={(date: any) => {
           setVal(date);
         }}
@@ -158,12 +158,12 @@ function Forms() {
           value={selectedOne}
           onChange={(val: { label: string; value: string }) => setSelectedOne(val)}
           label="Select one"
-          labelInline
+          isLabelInline
           placeholder="Single select"
         />
         <div className="mt-5">
           <Switch
-            checked={selectCode}
+            isChecked={selectCode}
             onChange={() => setSelectCode(!selectCode)}
             label="Show select code"
           />
@@ -179,7 +179,7 @@ function Forms() {
      onChange={(val: { label: string; value: string }) => 
             setSelectedOne(val)}
      label="Select one"
-     labelInline
+     isLabelInline
      placeholder="Single select"
    />
 </div>`}</code>
@@ -218,7 +218,7 @@ function Forms() {
         <div>
           <div className="mt-5">
             <Switch
-              checked={dropdownCode}
+              isChecked={dropdownCode}
               onChange={() => setDropdownCode(!dropdownCode)}
               label="Show dropdown code"
             />
@@ -262,10 +262,10 @@ function Forms() {
       <PageHeading>Form Components</PageHeading>
       <SectionHeading>Input and checkbox components</SectionHeading>
       <hr />
-      <Checkbox checked={true} textColor={"red-600"} />
+      <Checkbox isChecked={true} textColor={"red-600"} />
       <div className="mt-5">
         <Switch
-          checked={showInputInterface}
+          isChecked={showInputInterface}
           onChange={() => setShowInputInterface(!showInputInterface)}
           label="Show input interface"
         />
@@ -276,7 +276,7 @@ function Forms() {
           <pre>
             <code>{`interface IInputProps {
   label?: string;
-  labelInline?: boolean;
+  isisLabelInline?: boolean;
   labelClassName?: string;
   htmlFor?: string;
   register?: any;
@@ -294,24 +294,24 @@ function Forms() {
   min?: number;
   max?: number;
   autoComplete?: any;
-  disabled?: boolean;
+  isDisabled?: boolean;
   reference?: any;
   placeholder?: string;
   id?: string;
   containerClassName?: string;
   errorMessage?: string;
-  autoFocus?: any;
-  optional?: boolean;
-  readOnly?: boolean;
+  shouldAutoFocus?: boolean;
+  isOptional?: boolean;
+  isReadOnly?: boolean;
   info?: any;
-  inputFieldId?: string;
+  inputFieldID?: string;
   appendIcon?: IconProp;
-  appendIconId?: string;
+  appendIconID?: string;
   appendText?: string;
   appendSelectProps?: any;
   prependText?: string;
   inputFieldStyle?: any;
-  inputId?: string;
+  inputID?: string;
   }`}</code>
           </pre>
         </div>
@@ -325,7 +325,7 @@ function Forms() {
       <hr />
       <div className="mt-5">
         <Switch
-          checked={showDatePicker}
+          isChecked={showDatePicker}
           onChange={() => setShowDatePicker(!showDatePicker)}
           label="Show date picker code"
         />
@@ -335,7 +335,7 @@ function Forms() {
           <pre>
             <code>{`  <DatePicker
     label={"date"}
-    labelInline
+    isLabelInline
     placeholder={"Date"}
     dateFormat={"yyyy-MM-DD"}
     selected={"date"}
@@ -381,7 +381,7 @@ function Forms() {
 
         <div className="mt-5">
           <Switch
-            checked={showRadioButtonCode}
+            isChecked={showRadioButtonCode}
             onChange={() => setShowRadioButtonCode(!showRadioButtonCode)}
             label="Toggle radio button code example"
           />
@@ -423,7 +423,7 @@ function Forms() {
 
         <div className="mt-5">
           <Switch
-            checked={showRadioGroupCode}
+            isChecked={showRadioGroupCode}
             onChange={() => setShowRadioGroupCode(!showRadioGroupCode)}
             label="Toggle radio group code example"
           />

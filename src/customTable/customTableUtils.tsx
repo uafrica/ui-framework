@@ -180,7 +180,7 @@ function initialiseColumnOrder(columns: IColumn[], columnOrder?: string[]) {
     columnOrder.forEach((c: any) => {
       let index = definedColumns.indexOf(c);
       if (index > -1) {
-        // column still existis in list of defined columns
+        // Column still exists in list of defined columns
         _columnOrder.push(c);
       }
     });
@@ -188,7 +188,7 @@ function initialiseColumnOrder(columns: IColumn[], columnOrder?: string[]) {
     definedColumns.forEach((c: any) => {
       let index = columnOrder?.indexOf(c);
       if (index === -1) {
-        // defined column does not exist in provided order
+        // Defined column does not exist in provided order
         _columnOrder.push(c);
       }
     });

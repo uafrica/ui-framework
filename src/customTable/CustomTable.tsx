@@ -32,7 +32,7 @@ function CustomTable(props: {
   onRowOrderChanged?: Function;
   onColumnWidthsChanged?: Function;
   onDataChanged?: Function;
-  noPagination?: boolean;
+  hidePagination?: boolean;
   scrollableX?: boolean;
   contextMenuItems?: Function;
   contextMenuHeader?: Function;
@@ -40,7 +40,7 @@ function CustomTable(props: {
   renderTableActionsHeader?: Function;
   renderTableActionsChildren?: Function;
   setTableFunctions?: Function;
-  noDataText?: string;
+  showNoDataText?: string;
   loadOnPageChange?: boolean;
   rowOrderIcon?: IconProp;
   persistPage?: boolean;
@@ -59,13 +59,13 @@ function CustomTable(props: {
     onRowOrderChanged,
     onColumnWidthsChanged,
     onDataChanged,
-    noPagination,
+    hidePagination: noPagination,
     scrollableX,
     contextMenuItems,
     contextMenuHeader,
     autoRefreshInterval,
     setTableFunctions,
-    noDataText,
+    showNoDataText,
     loadOnPageChange,
     rowOrderIcon,
     persistPage,
@@ -77,13 +77,14 @@ function CustomTable(props: {
   let defaultPageSize = 20;
   let interval: any;
 
-  // loading
+  // Loading
   let [isInitialising, setIsInitialising] = useState<boolean>(true);
   let [isLoading, setIsLoading] = useState<boolean>(false);
   let [data, setData] = useState<any[]>([]);
   let [error, setError] = useState<any[]>();
   let [orderingArguments, setOrderingArguments] = useState<any>({});
-  // table render
+
+  // Table render
   let [columns, setColumns] = useState<IColumn[]>(props.columns);
   let [columnOrder, setColumnOrder] = useState<string[]>(
     customTableUtils.initialiseColumnOrder(props.columns, props.columnOrder)
@@ -96,21 +97,24 @@ function CustomTable(props: {
           return { id: column.id, value: column.width };
         })
   );
-  // row selection
+
+  // Row selection
   let [selectedRowIdentifiers, setSelectedRowIdentifiers] = useState<string[]>([]);
   let [allRowsSelected, setAllRowsSelected] = useState<boolean>(false);
-  // pagination
+
+  // Pagination
   let [count, setCount] = useState<number>(1);
   let [page, setPage] = useState<number>(1);
   let [totalPages, setTotalPages] = useState<number>(0);
   let [pageSize, setPageSize] = useState<number>(props.pageSize ?? defaultPageSize);
-  // menu
+
+  // Menu
   let [showMenu, setShowMenu] = useState<boolean>(false);
   let [contextMenuMaxHeight, setContextMenuMaxHeight] = useState<any>();
   let [clickPosition, setClickPosition] = useState<any>({ x: 0, y: 0 });
   let [activeRow, setActiveRow] = useState<any>({ rowData: null, dataIndex: null });
 
-  // dragging
+  // Dragging
   let [list, setList] = useState<any>();
   let [draggingElement, setDraggingElement] = useState<any>();
   let [draggingColumnIndex, setDraggingColumnIndex] = useState<any>();
@@ -119,7 +123,8 @@ function CustomTable(props: {
   let [isDraggingStarted, setIsDraggingStarted] = useState<boolean>(false);
   let [columnEventListenersAdded, setColumnEventListenersAdded] = useState<boolean>(false);
   let [rowEventListenersAdded, setRowEventListenersAdded] = useState<boolean>(false);
-  // column resize
+
+  // Column resize
   let [resizeColumnId, setResizeColumnId] = useState<string>("");
   let [resizeColumnStartWidth, setResizeColumnStartWidth] = useState<number>(0);
   let [resizeColumnStartX, setResizeColumnStartX] = useState<number>(0);
@@ -128,13 +133,13 @@ function CustomTable(props: {
   let fetchFunctionArgumentsRef = useRef(fetchFunctionArguments);
 
   useEffect(() => {
-    // rerun when props.columnOrder
+    // Rerun when props.columnOrder
     // when the parent component only sets the widths on mount and not in the useState hook call
     setColumnOrder(customTableUtils.initialiseColumnOrder(props.columns, props.columnOrder));
   }, [props.columnOrder]);
 
   useEffect(() => {
-    // when the parent component only sets the widths on mount and not in the useState hook call
+    // When the parent component only sets the widths on mount and not in the useState hook call
     setColumnWidths(
       props.columnWidths && props.columnWidths.length > 0
         ? props.columnWidths
@@ -197,7 +202,7 @@ function CustomTable(props: {
   }, [props.pageSize]);
 
   useEffect(() => {
-    // column resize
+    // Column resize
     if (resizeColumnId !== "") {
       document.addEventListener("mousemove", resizeColumnMouseMoveHandler);
       document.addEventListener("mouseup", resizeColumnMouseUpHandler);
@@ -205,7 +210,7 @@ function CustomTable(props: {
   }, [resizeColumnId]);
 
   useEffect(() => {
-    // column dragging
+    // Column dragging
     if (draggingColumnIndex !== undefined && !columnEventListenersAdded) {
       setColumnEventListenersAdded(true);
       document.addEventListener("mousemove", dragColumnMouseMoveHandler);
@@ -214,7 +219,7 @@ function CustomTable(props: {
   }, [draggingColumnIndex]);
 
   useEffect(() => {
-    // row dragging
+    // Row dragging
     if (draggingRowIndex !== undefined && !rowEventListenersAdded) {
       setRowEventListenersAdded(true);
       document.addEventListener("mousemove", dragRowMouseMoveHandler);
@@ -223,7 +228,7 @@ function CustomTable(props: {
   }, [draggingRowIndex]);
 
   useEffect(() => {
-    // context menu position
+    // Context menu position
     repositionMenu();
   }, [clickPosition]);
 
@@ -244,7 +249,7 @@ function CustomTable(props: {
     var contextMenu = document.getElementById("table-dropdown-menu");
 
     if (table && !table.contains(e.target) && contextMenu && !contextMenu.contains(e.target)) {
-      // do not show menu if click was outside table container
+      // Do not show menu if click was outside table container
       setShowMenu(false);
     }
   }
@@ -299,12 +304,12 @@ function CustomTable(props: {
         scrollableContainerBoundaries.left < e.clientX &&
         e.clientX <= scrollableContainerBoundaries.right
       ) {
-        // in scroll range
+        // In scroll range
       } else if (scrollableContainerBoundaries.right < e.clientX) {
-        // scroll forward
+        // Scroll forward
         scrollableContainer.scrollLeft += 5;
       } else if (scrollableContainerBoundaries.left > e.clientX) {
-        // scroll back
+        // Scroll back
         scrollableContainer.scrollLeft -= 5;
       }
 
@@ -313,10 +318,10 @@ function CustomTable(props: {
       if (tableBoundaries.left <= e.clientX && e.clientX <= tableBoundaries.right) {
         left = e.clientX + amountScrolled - scrollableContainerBoundaries.left;
       } else if (tableBoundaries.left > e.clientX) {
-        // max left reached
+        // Max left reached
         left = 0;
       } else if (e.clientX > tableBoundaries.right) {
-        // max right reached
+        // Max right reached
         left = tableBoundaries.right + amountScrolled - scrollableContainerBoundaries.left;
       }
 
@@ -471,7 +476,7 @@ function CustomTable(props: {
             rows[endRowIndex].nextSibling
           );
 
-      // pass starting and ending index to update the row order
+      // Pass starting and ending index to update the row order
       updateRowOrder(draggingRowIndex, endRowIndex - 1);
       table.style.removeProperty("visibility");
       document.removeEventListener("mousemove", dragRowMouseMoveHandler);
@@ -593,7 +598,7 @@ function CustomTable(props: {
         header: (
           <Checkbox
             hoverTitle={allRowsSelected ? "Deselect all" : "Select all"}
-            checked={allRowsSelected}
+            isChecked={allRowsSelected}
             onClick={() => {
               if (allRowsSelected) {
                 setAllRowsSelected(false);
@@ -613,7 +618,7 @@ function CustomTable(props: {
         cell: (row: IRow) => {
           return (
             <Checkbox
-              checked={customTableUtils.isRowSelected(
+              isChecked={customTableUtils.isRowSelected(
                 selectedRowIdentifiers,
                 row.original[rowUniqueIdentifier]
               )}
@@ -1033,7 +1038,7 @@ function CustomTable(props: {
 
             <div ref={topRef} className=" custom-table-container rounded-lg relative">
               {rowOrder && rowOrder.length === 0 && (
-                <div className="no-data">{noDataText ?? "No data"}</div>
+                <div className="no-data">{showNoDataText ?? "No data"}</div>
               )}
               {renderTable()}
               {renderPagination()}

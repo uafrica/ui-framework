@@ -7,12 +7,12 @@ interface IMessageProps {
   heading?: string;
   children: any;
   noPadding?: boolean;
-  shadow?: boolean;
-  close?: boolean;
+  showShadow?: boolean;
+  showCloseButton?: boolean;
 }
 
 interface IInstructionProps {
-  center?: boolean;
+  isCenter?: boolean;
   className?: string;
   noPadding?: boolean;
   children: any;
@@ -45,7 +45,7 @@ function Instruction(props: IInstructionProps) {
   return (
     <p
       className={
-        (props.noPadding ? "" : " py-3 ") + (props.center ? " text-center " : "") + className
+        (props.noPadding ? "" : " py-3 ") + (props.isCenter ? " text-center " : "") + className
       }
     >
       {props.children}
@@ -54,8 +54,8 @@ function Instruction(props: IInstructionProps) {
 }
 
 function BaseMessage(props: IBaseMessageProps) {
-  let { children, variant, noPadding, shadow, close } = props;
-  const [show, setShow] = useState<boolean>(true)
+  let { children, variant, noPadding, showShadow, showCloseButton } = props;
+  const [show, setShow] = useState<boolean>(true);
 
   let color = "gray";
   let icon: IconProp | undefined;
@@ -84,7 +84,7 @@ function BaseMessage(props: IBaseMessageProps) {
             color +
             "-50 " +
             (noPadding ? "" : " p-4 my-4 ") +
-            (shadow ? " shadow-lg " : "")
+            (showShadow ? " shadow-lg " : "")
           }
         >
           <div className={"flex justify-between items-center"}>
@@ -100,8 +100,12 @@ function BaseMessage(props: IBaseMessageProps) {
                 <div className={"text-" + color + "-700"}>{children}</div>
               </div>
             </div>
-            {close && (
-              <FontAwesomeIcon icon={"times"} className={"text-" + color + "-400 cursor-pointer"} onClick={() => setShow(!show)} />
+            {showCloseButton && (
+              <FontAwesomeIcon
+                icon={"times"}
+                className={"text-" + color + "-400 cursor-pointer"}
+                onClick={() => setShow(!show)}
+              />
             )}
           </div>
         </div>

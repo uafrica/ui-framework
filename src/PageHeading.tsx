@@ -5,30 +5,26 @@ interface IPageHeading {
   children: any;
   id?: string;
   icon?: IconProp;
-  center?: boolean;
-  uppercase?: boolean;
+  isCenter?: boolean;
+  shouldNotUppercase?: boolean;
 }
 
 function PageHeading(props: IPageHeading) {
-  let { id, children, center, icon, uppercase } = props;
-  let uppercaseText = "uppercase"
+  let { id, children, isCenter, icon, shouldNotUppercase } = props;
+  let uppercaseText = "uppercase";
 
-  if (!uppercase) {
-    uppercaseText = ""
+  if (shouldNotUppercase) {
+    uppercaseText = "";
   }
 
   return (
-    <div className={center ? " mx-auto text-center items-center " : ""} id={id}>
+    <div className={isCenter ? " mx-auto text-center items-center " : ""} id={id}>
       <h1 className={`text-xl font-bold text-gray-900 ${uppercaseText}`}>
         {icon && <FontAwesomeIcon icon={icon} className={"mr-3"} size="sm" />}
         {children}
       </h1>
     </div>
   );
-}
-
-PageHeading.defaultProps = {
-  uppercase: true // add default prop to true
 }
 
 export { PageHeading };

@@ -3,8 +3,8 @@ import { Label } from "./Label";
 interface IRadioButtonProps {
   label: string;
   onChange?: any;
-  checked?: boolean;
-  disabled?: boolean;
+  isChecked?: boolean;
+  isDisabled?: boolean;
   labelClassName?: string;
   className?: string;
   labelLeft?: boolean;
@@ -16,7 +16,7 @@ interface IRadioGroupProps {
   title?: any;
   options: string[];
   onChange?: any;
-  disabled?: boolean;
+  isDisabled?: boolean;
   labelClassName?: string;
   className?: string;
   labelLeft?: boolean;
@@ -25,7 +25,17 @@ interface IRadioGroupProps {
 }
 
 function Button(props: IRadioButtonProps) {
-  let { label, onChange, disabled, labelClassName, className, labelLeft, labelRight, name, checked } = props;
+  let {
+    label,
+    onChange,
+    isDisabled,
+    labelClassName,
+    className,
+    labelLeft,
+    labelRight,
+    name,
+    isChecked
+  } = props;
 
   function selectOption() {
     var list = document.querySelectorAll(`input[name='${name}']`);
@@ -46,7 +56,7 @@ function Button(props: IRadioButtonProps) {
           selectOption();
         }}
         className={
-          (disabled ? "text-gray-500 " : "text-base cursor-pointer ") +
+          (isDisabled ? "text-gray-500 " : "text-base cursor-pointer ") +
           " u-vertical-center " +
           (labelClassName ? labelClassName : "")
         }
@@ -65,15 +75,15 @@ function Button(props: IRadioButtonProps) {
           className={
             (labelLeft ? "ml-2 " : "mr-2 ") +
             "cursor-pointer form-radio u-focus " +
-            (disabled ? "text-gray-500 " : "text-primary hover:border-primary ") +
+            (isDisabled ? "text-gray-500 " : "text-primary hover:border-primary ") +
             " border-gray-300  " +
             (className ? className : "")
           }
-          disabled={disabled}
+          disabled={isDisabled}
           id={label}
           name={name}
           value={label}
-          checked={checked}
+          checked={isChecked}
           onChange={e => {
             onChange(e.target.value);
           }}
@@ -89,7 +99,7 @@ function Group(props: IRadioGroupProps) {
     title,
     options,
     onChange,
-    disabled,
+    isDisabled,
     labelClassName,
     className,
     labelLeft,
@@ -106,7 +116,7 @@ function Group(props: IRadioGroupProps) {
               <Button
                 name={name}
                 labelClassName={labelClassName}
-                disabled={disabled}
+                isDisabled={isDisabled}
                 labelLeft={labelLeft}
                 labelRight={labelRight}
                 label={option}

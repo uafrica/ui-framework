@@ -47,7 +47,7 @@ function Pagination({
           <Button.Link
             id="pagination__go_to_previous_page"
             title="Previous"
-            disabled={active === 1}
+            isDisabled={active === 1}
             onClick={() => {
               setPageVal(pageVal - 1);
               handler(active - 1);
@@ -117,7 +117,7 @@ function Pagination({
               handler(active + 1);
               scrollRef?.current?.scrollIntoView();
             }}
-            disabled={active === pages}
+            isDisabled={active === pages}
           />
         </div>
       </div>

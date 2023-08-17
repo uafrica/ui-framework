@@ -15,9 +15,9 @@ interface IProps {
 function NavItem(props: IProps) {
   let { item } = props;
 
-  let linkIsActive = window.location.pathname.indexOf(item.path) >= 0;
+  let isLinkActive = window.location.pathname.indexOf(item.path) >= 0;
   let bgClass = "";
-  if (linkIsActive) {
+  if (isLinkActive) {
     bgClass = "bg-gray-100 font-semibold";
   }
 

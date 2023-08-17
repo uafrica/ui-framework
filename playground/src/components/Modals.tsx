@@ -15,7 +15,7 @@ function Modals() {
   const [nestedModal1, setNestedModal1] = useState<boolean>(false);
   const [nestedModal2, setNestedModal2] = useState<boolean>(false);
   const [nestedModal3, setNestedModal3] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [isLoading, setLoading] = useState<boolean>(false);
 
   // loader
   function onCloseModal(time: number, size: any) {
@@ -28,7 +28,7 @@ function Modals() {
 
   function renderNestedModal() {
     return (
-      <Modal.Large show={nestedModal1} closeButton onHide={() => setNestedModal1(false)}>
+      <Modal.Large show={nestedModal1} showCloseButton onHide={() => setNestedModal1(false)}>
         <ModalActionsPanel title={"Large nested modal"}>
           <div className={"flex items-center"}>
             <Button.Primary title={"Button"} leftRounded={true} />
@@ -54,7 +54,7 @@ function Modals() {
 
         <Modal.Medium
           show={nestedModal2}
-          closeButton
+          showCloseButton
           onHide={() => setNestedModal2(false)}
           title="Nested modal 2"
         >
@@ -67,7 +67,7 @@ function Modals() {
           <div className="mt-4">Some content here</div>
           <Modal.Small
             show={nestedModal3}
-            closeButton
+            showCloseButton
             onHide={() => setNestedModal3(false)}
             title="Nested modal 3"
           >
@@ -78,7 +78,7 @@ function Modals() {
               <Button.Primary
                 title="Save"
                 loadingTitle="Saving"
-                isLoading={loading}
+                isLoading={isLoading}
                 onClick={() => onCloseModal(1500, setNestedModal3)}
               />
             </Modal.ButtonsPanel>
@@ -89,7 +89,7 @@ function Modals() {
             <Button.Primary
               title="Save"
               loadingTitle="Saving"
-              isLoading={loading}
+              isLoading={isLoading}
               onClick={() => onCloseModal(1500, setNestedModal2)}
             />
           </Modal.ButtonsPanel>
@@ -100,7 +100,7 @@ function Modals() {
           <Button.Primary
             title="Save"
             loadingTitle="Saving"
-            isLoading={loading}
+            isLoading={isLoading}
             onClick={() => onCloseModal(1500, setNestedModal1)}
           />
         </Modal.ButtonsPanel>
@@ -125,7 +125,7 @@ function Modals() {
       </PageActionsPanel>
       <Modal.Medium
         show={mediumModal}
-        closeButton
+        showCloseButton
         onHide={() => setMediumModal(false)}
         title="Medium modal (with interface)"
         disableClickOutsideToClose
@@ -154,14 +154,14 @@ function Modals() {
           <Button.Primary
             title="Save"
             loadingTitle="Saving"
-            isLoading={loading}
+            isLoading={isLoading}
             onClick={() => onCloseModal(1500, setMediumModal)}
           />
         </Modal.ButtonsPanel>
       </Modal.Medium>
       <Modal.Small
         show={smallModal}
-        closeButton={false}
+        showCloseButton={false}
         onHide={() => setSmallModal(false)}
         title="Small modal"
       >
@@ -170,14 +170,14 @@ function Modals() {
           <Button.Primary
             title="Save"
             loadingTitle="Saving"
-            isLoading={loading}
+            isLoading={isLoading}
             onClick={() => onCloseModal(1500, setSmallModal)}
           />
         </Modal.ButtonsPanel>
       </Modal.Small>
       <Modal.Large
         show={largeModal}
-        closeButton
+        showCloseButton
         onHide={() => setLargeModal(false)}
         title="Large modal (with code example)"
       >
@@ -196,7 +196,7 @@ function Modals() {
                 <Button.Primary
                   title="Save"
                   loadingTitle="Saving"
-                  isLoading={loading}
+                  isLoading={isLoading}
                   onClick={() => onCloseModal(1500, setLargeModal)}
                 />
               </Modal.ButtonsPanel>
@@ -209,7 +209,7 @@ function Modals() {
           <Button.Primary
             title="Save"
             loadingTitle="Saving"
-            isLoading={loading}
+            isLoading={isLoading}
             onClick={() => onCloseModal(1500, setLargeModal)}
           />
         </Modal.ButtonsPanel>

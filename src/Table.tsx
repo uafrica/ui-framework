@@ -7,22 +7,22 @@ const tableColClass = "px-2 py-2 whitespace-nowrap text-gray-900";
 // Interface
 interface IProps {
   className?: string;
-  nonScrollable?: boolean;
+  disableScroll?: boolean;
   children: any;
 }
 
 function TableContainer(props: IProps) {
-  let { children, className, nonScrollable } = props;
+  let { children, className, disableScroll } = props;
 
   return (
     <div className="flex flex-col">
       <div className="py-2 align-middle inline-block min-w-full">
         <div
           className={
-            "shadow-lg border-gray-200 sm:rounded-lg " + (nonScrollable ? "" : "overflow-x-hidden")
+            "shadow-lg border-gray-200 sm:rounded-lg " + (disableScroll ? "" : "overflow-x-hidden")
           }
         >
-          <div className={nonScrollable ? "" : "overflow-x-auto"}>
+          <div className={disableScroll ? "" : "overflow-x-auto"}>
             <table className={tableBaseClass + (className ? className : "")}>{children}</table>
           </div>
         </div>

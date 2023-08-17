@@ -58,7 +58,7 @@ import { SavingOverlay } from "./SavingOverlay";
 import { SectionHeading } from "./SectionHeading";
 import { Table } from "./Table";
 import { Tabs } from "./Tabs";
-import { Textarea } from "./Textarea";
+import { TextArea } from "./TextArea";
 import { useGetPagination } from "./hooks/useGetPagination";
 import { useMediaQuery } from "./hooks/useMediaQuery";
 import { useOnClickOutside } from "./hooks/useOnClickOutside";
@@ -109,7 +109,7 @@ export {
   Radio,
   InfoButton,
   InfoPopover,
-  Textarea,
+  TextArea,
   Table,
   SavePanel,
   SearchInput,

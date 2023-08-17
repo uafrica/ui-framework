@@ -5,18 +5,18 @@ import { useState } from "react";
 
 interface ICounterProps {
   label?: string;
-  labelInline?: boolean;
+  isLabelInline?: boolean;
   labelClassName?: string;
   value?: any;
   onChange?: any;
   step?: any;
   min?: number;
   max?: number;
-  disabled?: boolean;
+  isDisabled?: boolean;
   placeholder?: string;
   id?: string;
-  autoFocus?: any;
-  inputId?: string;
+  shouldAutoFocus?: any;
+  inputID?: string;
   containerClassName?: string;
   htmlFor?: string;
 }
@@ -26,14 +26,14 @@ function Counter(props: ICounterProps) {
     min,
     max,
     step,
-    inputId,
+    inputID: inputID,
     value,
-    disabled,
+    isDisabled,
     placeholder,
-    autoFocus,
+    shouldAutoFocus,
     onChange,
     containerClassName,
-    labelInline,
+    isLabelInline,
     label,
     htmlFor,
     labelClassName
@@ -45,22 +45,22 @@ function Counter(props: ICounterProps) {
 
   const [inputValue, setInputValue] = useState(value ? value : 0);
 
-  let decreaseDisabled = (min !== undefined && inputValue - step < min) || disabled;
-  let increaseDisabled = (max !== undefined && inputValue + step > max) || disabled;
+  let decreaseDisabled = (min !== undefined && inputValue - step < min) || isDisabled;
+  let increaseDisabled = (max !== undefined && inputValue + step > max) || isDisabled;
 
   return (
     <div
       className={
         containerClassName
           ? containerClassName
-          : labelInline
+          : isLabelInline
           ? "u-vertical-center flex-row space-x-4"
           : "mt-4 max-w-sm"
       }
     >
       {label && label.length > 0 && (
         <div className="flex justify-between">
-          <Label htmlFor={htmlFor} className={labelClassName} noMargin={labelInline}>
+          <Label htmlFor={htmlFor} className={labelClassName} noMargin={isLabelInline}>
             {label}
           </Label>
         </div>
@@ -88,18 +88,18 @@ function Counter(props: ICounterProps) {
         </div>
 
         <Input
-          labelInline
-          inputId={inputId}
+          isLabelInline
+          inputID={inputID}
           containerClassName="w-20"
           inputClassName="input-counter  border-primary-100 "
           step={step}
           min={min}
           max={max}
           value={inputValue}
-          disabled={disabled}
+          isDisabled={isDisabled}
           placeholder={placeholder}
           type="number"
-          autoFocus={autoFocus}
+          shouldAutoFocus={shouldAutoFocus}
           onChange={(e: any) => {
             // only change value if within any specified limits
             setInputValue(e.target.value);

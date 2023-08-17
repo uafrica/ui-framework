@@ -12,9 +12,9 @@ interface IButtonProps {
   iconSize?: SizeProp;
   tabIndex?: number | undefined;
   onClick?: any;
-  center?: boolean;
+  isCenter?: boolean;
   className?: string;
-  disabled?: boolean;
+  isDisabled?: boolean;
   hoverTitle?: string;
   leftRounded?: boolean;
   rightRounded?: boolean;
@@ -28,9 +28,9 @@ interface ILinkProps {
   icon?: IconProp;
   color?: string;
   onClick?: any;
-  center?: boolean;
+  isCenter?: boolean;
   className?: string;
-  disabled?: boolean;
+  isDisabled?: boolean;
   loadingTitle?: string;
   hoverTitle?: string;
   isLoading?: boolean;
@@ -46,8 +46,8 @@ interface ILinkBaseProps extends ILinkProps {
 
 interface IButtonsPanelProps {
   children: any;
-  center?: boolean;
-  left?: boolean;
+  isCenter?: boolean;
+  isLeft?: boolean;
   noMargin?: boolean;
 }
 
@@ -195,10 +195,10 @@ function BaseButton(props: IButtonBaseProps) {
     loadingTitle,
     icon,
     title,
-    center,
+    isCenter,
     buttonTypeClassNames,
     className,
-    disabled,
+    isDisabled,
     type,
     id,
     iconSize,
@@ -207,7 +207,7 @@ function BaseButton(props: IButtonBaseProps) {
     rightRounded
   } = props;
 
-  let disabledOrLoading = disabled || isLoading;
+  let disabledOrLoading = isDisabled || isLoading;
 
   let iconToShow = icon;
   let iconClass = "";
@@ -231,7 +231,7 @@ function BaseButton(props: IButtonBaseProps) {
         (leftRounded ? "rounded-r h-9" : rightRounded ? "rounded-l h-9" : "rounded-full h-9 ") +
         buttonTypeClassNames +
         " items-center " +
-        (center ? " block mx-auto " : "") +
+        (isCenter ? " block mx-auto " : "") +
         (className ? className : "") +
         (disabledOrLoading ? " opacity-50 pointer-events-none" : "")
       }
@@ -249,7 +249,7 @@ function BaseButton(props: IButtonBaseProps) {
 }
 
 function ButtonsPanel(props: IButtonsPanelProps) {
-  let { noMargin, children, center, left } = props;
+  let { noMargin, children, isCenter, isLeft } = props;
   let align = "justify-between";
 
   let nonEmptyChildren = [];
@@ -264,11 +264,11 @@ function ButtonsPanel(props: IButtonsPanelProps) {
     align = "justify-end";
   }
 
-  if (center) {
+  if (isCenter) {
     align = "justify-center";
   }
 
-  if (left) {
+  if (isLeft) {
     align = "justify-start";
   }
 
@@ -283,11 +283,11 @@ function Download(props: {
   isDownloading: boolean;
   download: any;
   downloadType: string;
-  disabled?: boolean;
+  isDisabled?: boolean;
 }) {
   return (
     <Button.Link
-      disabled={props.disabled}
+      isDisabled={props.isDisabled}
       onClick={() => props.download()}
       icon="download"
       isLoading={props.isDownloading}

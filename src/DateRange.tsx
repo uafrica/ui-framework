@@ -19,7 +19,7 @@ function DateRange(props: {
   periodOptions?: { label: string; value: string }[];
   containerClassName?: string;
   label?: string;
-  disabled?: boolean;
+  isDisabled?: boolean;
   showTimeSelect?: boolean;
   dateFormat?: string;
 }) {
@@ -38,7 +38,7 @@ function DateRange(props: {
     periodOptions,
     containerClassName,
     label,
-    disabled,
+    isDisabled,
     showTimeSelect,
     dateFormat
   } = props;
@@ -77,14 +77,14 @@ function DateRange(props: {
         placeholder={"Select period"}
         value={period ?? defaultPeriod}
         label={label}
-        disabled={disabled}
+        isDisabled={isDisabled}
       />
       {showRange && (
         <>
           <DatePicker
             showTimeSelect={showTimeSelect}
             label="From"
-            selected={dateFrom ?? defaultDateFrom}
+            selectedDate={dateFrom ?? defaultDateFrom}
             onChange={(val: any) => {
               if (onRangeChange) {
                 onRangeChange(val, dateTo);
@@ -95,7 +95,7 @@ function DateRange(props: {
           <DatePicker
             showTimeSelect={showTimeSelect}
             label="To"
-            selected={dateTo ?? defaultDateTo}
+            selectedDate={dateTo ?? defaultDateTo}
             onChange={(val: any) => {
               if (onRangeChange) {
                 onRangeChange(dateFrom, val);

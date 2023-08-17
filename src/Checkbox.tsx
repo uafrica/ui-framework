@@ -11,9 +11,9 @@ interface IProps {
   info?: string;
   className?: string;
   id?: string;
-  checked?: boolean;
-  center?: boolean;
-  disabled?: boolean;
+  isChecked?: boolean;
+  isCenter?: boolean;
+  isDisabled?: boolean;
   noPadding?: boolean;
   labelLeft?: boolean;
   labelRight?: boolean;
@@ -31,14 +31,14 @@ function Checkbox(props: IProps) {
     info,
     className,
     id,
-    center,
-    checked,
+    isCenter: center,
+    isChecked: checked,
     key,
     labelLeft,
     labelRight,
     hoverTitle,
     noPadding,
-    disabled,
+    isDisabled,
     textColor,
     dataTest
   } = props;
@@ -46,7 +46,7 @@ function Checkbox(props: IProps) {
   const labelEl = (
     <label
       className={
-        (disabled ? "text-gray-500 " : "text-base cursor-pointer ") +
+        (isDisabled ? "text-gray-500 " : "text-base cursor-pointer ") +
         " u-vertical-center " +
         (labelClassName ? labelClassName : "")
       }
@@ -63,20 +63,20 @@ function Checkbox(props: IProps) {
     <div className="flex items-start">
       <div
         id={id}
-        onClick={disabled ? null : onClick ?? null}
+        onClick={isDisabled ? null : onClick ?? null}
         key={key}
         className={
           (noPadding ? "" : "py-2 px-1 ") +
           " u-vertical-center space-x-4 " +
           (center ? " justify-center " : "") +
-          (disabled ? "" : " cursor-pointer ")
+          (isDisabled ? "" : " cursor-pointer ")
         }
       >
         {label && (labelLeft || (!labelLeft && !labelRight)) && labelEl}
         <input
           onKeyPress={(e: any) => {
             if (e.key === "Enter") {
-              disabled ? null : onClick ? onClick(e) : null;
+              isDisabled ? null : onClick ? onClick(e) : null;
             }
           }}
           title={hoverTitle}
@@ -84,7 +84,7 @@ function Checkbox(props: IProps) {
           data-test={dataTest}
           className={
             "u-focus " +
-            (disabled
+            (isDisabled
               ? "text-gray-500 "
               : `text-${textDisplayColor} hover:border-primary cursor-pointer `) +
             " border-gray-300 rounded " +

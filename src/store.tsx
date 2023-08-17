@@ -2,17 +2,6 @@ import React, { createContext, useContext } from "react";
 // @ts-ignore
 const StoreContext = createContext();
 
-// Properties stored in store
-// provider_settings
-// roles
-// user_settings
-// logged_in_user
-// impersonated_username
-// account
-// emitter
-// To implement store from library, the entire project that uses the store component
-// has to be converted. I will not work here and there. It's all or nothing
-
 // NOTE: If you want to use this store configuration in your project, do not have the same setup in you local repo.
 // I.e. if you want to use the StoreContext declared, you have to use one of them, not both
 

@@ -2,7 +2,7 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 export interface IInputProps {
   label?: string;
-  labelInline?: boolean;
+  isLabelInline?: boolean;
   labelClassName?: string;
   htmlFor?: string;
   register?: any;
@@ -22,18 +22,18 @@ export interface IInputProps {
   max?: number;
   maxLength?: number;
   autoComplete?: any;
-  disabled?: boolean;
+  isDisabled?: boolean;
   reference?: any;
   placeholder?: string;
   id?: string;
   containerClassName?: string;
   errorMessage?: string;
-  autoFocus?: any;
-  optional?: any; // when boolean displays the text "optional" next to the label, when string displays string value
-  readOnly?: boolean;
+  shouldAutoFocus?: any;
+  isOptional?: any; // when boolean displays the text "optional" next to the label, when string displays string value
+  isReadOnly?: boolean;
   inputClassName?: string;
   info?: any;
-  inputFieldId?: string;
+  inputFieldID?: string;
   appendIcon?: IconProp;
   appendIconId?: string;
   onAppendIconClick?: any;
@@ -44,13 +44,12 @@ export interface IInputProps {
   prependText?: string;
   prependPadding?: string;
   inputFieldStyle?: any;
-  inputId?: string;
+  inputID?: string;
   onClearSearch?: Function;
   prependSelectProps?: any;
   prependTextSize?: string;
   showAsterisk?: boolean;
-  noArrows?: boolean;
+  hideArrows?: boolean;
   disableNumericInputScroll?: boolean; // scrolling over a numeric input causes the input value to change
-  pointer?: boolean;
   dataTest?: string | undefined;
 }

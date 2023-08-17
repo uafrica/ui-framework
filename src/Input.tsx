@@ -5,14 +5,13 @@ import { Label } from "./Label";
 import { Message } from "./Message";
 import { IInputProps } from "./interfaces/inputProps.interface";
 
-// Implementation
 function Input(props: IInputProps) {
   let {
     label,
     htmlFor,
     labelClassName,
-    inputFieldId,
-    readOnly,
+    inputFieldID,
+    isReadOnly,
     inputFieldStyle,
     placeholder,
     register,
@@ -22,15 +21,15 @@ function Input(props: IInputProps) {
     defaultValue,
     value,
     validationError,
-    inputId,
+    inputID,
     appendIcon,
     appendText,
     appendPadding,
     appendIconId,
     onAppendIconClick,
     appendIconColor,
-    optional,
-    disabled,
+    isOptional,
+    isDisabled,
     errorMessage,
     onChange,
     onClick,
@@ -39,8 +38,8 @@ function Input(props: IInputProps) {
     prependPadding,
     onBlur,
     containerClassName,
-    labelInline,
-    autoFocus,
+    isLabelInline,
+    shouldAutoFocus,
     onKeyPress,
     onKeyUp,
     step,
@@ -55,9 +54,8 @@ function Input(props: IInputProps) {
     prependSelectProps,
     prependTextSize,
     showAsterisk,
-    noArrows,
+    hideArrows,
     disableNumericInputScroll,
-    pointer,
     dataTest
   } = props;
 
@@ -85,18 +83,18 @@ function Input(props: IInputProps) {
 
   const InputElement = (
     <input
-      autoFocus={autoFocus}
+      autoFocus={shouldAutoFocus}
       name={name}
       ref={reference ? (r: any) => reference(r) : register}
       type={type}
       defaultValue={defaultValue}
       value={value}
-      id={inputId}
-      readOnly={disabled || readOnly} // if we make the input disabled then react-hooks-form doesn't submit the defaultValue https://twitter.com/bluebill1049/status/1300231640392716288
+      id={inputID}
+      readOnly={isDisabled || isReadOnly} // if we make the input disabled then react-hooks-form doesn't submit the defaultValue https://twitter.com/bluebill1049/status/1300231640392716288
       onChange={onChange}
       onClick={onClick}
       onFocus={(e: any) => {
-        if (!disabled) {
+        if (!isDisabled) {
           e.target.placeholder = "";
           onFocus && onFocus(e);
         }
@@ -105,7 +103,7 @@ function Input(props: IInputProps) {
       onKeyPress={onKeyPress}
       onKeyUp={onKeyUp}
       onBlur={(e: any) => {
-        if (!disabled) {
+        if (!isDisabled) {
           if (placeholder) {
             e.target.placeholder = placeholder;
           }
@@ -121,8 +119,7 @@ function Input(props: IInputProps) {
         "focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent shadow-sm block w-full border-gray-300 rounded-md " +
         inputClasses +
         " " +
-        (disabled ? " bg-gray-100" : "") +
-        (pointer ? " cursor-pointer" : "")
+        (isDisabled ? " bg-gray-100" : "")
       }
       onWheel={(e: any) => {
         if (disableNumericInputScroll) {
@@ -136,34 +133,34 @@ function Input(props: IInputProps) {
   return (
     <div
       className={
-        (noArrows ? " no-arrows " : "") +
+        (hideArrows ? " no-arrows " : "") +
         (containerClassName
           ? containerClassName
-          : labelInline
+          : isLabelInline
           ? "u-vertical-center flex-row space-x-4"
           : "mt-4 max-w-sm")
       }
     >
       {label && label.length > 0 && (
         <div className="flex justify-between">
-          <Label htmlFor={htmlFor} className={labelClassName} noMargin={labelInline}>
+          <Label htmlFor={htmlFor} className={labelClassName} noMargin={isLabelInline}>
             <span className="inline-block whitespace-nowrap">
               {label}
               {showAsterisk && " *"}
             </span>
             {info && <InfoButton>{info}</InfoButton>}
           </Label>
-          {optional && (
+          {isOptional && (
             <span className="text-gray-500">
-              {typeof optional === "string" ? optional : "(Optional)"}
+              {typeof isOptional === "string" ? isOptional : "(Optional)"}
             </span>
           )}
         </div>
       )}
-      <div className="u-vertical-center flex-row w-full" id={inputFieldId} style={inputFieldStyle}>
+      <div className="u-vertical-center flex-row w-full" id={inputFieldID} style={inputFieldStyle}>
         {prependSelectProps && (
           <div className="-mr-2 z-10">
-            <Select {...prependSelectProps} noMargin disabled={disabled} />
+            <Select {...prependSelectProps} noMargin isDisabled={isDisabled} />
           </div>
         )}
         <div className={"relative rounded-m w-full"}>
@@ -228,7 +225,7 @@ function Input(props: IInputProps) {
         </div>
         {appendSelectProps && (
           <div className="-ml-2">
-            <Select {...appendSelectProps} noMargin disabled={disabled} />
+            <Select {...appendSelectProps} noMargin isDisabled={isDisabled} />
           </div>
         )}
       </div>

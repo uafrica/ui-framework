@@ -1,16 +1,16 @@
 // Interface
 interface IResponsiveRow {
   children: any;
-  verticalCenter?: boolean;
+  isCenteredVertically?: boolean;
 }
 
 function ResponsiveRow(props: IResponsiveRow) {
-  let { children, verticalCenter } = props;
+  let { children, isCenteredVertically } = props;
 
   return (
     <div
       className={
-        "flex sm:space-x-4 flex-wrap sm:flex-nowrap " + (verticalCenter ? "items-center" : "")
+        "flex sm:space-x-4 flex-wrap sm:flex-nowrap " + (isCenteredVertically ? "items-center" : "")
       }
     >
       {children}

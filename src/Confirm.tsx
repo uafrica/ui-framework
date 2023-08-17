@@ -5,8 +5,8 @@ import { Modal } from "./Modal";
 
 // Interface
 interface IProps {
-  visible?: boolean;
-  disabled?: boolean;
+  isVisible?: boolean;
+  isDisabled?: boolean;
   onConfirm?: any;
   onCancel?: any;
   onClose?: any;
@@ -36,10 +36,10 @@ function Confirm(props: IProps) {
     disablePressEscToClose
   } = props;
 
-  let [isOpen, setOpen] = useState<boolean>(!!props.visible);
+  let [isOpen, setOpen] = useState<boolean>(Boolean(props.isVisible));
 
   useEffect(() => {
-    if (props.visible) {
+    if (props.isVisible) {
       if (typeof props.onShow === "function") {
         props.onShow();
       }
@@ -81,7 +81,7 @@ function Confirm(props: IProps) {
 
   function onButtonClick(event: any) {
     event.stopPropagation();
-    if (props.disabled) return;
+    if (props.isDisabled) return;
 
     // Since the modal is inside the button click events will propagate up.
     if (!isOpen) {
@@ -93,14 +93,17 @@ function Confirm(props: IProps) {
     <Button.Cancel title={cancelText} onClick={onCancel} />
   ) : null;
 
+  if (!isOpen) {
+    return null;
+  }
+
   return (
     <div onClick={onButtonClick} className="flex items-center">
       {children}
       <Modal.Small
-        show={isOpen}
         onHide={onClose}
         title={title}
-        closeButton
+        showCloseButton
         disableClickOutsideToClose={disableClickOutsideToClose}
         disablePressEscToClose={disablePressEscToClose}
       >

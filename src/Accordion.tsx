@@ -13,7 +13,7 @@ interface IAccordion {
   onDelete?: any;
   backgroundColor?: string;
   textColor?: string;
-  noCaret?: boolean;
+  hideCaret?: boolean;
   caretColor?: string;
   endComponent?: any;
 }
@@ -27,7 +27,7 @@ function Accordion(props: IAccordion) {
     onDelete,
     backgroundColor,
     textColor,
-    noCaret,
+    hideCaret,
     caretColor,
     endComponent
   } = props;
@@ -61,7 +61,7 @@ function Accordion(props: IAccordion) {
               </Confirm>
             )}
 
-            {!noCaret && (
+            {!hideCaret && (
               <FontAwesomeIcon
                 icon="caret-down"
                 className={`${open ? "transform rotate-180" : ""} w-5 h-5 text-${caretColor}-500`}

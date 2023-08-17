@@ -24,7 +24,7 @@ interface IProps {
   headers?: any;
   disallowDuplicateCancel?: boolean;
   retryCounter?: number;
-  fetchOnInit?: boolean;
+  shouldFetchOnInit?: boolean;
   onSuccess?: Function;
   onError?: Function;
   initialLoadingState?: boolean;
@@ -38,7 +38,7 @@ export function useSignedRequest({
   headers,
   disallowDuplicateCancel,
   retryCounter,
-  fetchOnInit,
+  shouldFetchOnInit,
   onSuccess,
   onError,
   initialLoadingState,
@@ -53,7 +53,7 @@ export function useSignedRequest({
   useEffect(() => {
     // Do not fetch on mount by default
     const fetchData = async () => {
-      if (fetchOnInit) {
+      if (shouldFetchOnInit) {
         await makeRequest();
       }
     };

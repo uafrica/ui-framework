@@ -5,12 +5,11 @@ import { createContext, useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 
 interface ISmallMediumModalProps {
-  show: boolean;
   children: any;
   onHide?: any;
   title?: any;
   icon?: IconProp;
-  closeButton: boolean;
+  showCloseButton: boolean;
   disableClickOutsideToClose?: boolean;
   disablePressEscToClose?: boolean;
 }
@@ -27,13 +26,12 @@ const isBrowser = () =>
   !!(typeof window !== "undefined" && window.document && window.document.createElement);
 
 const Base = ({
-  show,
   onHide,
   children,
   className,
   icon,
   title,
-  closeButton,
+  showCloseButton: closeButton,
   disableClickOutsideToClose,
   disablePressEscToClose,
   ...props
@@ -62,9 +60,6 @@ const Base = ({
     }
   }
   const ref = useRef(null);
-  if (!show) {
-    return null;
-  }
   const hostElement = document.getElementById(hostElementId);
 
   const content = (

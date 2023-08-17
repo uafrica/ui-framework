@@ -28,9 +28,9 @@ function CornelScratchPad() {
           showAsterisk
           prependText="R"
           label="Price"
-          disabled
+          isDisabled
           pointer
-          labelInline
+          isLabelInline
           appendSelectProps={{
             popoverWidth: "w-96",
             buttonWidth: "w-24",
@@ -59,7 +59,7 @@ function CornelScratchPad() {
           <Select
             placeholder="Multiselect"
             value={multiSelectValue}
-            multiSelection
+            isMultiSelection
             onChange={(newValue: any) => setMultiSelectValue(newValue)}
             options={[
               { label: "Option 1", value: 1 },
@@ -72,32 +72,32 @@ function CornelScratchPad() {
 
       <Switch
         label="Toggle me on"
-        checked={switchTicked}
+        isChecked={switchTicked}
         onChange={() => setSwitchTicked(!switchTicked)}
       />
 
       <div className="my-4">
         <Switch
           label="Disabled"
-          disabled
+          isDisabled
           info="I should not be clickable"
-          checked={switchTicked}
+          isChecked={switchTicked}
           onChange={() => setSwitchTicked(!switchTicked)}
         />
       </div>
 
       <Checkbox
         label="Tick me"
-        checked={checkboxTicked}
+        isChecked={checkboxTicked}
         onClick={() => setCheckboxTicked(!checkboxTicked)}
         labelRight
       />
 
       <Checkbox
         label="I'm disabled"
-        disabled
+        isDisabled
         info="I should not be clickable"
-        checked={checkboxTicked}
+        isChecked={checkboxTicked}
         onClick={() => setCheckboxTicked(!checkboxTicked)}
         labelRight
       />
@@ -106,7 +106,7 @@ function CornelScratchPad() {
         label="Month"
         placeholder="Month"
         dateFormat={"yyyy-MM"}
-        selected={new Date()}
+        selectedDate={new Date()}
         onChange={date => {
           console.log(date);
         }}
@@ -118,7 +118,7 @@ function CornelScratchPad() {
         Some content here
     </Modal.Medium> */}
 
-      <Textarea label="Description" info="Testing all the styles here" optional />
+      <Textarea label="Description" info="Testing all the styles here" isOptional />
 
       <div className="float-right">
         <Dropdown.Menu color="blue" title="Dropdown menu" noBackground widthClass="w-96">

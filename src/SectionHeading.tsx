@@ -8,7 +8,7 @@ interface ISectionHeading {
   editIconClassName?: string;
   toggleEditMode?: any;
   hideEditMode?: boolean;
-  center?: boolean;
+  isCenter?: boolean;
   marginTop?: boolean; // Used if two sections are below each other
   noMarginBottom?: boolean;
   options?: any;
@@ -22,7 +22,7 @@ function SectionHeading(props: ISectionHeading) {
     editIconClassName,
     toggleEditMode,
     hideEditMode,
-    center,
+    isCenter: center,
     marginTop,
     noMarginBottom,
     options

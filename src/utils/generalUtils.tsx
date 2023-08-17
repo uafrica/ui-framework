@@ -8,8 +8,6 @@ import _ from "lodash";
 import * as dateUtils from "./dateUtils";
 import moment from "moment";
 
-// Used to check current app version
-
 function capitalize(str: string): string {
   if (!str) return "";
   return str.charAt(0).toUpperCase() + str.slice(1);
@@ -34,7 +32,7 @@ function getUUIDFilename(url: string) {
   return uuidv4() + extension;
 }
 
-function isCsv(file: any): RegExpExecArray | null | false {
+function isCSV(file: any): RegExpExecArray | null | false {
   if (!file) return false;
 
   let validationRegex = /(\.csv)$/i;
@@ -57,7 +55,7 @@ function isKML(file: any): RegExpExecArray | null | false {
   return validationRegex.exec(file.name.toLowerCase());
 }
 
-function isPdf(file: any): RegExpExecArray | null | false {
+function isPDF(file: any): RegExpExecArray | null | false {
   if (!file) return false;
 
   var validationRegex = /(\.pdf)$/i;
@@ -246,7 +244,7 @@ function keyToHumanReadable(key: string | undefined): string {
   keyHumanReadable = keyHumanReadable.replaceAll("receiver", "delivery");
   keyHumanReadable = keyHumanReadable.replaceAll("-", " ");
 
-  // camelcase to sentence case
+  // camel case to sentence case
   keyHumanReadable = keyHumanReadable.replace(/([A-Z])/g, " $1").trim();
 
   let sentenceCaseKey =
@@ -376,7 +374,7 @@ function isBrowserOutdated(browserName: string, browserVersion: string) {
   }
 }
 
-async function getDataUrl(file: any): Promise<unknown> {
+async function getDataURL(file: any): Promise<unknown> {
   return new Promise((resolve, reject) => {
     try {
       let reader = new FileReader();
@@ -506,7 +504,7 @@ function openInNewTab(url: string, store: any) {
             <a href={url} target="_blank" className="text-primary cursor-pointer font-bold">
               {url}
             </a>{" "}
-            in a new tab, but unfortunately popus are blocked by your browser.
+            in a new tab, but unfortunately popups are blocked by your browser.
           </div>
           <div>
             To unblock popups for this site, follow the{" "}
@@ -627,7 +625,7 @@ function addFiltersToArgsCheck(
       } else if (wildCardedColumns.indexOf(key) === -1) {
         args[key] = val;
       } else {
-        // Encode with % wildcard (postgres) at the begining and end of the argument
+        // Encode with % wildcard (postgres) at the beginning and end of the argument
         // The encoding is need because args are put into the query URL
         args[key] = "%" + val + "%";
       }
@@ -644,9 +642,9 @@ export {
   showError,
   getUUIDFilename,
   isImage,
-  isCsv,
+  isCSV,
   isKML,
-  isPdf,
+  isPDF,
   reverseArray,
   serialize,
   checkTokenExpired,
@@ -665,7 +663,7 @@ export {
   isScreenDesktopSize,
   kebabCaseToSentenceCase,
   isBrowserOutdated,
-  getDataUrl,
+  getDataURL,
   displayString,
   isNotEmpty,
   getBrowserIcon,

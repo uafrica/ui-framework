@@ -1,11 +1,13 @@
-import {
-  Button,
-  Message
-} from "../../../src";
+import { Button, Message } from "../../../src";
 import { useState } from "react";
 
 function Buttons() {
-  const [isLoading, setIsLoading] = useState<{ primary: boolean, secondary: boolean, tertiary: boolean, link: boolean }>({
+  const [isLoading, setIsLoading] = useState<{
+    primary: boolean;
+    secondary: boolean;
+    tertiary: boolean;
+    link: boolean;
+  }>({
     primary: false,
     secondary: false,
     tertiary: false,
@@ -16,33 +18,33 @@ function Buttons() {
       case "primary":
         setIsLoading({ ...isLoading, primary: true });
         setTimeout(() => {
-          setIsLoading({...isLoading, primary: false})
-        }, 2000)
+          setIsLoading({ ...isLoading, primary: false });
+        }, 2000);
         break;
       case "secondary":
         setIsLoading({ ...isLoading, secondary: true });
         setTimeout(() => {
-          setIsLoading({...isLoading, secondary: false})
-        }, 2000)
+          setIsLoading({ ...isLoading, secondary: false });
+        }, 2000);
         break;
       case "tertiary":
         setIsLoading({ ...isLoading, tertiary: true });
         setTimeout(() => {
-          setIsLoading({...isLoading, tertiary: false})
-        }, 2000)
+          setIsLoading({ ...isLoading, tertiary: false });
+        }, 2000);
         break;
       case "link":
         setIsLoading({ ...isLoading, link: true });
         setTimeout(() => {
-          setIsLoading({...isLoading, link: false})
-        }, 2000)
+          setIsLoading({ ...isLoading, link: false });
+        }, 2000);
         break;
     }
   };
 
   return (
     <>
-      <Message.Success close>This is a message</Message.Success>
+      <Message.Success showCloseButton>This is a message</Message.Success>
       <div className={"my-4 flex gap-5"}>
         <Button.Primary
           title={"Primary"}
@@ -69,7 +71,6 @@ function Buttons() {
         />
       </div>
     </>
-
   );
 }
 

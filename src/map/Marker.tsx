@@ -28,8 +28,7 @@ function Marker(props: {
       showMultipleMarkersModal && (
         <Modal.Medium
           title="Multiple marker items"
-          show={true}
-          closeButton
+          showCloseButton
           onHide={() => {
             setShowMultipleMarkersModal(false);
           }}

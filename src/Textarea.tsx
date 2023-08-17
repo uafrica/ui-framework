@@ -5,20 +5,20 @@ import { Label } from "./Label";
 const defaultContainerClass = "mt-3";
 
 // Interface
-interface ITextarea {
+interface ITextArea {
   label?: any;
   labelClassName?: string;
   htmlFor?: string;
   containerClassName?: string;
-  fieldId?: string;
+  fieldID?: string;
   className?: string;
   info?: string;
   id?: string;
   value?: any;
   defaultValue?: string;
   name?: string;
-  disabled?: boolean;
-  optional?: boolean;
+  isDisabled?: boolean;
+  isOptional?: boolean;
   onChange?: any;
   onFocus?: any;
   onBlur?: any;
@@ -27,17 +27,17 @@ interface ITextarea {
   register?: any;
   validationError?: any;
   errorMessage?: any;
-  fixed?: boolean;
+  isFixed?: boolean;
   rows?: any;
   maxLength?: number;
   dataTest?: string | undefined;
 }
 
 // Implementation
-function Textarea(props: ITextarea) {
+function TextArea(props: ITextArea) {
   let {
     containerClassName,
-    fieldId,
+    fieldID,
     label,
     labelClassName,
     info,
@@ -54,14 +54,14 @@ function Textarea(props: ITextarea) {
     infoButton,
     errorMessage,
     rows,
-    optional,
-    disabled,
+    isOptional,
+    isDisabled,
     maxLength,
     dataTest
   } = props;
 
   return (
-    <div className={containerClassName ? containerClassName : defaultContainerClass} id={fieldId}>
+    <div className={containerClassName ? containerClassName : defaultContainerClass} id={fieldID}>
       <div className="flex justify-between">
         {label && (
           <div className="mt-1">
@@ -70,12 +70,12 @@ function Textarea(props: ITextarea) {
             </Label>
           </div>
         )}
-        {optional && <span className="text-gray-500">(Optional)</span>}
+        {isOptional && <span className="text-gray-500">(Optional)</span>}
       </div>
       <textarea
         className={
           "focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent mt-2 shadow-sm block w-full border border-gray-300 rounded-md" +
-          (disabled ? " bg-gray-100" : "")
+          (isDisabled ? " bg-gray-100" : "")
         }
         id={id}
         value={value}
@@ -86,7 +86,7 @@ function Textarea(props: ITextarea) {
         onChange={onChange}
         onFocus={onFocus}
         onBlur={onBlur}
-        disabled={disabled}
+        disabled={isDisabled}
         ref={register}
         maxLength={maxLength}
         data-test={dataTest}
@@ -102,4 +102,4 @@ function Textarea(props: ITextarea) {
   );
 }
 
-export { Textarea };
+export { TextArea };

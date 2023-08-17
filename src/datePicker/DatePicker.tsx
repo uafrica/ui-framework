@@ -10,9 +10,9 @@ import { Label } from "../Label";
 
 // Interface
 interface IDatePicker {
-  selected: Date;
+  selectedDate: Date;
   label?: string;
-  labelInline?: boolean;
+  isLabelInline?: boolean;
   placeholder?: string;
   dateFormat?: string;
   containerClassName?: string;
@@ -21,7 +21,7 @@ interface IDatePicker {
   showTimeSelect?: boolean;
   onChange: (date: Date) => void;
   onDatePickerClose?: Function;
-  disabled?: boolean;
+  isDisabled?: boolean;
   dataTest?: string | undefined;
   info?: any;
 }
@@ -59,16 +59,16 @@ export const inputStyle = {
 // Implementation
 function DatePicker(props: IDatePicker) {
   let {
-    selected,
+    selectedDate,
     label,
-    labelInline,
+    isLabelInline,
     placeholder,
     dateFormat,
     containerClassName,
     onChange,
     onDatePickerClose,
     showTimeSelect,
-    disabled,
+    isDisabled,
     minDate,
     maxDate,
     dataTest,
@@ -80,8 +80,8 @@ function DatePicker(props: IDatePicker) {
   }
 
   let date = new Date();
-  if (selected) {
-    date = moment(selected).toDate();
+  if (selectedDate) {
+    date = moment(selectedDate).toDate();
   }
 
   const popupNode = useRef<HTMLElement>();
@@ -113,26 +113,26 @@ function DatePicker(props: IDatePicker) {
                 onClick={() => {
                   ctxValue.toggleCalendar();
                 }}
-                value={selected ? formattedDate(dateFormat, date) : ""}
-                readOnly
+                value={selectedDate ? formattedDate(dateFormat, date) : ""}
+                isReadOnly
                 info={info}
                 label={label}
-                labelInline={labelInline}
+                isLabelInline={isLabelInline}
                 containerClassName={containerClassName}
                 placeholder={placeholder}
-                appendIcon={disabled ? undefined : ctxValue.isVisible ? "caret-up" : "caret-down"}
+                appendIcon={isDisabled ? undefined : ctxValue.isVisible ? "caret-up" : "caret-down"}
                 onAppendIconClick={() => {
                   ctxValue.toggleCalendar();
                 }}
                 appendIconColor="text-gray-400"
-                disabled={disabled}
+                isDisabled={isDisabled}
                 dataTest={dataTest}
               />
             </div>
           )}
         </Reference>
 
-        {!disabled && (
+        {!isDisabled && (
           // @ts-ignore
           <Popper
             placement="bottom-start"
@@ -208,7 +208,7 @@ const TimeSelection: React.FC<{}> = _ => {
         <div style={{ width: "55px" }}>
           <Input
             label=""
-            labelInline={true}
+            isLabelInline={true}
             type="number"
             step={1}
             min={0}
@@ -241,7 +241,7 @@ const TimeSelection: React.FC<{}> = _ => {
         <div style={{ width: "55px" }}>
           <Input
             label=""
-            labelInline={true}
+            isLabelInline={true}
             type="number"
             step={1}
             min={0}

@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import * as mapUtils from "./../utils/mapUtils";
 
 function Map(props: {
-  readonly?: boolean;
+  isReadOnly?: boolean;
   polygons?: IPolygon[];
   markers?: IMarker[];
   mapContainerStyle?: any;
@@ -36,7 +36,7 @@ function Map(props: {
   let {
     polygons,
     markers,
-    readonly,
+    isReadOnly,
     disableScrollZoom,
     selectedPolygon,
     bounds,
@@ -328,7 +328,7 @@ function Map(props: {
             doSnap={doSnap}
             snapPointToPolygon={snapPointToPolygon}
             editable={
-              !readonly &&
+              !isReadOnly &&
               selectedPolygon !== null &&
               selectedPolygon?.data?.id === polygon?.data?.id
             }
@@ -340,7 +340,7 @@ function Map(props: {
                 props.onPolygonSelectionChanged(polygon, true);
                 refitBounds(polygon);
 
-                if (!readonly) {
+                if (!isReadOnly) {
                   enterEditMode();
                 }
                 if (props.onPolygonClicked) {
@@ -405,7 +405,7 @@ function Map(props: {
           <div className="flex flex-row space-x-4 items-center">
             {toolbarLeft && <div>{toolbarLeft}</div>}
 
-            {!readonly && editMode && (
+            {!isReadOnly && editMode && (
               <MapToolbar
                 doSnap={doSnap}
                 onSnapToggle={() => {
@@ -436,7 +436,7 @@ function Map(props: {
                 title="Exit edit mode"
               />
             ) : (
-              !readonly && (
+              !isReadOnly && (
                 <Button.Primary
                   title="Edit zones"
                   id="edit_zones"
