@@ -19,6 +19,7 @@ interface IButtonProps {
   leftRounded?: boolean;
   rightRounded?: boolean;
   bgColor?: string; // overrides icon bg
+  iconClassName?: string;
 }
 
 interface ILinkProps {
@@ -38,6 +39,7 @@ interface ILinkProps {
   target?: string;
   noPadding?: boolean;
   tabIndex?: number | undefined;
+  iconClassName?: string;
 }
 
 interface ILinkBaseProps extends ILinkProps {
@@ -204,7 +206,8 @@ function BaseButton(props: IButtonBaseProps) {
     iconSize,
     hoverTitle,
     leftRounded,
-    rightRounded
+    rightRounded,
+    iconClassName = "mr-3"
   } = props;
 
   let disabledOrLoading = isDisabled || isLoading;
@@ -214,7 +217,7 @@ function BaseButton(props: IButtonBaseProps) {
 
   if (isLoading) {
     iconToShow = "sync";
-    iconClass = "button-loader-spinning";
+    iconClass = " button-loader-spinning";
   }
 
   let textToShow = isLoading && loadingTitle ? loadingTitle + "..." : title;
@@ -239,7 +242,7 @@ function BaseButton(props: IButtonBaseProps) {
       {iconToShow && (
         <FontAwesomeIcon
           icon={iconToShow}
-          className={(textToShow ? "mr-3 " : "") + iconClass}
+          className={(textToShow ? iconClassName : "") + iconClass}
           size={iconSize ? iconSize : "sm"}
         />
       )}
