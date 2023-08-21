@@ -179,13 +179,19 @@ function DropdownMenu(props: IDropdown) {
                         } border bg-white`)
                   }
                 >
-                  {icon && <FontAwesomeIcon icon={icon} className="h-5 w-5" aria-hidden="true" />}
+                  {icon && (
+                    <div className="h-5 w-5 flex items-center">
+                      <FontAwesomeIcon icon={icon} aria-hidden="true" />
+                    </div>
+                  )}
                   {Boolean(title) && <span className="ml-2 truncate">{title}</span>}
-                  <FontAwesomeIcon
-                    icon="caret-down"
-                    className={"-mr-1 ml-2 h-5 w-5" + (title ? " mt-px" : "")}
-                    aria-hidden="true"
-                  />
+                  <div className="h-5 w-5 flex items-center">
+                    <FontAwesomeIcon
+                      icon="caret-down"
+                      className={"-mr-1 ml-2 " + (title ? " mt-px" : "")}
+                      aria-hidden="true"
+                    />
+                  </div>
                 </div>
               </div>
             )}
@@ -306,15 +312,16 @@ function MenuItem(props: IMenuItem) {
             }}
           >
             {iconToShow && (
-              <FontAwesomeIcon
-                icon={iconToShow}
-                spin={isLoading}
-                className={
-                  "mr-3 h-5 w-5  " +
-                  (isDisabled ? "text-gray-500" : "text-black group-hover:text-gray-900")
-                }
-                aria-hidden="true"
-              />
+              <div className="h-5 w-5 mr-3 flex items-center">
+                <FontAwesomeIcon
+                  icon={iconToShow}
+                  spin={isLoading}
+                  className={
+                    "  " + (isDisabled ? "text-gray-500" : "text-black group-hover:text-gray-900")
+                  }
+                  aria-hidden="true"
+                />
+              </div>
             )}
             {title}
           </div>
@@ -341,11 +348,13 @@ function MenuHeading(props: IMenuHeading) {
             }
           >
             {icon && (
-              <FontAwesomeIcon
-                icon={icon}
-                className="mr-3 h-5 w-5 text-gray-500 group-hover:text-gray-900"
-                aria-hidden="true"
-              />
+              <div className="h-5 w-5 mr-3 flex items-center">
+                <FontAwesomeIcon
+                  icon={icon}
+                  className=" text-gray-500 group-hover:text-gray-900"
+                  aria-hidden="true"
+                />
+              </div>
             )}
             {title}
           </div>
