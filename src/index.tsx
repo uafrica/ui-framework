@@ -6,6 +6,7 @@ import * as interfaces from "./interfaces/index";
 import * as mapUtils from "./utils/mapUtils";
 import * as navUtils from "./utils/navUtils";
 import * as numberUtils from "./utils/numberUtils";
+import * as timerUtils from "./utils/timerUtils";
 import * as roleUtils from "./utils/roleUtils";
 import * as stringUtils from "./utils/stringUtils";
 import * as tableUtils from "./utils/tableUtils";
@@ -125,6 +126,7 @@ export {
   addressUtils,
   cacheUtils,
   numberUtils,
+  timerUtils,
   generalUtils,
   stringUtils,
   mapUtils,
