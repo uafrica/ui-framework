@@ -93,32 +93,30 @@ function Confirm(props: IProps) {
     <Button.Cancel title={cancelText} onClick={onCancel} />
   ) : null;
 
-  if (!isOpen) {
-    return null;
-  }
-
   return (
     <div onClick={onButtonClick} className="flex items-center">
       {children}
-      <Modal.Small
-        onHide={onClose}
-        title={title}
-        showCloseButton
-        disableClickOutsideToClose={disableClickOutsideToClose}
-        disablePressEscToClose={disablePressEscToClose}
-      >
-        {body}
-        <Button.ButtonsPanel>
-          {cancelButton}
-          {(!confirmButtonVariant || confirmButtonVariant === "danger") && (
-            <Button.Danger onClick={onConfirm} title={confirmText} />
-          )}
+      {isOpen && (
+        <Modal.Small
+          onHide={onClose}
+          title={title}
+          showCloseButton
+          disableClickOutsideToClose={disableClickOutsideToClose}
+          disablePressEscToClose={disablePressEscToClose}
+        >
+          {body}
+          <Button.ButtonsPanel>
+            {cancelButton}
+            {(!confirmButtonVariant || confirmButtonVariant === "danger") && (
+              <Button.Danger onClick={onConfirm} title={confirmText} />
+            )}
 
-          {confirmButtonVariant && confirmButtonVariant !== "danger" && (
-            <Button.Primary onClick={onConfirm} title={confirmText} />
-          )}
-        </Button.ButtonsPanel>
-      </Modal.Small>
+            {confirmButtonVariant && confirmButtonVariant !== "danger" && (
+              <Button.Primary onClick={onConfirm} title={confirmText} />
+            )}
+          </Button.ButtonsPanel>
+        </Modal.Small>
+      )}
     </div>
   );
 }
