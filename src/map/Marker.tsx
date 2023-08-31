@@ -1,7 +1,6 @@
-import Tooltip from "./Tooltip";
 import { IMarker } from "./../interfaces";
 import { Marker as GoogleMapsMarker } from "@react-google-maps/api";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { Modal } from "./../Modal";
 import { Button } from "./../Button";
 
@@ -14,7 +13,6 @@ function Marker(props: {
 }) {
   let { markerGroup } = props;
 
-  let [isHovering, setIsHovering] = useState<boolean>(false);
   let [showMultipleMarkersModal, setShowMultipleMarkersModal] = useState<boolean>(false);
 
   function onMarkerClicked(e: any, marker: IMarker) {
@@ -60,12 +58,6 @@ function Marker(props: {
 
   function render() {
     let coordinates = markerGroup[0].coordinates;
-    let tooltipContent = markerGroup[0].options.tooltip
-      ? markerGroup[0].options.tooltip(markerGroup[0])
-      : null;
-    if (markerGroup.length > 1) {
-      tooltipContent = <div className="px-4 py-2">{markerGroup.length} marker items</div>;
-    }
 
     return markerGroup.length > 0 ? (
       <>
@@ -83,11 +75,10 @@ function Marker(props: {
           }}
           position={coordinates}
           onMouseOver={(e: google.maps.MapMouseEvent) => {
-            setIsHovering(true);
+            // @ts-ignore
             props.onMouseOver(e, markerGroup);
           }}
           onMouseOut={(e: google.maps.MapMouseEvent) => {
-            setIsHovering(false);
             props.onMouseOut(e, markerGroup);
           }}
           options={{
@@ -106,13 +97,7 @@ function Marker(props: {
               : undefined
           }}
         ></GoogleMapsMarker>
-        {isHovering && (
-          <Tooltip
-            offsetY={markerGroup[0].options.tooltipYOffset}
-            offsetX={markerGroup[0].options.tooltipXOffset}
-            tooltipContent={tooltipContent}
-          />
-        )}
+
         {renderMultipleMarkersModal()}
       </>
     ) : (
@@ -123,4 +108,4 @@ function Marker(props: {
   return render();
 }
 
-export default Marker;
+export default memo(Marker);

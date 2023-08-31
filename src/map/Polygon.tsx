@@ -1,9 +1,8 @@
-import Tooltip from "./Tooltip";
-import { IPolygon } from "./../interfaces/polygon.interface";
+import * as mapUtils from "../utils/mapUtils";
+import { IPolygon } from "../interfaces/polygon.interface";
 import { memo, useEffect, useState } from "react";
 import { Polygon as GoogleMapsPolygon } from "@react-google-maps/api";
-import { useStore } from "./../store";
-import * as mapUtils from "./../utils/mapUtils";
+import { useStore } from "../store";
 
 function Polygon(props: {
   polygon: IPolygon;
@@ -23,7 +22,6 @@ function Polygon(props: {
   let { polygon, zIndex, editable, doSnap } = props;
 
   let [options, setOptions] = useState<any>({ ...polygon.options } ?? {});
-  let [isHovering, setIsHovering] = useState<boolean>(false);
 
   useEffect(() => {
     setOptions({ ...polygon.options });
@@ -113,7 +111,6 @@ function Polygon(props: {
               };
             });
             props.onMouseOver(e, polygon);
-            setIsHovering(true);
           }}
           onMouseOut={(e: google.maps.PolyMouseEvent) => {
             setOptions((options: any) => {
@@ -121,7 +118,6 @@ function Polygon(props: {
             });
 
             props.onMouseOut(e, polygon);
-            setIsHovering(false);
           }}
           onRightClick={(e: google.maps.PolyMouseEvent) => {
             // remove node if more than 3 nodes
@@ -165,13 +161,6 @@ function Polygon(props: {
             }
           }}
         />
-        {isHovering && (
-          <Tooltip
-            offsetY={polygon.options.tooltipYOffset}
-            offsetX={polygon.options.tooltipXOffset}
-            tooltipContent={polygon.options.tooltip ? polygon.options.tooltip(polygon) : null}
-          />
-        )}
       </>
     );
   }

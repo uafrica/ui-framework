@@ -6,8 +6,6 @@ export interface IMarker {
     iconWidth: number;
     iconHeight: number;
     tooltip?: Function;
-    tooltipXOffset?: number;
-    tooltipYOffset?: number;
     isDraggable?: boolean;
   };
   onClick?: Function;

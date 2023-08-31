@@ -1,12 +1,14 @@
+import * as generalUtils from "../utils/generalUtils";
+import * as mapUtils from "./../utils/mapUtils";
 import _ from "lodash";
 import MapToolbar from "./MapToolbar";
 import Marker from "./Marker";
 import Polygon from "./Polygon";
+import Tooltip from "./Tooltip";
 import { Button } from "./../Button";
 import { DrawingManager, GoogleMap, Polyline } from "@react-google-maps/api";
 import { IMarker, IPolygon } from "./../interfaces";
-import { useEffect, useState } from "react";
-import * as mapUtils from "./../utils/mapUtils";
+import { useEffect, useRef, useState } from "react";
 
 function Map(props: {
   isReadOnly?: boolean;
@@ -50,13 +52,33 @@ function Map(props: {
     defaultZoom,
     mapOptions
   } = props;
+
   const snapDistanceThreshold = 30;
 
   let [map, setMap] = useState<any>();
+  let [mapId, setMapId] = useState<string>("");
   let [doSnap, setDoSnap] = useState<boolean>(false);
   let [center, setCenter] = useState(defaultCenter);
   let [isMapLoaded, setIsMapLoaded] = useState(false);
   let [options, setOptions] = useState({});
+  let [markerTooltipContent, setMarkerTooltipContent] = useState<any>(null);
+  let [polygonTooltipContent, setPolygonTooltipContent] = useState<any>(null);
+
+  let updateMarkerTooltipDebounced = useRef(
+    _.debounce((tooltipContent: any) => {
+      setMarkerTooltipContent(tooltipContent);
+    }, 100)
+  );
+  let updatePolygonTooltipDebounced = useRef(
+    _.debounce((tooltipContent: any) => {
+      setPolygonTooltipContent(tooltipContent);
+    }, 100)
+  );
+
+  useEffect(() => {
+    let mapId = `map_${generalUtils.generateRandomString(10)}`;
+    setMapId(mapId);
+  }, []);
 
   useEffect(() => {
     if (bounds && isMapLoaded) {
@@ -319,6 +341,16 @@ function Map(props: {
     return <Polyline path={antimeridian.path} options={antimeridian.options} />;
   }
 
+  function renderTooltip() {
+    return (
+      <Tooltip
+        show={markerTooltipContent ?? polygonTooltipContent}
+        content={markerTooltipContent ?? polygonTooltipContent}
+        mapId={mapId}
+      />
+    );
+  }
+
   function renderPolygons() {
     return (
       polygons &&
@@ -352,8 +384,16 @@ function Map(props: {
               if (props.onPolygonMouseOver) {
                 props.onPolygonMouseOver(e, polygon);
               }
+
+              let tooltipContent = polygon.options.tooltip
+                ? polygon.options.tooltip(polygon)
+                : null;
+
+              updatePolygonTooltipDebounced.current(tooltipContent);
             }}
             onMouseOut={(e: google.maps.PolyMouseEvent, polygon: IPolygon) => {
+              updatePolygonTooltipDebounced.current(null);
+
               if (props.onPolygonMouseOut) {
                 props.onPolygonMouseOut(e, polygon);
               }
@@ -381,13 +421,23 @@ function Map(props: {
 
     return Object.keys(markersGrouped).map(key => {
       let markerGroup = markersGrouped[key];
-
       return (
         <Marker
           key={key}
           markerGroup={markerGroup}
-          onMouseOver={() => {}}
-          onMouseOut={() => {}}
+          onMouseOver={() => {
+            let tooltipContent = markerGroup[0].options.tooltip
+              ? markerGroup[0].options.tooltip(markerGroup[0])
+              : null;
+            if (markerGroup.length > 1) {
+              tooltipContent = <div className="px-4 py-2">{markerGroup.length} marker items</div>;
+            }
+
+            updateMarkerTooltipDebounced.current(tooltipContent);
+          }}
+          onMouseOut={() => {
+            updateMarkerTooltipDebounced.current(null);
+          }}
           onDragEnd={(e: google.maps.MapMouseEvent, marker: IMarker) => {
             if (markerGroup[0].onDragEnd) {
               markerGroup[0].onDragEnd(e, marker);
@@ -399,8 +449,8 @@ function Map(props: {
   }
 
   function render() {
-    return (
-      <div className="relative">
+    return mapId ? (
+      <div className="relative" id={mapId}>
         <div className="absolute z-50 flex flex-row space-x-4 justify-between w-full p-4 items-center">
           <div className="flex flex-row space-x-4 items-center">
             {toolbarLeft && <div>{toolbarLeft}</div>}
@@ -511,8 +561,11 @@ function Map(props: {
           {renderPolygons()}
           {renderMarkers()}
           {renderAntimeridian()}
+          {renderTooltip()}
         </GoogleMap>
       </div>
+    ) : (
+      <></>
     );
   }
 
