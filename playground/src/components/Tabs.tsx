@@ -3,7 +3,6 @@ import { useEffect, useState, useRef } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import Modals from "./Modals";
 import Forms from "./Forms";
-import CornelScratchPad from "CornelScratchPad";
 import Tables from "./Tables";
 import Buttons from "./Buttons";
 import Utils from "./Utils";
@@ -41,7 +40,7 @@ function TabsPage() {
 
   return (
     <>
-      <PageHeading isUppercase={false}>Bob Group UI Component playground</PageHeading>
+      <PageHeading>Bob Group UI Component playground</PageHeading>
       <Tabs.Primary activeTabID={activeTabID} onSelect={(tabID: string) => onTabSelected(tabID)}>
         <Tabs.Tab tabID={"forms"} title={"Forms"}>
           <Forms />
@@ -57,9 +56,6 @@ function TabsPage() {
         </Tabs.Tab>
         <Tabs.Tab tabID={"utils"} title={"Utils"}>
           <Utils />
-        </Tabs.Tab>
-        <Tabs.Tab tabID={"cornel"} title={"Cornel's scratchpad"}>
-          <CornelScratchPad />
         </Tabs.Tab>
       </Tabs.Primary>
     </>

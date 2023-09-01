@@ -6,6 +6,7 @@ function withError<T>(Component: ComponentType<T>) {
   return (hocProps: T) => {
     return (
       <ErrorBoundary FallbackComponent={ErrorState}>
+        {/* @ts-ignore */}
         <Component {...hocProps} />
       </ErrorBoundary>
     );

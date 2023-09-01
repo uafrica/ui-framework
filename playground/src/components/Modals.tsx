@@ -28,83 +28,87 @@ function Modals() {
 
   function renderNestedModal() {
     return (
-      <Modal.Large show={nestedModal1} showCloseButton onHide={() => setNestedModal1(false)}>
-        <ModalActionsPanel title={"Large nested modal"}>
-          <div className={"flex items-center"}>
-            <Button.Primary title={"Button"} leftRounded={true} />
-            <Dropdown.Menu
-              color={"primary"}
-              borderColor={"primary"}
-              rightRounded={true}
-              buttonStyle={{ paddingTop: "5px", paddingBottom: "5px" }}
-            >
-              <Dropdown.MenuItem title={"Item 1"} onClick={() => {}} />
-            </Dropdown.Menu>
-          </div>
-        </ModalActionsPanel>
-        <Button.Primary
-          title="Open nested modal 2"
-          onClick={() => {
-            setNestedModal2(true);
-          }}
-        />
-        <Accordion title={"Some title"} caretColor={"red"}>
-          <div className="mt-4">Some content here</div>
-        </Accordion>
-
-        <Modal.Medium
-          show={nestedModal2}
-          showCloseButton
-          onHide={() => setNestedModal2(false)}
-          title="Nested modal 2"
-        >
+      nestedModal1 && (
+        <Modal.Large showCloseButton onHide={() => setNestedModal1(false)}>
+          <ModalActionsPanel title={"Large nested modal"}>
+            <div className={"flex items-center"}>
+              <Button.Primary title={"Button"} leftRounded={true} />
+              <Dropdown.Menu
+                color={"primary"}
+                borderColor={"primary"}
+                rightRounded={true}
+                buttonStyle={{ paddingTop: "5px", paddingBottom: "5px" }}
+              >
+                <Dropdown.MenuItem title={"Item 1"} onClick={() => {}} />
+              </Dropdown.Menu>
+            </div>
+          </ModalActionsPanel>
           <Button.Primary
-            title="Open nested modal 3"
+            title="Open nested modal 2"
             onClick={() => {
-              setNestedModal3(true);
+              setNestedModal2(true);
             }}
           />
-          <div className="mt-4">Some content here</div>
-          <Modal.Small
-            show={nestedModal3}
-            showCloseButton
-            onHide={() => setNestedModal3(false)}
-            title="Nested modal 3"
-          >
-            <div>Some content here</div>
+          <Accordion title={"Some title"} caretColor={"red"}>
+            <div className="mt-4">Some content here</div>
+          </Accordion>
 
-            <Modal.ButtonsPanel isFixed>
-              <Button.Cancel title="Cancel" onClick={() => setNestedModal3(false)} />
+          {nestedModal2 && (
+            <Modal.Medium
+              showCloseButton
+              onHide={() => setNestedModal2(false)}
+              title="Nested modal 2"
+            >
               <Button.Primary
-                title="Save"
-                loadingTitle="Saving"
-                isLoading={isLoading}
-                onClick={() => onCloseModal(1500, setNestedModal3)}
+                title="Open nested modal 3"
+                onClick={() => {
+                  setNestedModal3(true);
+                }}
               />
-            </Modal.ButtonsPanel>
-          </Modal.Small>
+              <div className="mt-4">Some content here</div>
+              {nestedModal3 && (
+                <Modal.Small
+                  showCloseButton
+                  onHide={() => setNestedModal3(false)}
+                  title="Nested modal 3"
+                >
+                  <div>Some content here</div>
+
+                  <Modal.ButtonsPanel isFixed>
+                    <Button.Cancel title="Cancel" onClick={() => setNestedModal3(false)} />
+                    <Button.Primary
+                      title="Save"
+                      loadingTitle="Saving"
+                      isLoading={isLoading}
+                      onClick={() => onCloseModal(1500, setNestedModal3)}
+                    />
+                  </Modal.ButtonsPanel>
+                </Modal.Small>
+              )}
+
+              <Modal.ButtonsPanel>
+                <Button.Cancel title="Cancel" onClick={() => setNestedModal2(false)} />
+                <Button.Primary
+                  title="Save"
+                  loadingTitle="Saving"
+                  isLoading={isLoading}
+                  onClick={() => onCloseModal(1500, setNestedModal2)}
+                />
+              </Modal.ButtonsPanel>
+            </Modal.Medium>
+          )}
 
           <Modal.ButtonsPanel>
-            <Button.Cancel title="Cancel" onClick={() => setNestedModal2(false)} />
+            <Button.Cancel title="Cancel" onClick={() => setNestedModal1(false)} />
             <Button.Primary
               title="Save"
               loadingTitle="Saving"
               isLoading={isLoading}
-              onClick={() => onCloseModal(1500, setNestedModal2)}
+              onClick={() => onCloseModal(1500, setNestedModal1)}
             />
           </Modal.ButtonsPanel>
-        </Modal.Medium>
-
-        <Modal.ButtonsPanel>
-          <Button.Cancel title="Cancel" onClick={() => setNestedModal1(false)} />
-          <Button.Primary
-            title="Save"
-            loadingTitle="Saving"
-            isLoading={isLoading}
-            onClick={() => onCloseModal(1500, setNestedModal1)}
-          />
-        </Modal.ButtonsPanel>
-      </Modal.Large>
+        </Modal.Large>
+      )
     );
   }
   return (
@@ -123,16 +127,16 @@ function Modals() {
           />
         ))}
       </PageActionsPanel>
-      <Modal.Medium
-        show={mediumModal}
-        showCloseButton
-        onHide={() => setMediumModal(false)}
-        title="Medium modal (with interface)"
-        disableClickOutsideToClose
-      >
-        <div>
-          <pre>
-            <code>{`
+      {mediumModal && (
+        <Modal.Medium
+          showCloseButton
+          onHide={() => setMediumModal(false)}
+          title="Medium modal (with interface)"
+          disableClickOutsideToClose
+        >
+          <div>
+            <pre>
+              <code>{`
             interface ISmallMediumModalProps {
                 show: boolean;
                 children: any;
@@ -147,45 +151,46 @@ function Modals() {
                 className?: string;
               }
             `}</code>
-          </pre>
-        </div>
-        <Modal.ButtonsPanel>
-          <Button.Cancel title="Cancel" onClick={() => setMediumModal(false)} />
-          <Button.Primary
-            title="Save"
-            loadingTitle="Saving"
-            isLoading={isLoading}
-            onClick={() => onCloseModal(1500, setMediumModal)}
-          />
-        </Modal.ButtonsPanel>
-      </Modal.Medium>
-      <Modal.Small
-        show={smallModal}
-        showCloseButton={false}
-        onHide={() => setSmallModal(false)}
-        title="Small modal"
-      >
-        <Modal.ButtonsPanel>
-          <Button.Cancel title="Cancel" onClick={() => setSmallModal(false)} />
-          <Button.Primary
-            title="Save"
-            loadingTitle="Saving"
-            isLoading={isLoading}
-            onClick={() => onCloseModal(1500, setSmallModal)}
-          />
-        </Modal.ButtonsPanel>
-      </Modal.Small>
-      <Modal.Large
-        show={largeModal}
-        showCloseButton
-        onHide={() => setLargeModal(false)}
-        title="Large modal (with code example)"
-      >
-        <div>
-          <pre>
-            <code>{`
+            </pre>
+          </div>
+          <Modal.ButtonsPanel>
+            <Button.Cancel title="Cancel" onClick={() => setMediumModal(false)} />
+            <Button.Primary
+              title="Save"
+              loadingTitle="Saving"
+              isLoading={isLoading}
+              onClick={() => onCloseModal(1500, setMediumModal)}
+            />
+          </Modal.ButtonsPanel>
+        </Modal.Medium>
+      )}
+      {smallModal && (
+        <Modal.Small
+          showCloseButton={false}
+          onHide={() => setSmallModal(false)}
+          title="Small modal"
+        >
+          <Modal.ButtonsPanel>
+            <Button.Cancel title="Cancel" onClick={() => setSmallModal(false)} />
+            <Button.Primary
+              title="Save"
+              loadingTitle="Saving"
+              isLoading={isLoading}
+              onClick={() => onCloseModal(1500, setSmallModal)}
+            />
+          </Modal.ButtonsPanel>
+        </Modal.Small>
+      )}
+      {largeModal && (
+        <Modal.Large
+          showCloseButton
+          onHide={() => setLargeModal(false)}
+          title="Large modal (with code example)"
+        >
+          <div>
+            <pre>
+              <code>{`
               <Modal.Large
-                show={largeModal}
                 closeButton
                 onHide={() => setLargeModal(false)}
                 title="Large modal"
@@ -202,18 +207,19 @@ function Modals() {
               </Modal.ButtonsPanel>
             </Modal.Large>
         `}</code>
-          </pre>
-        </div>
-        <Modal.ButtonsPanel>
-          <Button.Cancel title="Cancel" onClick={() => setLargeModal(false)} />
-          <Button.Primary
-            title="Save"
-            loadingTitle="Saving"
-            isLoading={isLoading}
-            onClick={() => onCloseModal(1500, setLargeModal)}
-          />
-        </Modal.ButtonsPanel>
-      </Modal.Large>
+            </pre>
+          </div>
+          <Modal.ButtonsPanel>
+            <Button.Cancel title="Cancel" onClick={() => setLargeModal(false)} />
+            <Button.Primary
+              title="Save"
+              loadingTitle="Saving"
+              isLoading={isLoading}
+              onClick={() => onCloseModal(1500, setLargeModal)}
+            />
+          </Modal.ButtonsPanel>
+        </Modal.Large>
+      )}
 
       {renderNestedModal()}
     </div>

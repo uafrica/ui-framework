@@ -8,7 +8,7 @@ import {
   Select,
   Dropdown,
   Radio,
-  Textarea,
+  TextArea,
   Button,
   Checkbox
 } from "../../../src";
@@ -131,7 +131,7 @@ function Forms() {
 
   const TextareaField = () => (
     <div className="max-w-md my-4">
-      <Textarea label={"Textarea"} />
+      <TextArea label={"Textarea"} />
     </div>
   );
 
