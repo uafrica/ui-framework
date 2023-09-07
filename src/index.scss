@@ -1,12 +1,14 @@
 @tailwind components;
+
 @layer components {
   // common utility patterns
 
   .u-focus {
-    @apply focus:outline-none focus:ring-1 focus:ring-primary;
+    @apply focus: outline-none focus:ring-1 focus:ring-primary;
   }
+
   .u-button {
-    @apply inline-flex justify-center items-center px-5 py-2 border leading-4 font-medium rounded-full shadow-sm focus:outline-none;
+    @apply inline-flex justify-center items-center px-5 py-2 border leading-4 font-medium rounded-full shadow-sm focus: outline-none;
   }
 
   .u-label-text {
@@ -14,15 +16,17 @@
   }
 
   .u-panel {
-    @apply flex justify-between flex-col md:flex-row items-start md:items-center z-30;
+    @apply flex justify-between flex-col md: flex-row items-start md:items-center z-30;
   }
 
   .u-horizontal-center {
     @apply flex justify-center;
   }
+
   .u-vertical-center {
     @apply flex items-center;
   }
+
   .u-center {
     @apply flex items-center justify-center;
   }
@@ -33,7 +37,7 @@
 
   .u-reverse-flex-col-to-row {
     // content displayed in column in reverse order on xs screens. on sm and larger display content in normal order in row
-    @apply flex flex-col-reverse sm:flex-row space-y-4 sm:space-y-0 space-y-reverse space-x-0 sm:space-x-4;
+    @apply flex flex-col-reverse sm: flex-row space-y-4 sm:space-y-0 space-y-reverse space-x-0 sm:space-x-4;
   }
 }
 
@@ -46,6 +50,7 @@
     transition: max-width 1s;
     max-width: 0;
   }
+
   .nav-item-text {
     display: none;
   }
@@ -56,6 +61,7 @@
     transition: max-width 1s;
     max-width: 300px;
   }
+
   .nav-item-text {
     white-space: nowrap;
     overflow: hidden;
@@ -65,6 +71,7 @@
 
 // INPUT
 .no-arrows {
+
   // remove arrows from number input
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
@@ -106,6 +113,7 @@
     max-height: calc(100vh - 90px) !important;
     max-width: calc(95vw) !important;
   }
+
   .save-panel {
     width: calc(100% + 3rem);
     margin-left: -1.5rem;
@@ -145,12 +153,14 @@
   width: 850px;
   max-width: calc(95vw) !important;
 }
+
 .small-modal {
   width: 450px;
   max-width: calc(95vw) !important;
 }
 
 .time-picker {
+
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -162,11 +172,11 @@
   }
 }
 
-.ua-filters-panel > * {
+.ua-filters-panel>* {
   margin-right: 1rem;
 }
 
-.ua-filters-panel > *:nth-child(1) {
+.ua-filters-panel>*:nth-child(1) {
   margin-right: 1rem !important;
 }
 
@@ -177,17 +187,18 @@
       max-width: calc(98vw) !important;
     }
   }
+
   .save-panel {
     left: 0px;
     width: 100%;
   }
 
-  .ua-page-actions-panel-children > * {
+  .ua-page-actions-panel-children>* {
     margin-bottom: 0.5rem;
     margin-top: 0.5rem;
   }
 
-  .ua-filters-panel > * {
+  .ua-filters-panel>* {
     margin-bottom: 0.5rem;
     margin-top: 0.5rem;
     margin-left: 0;
@@ -207,6 +218,7 @@
   text-align: center !important;
   border-radius: 0 !important;
 }
+
 .input-counter::-webkit-outer-spin-button,
 .input-counter::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -228,6 +240,7 @@
   0% {
     -webkit-transform: rotate(0deg);
   }
+
   100% {
     -webkit-transform: rotate(360deg);
   }
@@ -237,6 +250,7 @@
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
@@ -282,4 +296,8 @@
 .total-pages {
   box-sizing: border-box;
   margin-left: 5px;
+}
+
+.map-tooltip {
+  font-family: 'Montserrat';
 }

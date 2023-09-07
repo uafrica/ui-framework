@@ -506,7 +506,9 @@ function Map(props: {
       (markerTooltipContent || polygonTooltipContent) && (
         <InfoWindow
           options={{ disableAutoPan: tooltipMode !== "click" }}
-          children={markerTooltipContent || polygonTooltipContent}
+          children={
+            <div className="map-tooltip">{markerTooltipContent || polygonTooltipContent}</div>
+          }
           position={tooltipCoordinates}
           onCloseClick={hideTooltip}
         ></InfoWindow>
