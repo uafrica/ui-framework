@@ -10,6 +10,7 @@ function Polygon(props: {
   onClick?: Function;
   onMouseOver: Function;
   onMouseOut: Function;
+  onMouseMove?: Function;
   editable: boolean;
   onPolygonUpdated: Function;
   snapPointToPolygon: Function;
@@ -158,6 +159,11 @@ function Polygon(props: {
                   }
                 }
               }
+            }
+          }}
+          onMouseMove={(e: google.maps.PolyMouseEvent) => {
+            if (props.onMouseMove) {
+              props.onMouseMove(e, polygon);
             }
           }}
         />

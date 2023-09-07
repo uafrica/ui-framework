@@ -19,6 +19,9 @@ function Marker(props: {
     if (marker.onClick) {
       marker.onClick(e, marker);
     }
+    if (props.onClick) {
+      props.onClick(e, marker);
+    }
   }
 
   function renderMultipleMarkersModal() {

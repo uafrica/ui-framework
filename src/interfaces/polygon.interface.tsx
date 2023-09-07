@@ -10,9 +10,8 @@ export interface IPolygon {
     fillOpacity?: number;
     editable?: boolean;
     tooltip?: Function;
-    tooltipXOffset?: number;
-    tooltipYOffset?: number;
-    isEditable?: Function
+    isEditable?: Function;
+    tooltipMode?: "click" | "hover";
   };
-  onClick?: Function
+  onClick?: Function;
 }

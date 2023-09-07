@@ -1,13 +1,12 @@
 import * as generalUtils from "../utils/generalUtils";
-import * as mapUtils from "./../utils/mapUtils";
+import * as mapUtils from "../utils/mapUtils";
 import _ from "lodash";
 import MapToolbar from "./MapToolbar";
 import Marker from "./Marker";
 import Polygon from "./Polygon";
-import Tooltip from "./Tooltip";
-import { Button } from "./../Button";
-import { DrawingManager, GoogleMap, Polyline } from "@react-google-maps/api";
-import { IMarker, IPolygon } from "./../interfaces";
+import { Button } from "../Button";
+import { DrawingManager, GoogleMap, InfoWindow, Polyline } from "@react-google-maps/api";
+import { IMarker, IPolygon } from "../interfaces";
 import { useEffect, useRef, useState } from "react";
 
 function Map(props: {
@@ -63,6 +62,8 @@ function Map(props: {
   let [options, setOptions] = useState({});
   let [markerTooltipContent, setMarkerTooltipContent] = useState<any>(null);
   let [polygonTooltipContent, setPolygonTooltipContent] = useState<any>(null);
+  let [tooltipMode, setTooltipMode] = useState<"click" | "hover">("click");
+  let [tooltipCoordinates, setTooltipCoordinates] = useState<any>();
 
   let updateMarkerTooltipDebounced = useRef(
     _.debounce((tooltipContent: any) => {
@@ -229,7 +230,7 @@ function Map(props: {
   function latLngToPixel(latLng: google.maps.LatLng) {
     var scale = Math.pow(2, map.getZoom());
     var projection = map.getProjection();
-    var bounds = map.getBounds();
+    var bounds: google.maps.LatLngBounds = map.getBounds();
     var nw = projection.fromLatLngToPoint(
       new google.maps.LatLng(bounds.getNorthEast().lat(), bounds.getSouthWest().lng())
     );
@@ -313,6 +314,26 @@ function Map(props: {
     }
   }
 
+  function hideTooltip() {
+    updateMarkerTooltipDebounced.current(null);
+    updatePolygonTooltipDebounced.current(null);
+  }
+
+  function calculateTooltipCoordinates(baseCoordinates: { lat?: number; lng?: number }) {
+    if (baseCoordinates.lat && baseCoordinates.lng) {
+      let bounds: google.maps.LatLngBounds = map.getBounds();
+      let northEast = bounds.getNorthEast();
+      let southWest = bounds.getSouthWest();
+
+      let latModifier = ((southWest.lat() - northEast.lat()) / 100) * 2;
+
+      setTooltipCoordinates({
+        lat: baseCoordinates.lat - latModifier,
+        lng: baseCoordinates.lng
+      });
+    }
+  }
+
   function renderAntimeridian() {
     const lineSymbol = {
       path: "M 0,-1 0,1",
@@ -339,16 +360,6 @@ function Map(props: {
     };
 
     return <Polyline path={antimeridian.path} options={antimeridian.options} />;
-  }
-
-  function renderTooltip() {
-    return (
-      <Tooltip
-        show={markerTooltipContent ?? polygonTooltipContent}
-        content={markerTooltipContent ?? polygonTooltipContent}
-        mapId={mapId}
-      />
-    );
   }
 
   function renderPolygons() {
@@ -379,8 +390,17 @@ function Map(props: {
                   props.onPolygonClicked(e, polygon);
                 }
               }
+              if (polygon.options.tooltipMode === "click") {
+                let tooltipContent = polygon.options.tooltip
+                  ? polygon.options.tooltip(polygon)
+                  : null;
+                calculateTooltipCoordinates({ lat: e.latLng?.lat(), lng: e.latLng?.lng() });
+                setTooltipMode("click");
+                updatePolygonTooltipDebounced.current(tooltipContent);
+              }
             }}
-            onMouseOver={(e: google.maps.PolyMouseEvent, polygon: IPolygon) => {
+            onMouseOver={() => {}}
+            onMouseMove={(e: google.maps.PolyMouseEvent, polygon: IPolygon) => {
               if (props.onPolygonMouseOver) {
                 props.onPolygonMouseOver(e, polygon);
               }
@@ -389,13 +409,20 @@ function Map(props: {
                 ? polygon.options.tooltip(polygon)
                 : null;
 
-              updatePolygonTooltipDebounced.current(tooltipContent);
+              if (polygon.options.tooltipMode === "hover" || !polygon.options.tooltipMode) {
+                calculateTooltipCoordinates({ lat: e.latLng?.lat(), lng: e.latLng?.lng() });
+                setTooltipMode("hover");
+                updatePolygonTooltipDebounced.current(tooltipContent);
+              }
             }}
             onMouseOut={(e: google.maps.PolyMouseEvent, polygon: IPolygon) => {
               updatePolygonTooltipDebounced.current(null);
 
               if (props.onPolygonMouseOut) {
                 props.onPolygonMouseOut(e, polygon);
+              }
+              if (polygon.options.tooltipMode === "hover" || !polygon.options.tooltipMode) {
+                updatePolygonTooltipDebounced.current(null);
               }
             }}
             onPolygonUpdated={(polygon: IPolygon) => {
@@ -421,10 +448,22 @@ function Map(props: {
 
     return Object.keys(markersGrouped).map(key => {
       let markerGroup = markersGrouped[key];
+      let tooltipContent = markerGroup[0].options.tooltip
+        ? markerGroup[0].options.tooltip(markerGroup[0], hideTooltip)
+        : null;
+
       return (
         <Marker
           key={key}
           markerGroup={markerGroup}
+          onClick={() => {
+            if (markerGroup[0].options.tooltipMode === "click") {
+              calculateTooltipCoordinates(markerGroup[0].coordinates);
+              setTooltipMode("click");
+
+              updateMarkerTooltipDebounced.current(tooltipContent);
+            }
+          }}
           onMouseOver={() => {
             let tooltipContent = markerGroup[0].options.tooltip
               ? markerGroup[0].options.tooltip(markerGroup[0])
@@ -433,10 +472,23 @@ function Map(props: {
               tooltipContent = <div className="px-4 py-2">{markerGroup.length} marker items</div>;
             }
 
-            updateMarkerTooltipDebounced.current(tooltipContent);
+            if (
+              markerGroup[0].options.tooltipMode === "hover" ||
+              !markerGroup[0].options.tooltipMode
+            ) {
+              calculateTooltipCoordinates({ ...markerGroup[0].coordinates });
+              setTooltipMode("hover");
+
+              updateMarkerTooltipDebounced.current(tooltipContent);
+            }
           }}
           onMouseOut={() => {
-            updateMarkerTooltipDebounced.current(null);
+            if (
+              markerGroup[0].options.tooltipMode === "hover" ||
+              !markerGroup[0].options.tooltipMode
+            ) {
+              updateMarkerTooltipDebounced.current(null);
+            }
           }}
           onDragEnd={(e: google.maps.MapMouseEvent, marker: IMarker) => {
             if (markerGroup[0].onDragEnd) {
@@ -446,6 +498,20 @@ function Map(props: {
         />
       );
     });
+  }
+
+  function renderTooltip() {
+    return (
+      tooltipCoordinates &&
+      (markerTooltipContent || polygonTooltipContent) && (
+        <InfoWindow
+          options={{ disableAutoPan: tooltipMode !== "click" }}
+          children={markerTooltipContent || polygonTooltipContent}
+          position={tooltipCoordinates}
+          onCloseClick={hideTooltip}
+        ></InfoWindow>
+      )
+    );
   }
 
   function render() {
