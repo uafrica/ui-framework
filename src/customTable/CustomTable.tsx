@@ -347,43 +347,47 @@ function CustomTable(props: {
   }
 
   function dragColumnMouseUpHandler() {
-    let table = document.getElementById(props.id);
-    if (table) {
-      placeholder && placeholder.parentNode?.removeChild(placeholder);
-      setPlaceholder(placeholder);
-      draggingElement?.classList.remove("dragging");
-      draggingElement?.classList.remove("dragging-column");
-      draggingElement?.style.removeProperty("top");
-      draggingElement?.style.removeProperty("left");
-      draggingElement?.style.removeProperty("position");
-      setDraggingElement(draggingElement);
-      // @ts-ignore
-      let endColumnIndex = [].slice.call(list.children).indexOf(draggingElement);
-      isDraggingStarted = false;
-      setIsDraggingStarted(false);
-      list.parentNode?.removeChild(list);
-      setList(list);
-      table.querySelectorAll("tr").forEach(function (row) {
-        let cells = [].slice.call(row.querySelectorAll("th, td"));
-        draggingColumnIndex > endColumnIndex
-          ? // @ts-ignore
-            cells[endColumnIndex].parentNode.insertBefore(
-              cells[draggingColumnIndex],
-              cells[endColumnIndex]
-            )
-          : // @ts-ignore
-            cells[endColumnIndex].parentNode.insertBefore(
-              cells[draggingColumnIndex],
-              // @ts-ignore
-              cells[endColumnIndex].nextSibling
-            );
-      });
-      table.style.removeProperty("visibility");
-      updateColumnOrder();
-      document.removeEventListener("mousemove", dragColumnMouseMoveHandler);
-      document.removeEventListener("mouseup", dragColumnMouseUpHandler);
-      setDraggingColumnIndex(undefined);
-      setColumnEventListenersAdded(false);
+    try {
+      let table = document.getElementById(props.id);
+      if (table) {
+        placeholder && placeholder.parentNode?.removeChild(placeholder);
+        setPlaceholder(placeholder);
+        draggingElement?.classList.remove("dragging");
+        draggingElement?.classList.remove("dragging-column");
+        draggingElement?.style.removeProperty("top");
+        draggingElement?.style.removeProperty("left");
+        draggingElement?.style.removeProperty("position");
+        setDraggingElement(draggingElement);
+        // @ts-ignore
+        let endColumnIndex = [].slice.call(list.children).indexOf(draggingElement);
+        isDraggingStarted = false;
+        setIsDraggingStarted(false);
+        list.parentNode?.removeChild(list);
+        setList(list);
+        table.querySelectorAll("tr").forEach(function (row) {
+          let cells = [].slice.call(row.querySelectorAll("th, td"));
+          draggingColumnIndex > endColumnIndex
+            ? // @ts-ignore
+              cells[endColumnIndex].parentNode.insertBefore(
+                cells[draggingColumnIndex],
+                cells[endColumnIndex]
+              )
+            : // @ts-ignore
+              cells[endColumnIndex].parentNode.insertBefore(
+                cells[draggingColumnIndex],
+                // @ts-ignore
+                cells[endColumnIndex].nextSibling
+              );
+        });
+        table.style.removeProperty("visibility");
+        updateColumnOrder();
+        document.removeEventListener("mousemove", dragColumnMouseMoveHandler);
+        document.removeEventListener("mouseup", dragColumnMouseUpHandler);
+        setDraggingColumnIndex(undefined);
+        setColumnEventListenersAdded(false);
+      }
+    } catch (e) {
+      console.log(e);
     }
   }
 
