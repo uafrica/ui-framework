@@ -40,6 +40,7 @@ interface IBase {
   isDisabled?: boolean;
   disableSearch?: boolean;
   placeholder?: any;
+  customSelectionValue?: any; // overrides placeholder and other selection text
   isMultiSelection?: boolean;
   buttons?: any; // If you want an add option buttons to the bottom of the list, add Button.Link elements
   onDelete?: (label: any, value: any) => void; // Renders a delete button next to each option
@@ -60,6 +61,7 @@ function GroupedSelect(props: IGroupedSelect) {
     isDisabled,
     id,
     placeholder,
+    customSelectionValue,
     popoverWidth,
     value,
     optionGroups,
@@ -426,7 +428,8 @@ function GroupedSelect(props: IGroupedSelect) {
                           id={id}
                         >
                           <span className="block truncate" data-test={dataTest}>
-                            {labelWithValue ? labelWithValue : placeholder}
+                            {customSelectionValue ??
+                              (labelWithValue ? labelWithValue : placeholder)}
                           </span>
                           <span className="absolute inset-y-0 right-0 u-vertical-center pr-2 pointer-events-none">
                             <FontAwesomeIcon

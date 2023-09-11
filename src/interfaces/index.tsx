@@ -3,5 +3,6 @@ import { IGenericUser } from "./genericUser.interface";
 import { IMarker } from "./marker.interface";
 import { INavItem } from "./navitem.interface";
 import { IPolygon } from "./polygon.interface";
+import { ICountry } from "./country.interface";
 
-export type { IGenericRole, IGenericUser, IMarker, INavItem, IPolygon };
+export type { IGenericRole, IGenericUser, IMarker, INavItem, IPolygon, ICountry };
