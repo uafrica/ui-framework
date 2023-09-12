@@ -19,6 +19,7 @@ function MobileNumberSelect(props: {
   validation?: any;
   isRequired?: boolean;
   mobileNumberRegex?: boolean;
+  showAsterisk?: boolean;
 }) {
   let {
     allowedCountryCodes,
@@ -31,7 +32,8 @@ function MobileNumberSelect(props: {
     name,
     validation,
     isRequired,
-    mobileNumberRegex
+    mobileNumberRegex,
+    showAsterisk
   } = props;
 
   const shouldValidate = validation && name;
@@ -125,6 +127,7 @@ function MobileNumberSelect(props: {
             onChange={onCountryChanged}
           />
           <Input
+            showAsterisk={showAsterisk}
             name={name}
             isReadOnly={isReadOnly}
             containerClassName="w-full"
