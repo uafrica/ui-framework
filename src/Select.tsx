@@ -220,7 +220,7 @@ function GroupedSelect(props: IGroupedSelect) {
                       (option.disabled === true ? " text-gray-500 " : "")
                     }
                   >
-                    {option.label}
+                    {option.labelCustomHTML ?? option.label}
                   </span>
 
                   {selected ? (

@@ -4,6 +4,7 @@ import { ICountry } from "./interfaces/country.interface";
 import { Input } from "./Input";
 import { Label } from "./Label";
 import { useEffect, useState } from "react";
+import { Message } from "./Message";
 
 function MobileNumberSelect(props: {
   allowedCountryCodes?: string[];
@@ -12,8 +13,29 @@ function MobileNumberSelect(props: {
   onChange?: Function;
   value?: any;
   isReadOnly?: boolean;
+  validationError?: any;
+  errorMessage?: any;
+  name?: string;
+  validation?: any;
+  isRequired?: boolean;
+  mobileNumberRegex?: boolean;
 }) {
-  let { allowedCountryCodes, value, label, defaultCountryCode, isReadOnly } = props;
+  let {
+    allowedCountryCodes,
+    value,
+    label,
+    defaultCountryCode,
+    isReadOnly,
+    validationError,
+    errorMessage,
+    name,
+    validation,
+    isRequired,
+    mobileNumberRegex
+  } = props;
+
+  const shouldValidate = validation && name;
+  const validationRegex = /^\d{9}$/;
 
   const validCountries: ICountry[] = allowedCountryCodes
     ? countryUtils.getAllCountriesInListOfCodes(allowedCountryCodes)
@@ -69,6 +91,15 @@ function MobileNumberSelect(props: {
         }
       }
     }
+
+    if (mobileNumber.indexOf("0") === 0) {
+      // mobile number should not start with 0 anymore
+      mobileNumber = mobileNumber.slice(1);
+    }
+
+    if (shouldValidate) {
+      validation.setValue(name, mobileNumber);
+    }
     return { number: mobileNumber, country: mobileNumberCountry };
   }
 
@@ -83,8 +114,8 @@ function MobileNumberSelect(props: {
 
   function render() {
     return (
-      <div>
-        {label && <Label noMargin>{label}</Label>}
+      <div className="mt-4">
+        {label && <Label>{label}</Label>}
         <div className="flex flex-row space-x-4">
           <CountrySelect
             isReadOnly={isReadOnly}
@@ -94,20 +125,41 @@ function MobileNumberSelect(props: {
             onChange={onCountryChanged}
           />
           <Input
+            name={name}
             isReadOnly={isReadOnly}
             containerClassName="w-full"
             disableNumericInputScroll
-            hideArrows
-            type="number"
             prependPadding="pl-14"
             prependTextSize="text-base"
             isLabelInline
             prependText={selectedCountry?.dialCode}
-            value={mobileNumber ?? ""}
+            value={shouldValidate ? undefined : mobileNumber ?? ""}
+            defaultValue={shouldValidate ? value : undefined}
             onChange={(e: any) => {
               setMobileNumber(e.target.value);
             }}
+            register={
+              validation &&
+              validation.register({
+                required: {
+                  value: isRequired,
+                  message: "This field is required"
+                },
+                pattern: {
+                  value: mobileNumberRegex ?? validationRegex,
+                  message: "Invalid mobile number"
+                }
+              })
+            }
           />
+        </div>
+        <div>
+          {validationError &&
+            (errorMessage ? (
+              <Message.Error>{errorMessage}</Message.Error>
+            ) : (
+              <Message.Error>{validationError.message}</Message.Error>
+            ))}
         </div>
       </div>
     );
