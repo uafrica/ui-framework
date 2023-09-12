@@ -128,7 +128,7 @@ function MobileNumberSelect(props: {
         <div className="flex flex-row space-x-4">
           <CountrySelect
             isReadOnly={isReadOnly}
-            containerClassName="w-16"
+            containerClassName={selectedCountry? "w-16": "w-24"}
             allowedCountryCodes={allowedCountryCodes}
             value={selectedCountry?.code}
             onChange={onCountryChanged}

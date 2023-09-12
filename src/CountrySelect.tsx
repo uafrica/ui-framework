@@ -140,7 +140,7 @@ function CountrySelect(props: {
       <div>
         <div className={containerClassName ?? ""}>
           <Select
-            isDisabled={isReadOnly || allowedCountryCodes?.length === 1}
+            isDisabled={isReadOnly}
             noMargin
             label={label}
             allowDeselect={allowDeselect}
