@@ -117,7 +117,14 @@ function MobileNumberSelect(props: {
   function render() {
     return (
       <div className="mt-4">
-        {label && <Label>{label}</Label>}
+        {label && (
+          <Label>
+            <span className="inline-block whitespace-nowrap">
+              {label}
+              {showAsterisk && " *"}
+            </span>
+          </Label>
+        )}
         <div className="flex flex-row space-x-4">
           <CountrySelect
             isReadOnly={isReadOnly}
@@ -127,7 +134,6 @@ function MobileNumberSelect(props: {
             onChange={onCountryChanged}
           />
           <Input
-            showAsterisk={showAsterisk}
             name={name}
             isReadOnly={isReadOnly}
             containerClassName="w-full"
