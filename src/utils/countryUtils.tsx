@@ -333,10 +333,18 @@ function getCountryByDialCode(dialCode: string): ICountry | null {
   }
 }
 
+function isValidCountryDialCode(value: string): boolean {
+  let filteredCountries = countries.filter((country: ICountry) => {
+    return country.dialCode === value;
+  });
+
+  return filteredCountries.length > 0;
+}
 export {
   getAllCountries,
   getAllCountriesInListOfCodes,
   getCountryByName,
   getCountryByCode,
-  getCountryByDialCode
+  getCountryByDialCode,
+  isValidCountryDialCode
 };
