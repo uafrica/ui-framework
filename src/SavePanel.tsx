@@ -1,3 +1,4 @@
+import React from "react";
 import { Button } from "./Button";
 
 // Interface
@@ -29,13 +30,13 @@ function SavePanel(props: ISavePanel) {
     saveDisabledText,
     saveText,
     cancelText,
-    className
+    className,
   } = props;
 
   return (
     <div
       className={
-        "save-panel z-20 py-4 px-4 shadow-inner fixed bottom-0 bg-white justify-between u-vertical-center " +
+        "save-panel z-20 py-4 px-4 shadow-inner fixed bottom-0 bg-white justify-between  flex items-center  " +
         (className ? className : "")
       }
     >
@@ -44,7 +45,9 @@ function SavePanel(props: ISavePanel) {
           `flex ${
             props.callToActionAtBottom ? "flex-col" : "flex-col-reverse "
           } sm:flex-row my-1 w-full ` +
-          (!(!isSavingChanges && props.cancelChanges) ? "justify-end" : "justify-between")
+          (!(!isSavingChanges && props.cancelChanges)
+            ? "justify-end"
+            : "justify-between")
         }
       >
         {!isSavingChanges && props.cancelChanges && (
@@ -59,16 +62,28 @@ function SavePanel(props: ISavePanel) {
         )}
         <div className="flex flex-col sm:flex-row sm:space-x-4 mr-2 ml-2 sm:ml-0 justify-end mt-4 sm:mt-0 space-y-4 sm:space-y-0">
           {saveError && (
-            <div className="inline-error flex flex-wrap self-center text-center">{saveError}</div>
+            <div className="inline-error flex flex-wrap self-center text-center">
+              {saveError}
+            </div>
           )}
           <Button.Primary
             className="sm:w-auto w-full"
             id="save_button"
             onClick={props.saveChanges}
-            isDisabled={isSavingChanges || !hasSomethingChanged || Boolean(saveDisabledText)}
+            isDisabled={
+              isSavingChanges ||
+              !hasSomethingChanged ||
+              Boolean(saveDisabledText)
+            }
             hoverTitle={saveDisabledText}
             isLoading={isSavingChanges}
-            title={isSaved && !hasSomethingChanged ? "Saved" : saveText ? saveText : "Save"}
+            title={
+              isSaved && !hasSomethingChanged
+                ? "Saved"
+                : saveText
+                ? saveText
+                : "Save"
+            }
             icon={isSaved && !hasSomethingChanged ? "check" : undefined}
             loadingTitle="Saving"
           />

@@ -1,4 +1,5 @@
 import ContentLoader from "react-content-loader";
+import React from "react";
 
 function ShipmentLoader() {
   return (
@@ -21,7 +22,7 @@ function ShipmentLoader() {
 }
 
 const SkeletonLoader = {
-  ShipmentLoader
+  ShipmentLoader,
 };
 
 export default SkeletonLoader;

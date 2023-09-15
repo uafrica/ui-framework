@@ -1,6 +1,7 @@
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Label } from "./Label";
 import { Input } from "./Input";
+import { Label } from "./Label";
 import { useState } from "react";
 
 interface ICounterProps {
@@ -36,7 +37,7 @@ function Counter(props: ICounterProps) {
     isLabelInline,
     label,
     htmlFor,
-    labelClassName
+    labelClassName,
   } = props;
 
   if (step === undefined) {
@@ -45,8 +46,10 @@ function Counter(props: ICounterProps) {
 
   const [inputValue, setInputValue] = useState(value ? value : 0);
 
-  let decreaseDisabled = (min !== undefined && inputValue - step < min) || isDisabled;
-  let increaseDisabled = (max !== undefined && inputValue + step > max) || isDisabled;
+  let decreaseDisabled =
+    (min !== undefined && inputValue - step < min) || isDisabled;
+  let increaseDisabled =
+    (max !== undefined && inputValue + step > max) || isDisabled;
 
   return (
     <div
@@ -54,18 +57,22 @@ function Counter(props: ICounterProps) {
         containerClassName
           ? containerClassName
           : isLabelInline
-          ? "u-vertical-center flex-row space-x-4"
+          ? " flex items-center  flex-row space-x-4"
           : "mt-4 max-w-sm"
       }
     >
       {label && label.length > 0 && (
         <div className="flex justify-between">
-          <Label htmlFor={htmlFor} className={labelClassName} noMargin={isLabelInline}>
+          <Label
+            htmlFor={htmlFor}
+            className={labelClassName}
+            noMargin={isLabelInline}
+          >
             {label}
           </Label>
         </div>
       )}
-      <div className="u-vertical-center flex-row w-full">
+      <div className=" flex items-center  flex-row w-full">
         <div
           style={{ height: "37px" }}
           className={

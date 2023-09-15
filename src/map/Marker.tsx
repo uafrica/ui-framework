@@ -1,8 +1,8 @@
+import React, { memo, useState } from "react";
+import { Button } from "./../Button";
 import { IMarker } from "./../interfaces";
 import { Marker as GoogleMapsMarker } from "@react-google-maps/api";
-import { memo, useState } from "react";
 import { Modal } from "./../Modal";
-import { Button } from "./../Button";
 
 function Marker(props: {
   markerGroup: IMarker[];
@@ -13,7 +13,8 @@ function Marker(props: {
 }) {
   let { markerGroup } = props;
 
-  let [showMultipleMarkersModal, setShowMultipleMarkersModal] = useState<boolean>(false);
+  let [showMultipleMarkersModal, setShowMultipleMarkersModal] =
+    useState<boolean>(false);
 
   function onMarkerClicked(e: any, marker: IMarker) {
     if (marker.onClick) {
@@ -37,7 +38,11 @@ function Marker(props: {
           {markerGroup.map((marker, index: number) => {
             return (
               <div
-                className={marker.onClick ? "cursor-pointer hover:bg-gray-100 rounded-md" : ""}
+                className={
+                  marker.onClick
+                    ? "cursor-pointer hover:bg-gray-100 rounded-md"
+                    : ""
+                }
                 key={index}
                 onClick={(e: any) => {
                   onMarkerClicked(e, marker);
@@ -97,7 +102,7 @@ function Marker(props: {
                     markerGroup[0].options.iconHeight
                   )
                 )
-              : undefined
+              : undefined,
           }}
         ></GoogleMapsMarker>
 

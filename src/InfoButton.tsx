@@ -1,9 +1,9 @@
 import React, { useRef } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Manager, Reference, Popper } from "react-popper";
-import { createContext, useEffect, useState, ReactNode } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconName } from "@fortawesome/free-solid-svg-icons";
+import { Manager, Popper, Reference } from "react-popper";
 
 interface IInfoButton {
   placement?:
@@ -36,7 +36,7 @@ function InfoButton(props: IInfoButton) {
           <Reference>
             {({ ref }) => (
               <div
-                className="u-center w-full bg-white font-medium text-primary hover:bg-primary-50 focus:outline-none rounded-full cursor-pointer"
+                className=" flex items-center justify-center  w-full bg-white font-medium text-primary hover:bg-primary-50 focus:outline-none rounded-full cursor-pointer"
                 ref={ref}
                 onClick={(e: any) => {
                   e.stopPropagation();
@@ -51,12 +51,15 @@ function InfoButton(props: IInfoButton) {
             )}
           </Reference>
           <Portal>
-            <Popper placement={placement} innerRef={node => (popupNode.current = node)}>
+            <Popper
+              placement={placement}
+              innerRef={(node) => (popupNode.current = node)}
+            >
               {({ ref, style }) =>
                 ctxValue.isVisible ? (
                   <div
                     className={
-                      "info-popover z-50 origin-top-right absolute font-normal p-4 w-80 rounded-md shadow-md bg-white divide-y u-black-ring divide-gray-100 focus:outline-none"
+                      "info-popover z-50 origin-top-right absolute font-normal p-4 w-80 rounded-md shadow-md bg-white divide-y  ring-1 ring-black ring-opacity-5  divide-gray-100 focus:outline-none"
                     }
                     // @ts-ignore
                     style={style}
@@ -93,7 +96,7 @@ interface InfoButtonContextType {
 
 const InfoButtonCtx = createContext<InfoButtonContextType>({
   isVisible: false,
-  showInfo: () => {}
+  showInfo: () => {},
 });
 
 export function useInfoButtonCtx(
@@ -121,6 +124,6 @@ export function useInfoButtonCtx(
 
   return {
     isVisible,
-    showInfo: () => setVisible(!isVisible)
+    showInfo: () => setVisible(!isVisible),
   };
 }

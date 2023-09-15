@@ -1,8 +1,8 @@
 import * as numberUtils from "./numberUtils";
-import { Loader } from "./../Loader";
-
-import { Link } from "react-router-dom";
 import moment from "moment";
+import React from "react";
+import { Link } from "react-router-dom";
+import { Loader } from "./../Loader";
 
 function getTableCountString(
   label: string,
@@ -18,7 +18,10 @@ function getTableCountString(
     displayString = selectedCount + " selected";
   } else if (dataArray && dataArray.length > 0) {
     let recordsCountFrom = page * lastTableState.pageSize + 1;
-    let recordsCountTo = Math.min(totalCount, recordsCountFrom + lastTableState.pageSize - 1);
+    let recordsCountTo = Math.min(
+      totalCount,
+      recordsCountFrom + lastTableState.pageSize - 1
+    );
 
     if (recordsCountTo === 0 || !recordsCountTo) {
       return <div />;
@@ -284,5 +287,5 @@ export {
   linkableTableRow,
   getTableCountDiv,
   getTableCountDivWithDateRangeIndication,
-  getTableCountString
+  getTableCountString,
 };

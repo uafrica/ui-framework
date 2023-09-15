@@ -1,3 +1,4 @@
+import React from "react";
 import { Label } from "./Label";
 
 interface IRadioButtonProps {
@@ -34,7 +35,7 @@ function Button(props: IRadioButtonProps) {
     labelLeft,
     labelRight,
     name,
-    isChecked
+    isChecked,
   } = props;
 
   function selectOption() {
@@ -57,7 +58,7 @@ function Button(props: IRadioButtonProps) {
         }}
         className={
           (isDisabled ? "text-gray-500 " : "text-base cursor-pointer ") +
-          " u-vertical-center " +
+          "  flex items-center  " +
           (labelClassName ? labelClassName : "")
         }
       >
@@ -69,13 +70,17 @@ function Button(props: IRadioButtonProps) {
   return (
     <div className="flex items-start">
       <label className="inline-flex items-center">
-        {label && (labelLeft || (!labelLeft && !labelRight)) && renderLabel(label)}
+        {label &&
+          (labelLeft || (!labelLeft && !labelRight)) &&
+          renderLabel(label)}
         <input
           type="radio"
           className={
             (labelLeft ? "ml-2 " : "mr-2 ") +
-            "cursor-pointer form-radio u-focus " +
-            (isDisabled ? "text-gray-500 " : "text-primary hover:border-primary ") +
+            "cursor-pointer form-radio  focus:outline-none focus:ring-1 focus:ring-primary  " +
+            (isDisabled
+              ? "text-gray-500 "
+              : "text-primary hover:border-primary ") +
             " border-gray-300  " +
             (className ? className : "")
           }
@@ -84,7 +89,7 @@ function Button(props: IRadioButtonProps) {
           name={name}
           value={label}
           checked={isChecked}
-          onChange={e => {
+          onChange={(e) => {
             onChange(e.target.value);
           }}
         />
@@ -104,7 +109,7 @@ function Group(props: IRadioGroupProps) {
     className,
     labelLeft,
     labelRight,
-    name
+    name,
   } = props;
   return (
     <div className="">
@@ -134,7 +139,7 @@ function Group(props: IRadioGroupProps) {
 
 const Radio = {
   Button,
-  Group
+  Group,
 };
 
 export { Radio };

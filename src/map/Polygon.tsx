@@ -1,6 +1,6 @@
 import * as mapUtils from "../utils/mapUtils";
+import React, { memo, useEffect, useState } from "react";
 import { IPolygon } from "../interfaces/polygon.interface";
-import { memo, useEffect, useState } from "react";
 import { Polygon as GoogleMapsPolygon } from "@react-google-maps/api";
 import { useStore } from "../store";
 
@@ -33,7 +33,10 @@ function Polygon(props: {
     let invalidRemoval = false;
     paths.forEach((path: { lat: number; lng: number }[], index) => {
       for (let i = path.length - 1; i >= 0; i--) {
-        if (path[i]?.lat === coordinates.lat() && path[i]?.lng === coordinates.lng()) {
+        if (
+          path[i]?.lat === coordinates.lat() &&
+          path[i]?.lng === coordinates.lng()
+        ) {
           let uniqueCoordinates = path.length;
           if (
             path[0].lat === path[path.length - 1].lat &&
@@ -61,7 +64,7 @@ function Polygon(props: {
       store.emitter.emit("showToast", {
         text: "This coordinate can not be removed from the polygon. A polygon must have at least 3 coordinates",
         variant: "error",
-        autoHide: 3000
+        autoHide: 3000,
       });
     } else {
       polygon.paths = [...paths];
@@ -83,13 +86,16 @@ function Polygon(props: {
     return (
       <>
         <GoogleMapsPolygon
-          onLoad={ref => {
+          onLoad={(ref) => {
             if (ref && polygon) {
               setPolygonRef(ref);
             }
           }}
           editable={
-            editable && (polygon?.options?.isEditable ? polygon.options.isEditable(polygon) : true)
+            editable &&
+            (polygon?.options?.isEditable
+              ? polygon.options.isEditable(polygon)
+              : true)
           }
           onClick={(e: google.maps.PolyMouseEvent) => {
             if (props.onClick) {
@@ -102,20 +108,25 @@ function Polygon(props: {
           paths={polygon.paths}
           options={{
             ...options,
-            zIndex
+            zIndex,
           }}
           onMouseOver={(e: google.maps.PolyMouseEvent) => {
             setOptions((options: any) => {
               return {
                 ...options,
-                fillOpacity: polygon.options.fillOpacity ? polygon.options.fillOpacity + 0.2 : 0.6
+                fillOpacity: polygon.options.fillOpacity
+                  ? polygon.options.fillOpacity + 0.2
+                  : 0.6,
               };
             });
             props.onMouseOver(e, polygon);
           }}
           onMouseOut={(e: google.maps.PolyMouseEvent) => {
             setOptions((options: any) => {
-              return { ...options, fillOpacity: polygon.options.fillOpacity ?? 0.2 };
+              return {
+                ...options,
+                fillOpacity: polygon.options.fillOpacity ?? 0.2,
+              };
             });
 
             props.onMouseOut(e, polygon);
@@ -133,7 +144,10 @@ function Polygon(props: {
           onMouseUp={(e: google.maps.PolyMouseEvent) => {
             let newPolygonPaths = mapUtils.getPathFromGooglePolygon(polygonRef);
             let cursorLocation: any = e.latLng;
-            if (e.path !== undefined && (e.edge !== undefined || e.vertex !== undefined)) {
+            if (
+              e.path !== undefined &&
+              (e.edge !== undefined || e.vertex !== undefined)
+            ) {
               let index: any = e?.edge !== undefined ? e.edge + 1 : e.vertex;
               cursorLocation = new google.maps.LatLng(
                 newPolygonPaths[e.path][index].lat,
@@ -152,10 +166,13 @@ function Polygon(props: {
                         e,
                         { ...polygon, paths: newPolygonPaths },
                         cursorLocation
-                      )
+                      ),
                     });
                   } else {
-                    props.onPolygonUpdated({ ...polygon, paths: newPolygonPaths });
+                    props.onPolygonUpdated({
+                      ...polygon,
+                      paths: newPolygonPaths,
+                    });
                   }
                 }
               }

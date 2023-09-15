@@ -1,6 +1,7 @@
-import { Message } from "./Message";
+import React from "react";
 import { InfoButton } from "./InfoButton";
 import { Label } from "./Label";
+import { Message } from "./Message";
 
 const defaultContainerClass = "mt-3";
 
@@ -33,7 +34,6 @@ interface ITextArea {
   dataTest?: string | undefined;
 }
 
-// Implementation
 function TextArea(props: ITextArea) {
   let {
     containerClassName,
@@ -57,11 +57,17 @@ function TextArea(props: ITextArea) {
     isOptional,
     isDisabled,
     maxLength,
-    dataTest
+    dataTest,
   } = props;
 
   return (
-    <div className={containerClassName ? containerClassName : defaultContainerClass} id={fieldID}>
+    //  @ts-ignore
+    <div
+      className={
+        containerClassName ? containerClassName : defaultContainerClass
+      }
+      id={fieldID}
+    >
       <div className="flex justify-between">
         {label && (
           <div className="mt-1">

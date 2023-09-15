@@ -1,5 +1,6 @@
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { useState } from "react";
 
 // Interfaces
@@ -45,7 +46,9 @@ function Instruction(props: IInstructionProps) {
   return (
     <p
       className={
-        (props.noPadding ? "" : " py-3 ") + (props.isCenter ? " text-center " : "") + className
+        (props.noPadding ? "" : " py-3 ") +
+        (props.isCenter ? " text-center " : "") +
+        className
       }
     >
       {props.children}
@@ -88,7 +91,7 @@ function BaseMessage(props: IBaseMessageProps) {
           }
         >
           <div className={"flex justify-between items-center"}>
-            <div className="u-vertical-center">
+            <div className=" flex items-center ">
               {icon && (
                 <FontAwesomeIcon
                   className={"mr-3 h-5 w-5 text-" + color + "-400"}
@@ -119,7 +122,7 @@ const Message = {
   Warning,
   Error,
   Info,
-  Instruction
+  Instruction,
 };
 
 export { Message };

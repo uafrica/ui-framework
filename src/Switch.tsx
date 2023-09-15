@@ -1,5 +1,6 @@
-import { Switch as HeadlessSwitch } from "@headlessui/react";
+import React from "react";
 import { InfoButton } from "./InfoButton";
+import { Switch as HeadlessSwitch } from "@headlessui/react";
 
 interface IProps {
   isChecked: boolean;
@@ -16,7 +17,8 @@ export default function Switch(props: IProps) {
   return (
     <div
       className={
-        "u-vertical-center flex-row space-x-4 " + (containerClassName ? containerClassName : "")
+        " flex items-center  flex-row space-x-4 " +
+        (containerClassName ? containerClassName : "")
       }
       onClick={() => {
         if (!isDisabled) {
@@ -30,8 +32,14 @@ export default function Switch(props: IProps) {
         disabled={isDisabled}
         className={
           " relative inline-flex flex-shrink-0 h-6.5 w-11 border-2 border-transparent rounded-full transition-colors ease-in-out duration-200  " +
-          (isDisabled ? "pointer-events-none " : " hover:border-primary cursor-pointer ") +
-          (isChecked ? (isDisabled ? "bg-gray-400" : "bg-primary") : "bg-gray-200")
+          (isDisabled
+            ? "pointer-events-none "
+            : " hover:border-primary cursor-pointer ") +
+          (isChecked
+            ? isDisabled
+              ? "bg-gray-400"
+              : "bg-primary"
+            : "bg-gray-200")
         }
       >
         <span className="sr-only">Use setting</span>
@@ -43,12 +51,18 @@ export default function Switch(props: IProps) {
         >
           <span
             className={
-              "absolute inset-0 h-full w-full u-center transition-opacity " +
-              (isChecked ? "opacity-0 ease-out duration-100" : "opacity-100 ease-in duration-200")
+              "absolute inset-0 h-full w-full  flex items-center justify-center  transition-opacity " +
+              (isChecked
+                ? "opacity-0 ease-out duration-100"
+                : "opacity-100 ease-in duration-200")
             }
             aria-hidden="true"
           >
-            <svg className="h-3 w-3 text-gray-400" fill="none" viewBox="0 0 12 12">
+            <svg
+              className="h-3 w-3 text-gray-400"
+              fill="none"
+              viewBox="0 0 12 12"
+            >
               <path
                 d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2"
                 stroke="currentColor"
@@ -60,13 +74,17 @@ export default function Switch(props: IProps) {
           </span>
           <span
             className={
-              "absolute inset-0 h-full w-full u-center transition-opacity " +
-              (isChecked ? "opacity-100 ease-in duration-200" : "opacity-0 ease-out duration-100")
+              "absolute inset-0 h-full w-full  flex items-center justify-center  transition-opacity " +
+              (isChecked
+                ? "opacity-100 ease-in duration-200"
+                : "opacity-0 ease-out duration-100")
             }
             aria-hidden="true"
           >
             <svg
-              className={`h-3 w-3 ${isDisabled ? "text-gray-600" : "text-primary-600"} `}
+              className={`h-3 w-3 ${
+                isDisabled ? "text-gray-600" : "text-primary-600"
+              } `}
               fill="currentColor"
               viewBox="0 0 12 12"
             >
@@ -75,7 +93,11 @@ export default function Switch(props: IProps) {
           </span>
         </span>
       </HeadlessSwitch>
-      {label && <div className={isDisabled ? "text-gray-500" : "cursor-pointer"}>{label}</div>}
+      {label && (
+        <div className={isDisabled ? "text-gray-500" : "cursor-pointer"}>
+          {label}
+        </div>
+      )}
       {info && <InfoButton>{info}</InfoButton>}
     </div>
   );

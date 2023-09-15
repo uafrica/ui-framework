@@ -91,7 +91,9 @@ function cloneRowTable(tableId: any, list: any) {
       cells.forEach(function (cell) {
         // @ts-ignore
         const newCell = cell.cloneNode(true);
-        newCell.style.width = `${parseInt(window.getComputedStyle(cell).width)}px`;
+        newCell.style.width = `${parseInt(
+          window.getComputedStyle(cell).width
+        )}px`;
         newRow.appendChild(newCell);
       });
 
@@ -149,7 +151,7 @@ function isRowSelected(selectedRowIdentifiers: string[], rowId: any): boolean {
 function getColumnById(columns: IColumn[], columnId: string) {
   let column: any = {};
 
-  columns.forEach(c => {
+  columns.forEach((c) => {
     if (c.id === columnId) {
       column = c;
     }
@@ -158,10 +160,13 @@ function getColumnById(columns: IColumn[], columnId: string) {
   return column;
 }
 
-function getColumnWidth(columnWidths: { id: string; value?: number }[], columnId: string) {
+function getColumnWidth(
+  columnWidths: { id: string; value?: number }[],
+  columnId: string
+) {
   let width: any = null;
 
-  columnWidths.forEach(c => {
+  columnWidths.forEach((c) => {
     if (c.id === columnId) {
       width = c.value;
     }
@@ -225,5 +230,5 @@ export {
   getColumnById,
   getColumnWidth,
   initialiseColumnOrder,
-  getDataByRowId
+  getDataByRowId,
 };

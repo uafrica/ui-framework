@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { Card } from "./Card";
+import React, { useEffect, useState } from "react";
 import { Button } from "./Button";
+import { Card } from "./Card";
 import { Select } from "./Select";
 
 interface IProps {
@@ -22,7 +22,7 @@ function Pagination({
   isLoading,
   setRows,
   rows,
-  scrollRef
+  scrollRef,
 }: IProps) {
   const [pageVal, setPageVal] = useState<number>(active);
 
@@ -97,10 +97,12 @@ function Pagination({
           {setRows && rows && (
             <div>
               <Select
-                options={["5", "10", "20", "25", "50", "100"].map((item: any) => ({
-                  label: item,
-                  value: parseInt(item)
-                }))}
+                options={["5", "10", "20", "25", "50", "100"].map(
+                  (item: any) => ({
+                    label: item,
+                    value: parseInt(item),
+                  })
+                )}
                 value={rows}
                 onChange={(val: any) => setRows(val)}
                 buttonWidth={"w-20 -mt-4 ml-8"}

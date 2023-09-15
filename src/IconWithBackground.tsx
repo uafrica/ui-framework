@@ -1,5 +1,6 @@
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 // Interface
 interface IIconWithBackground {
@@ -13,9 +14,7 @@ function IconWithBackground(props: IIconWithBackground) {
   return (
     <div
       className={
-        "rounded-full u-center h-8 w-8 bg-" +
-        (color ? color : "black") +
-        "-100"
+        "rounded-full  flex items-center justify-center  h-8 w-8 bg-" + (color ? color : "black") + "-100"
       }
     >
       <FontAwesomeIcon

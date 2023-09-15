@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 
 function WeekdaySelect(props: { value?: number[]; onChange?: Function }) {
@@ -8,32 +9,32 @@ function WeekdaySelect(props: { value?: number[]; onChange?: Function }) {
   let days: { letter: string; value: number }[] = [
     {
       letter: "S",
-      value: 0
+      value: 0,
     },
     {
       letter: "M",
-      value: 1
+      value: 1,
     },
     {
       letter: "T",
-      value: 2
+      value: 2,
     },
     {
       letter: "W",
-      value: 3
+      value: 3,
     },
     {
       letter: "T",
-      value: 4
+      value: 4,
     },
     {
       letter: "F",
-      value: 5
+      value: 5,
     },
     {
       letter: "S",
-      value: 6
-    }
+      value: 6,
+    },
   ];
 
   function renderDay(day: any) {

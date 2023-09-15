@@ -1,9 +1,9 @@
 import * as countryUtils from "./utils/countryUtils";
+import React, { useEffect, useState } from "react";
 import { CountrySelect } from "./CountrySelect";
 import { ICountry } from "./interfaces/country.interface";
 import { Input } from "./Input";
 import { Label } from "./Label";
-import { useEffect, useState } from "react";
 import { Message } from "./Message";
 
 function MobileNumberSelect(props: {
@@ -33,7 +33,7 @@ function MobileNumberSelect(props: {
     validation,
     isRequired,
     mobileNumberRegex,
-    showAsterisk
+    showAsterisk,
   } = props;
 
   const shouldValidate = validation && name;
@@ -57,14 +57,19 @@ function MobileNumberSelect(props: {
 
   useEffect(() => {
     if (props.onChange) {
-      if (selectedCountry && value !== selectedCountry.dialCode + mobileNumber) {
+      if (
+        selectedCountry &&
+        value !== selectedCountry.dialCode + mobileNumber
+      ) {
         props.onChange(selectedCountry.dialCode + mobileNumber);
       }
     }
   }, [mobileNumber, selectedCountry]);
 
   function cleanReceivedMobileNumber(value: any) {
-    let defaultCountry = countryUtils.getCountryByCode(defaultCountryCode ?? "ZA");
+    let defaultCountry = countryUtils.getCountryByCode(
+      defaultCountryCode ?? "ZA"
+    );
 
     let mobileNumber = "";
     let mobileNumberCountry: ICountry | null = defaultCountry;
@@ -78,7 +83,7 @@ function MobileNumberSelect(props: {
         mobileNumberCountry = defaultCountry;
       } else if (mobileNumber.indexOf("+") === 0) {
         let wasFound = false;
-        validCountries.forEach(validCountry => {
+        validCountries.forEach((validCountry) => {
           if (mobileNumber.indexOf(validCountry.dialCode) === 0) {
             wasFound = true;
             mobileNumber = mobileNumber.slice(validCountry.dialCode.length);
@@ -128,7 +133,7 @@ function MobileNumberSelect(props: {
         <div className="flex flex-row space-x-4">
           <CountrySelect
             isReadOnly={isReadOnly}
-            containerClassName={selectedCountry? "w-16": "w-24"}
+            containerClassName={selectedCountry ? "w-16" : "w-24"}
             allowedCountryCodes={allowedCountryCodes}
             value={selectedCountry?.code}
             onChange={onCountryChanged}
@@ -152,12 +157,12 @@ function MobileNumberSelect(props: {
               validation.register({
                 required: {
                   value: isRequired,
-                  message: "This field is required"
+                  message: "This field is required",
                 },
                 pattern: {
                   value: mobileNumberRegex ?? validationRegex,
-                  message: "Invalid mobile number"
-                }
+                  message: "Invalid mobile number",
+                },
               })
             }
           />

@@ -1,3 +1,5 @@
+import React from "react";
+
 function CopyText(props: { text: string }) {
   return (
     <span

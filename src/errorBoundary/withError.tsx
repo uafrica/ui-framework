@@ -1,6 +1,6 @@
-import { ComponentType } from "react";
-import { ErrorBoundary } from "react-error-boundary";
 import ErrorState from "./ErrorState";
+import React, { ComponentType } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
 function withError<T>(Component: ComponentType<T>) {
   return (hocProps: T) => {

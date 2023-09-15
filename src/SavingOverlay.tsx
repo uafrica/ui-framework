@@ -1,5 +1,5 @@
+import React, { ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { useEffect, useState, ReactNode } from "react";
 
 function Portal(props: { children: ReactNode }) {
   let { children } = props;
@@ -14,7 +14,7 @@ function Portal(props: { children: ReactNode }) {
 export function SavingOverlay() {
   return (
     <Portal>
-      <div className="saving-overlay" onClick={e => e.stopPropagation()} />
+      <div className="saving-overlay" onClick={(e) => e.stopPropagation()} />
     </Portal>
   );
 }

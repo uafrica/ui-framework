@@ -1,5 +1,5 @@
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
 
 interface IProps {
   backgroundColorClass: string;
@@ -10,7 +10,8 @@ interface IProps {
 }
 
 function Banner(props: IProps) {
-  let { backgroundColorClass, textColorClass, icon, children, iconClassName } = props;
+  let { backgroundColorClass, textColorClass, icon, children, iconClassName } =
+    props;
 
   let elements = document.getElementsByClassName("uafrica-banner");
   const [bannerId] = useState(`banner_${elements.length}`);
@@ -67,14 +68,17 @@ function Banner(props: IProps) {
 
             <div
               className={
-                "link-container flex " + (showMore ? "flex-row space-x-4" : "flex-col space-y-4")
+                "link-container flex " +
+                (showMore ? "flex-row space-x-4" : "flex-col space-y-4")
               }
             >
               <>
                 <div
                   id={bannerId}
                   dangerouslySetInnerHTML={{ __html: children }}
-                  className={"uafrica-banner " + (showMore ? "line-clamp-1" : "")}
+                  className={
+                    "uafrica-banner " + (showMore ? "line-clamp-1" : "")
+                  }
                 />
               </>
             </div>

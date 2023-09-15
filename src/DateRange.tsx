@@ -1,8 +1,8 @@
-import { useEffect } from "react";
+import moment from "moment";
+import React, { useEffect } from "react";
 import { DatePicker } from "./datePicker/DatePicker";
 import { MonthPicker } from "./monthPicker/MonthPicker";
 import { Select } from "./Select";
-import moment from "moment";
 
 function DateRange(props: {
   showRange?: boolean;
@@ -40,7 +40,7 @@ function DateRange(props: {
     label,
     isDisabled,
     showTimeSelect,
-    dateFormat
+    dateFormat,
   } = props;
   useEffect(() => {
     if (showMonth && onMonthChange) {
@@ -53,7 +53,9 @@ function DateRange(props: {
       );
 
       if (dateFrom) {
-        dateFrom = moment(dateFrom).startOf("month").format("YYYY-MM-DD HH:mm:ss"); // removed .format("YYYY-MM-DD HH:mm:ss) to make things work on safari
+        dateFrom = moment(dateFrom)
+          .startOf("month")
+          .format("YYYY-MM-DD HH:mm:ss"); // removed .format("YYYY-MM-DD HH:mm:ss) to make things work on safari
         dateTo = moment(dateFrom).endOf("month").format("YYYY-MM-DD HH:mm:ss"); // added .format back because safari seems to be working again
       }
 
@@ -125,7 +127,7 @@ function DateRange(props: {
 }
 
 DateRange.defaultProps = {
-  label: "Filter by period"
+  label: "Filter by period",
 };
 
 export { DateRange };

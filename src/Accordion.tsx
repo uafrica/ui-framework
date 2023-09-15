@@ -1,8 +1,8 @@
+import React, { useEffect } from "react";
+import { Confirm } from "./Confirm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Transition } from "@headlessui/react";
-import { useEffect } from "react";
 import { useState } from "react";
-import { Confirm } from "./Confirm";
 
 // Interface
 interface IAccordion {
@@ -29,7 +29,7 @@ function Accordion(props: IAccordion) {
     textColor,
     hideCaret,
     caretColor,
-    endComponent
+    endComponent,
   } = props;
 
   useEffect(() => {
@@ -57,14 +57,20 @@ function Accordion(props: IAccordion) {
                 body="Are you sure you want to delete the item?"
                 confirmText="Delete"
               >
-                <FontAwesomeIcon icon="trash" className="delete" title="Delete item" />
+                <FontAwesomeIcon
+                  icon="trash"
+                  className="delete"
+                  title="Delete item"
+                />
               </Confirm>
             )}
 
             {!hideCaret && (
               <FontAwesomeIcon
                 icon="caret-down"
-                className={`${open ? "transform rotate-180" : ""} w-5 h-5 text-${caretColor}-500`}
+                className={`${
+                  open ? "transform rotate-180" : ""
+                } w-5 h-5 text-${caretColor}-500`}
               />
             )}
           </div>
@@ -89,7 +95,7 @@ Accordion.defaultProps = {
   backgroundColor: "primary",
   textColor: "primary",
   caretColor: "primary",
-  endComponent: null
+  endComponent: null,
 };
 
 export default Accordion;

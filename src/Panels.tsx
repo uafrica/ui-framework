@@ -1,5 +1,6 @@
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import React from "react";
 import { Button } from "./Button";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { PageHeading } from "./PageHeading";
 import { SectionHeading } from "./SectionHeading";
 
@@ -55,9 +56,10 @@ function TableActionsPanel(props: IProps) {
 }
 
 function SectionActionsPanel(props: ISectionActionsPanel) {
-  let { title, className, toggleEditMode, hideEditMode, icon, iconColor } = props;
+  let { title, className, toggleEditMode, hideEditMode, icon, iconColor } =
+    props;
   return (
-    <div className={"u-panel " + (className ? className : "")}>
+    <div className={" flex justify-between flex-col md:flex-row items-start md:items-center z-30  " + (className ? className : "")}>
       {title && (
         <SectionHeading
           icon={icon}
@@ -69,7 +71,7 @@ function SectionActionsPanel(props: ISectionActionsPanel) {
           {title}
         </SectionHeading>
       )}
-      <div className="ml-auto u-vertical-center flex-wrap flex-row space-x-0 sm:space-x-4 space-y-4 sm:space-y-0 flex-grow-0 w-full md:w-auto justify-end">
+      <div className="ml-auto  flex items-center  flex-wrap flex-row space-x-0 sm:space-x-4 space-y-4 sm:space-y-0 flex-grow-0 w-full md:w-auto justify-end">
         {props.children}
       </div>
     </div>
@@ -80,13 +82,13 @@ function PageActionsPanel(props: IPageActionsPanelProps) {
   let { title, icon, shouldNotUppercase } = props;
 
   return (
-    <div className="ua-page-actions-panel u-panel xs:pb-4">
+    <div className="ua-page-actions-panel flex justify-between flex-col md:flex-row items-start md:items-center z-30  xs:pb-4">
       {title && (
         <PageHeading icon={icon} shouldNotUppercase={shouldNotUppercase}>
           {title}
         </PageHeading>
       )}
-      <div className="ua-page-actions-panel-children ml-0 xs:ml-auto u-reverse-flex-col-to-row items-start xs:items-center ">
+      <div className="ua-page-actions-panel-children ml-0 xs:ml-auto  flex flex-col-reverse sm:flex-row space-y-4 sm:space-y-0 space-y-reverse space-x-0 sm:space-x-4  items-start xs:items-center ">
         {props.children}
       </div>
     </div>
@@ -97,8 +99,8 @@ function ModalActionsPanel(props: IProps) {
   let { title, onClose } = props;
 
   return (
-    <div className="ua-modal-actions-panel u-panel pb-4">
-      <div className="u-vertical-center justify-between w-full md:w-auto">
+    <div className="ua-modal-actions-panel  flex justify-between flex-col md:flex-row items-start md:items-center z-30  pb-4">
+      <div className=" flex items-center  justify-between w-full md:w-auto">
         <div>{title && <PageHeading>{title}</PageHeading>}</div>
         <div>
           {onClose && (
@@ -108,7 +110,7 @@ function ModalActionsPanel(props: IProps) {
           )}
         </div>
       </div>
-      <div className="u-horizontal-center flex-row space-x-4 items-center w-full md:w-auto flex-wrap pt-2">
+      <div className=" flex justify-center  flex-row space-x-4 items-center w-full md:w-auto flex-wrap pt-2">
         {props.children}
         {onClose && (
           <div className="hidden md:block" onClick={onClose}>
@@ -126,7 +128,8 @@ function FiltersPanel(props: IFiltersPanel) {
   return (
     <div
       className={
-        "ua-filters-panel u-vertical-center flex-wrap flex-row " + (className ? className : "")
+        "ua-filters-panel  flex items-center  flex-wrap flex-row " +
+        (className ? className : "")
       }
     >
       {children}
@@ -139,5 +142,5 @@ export {
   SectionActionsPanel,
   PageActionsPanel,
   FiltersPanel,
-  ModalActionsPanel
+  ModalActionsPanel,
 };

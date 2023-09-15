@@ -542,7 +542,8 @@ function calculateSum(items: any[], field: string, decimals?: number) {
 function differenceBetweenObjects(origObj: any, newObj: any) {
   function changes(newObj: any, origObj: any) {
     let arrayIndexCounter = 0;
-    return _.transform(newObj, function (result, value, key) {
+     // @ts-ignore todo check this works
+     return _.transform(newObj, function (result, value, key) {
       if (!_.isEqual(value, origObj[key])) {
         let resultKey = _.isArray(origObj) ? arrayIndexCounter++ : key;
 

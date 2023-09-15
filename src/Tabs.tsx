@@ -1,5 +1,5 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { InfoButton } from "./InfoButton";
 
 // Interface
@@ -33,9 +33,12 @@ function evaluateScroll(tabNavId: any, children: any) {
     }
 
     let rightId =
-      children[children.length - 1]?.props?.id ?? children[children.length - 1]?.props?.tabID;
+      children[children.length - 1]?.props?.id ??
+      children[children.length - 1]?.props?.tabID;
     if (rightId) {
-      let right: any = document.getElementById(rightId)?.getBoundingClientRect();
+      let right: any = document
+        .getElementById(rightId)
+        ?.getBoundingClientRect();
 
       if (right?.x + right?.width > screen.width) {
         res.right = true;
@@ -66,14 +69,20 @@ function Primary(props: ITabs) {
 
   children = children.filter((child: any) => child && child.props);
 
-  let activeTab = children.filter((child: any) => props.activeTabID === child.props.tabID);
+  let activeTab = children.filter(
+    (child: any) => props.activeTabID === child.props.tabID
+  );
 
   return (
     <div>
       <div>
         <div className="flex items-center border-b border-gray-200 w-full">
           {overflowing.left && (
-            <FontAwesomeIcon icon={"chevron-left"} color="gray" className="m-1" />
+            <FontAwesomeIcon
+              icon={"chevron-left"}
+              color="gray"
+              className="m-1"
+            />
           )}
 
           <nav
@@ -100,7 +109,9 @@ function Primary(props: ITabs) {
                       (child.props.isClickable !== false
                         ? " hover:text-gray-900 hover:border-gray-300"
                         : "")) +
-                  (child.props.isClickable !== false ? " cursor-pointer " : " cursor-default ") +
+                  (child.props.isClickable !== false
+                    ? " cursor-pointer "
+                    : " cursor-default ") +
                   "  group inline-flex items-center py-3 px-1 border-b-2 font-bold"
                 }
               >
@@ -111,13 +122,19 @@ function Primary(props: ITabs) {
                   }
                 >
                   {child.props.title}{" "}
-                  {child.props.info && <InfoButton>{child.props.info}</InfoButton>}
+                  {child.props.info && (
+                    <InfoButton>{child.props.info}</InfoButton>
+                  )}
                 </span>
               </div>
             ))}
           </nav>
           {overflowing.right && (
-            <FontAwesomeIcon icon={"chevron-right"} color="gray" className="m-1" />
+            <FontAwesomeIcon
+              icon={"chevron-right"}
+              color="gray"
+              className="m-1"
+            />
           )}
         </div>
         <React.Fragment key={props.activeTabID}>{activeTab}</React.Fragment>
@@ -140,12 +157,16 @@ function Secondary(props: ITabs) {
   }
 
   children = children.filter((child: any) => child && child.props);
-  let activeTab = children.filter((child: any) => props.activeTabID === child.props.tabID);
+  let activeTab = children.filter(
+    (child: any) => props.activeTabID === child.props.tabID
+  );
 
   return (
     <div className="mt-8">
       <div className="flex items-center border-b border-gray-200 w-full">
-        {overflowing.left && <FontAwesomeIcon icon={"chevron-left"} color="gray" className="m-1" />}
+        {overflowing.left && (
+          <FontAwesomeIcon icon={"chevron-left"} color="gray" className="m-1" />
+        )}
         <nav
           onScroll={() => {
             setOverflowing(evaluateScroll(tabNavId, props.children));
@@ -167,24 +188,35 @@ function Secondary(props: ITabs) {
                 (props.activeTabID === child.props.tabID
                   ? "bg-primary-100 text-primary-700 font-bold"
                   : "text-black " +
-                    (child.props.isClickable !== false ? " hover:bg-gray-200 " : "")) +
-                (child.props.isClickable !== false ? " cursor-pointer " : " cursor-default ") +
+                    (child.props.isClickable !== false
+                      ? " hover:bg-gray-200 "
+                      : "")) +
+                (child.props.isClickable !== false
+                  ? " cursor-pointer "
+                  : " cursor-default ") +
                 "  px-3 py-2 font-medium rounded-md"
               }
             >
               <span
                 className={
-                  "u-vertical-center flex-row space-x-4 whitespace-nowrap " + child.props.className
+                  " flex items-center  flex-row space-x-4 whitespace-nowrap " +
+                  child.props.className
                 }
               >
                 {child.props.title}{" "}
-                {child.props.info && <InfoButton>{child.props.info}</InfoButton>}
+                {child.props.info && (
+                  <InfoButton>{child.props.info}</InfoButton>
+                )}
               </span>
             </div>
           ))}
         </nav>
         {overflowing.right && (
-          <FontAwesomeIcon icon={"chevron-right"} color="gray" className="m-1" />
+          <FontAwesomeIcon
+            icon={"chevron-right"}
+            color="gray"
+            className="m-1"
+          />
         )}
       </div>
       <React.Fragment key={props.activeTabID}>{activeTab}</React.Fragment>
@@ -195,7 +227,7 @@ function Secondary(props: ITabs) {
 const Tabs = {
   Primary,
   Secondary,
-  Tab
+  Tab,
 };
 
 export { Tabs };

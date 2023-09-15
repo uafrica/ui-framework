@@ -1,12 +1,11 @@
-// Derived from https://github.com/fareez-ahamed/react-datepicker
-
-import React, { useRef, useContext } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Manager, Reference, Popper } from "react-popper";
-import { DatePickerCtx, useDatePickerCtx } from "./DatePickerContext";
 import moment from "moment";
+import React, { useContext, useRef } from "react";
+import { DatePickerCtx, useDatePickerCtx } from "./DatePickerContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Input } from "../Input";
 import { Label } from "../Label";
+import { Manager, Popper, Reference } from "react-popper";
+// Derived from https://github.com/fareez-ahamed/react-datepicker
 
 // Interface
 interface IDatePicker {
@@ -33,7 +32,7 @@ const daysOfWeekNames = [
   "Wednesday",
   "Thursday",
   "Friday",
-  "Saturday"
+  "Saturday",
 ];
 
 const monthNames = [
@@ -48,12 +47,12 @@ const monthNames = [
   "September",
   "October",
   "November",
-  "December"
+  "December",
 ];
 
 export const inputStyle = {
   paddingTop: "0.375rem",
-  paddingBottom: "0.375rem"
+  paddingBottom: "0.375rem",
 };
 
 // Implementation
@@ -72,7 +71,7 @@ function DatePicker(props: IDatePicker) {
     minDate,
     maxDate,
     dataTest,
-    info
+    info,
   } = props;
 
   if (placeholder === undefined) {
@@ -96,7 +95,10 @@ function DatePicker(props: IDatePicker) {
   );
 
   return (
-    <DatePickerCtx.Provider value={ctxValue} key={ctxValue.isVisible.toString()}>
+    <DatePickerCtx.Provider
+      value={ctxValue}
+      key={ctxValue.isVisible.toString()}
+    >
       {/* @ts-ignore */}
       <Manager>
         {/* @ts-ignore */}
@@ -120,7 +122,13 @@ function DatePicker(props: IDatePicker) {
                 isLabelInline={isLabelInline}
                 containerClassName={containerClassName}
                 placeholder={placeholder}
-                appendIcon={isDisabled ? undefined : ctxValue.isVisible ? "caret-up" : "caret-down"}
+                appendIcon={
+                  isDisabled
+                    ? undefined
+                    : ctxValue.isVisible
+                    ? "caret-up"
+                    : "caret-down"
+                }
                 onAppendIconClick={() => {
                   ctxValue.toggleCalendar();
                 }}
@@ -136,14 +144,14 @@ function DatePicker(props: IDatePicker) {
           // @ts-ignore
           <Popper
             placement="bottom-start"
-            innerRef={node => (popupNode.current = node)}
+            innerRef={(node) => (popupNode.current = node)}
             modifiers={[
               {
                 name: "offset",
                 options: {
-                  offset: [0, 5]
-                }
-              }
+                  offset: [0, 5],
+                },
+              },
             ]}
           >
             {({ ref, style, placement }) =>
@@ -166,45 +174,46 @@ interface CalendarProps {
   ref: React.Ref<HTMLDivElement>;
 }
 
-const Calendar: React.FC<CalendarProps> = React.forwardRef<HTMLDivElement, CalendarProps>(
-  (props, ref) => {
-    const { view } = useContext(DatePickerCtx);
+const Calendar: React.FC<CalendarProps> = React.forwardRef<
+  HTMLDivElement,
+  CalendarProps
+>((props, ref) => {
+  const { view } = useContext(DatePickerCtx);
 
-    let selectionComponent = null;
-    switch (view) {
-      case "date":
-        selectionComponent = <DateSelection />;
-        break;
-      case "month":
-        selectionComponent = <MonthSelection />;
-        break;
-      case "year":
-        selectionComponent = <YearSelection />;
-        break;
-    }
-
-    return (
-      <div
-        className="bg-white z-40 relative shadow-lg max-w-xs w-64 p-2 rounded-lg u-black-ring"
-        ref={ref}
-        data-placement={props.placement}
-        // @ts-ignore
-        style={props.style}
-      >
-        {selectionComponent}
-      </div>
-    );
+  let selectionComponent = null;
+  switch (view) {
+    case "date":
+      selectionComponent = <DateSelection />;
+      break;
+    case "month":
+      selectionComponent = <MonthSelection />;
+      break;
+    case "year":
+      selectionComponent = <YearSelection />;
+      break;
   }
-);
 
-const TimeSelection: React.FC<{}> = _ => {
+  return (
+    <div
+      className="bg-white z-40 relative shadow-lg max-w-xs w-64 p-2 rounded-lg  ring-1 ring-black ring-opacity-5 "
+      ref={ref}
+      data-placement={props.placement}
+      // @ts-ignore
+      style={props.style}
+    >
+      {selectionComponent}
+    </div>
+  );
+});
+
+const TimeSelection: React.FC<{}> = (_) => {
   const { selectHours, selectMinutes, date } = useContext(DatePickerCtx);
   return (
     <div className="mt-1 text-center">
       <div>
         <b>Time</b>
       </div>
-      <div className="u-horizontal-center flex-row time-picker">
+      <div className=" flex justify-center  flex-row time-picker">
         <div style={{ width: "55px" }}>
           <Input
             label=""
@@ -273,7 +282,7 @@ const TimeSelection: React.FC<{}> = _ => {
   );
 };
 
-const DateSelection: React.FC<{}> = _ => {
+const DateSelection: React.FC<{}> = (_) => {
   const {
     nextMonth,
     prevMonth,
@@ -283,7 +292,7 @@ const DateSelection: React.FC<{}> = _ => {
     visible: { month, year },
     isSelectedDate,
     showTimeSelect,
-    isWithinRange
+    isWithinRange,
   } = useContext(DatePickerCtx);
 
   const dates = [];
@@ -298,7 +307,7 @@ const DateSelection: React.FC<{}> = _ => {
       <button
         tabIndex={0}
         key={`day${i}`}
-        className={`u-focus hover:bg-gray-200 rounded p-1 ${
+        className={` focus:outline-none focus:ring-1 focus:ring-primary  hover:bg-gray-200 rounded p-1 ${
           isSelectedDate(i) ? "bg-gray-300 font-semibold " : ""
         }
         
@@ -325,12 +334,12 @@ const DateSelection: React.FC<{}> = _ => {
           display: "grid",
           gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr 1fr",
           gridTemplateRows: "2rem auto",
-          alignItems: "stretch"
+          alignItems: "stretch",
         }}
       >
         <button
           tabIndex={0}
-          className="u-focus hover:bg-gray-200 rounded p-1 u-horizontal-center align-center focus:outline-none items-center"
+          className=" focus:outline-none focus:ring-1 focus:ring-primary  hover:bg-gray-200 rounded p-1  flex justify-center  align-center focus:outline-none items-center"
           onClick={(e: any) => {
             e.preventDefault();
             prevMonth();
@@ -341,7 +350,7 @@ const DateSelection: React.FC<{}> = _ => {
 
         <button
           tabIndex={0}
-          className={`u-focus hover:bg-gray-200 rounded p-1 u-horizontal-center align-center  focus:outline-none items-center font-semibold`}
+          className={` focus:outline-none focus:ring-1 focus:ring-primary  hover:bg-gray-200 rounded p-1  flex justify-center  align-center  focus:outline-none items-center font-semibold`}
           style={{ gridColumn: "2/5" }}
           onClick={() => viewMonths()}
         >
@@ -350,7 +359,7 @@ const DateSelection: React.FC<{}> = _ => {
 
         <button
           tabIndex={0}
-          className={`u-focus hover:bg-gray-200 rounded p-1 u-horizontal-center align-center focus:outline-none items-center font-semibold`}
+          className={` focus:outline-none focus:ring-1 focus:ring-primary  hover:bg-gray-200 rounded p-1  flex justify-center  align-center focus:outline-none items-center font-semibold`}
           style={{ gridColumn: "5/7" }}
           onClick={() => viewYears()}
         >
@@ -359,7 +368,7 @@ const DateSelection: React.FC<{}> = _ => {
 
         <button
           tabIndex={0}
-          className="u-focus hover:bg-gray-200 rounded p-1 u-horizontal-center align-center focus:outline-none items-center"
+          className=" focus:outline-none focus:ring-1 focus:ring-primary  hover:bg-gray-200 rounded p-1  flex justify-center  align-center focus:outline-none items-center"
           onClick={(e: any) => {
             e.preventDefault();
             nextMonth();
@@ -368,7 +377,7 @@ const DateSelection: React.FC<{}> = _ => {
           <FontAwesomeIcon icon="chevron-right" className="stroke-current" />
         </button>
 
-        {daysOfWeekNames.map(day => (
+        {daysOfWeekNames.map((day) => (
           <div
             key={(200 + day).toString()}
             className="p-1 font-semibold"
@@ -385,8 +394,9 @@ const DateSelection: React.FC<{}> = _ => {
   );
 };
 
-const MonthSelection: React.FC<{}> = _ => {
-  const { viewYears, selectMonth, nextYear, prevYear, visible } = useContext(DatePickerCtx);
+const MonthSelection: React.FC<{}> = (_) => {
+  const { viewYears, selectMonth, nextYear, prevYear, visible } =
+    useContext(DatePickerCtx);
 
   return (
     <div
@@ -395,7 +405,7 @@ const MonthSelection: React.FC<{}> = _ => {
         display: "grid",
         gridTemplateColumns: "1fr 1fr 1fr 1fr",
         gridTemplateRows: "2rem auto",
-        alignItems: "stretch"
+        alignItems: "stretch",
       }}
     >
       <div className="flex" style={{ gridColumn: "1/5" }}>
@@ -419,7 +429,10 @@ const MonthSelection: React.FC<{}> = _ => {
       </div>
 
       {monthNames.map((month, index) => (
-        <CalendarButton key={`month${index}`} onClick={() => selectMonth(index)}>
+        <CalendarButton
+          key={`month${index}`}
+          onClick={() => selectMonth(index)}
+        >
           {month.substring(0, 3)}
         </CalendarButton>
       ))}
@@ -427,12 +440,12 @@ const MonthSelection: React.FC<{}> = _ => {
   );
 };
 
-const YearSelection: React.FC<{}> = _ => {
+const YearSelection: React.FC<{}> = (_) => {
   const {
     selectYear,
     prevDecade,
     nextDecade,
-    visible: { year }
+    visible: { year },
   } = useContext(DatePickerCtx);
 
   let years = [];
@@ -459,7 +472,7 @@ const YearSelection: React.FC<{}> = _ => {
         display: "grid",
         gridTemplateColumns: "1fr 1fr 1fr 1fr",
         gridTemplateRows: "2rem auto",
-        alignItems: "stretch"
+        alignItems: "stretch",
       }}
     >
       <div className="flex" style={{ gridColumn: "1/5" }}>
@@ -496,19 +509,23 @@ const CalendarButton: React.FC<{
   style?: React.StyleHTMLAttributes<HTMLButtonElement>;
   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   children?: any;
-}> = props => {
+}> = (props) => {
   let children = null;
 
   if (props.chevron && props.chevron === "left")
-    children = <FontAwesomeIcon icon="chevron-left" className="stroke-current" />;
+    children = (
+      <FontAwesomeIcon icon="chevron-left" className="stroke-current" />
+    );
   else if (props.chevron && props.chevron === "right")
-    children = <FontAwesomeIcon icon="chevron-right" className="stroke-current" />;
+    children = (
+      <FontAwesomeIcon icon="chevron-right" className="stroke-current" />
+    );
   else children = props.children;
 
   return (
     <button
       tabIndex={0}
-      className={`hover:bg-gray-200 rounded p-1 u-horizontal-center align-center u-focus items-center ${props.className}`}
+      className={`hover:bg-gray-200 rounded p-1  flex justify-center  align-center  focus:outline-none focus:ring-1 focus:ring-primary  items-center ${props.className}`}
       // @ts-ignore
       style={props.style}
       onClick={props.onClick}
@@ -520,7 +537,9 @@ const CalendarButton: React.FC<{
 
 function formattedDate(dateFormat: string | undefined, date: Date): string {
   if (!dateFormat) {
-    return `${date.getDate()} ${monthNames[date.getMonth()]} ${date.getFullYear()}`;
+    return `${date.getDate()} ${
+      monthNames[date.getMonth()]
+    } ${date.getFullYear()}`;
   } else {
     return moment(date).format(dateFormat);
   }
