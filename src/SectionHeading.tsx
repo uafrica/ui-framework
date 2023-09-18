@@ -12,7 +12,6 @@ interface ISectionHeading {
   marginTop?: boolean; // Used if two sections are below each other
   noMarginBottom?: boolean;
   options?: any;
-  spaceBetween?: boolean;
 }
 
 function SectionHeading(props: ISectionHeading) {
@@ -26,8 +25,7 @@ function SectionHeading(props: ISectionHeading) {
     isCenter: center,
     marginTop,
     noMarginBottom,
-    options,
-    spaceBetween
+    options
   } = props;
 
   return (
@@ -36,8 +34,7 @@ function SectionHeading(props: ISectionHeading) {
         "u-vertical-center flex-row space-x-4 " +
         (center ? "justify-center" : "") +
         (marginTop ? " mt-8" : "") +
-        (noMarginBottom ? "" : " mb-4 ") +
-        (spaceBetween ? " justify-between " : "")
+        (noMarginBottom ? "" : " mb-4 ")
       }
     >
       {icon && (
