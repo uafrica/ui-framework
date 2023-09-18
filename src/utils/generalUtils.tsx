@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { Message } from "../Message";
-import { ReactElement } from "react";
+import React, { ReactElement } from "react";
 import { useMediaQuery } from "../hooks/useMediaQuery";
 import { detect } from "detect-browser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
