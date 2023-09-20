@@ -55,6 +55,14 @@ function Forms() {
   const InputPrice = () => (
     <>
       <div className="max-w-md my-4 flex">
+        <Input label="Number input" placeholder={"0.00"} type="number" inputClassName="pl-11" />
+        {inlineInput && (
+          <div className="flex items-center">
+            <InfoButton>State has been applied with inline input component</InfoButton>
+          </div>
+        )}
+      </div>
+      <div className="max-w-md my-4 flex">
         <Input
           label="Price"
           placeholder={"0.00"}

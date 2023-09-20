@@ -127,6 +127,7 @@ function Input(props: IInputProps) {
         }
       }}
       data-test={dataTest}
+      {...(type === "number" ? { inputMode: "numeric" } : {})}
     />
   );
 
