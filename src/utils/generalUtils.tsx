@@ -4,7 +4,10 @@ import React, { ReactElement } from "react";
 import { useMediaQuery } from "../hooks/useMediaQuery";
 import { detect } from "detect-browser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import _ from "lodash";
+import transform from "lodash/transform";
+import isEqual from "lodash/isEqual";
+import isObject from "lodash/isObject";
+import isArray from "lodash/isArray";
 import * as dateUtils from "./dateUtils";
 import moment from "moment";
 
@@ -248,7 +251,8 @@ function keyToHumanReadable(key: string | undefined): string {
   keyHumanReadable = keyHumanReadable.replace(/([A-Z])/g, " $1").trim();
 
   let sentenceCaseKey =
-    keyHumanReadable.charAt(0).toUpperCase() + keyHumanReadable.slice(1).toLowerCase();
+    keyHumanReadable.charAt(0).toUpperCase() +
+    keyHumanReadable.slice(1).toLowerCase();
 
   sentenceCaseKey = sentenceCaseKey.replaceAll("Bob box", "Bob Box");
   sentenceCaseKey = sentenceCaseKey.replaceAll("Bob pay", "Bob Pay");
@@ -351,14 +355,16 @@ const browserVersions = {
   fxios: "96.0", // 2022-01-11
   edge: "97.0.1072.55", // 2022-01-06
   "edge-chromium": "97.0.1072.55", // 2022-01-06
-  "edge-ios": "97.0.1072.55" // 2022-01-06
+  "edge-ios": "97.0.1072.55", // 2022-01-06
 };
 
 function isBrowserOutdated(browserName: string, browserVersion: string) {
   let recentBrowserVersions: any = browserVersions;
   try {
     if (recentBrowserVersions[browserName]) {
-      let recentVersion = Number(recentBrowserVersions[browserName].split(".")[0]);
+      let recentVersion = Number(
+        recentBrowserVersions[browserName].split(".")[0]
+      );
       let _browserVersion = Number(browserVersion.split(".")[0]);
       if (recentVersion > _browserVersion) {
         return true;
@@ -441,8 +447,8 @@ function parseFieldsAsFloatsInsideObject(objData: any, arr: string[]) {
   Object.keys(objData)
     // get order of arrays correct
     .sort((a, b) => arr.indexOf(a) - arr.indexOf(b))
-    .filter(el => callback(el, arr))
-    .forEach(el => {
+    .filter((el) => callback(el, arr))
+    .forEach((el) => {
       let elData;
       if (IsJsonString(objData[el])) {
         elData = parseFloat(objData[el]);
@@ -456,7 +462,10 @@ function parseFieldsAsFloatsInsideObject(objData: any, arr: string[]) {
     return arr.indexOf(el) >= 0;
   }
 
-  let retObj: any = arr.reduce((obj, arr, index) => ({ ...obj, [arr]: myData[index] }), {});
+  let retObj: any = arr.reduce(
+    (obj, arr, index) => ({ ...obj, [arr]: myData[index] }),
+    {}
+  );
 
   return { ...objData, ...retObj };
 }
@@ -469,7 +478,11 @@ function openInNewTab(url: string, store: any) {
   let newWindow = window.open(url, "_blank");
   newWindow && newWindow.focus();
 
-  if (!newWindow || newWindow.closed || typeof newWindow.closed == "undefined") {
+  if (
+    !newWindow ||
+    newWindow.closed ||
+    typeof newWindow.closed == "undefined"
+  ) {
     const browser = detect();
     let docs: string | null = null;
 
@@ -496,12 +509,20 @@ function openInNewTab(url: string, store: any) {
         <div>
           <div className="flex justify-center pb-6 pt-4 ">
             <div className="rounded-full bg-yellow-100 p-4">
-              <FontAwesomeIcon icon="exclamation-triangle" size="2x" className="text-yellow" />
+              <FontAwesomeIcon
+                icon="exclamation-triangle"
+                size="2x"
+                className="text-yellow"
+              />
             </div>
           </div>
           <div className="pb-4">
             We tried to open{" "}
-            <a href={url} target="_blank" className="text-primary cursor-pointer font-bold">
+            <a
+              href={url}
+              target="_blank"
+              className="text-primary cursor-pointer font-bold"
+            >
               {url}
             </a>{" "}
             in a new tab, but unfortunately popups are blocked by your browser.
@@ -509,7 +530,11 @@ function openInNewTab(url: string, store: any) {
           <div>
             To unblock popups for this site, follow the{" "}
             {docs ? (
-              <a href={docs} target="_blank" className="text-primary cursor-pointer font-bold">
+              <a
+                href={docs}
+                target="_blank"
+                className="text-primary cursor-pointer font-bold"
+              >
                 instructions
               </a>
             ) : (
@@ -523,7 +548,7 @@ function openInNewTab(url: string, store: any) {
       showCancelButton: false,
       okButtonVariant: "primary",
       okButtonText: "Okay, thanks",
-      return: async () => {}
+      return: async () => {},
     });
   }
 }
@@ -533,8 +558,8 @@ function calculateSum(items: any[], field: string, decimals?: number) {
     return "–";
   }
   return items
-    .filter(item => item !== undefined)
-    .map(item => item[field])
+    .filter((item) => item !== undefined)
+    .map((item) => item[field])
     .reduce((a: any, b: any) => a + b)
     .toFixed(decimals === undefined ? 2 : decimals);
 }
@@ -542,14 +567,16 @@ function calculateSum(items: any[], field: string, decimals?: number) {
 function differenceBetweenObjects(origObj: any, newObj: any) {
   function changes(newObj: any, origObj: any) {
     let arrayIndexCounter = 0;
-     // @ts-ignore todo check this works
-     return _.transform(newObj, function (result, value, key) {
-      if (!_.isEqual(value, origObj[key])) {
-        let resultKey = _.isArray(origObj) ? arrayIndexCounter++ : key;
+    // @ts-ignore todo check this works
+    return transform(newObj, function (result, value, key) {
+      if (!isEqual(value, origObj[key])) {
+        let resultKey = isArray(origObj) ? arrayIndexCounter++ : key;
 
         // @ts-ignore
         result[resultKey] =
-          _.isObject(value) && _.isObject(origObj[key]) ? changes(value, origObj[key]) : value;
+          isObject(value) && isObject(origObj[key])
+            ? changes(value, origObj[key])
+            : value;
       }
     });
   }
@@ -558,10 +585,17 @@ function differenceBetweenObjects(origObj: any, newObj: any) {
 }
 
 function mergeArrays(arr1: any[], arr2: any[], val: string) {
-  return arr1 && arr1.map(obj => (arr2 && arr2.find(p => p[val] === obj[val])) || obj);
+  return (
+    arr1 &&
+    arr1.map((obj) => (arr2 && arr2.find((p) => p[val] === obj[val])) || obj)
+  );
 }
 
-function getObjectByPropertyWithValue(array: any[], property: string, value: any): any {
+function getObjectByPropertyWithValue(
+  array: any[],
+  property: string,
+  value: any
+): any {
   let obj = null;
   array.forEach((o: any) => {
     if (o[property] === value) {
@@ -600,11 +634,18 @@ function addFiltersToArgsCheck(
 ) {
   if (!wildCardedColumns) wildCardedColumns = [];
 
-  Object.keys(filters).forEach(key => {
-    if (filters[key] && (!Array.isArray(filters[key]) || filters[key].length > 0)) {
+  Object.keys(filters).forEach((key) => {
+    if (
+      filters[key] &&
+      (!Array.isArray(filters[key]) || filters[key].length > 0)
+    ) {
       var val = filters[key];
 
-      if (key === "start_date" || key === "date" || key === "from_invoice_date") {
+      if (
+        key === "start_date" ||
+        key === "date" ||
+        key === "from_invoice_date"
+      ) {
         if (dontChangeDates) {
           val = dateUtils.pgFormatDate(moment(val));
         } else {
@@ -637,7 +678,8 @@ function addFiltersToArgsCheck(
 }
 
 function generateRandomString(length: number): string {
-  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   let result = "";
   const charactersLength = characters.length;
 
@@ -691,5 +733,5 @@ export {
   omitPropsFromObj,
   duplicateObjectsInArray,
   addFiltersToArgsCheck,
-  generateRandomString
+  generateRandomString,
 };

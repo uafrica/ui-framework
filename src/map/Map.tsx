@@ -1,6 +1,6 @@
 import * as generalUtils from "../utils/generalUtils";
 import * as mapUtils from "../utils/mapUtils";
-import _ from "lodash";
+import debounce from "lodash/debounce";
 import MapToolbar from "./MapToolbar";
 import Marker from "./Marker";
 import Polygon from "./Polygon";
@@ -69,12 +69,12 @@ function Map(props: {
   let [tooltipCoordinates, setTooltipCoordinates] = useState<any>();
 
   let updateMarkerTooltipDebounced = useRef(
-    _.debounce((tooltipContent: any) => {
+    debounce((tooltipContent: any) => {
       setMarkerTooltipContent(tooltipContent);
     }, 100)
   );
   let updatePolygonTooltipDebounced = useRef(
-    _.debounce((tooltipContent: any) => {
+    debounce((tooltipContent: any) => {
       setPolygonTooltipContent(tooltipContent);
     }, 100)
   );
