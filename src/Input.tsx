@@ -56,7 +56,8 @@ function Input(props: IInputProps) {
     showAsterisk,
     hideArrows,
     disableNumericInputScroll,
-    dataTest
+    dataTest,
+    inputMode
   } = props;
 
   type = type ? type : "text";
@@ -127,6 +128,7 @@ function Input(props: IInputProps) {
         }
       }}
       data-test={dataTest}
+      inputMode={inputMode ?? (type === "number" ? "decimal" : "text")}
     />
   );
 
