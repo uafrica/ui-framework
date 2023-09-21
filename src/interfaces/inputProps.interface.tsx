@@ -53,4 +53,5 @@ export interface IInputProps {
   disableNumericInputScroll?: boolean; // scrolling over a numeric input causes the input value to change
   dataTest?: string | undefined;
   pointer?: any;
+  inputMode?: "none" | "text" | "tel" | "url" | "email" | "numeric" | "decimal" | "search";
 }

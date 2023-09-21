@@ -4,19 +4,16 @@ import _ from "lodash";
 import MapToolbar from "./MapToolbar";
 import Marker from "./Marker";
 import Polygon from "./Polygon";
-import React, { useEffect, useRef, useState } from "react";
+import Polyline from "./Polyline";
 import { Button } from "../Button";
-import {
-  DrawingManager,
-  GoogleMap,
-  InfoWindow,
-  Polyline,
-} from "@react-google-maps/api";
-import { IMarker, IPolygon } from "../interfaces";
+import { DrawingManager, GoogleMap, InfoWindow } from "@react-google-maps/api";
+import { IMarker, IPolygon, IPolyline } from "../interfaces";
+import { useEffect, useRef, useState } from "react";
 
 function Map(props: {
   isReadOnly?: boolean;
   polygons?: IPolygon[];
+  polylines?: IPolyline[];
   markers?: IMarker[];
   mapContainerStyle?: any;
   defaultCenter: { lat: number; lng: number };
@@ -41,6 +38,7 @@ function Map(props: {
 }) {
   let {
     polygons,
+    polylines,
     markers,
     isReadOnly,
     disableScrollZoom,
@@ -364,7 +362,8 @@ function Map(props: {
       strokeOpacity: 1,
       scale: 4,
     };
-    let antimeridian = {
+    let antimeridian: IPolyline = {
+      data: { id: "antimeridian" },
       path: [
         { lat: 90, lng: 180 },
         { lat: -90, lng: 180 },
@@ -383,7 +382,7 @@ function Map(props: {
       },
     };
 
-    return <Polyline path={antimeridian.path} options={antimeridian.options} />;
+    return <Polyline polyline={antimeridian} />;
   }
 
   function renderPolygons() {
@@ -468,6 +467,14 @@ function Map(props: {
             }}
           />
         );
+      })
+    );
+  }
+  function renderPolylines() {
+    return (
+      polylines &&
+      polylines.map((polyline: IPolyline, index: number) => {
+        return <Polyline polyline={polyline} key={index} />;
       })
     );
   }
@@ -675,6 +682,7 @@ function Map(props: {
           )}
 
           {renderPolygons()}
+          {renderPolylines()}
           {renderMarkers()}
           {renderAntimeridian()}
           {renderTooltip()}
