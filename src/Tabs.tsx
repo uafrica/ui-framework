@@ -7,7 +7,8 @@ interface ITab {
   children?: any;
   tabID: string;
   id?: string;
-  title: string;
+  title?: string;
+  titleHTML?: any;
   info?: string;
   className?: string;
   isClickable?: boolean;
@@ -110,14 +111,14 @@ function Primary(props: ITabs) {
                     child.props.className
                   }
                 >
-                  {child.props.title}{" "}
+                  {child.props.title} {child.props.titleHTML && child.props.titleHTML}
                   {child.props.info && <InfoButton>{child.props.info}</InfoButton>}
                 </span>
               </div>
             ))}
           </nav>
           {overflowing.right && (
-            <FontAwesomeIcon icon={"chevron-right"} color="gray" className="m-1" />
+            <FontAwesomeIcon icon="chevron-right" color="gray" className="m-1" />
           )}
         </div>
         <React.Fragment key={props.activeTabID}>{activeTab}</React.Fragment>
@@ -177,15 +178,13 @@ function Secondary(props: ITabs) {
                   "u-vertical-center flex-row space-x-4 whitespace-nowrap " + child.props.className
                 }
               >
-                {child.props.title}{" "}
+                {child.props.title} {child.props.titleHTML && child.props.titleHTML}
                 {child.props.info && <InfoButton>{child.props.info}</InfoButton>}
               </span>
             </div>
           ))}
         </nav>
-        {overflowing.right && (
-          <FontAwesomeIcon icon={"chevron-right"} color="gray" className="m-1" />
-        )}
+        {overflowing.right && <FontAwesomeIcon icon="chevron-right" color="gray" className="m-1" />}
       </div>
       <React.Fragment key={props.activeTabID}>{activeTab}</React.Fragment>
     </div>

@@ -6,6 +6,7 @@ import Forms from "./Forms";
 import Tables from "./Tables";
 import Buttons from "./Buttons";
 import Utils from "./Utils";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function TabsPage() {
   const history = useHistory();
@@ -42,7 +43,14 @@ function TabsPage() {
     <>
       <PageHeading>Bob Group UI Component playground</PageHeading>
       <Tabs.Primary activeTabID={activeTabID} onSelect={(tabID: string) => onTabSelected(tabID)}>
-        <Tabs.Tab tabID={"forms"} title={"Forms"}>
+        <Tabs.Tab
+          tabID={"forms"}
+          titleHTML={
+            <div>
+              Forms <FontAwesomeIcon icon="crown" color="#FFB600" />
+            </div>
+          }
+        >
           <Forms />
         </Tabs.Tab>
         <Tabs.Tab tabID={"dialog"} title={"Modals"}>
