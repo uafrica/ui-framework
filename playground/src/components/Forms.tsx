@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   DatePicker,
   InfoButton,
@@ -193,6 +194,7 @@ function Forms() {
           <Dropdown.Menu title="dropdown options" padding={"pr-4 pl-2"} square={true}>
             <Dropdown.MenuItem
               icon="plus"
+              appendHTML={<FontAwesomeIcon icon="crown" color="#FFB600" />}
               isLoading={true}
               title="Option 1"
               onClick={() => alert("Option 1 selected")}
