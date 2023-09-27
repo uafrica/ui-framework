@@ -264,7 +264,8 @@ function Forms() {
       <PageHeading>Form Components</PageHeading>
       <SectionHeading>Input and checkbox components</SectionHeading>
       <hr />
-      <Checkbox isChecked={true} textColor={"red-600"} />
+      <Checkbox isChecked={true} textColor="red-600" />
+      <Checkbox isDisabled={true} label="Disabled" />
       <div className="mt-5">
         <Switch
           isChecked={showInputInterface}
