@@ -43,6 +43,7 @@ import { IconWithBackground } from "./IconWithBackground";
 import { InfoButton } from "./InfoButton";
 import { InfoPopover } from "./InfoPopover";
 import { Input } from "./Input";
+import { PasswordInputWithStrengthIndicator } from "./PasswordInputWithStrengthIndicator";
 import { Label, LabelWithValue } from "./Label";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { Loader } from "./Loader";
@@ -93,6 +94,7 @@ export {
   MonthPicker,
   CustomTable,
   Input,
+  PasswordInputWithStrengthIndicator,
   Counter,
   Modal,
   Confirm,
