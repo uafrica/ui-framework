@@ -71,7 +71,8 @@ function CustomTable(props: {
     rowOrderIcon,
     persistPage,
     hideRefreshButton = false,
-    rowStyleFunction
+    rowStyleFunction,
+    rowDragLockCheck
   } = props;
   let topRef: any = useRef();
   let rowUniqueIdentifier = props.rowUniqueIdentifier ?? "id";
