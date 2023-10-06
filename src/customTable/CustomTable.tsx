@@ -46,7 +46,7 @@ function CustomTable(props: {
   persistPage?: boolean;
   hideRefreshButton?: boolean;
   rowStyleFunction?: Function;
-  rowDragLockCheck?: Function; // If this field exists and is true then the drag functionality will be disabled
+  rowDragLockIndices?: number[]; // If this field exists and returns true then the drag functionality will be disabled
 }) {
   let {
     id,
