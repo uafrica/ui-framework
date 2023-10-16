@@ -89,8 +89,13 @@ function CustomTableRow(props: {
                 }
               }}
               onMouseDown={(e: any) => {
-                e.preventDefault();
-                e.stopPropagation();
+                if (e.button === 0 && e.buttons === 1) {
+                  // right click (allows text selection)
+                } else {
+                  // left click
+                  e.preventDefault();
+                  e.stopPropagation();
+                }
               }}
             >
               <div style={columnContentStyle} className="items-center mx-2 ">
