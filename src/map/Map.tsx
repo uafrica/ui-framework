@@ -466,6 +466,7 @@ function Map(props: {
 
       return (
         <Marker
+          hideTooltip={hideTooltip}
           key={key}
           markerGroup={markerGroup}
           onClick={() => {
