@@ -56,6 +56,7 @@ import { NavItem, NavItemDivider } from "./NavItem";
 import { NewVersionAvailable } from "./NewVersionAvailable";
 import { PageHeading } from "./PageHeading";
 import { Pagination } from "./Pagination";
+import { ProgressBar } from "./ProgressBar";
 import { Radio } from "./Radio";
 import { SavePanel, SavePanelContainer } from "./SavePanel";
 import { SearchInput } from "./SearchInput";
@@ -155,6 +156,7 @@ export {
   useMediaQuery,
   Banner,
   Pagination,
+  ProgressBar,
   useGetPagination,
   validationUtils,
   roleUtils,
