@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 function CountrySelect(props: {
   label?: string;
   allowedCountryCodes?: string[];
+  allowOtherCountries?: boolean;
   isMultiSelection?: boolean;
   allowDeselect?: boolean;
   onChange?: Function;
@@ -20,6 +21,7 @@ function CountrySelect(props: {
   let {
     label,
     allowedCountryCodes,
+    allowOtherCountries,
     isMultiSelection,
     value,
     allowDeselect,
@@ -51,6 +53,7 @@ function CountrySelect(props: {
         return code.toUpperCase();
       })
     );
+
     setCountrySelectOptions(countries);
   }, [allowedCountryCodes]);
 
@@ -63,14 +66,17 @@ function CountrySelect(props: {
     if (isMultiSelection) {
       if (selectedCountryCodes.length === 1) {
         setCustomSelectionValue(
-          countryUtils.getCountryByCode(selectedCountryCodes[0]) ?? <FontAwesomeIcon icon="flag" />
+          countryUtils.getCountryByCode(selectedCountryCodes[0], allowOtherCountries) ?? (
+            <FontAwesomeIcon icon="flag" />
+          )
         );
       } else {
         setCustomSelectionValue(null);
       }
     } else {
       if (selectedCountryCodes) {
-        let country = countryUtils.getCountryByCode(selectedCountryCodes);
+        let country = countryUtils.getCountryByCode(selectedCountryCodes, allowOtherCountries);
+
         setCustomSelectionValue(country?.flag ?? <FontAwesomeIcon icon="flag" />);
       } else {
         setCustomSelectionValue(null);
@@ -80,12 +86,12 @@ function CountrySelect(props: {
 
   function buildCountrySelectOptions(allowedCountryCodes?: string[]) {
     const allCountries: ICountry[] = allowedCountryCodes
-      ? countryUtils.getAllCountriesInListOfCodes(allowedCountryCodes)
-      : countryUtils.getAllCountries();
+      ? countryUtils.getAllCountriesInListOfCodes(allowedCountryCodes, allowOtherCountries)
+      : countryUtils.getAllCountries(allowOtherCountries);
 
     let displayCountries = [...allCountries];
 
-    return displayCountries.map((country: ICountry) => {
+    let countries = displayCountries.map((country: ICountry) => {
       let labelCustomHTML = (
         <div className=" w-full pr-4">
           <div className="flex flex-row justify-between items-center">
@@ -100,6 +106,8 @@ function CountrySelect(props: {
 
       return { label: country.name, labelCustomHTML, value: country.code };
     });
+
+    return countries;
   }
 
   function renderSelectedCountries() {
@@ -107,7 +115,10 @@ function CountrySelect(props: {
       <div className={selectedCountriesContainerClassName ?? "max-h-24 overflow-auto"}>
         <div className="flex flex-wrap">
           {selection.map((code: string, index: number) => {
-            let country: ICountry | null = countryUtils.getCountryByCode(code);
+            let country: ICountry | null = countryUtils.getCountryByCode(
+              code,
+              allowOtherCountries
+            );
             if (country) {
               return (
                 <div className="text-sm pt-4">

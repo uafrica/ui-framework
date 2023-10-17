@@ -8,6 +8,7 @@ import { Message } from "./Message";
 
 function MobileNumberSelect(props: {
   allowedCountryCodes?: string[];
+  allowOtherCountries?: boolean;
   defaultCountryCode?: string;
   label?: any;
   onChange?: Function;
@@ -23,6 +24,7 @@ function MobileNumberSelect(props: {
 }) {
   let {
     allowedCountryCodes,
+    allowOtherCountries,
     value,
     label,
     defaultCountryCode,
@@ -40,8 +42,8 @@ function MobileNumberSelect(props: {
   const validationRegex = /^\d{9}$/;
 
   const validCountries: ICountry[] = allowedCountryCodes
-    ? countryUtils.getAllCountriesInListOfCodes(allowedCountryCodes)
-    : countryUtils.getAllCountries();
+    ? countryUtils.getAllCountriesInListOfCodes(allowedCountryCodes, allowOtherCountries)
+    : countryUtils.getAllCountries(allowOtherCountries);
 
   let [selectedCountry, setSelectedCountry] = useState<any>();
   let [mobileNumber, setMobileNumber] = useState<string>();
@@ -64,7 +66,10 @@ function MobileNumberSelect(props: {
   }, [mobileNumber, selectedCountry]);
 
   function cleanReceivedMobileNumber(value: any) {
-    let defaultCountry = countryUtils.getCountryByCode(defaultCountryCode ?? "ZA");
+    let defaultCountry = countryUtils.getCountryByCode(
+      defaultCountryCode ?? "ZA",
+      allowOtherCountries
+    );
 
     let mobileNumber = "";
     let mobileNumberCountry: ICountry | null = defaultCountry;
@@ -107,7 +112,7 @@ function MobileNumberSelect(props: {
 
   function onCountryChanged(countryCode: string | null) {
     if (countryCode) {
-      let newSelectedCountry = countryUtils.getCountryByCode(countryCode);
+      let newSelectedCountry = countryUtils.getCountryByCode(countryCode, allowOtherCountries);
       setSelectedCountry(newSelectedCountry);
     } else {
       setSelectedCountry(null);
@@ -127,13 +132,15 @@ function MobileNumberSelect(props: {
         )}
         <div className="flex flex-row space-x-4">
           <CountrySelect
+            allowOtherCountries={allowOtherCountries}
             isReadOnly={isReadOnly}
-            containerClassName={selectedCountry? "w-16": "w-24"}
+            containerClassName={selectedCountry ? "w-16" : "w-24"}
             allowedCountryCodes={allowedCountryCodes}
             value={selectedCountry?.code}
             onChange={onCountryChanged}
           />
           <Input
+            hideArrows
             name={name}
             isReadOnly={isReadOnly}
             containerClassName="w-full"
@@ -145,7 +152,8 @@ function MobileNumberSelect(props: {
             value={shouldValidate ? undefined : mobileNumber ?? ""}
             defaultValue={shouldValidate ? value : undefined}
             onChange={(e: any) => {
-              setMobileNumber(e.target.value);
+              let value = e.target.value.replace("+", "");
+              setMobileNumber(value);
             }}
             register={
               validation &&
