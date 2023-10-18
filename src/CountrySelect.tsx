@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ICountry } from "./interfaces/country.interface";
 import { Select } from "./Select";
 import { useEffect, useState } from "react";
+import * as FlagIcons from "country-flag-icons/react/3x2";
 
 function CountrySelect(props: {
   label?: string;
@@ -76,8 +77,21 @@ function CountrySelect(props: {
     } else {
       if (selectedCountryCodes) {
         let country = countryUtils.getCountryByCode(selectedCountryCodes, allowOtherCountries);
-
-        setCustomSelectionValue(country?.flag ?? <FontAwesomeIcon icon="flag" />);
+        // @ts-ignore
+        let Flag: any = FlagIcons[country.code.toUpperCase()];
+        setCustomSelectionValue(
+          (
+            <div>
+              {Flag ? (
+                <div className="h-6 flex items-center">
+                  <Flag className="h-4" />
+                </div>
+              ) : (
+                country?.flag
+              )}
+            </div>
+          ) ?? <FontAwesomeIcon icon="flag" />
+        );
       } else {
         setCustomSelectionValue(null);
       }
@@ -90,13 +104,14 @@ function CountrySelect(props: {
       : countryUtils.getAllCountries(allowOtherCountries);
 
     let displayCountries = [...allCountries];
-
     let countries = displayCountries.map((country: ICountry) => {
+      // @ts-ignore
+      let Flag: any = FlagIcons[country.code.toUpperCase()];
       let labelCustomHTML = (
         <div className=" w-full pr-4">
           <div className="flex flex-row justify-between items-center">
             <div className="flex flex-row space-x-4 items-center">
-              <div>{country.flag}</div>
+              <div>{Flag ? <Flag className="h-4" /> : country.flag}</div>
               <div>{country.name}</div>
             </div>
             <div>{country.dialCode}</div>
@@ -115,15 +130,14 @@ function CountrySelect(props: {
       <div className={selectedCountriesContainerClassName ?? "max-h-24 overflow-auto"}>
         <div className="flex flex-wrap">
           {selection.map((code: string, index: number) => {
-            let country: ICountry | null = countryUtils.getCountryByCode(
-              code,
-              allowOtherCountries
-            );
+            let country: ICountry | null = countryUtils.getCountryByCode(code, allowOtherCountries);
             if (country) {
+              // @ts-ignore
+              let Flag: any = FlagIcons[country.code.toUpperCase()];
               return (
                 <div className="text-sm pt-4">
                   <div className="flex flex-row items-center space-x-2  bg-gray-200 rounded-full mr-4 px-3 py-1 text-sm">
-                    <div>{country.flag}</div>
+                    <div>{Flag ? <Flag className="h-4" /> : country.flag}</div>
                     <div>{country.name}</div>
                     <FontAwesomeIcon
                       icon="times"
