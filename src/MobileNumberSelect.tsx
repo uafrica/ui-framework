@@ -57,17 +57,19 @@ function MobileNumberSelect(props: {
     }
   }, [value]);
 
-  useEffect(() => {
+  // Occurs when either the mobile number or the country changes.
+  // Not making use of an useEffect here because it competes with the [value] useEffect above.
+  function onChange(_mobileNumber: string | undefined, selectedCountry: ICountry | null) {
     if (props.onChange) {
-      if (mobileNumber) {
-        if (selectedCountry && value !== selectedCountry.dialCode + mobileNumber) {
-          props.onChange(selectedCountry.dialCode + mobileNumber);
+      if (_mobileNumber) {
+        if (selectedCountry && value !== selectedCountry.dialCode + _mobileNumber) {
+          props.onChange(selectedCountry.dialCode + _mobileNumber);
         }
       } else {
         props.onChange("");
       }
     }
-  }, [mobileNumber, selectedCountry]);
+  }
 
   function cleanReceivedMobileNumber(value: any) {
     let defaultCountry = countryUtils.getCountryByCode(
@@ -115,12 +117,12 @@ function MobileNumberSelect(props: {
   }
 
   function onCountryChanged(countryCode: string | null) {
+    let newSelectedCountry = null;
     if (countryCode) {
-      let newSelectedCountry = countryUtils.getCountryByCode(countryCode, allowOtherCountries);
-      setSelectedCountry(newSelectedCountry);
-    } else {
-      setSelectedCountry(null);
+      newSelectedCountry = countryUtils.getCountryByCode(countryCode, allowOtherCountries);
     }
+    setSelectedCountry(newSelectedCountry);
+    onChange(mobileNumber, newSelectedCountry);
   }
 
   function render() {
@@ -158,6 +160,7 @@ function MobileNumberSelect(props: {
             onChange={(e: any) => {
               let value = e.target.value.replace("+", "");
               setMobileNumber(value);
+              onChange(value, selectedCountry);
             }}
             register={
               validation &&

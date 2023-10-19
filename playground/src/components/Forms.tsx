@@ -37,7 +37,7 @@ function Forms() {
   const [selectionOne, setSelectionOne] = useState<Array<{ label: string; value: string }>>([]);
   const [selectedOne, setSelectedOne] = useState<{ label: string; value: string }>();
 
-  const [phoneNumber, setPhoneNumber] = useState<string>("");
+  const [phoneNumber, setPhoneNumber] = useState<string>("764535606");
 
   const setSelectionOptions = () => {
     setTimeout(() => {
@@ -271,7 +271,7 @@ function Forms() {
       <Checkbox isChecked={true} textColor="red-600" />
       <Checkbox isDisabled={true} label="Disabled" />
       <MobileNumberSelect
-        allowedCountryCodes={["ZA"]}
+        allowedCountryCodes={["ZA", "TO"]}
         label="Mobile number"
         value={phoneNumber}
         onChange={(value: string) => setPhoneNumber(value)}
