@@ -58,7 +58,7 @@ function MobileNumberSelect(props: {
   }, [value]);
 
   useEffect(() => {
-    if (props.onChange) {
+    if (mobileNumber && props.onChange) {
       if (selectedCountry && value !== selectedCountry.dialCode + mobileNumber) {
         props.onChange(selectedCountry.dialCode + mobileNumber);
       }
