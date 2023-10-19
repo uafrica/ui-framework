@@ -11,7 +11,9 @@ import {
   Radio,
   TextArea,
   Button,
-  Checkbox
+  Checkbox,
+  MobileNumberSelect,
+  LabelWithValue
 } from "../../../src";
 import { useEffect, useState } from "react";
 
@@ -34,6 +36,8 @@ function Forms() {
   // select components
   const [selectionOne, setSelectionOne] = useState<Array<{ label: string; value: string }>>([]);
   const [selectedOne, setSelectedOne] = useState<{ label: string; value: string }>();
+
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
 
   const setSelectionOptions = () => {
     setTimeout(() => {
@@ -266,6 +270,13 @@ function Forms() {
       <hr />
       <Checkbox isChecked={true} textColor="red-600" />
       <Checkbox isDisabled={true} label="Disabled" />
+      <MobileNumberSelect
+        allowedCountryCodes={["ZA"]}
+        label="Mobile number"
+        value={phoneNumber}
+        onChange={(value: string) => setPhoneNumber(value)}
+      />
+      <LabelWithValue label="Phone" value={phoneNumber} />
       <div className="mt-5">
         <Switch
           isChecked={showInputInterface}

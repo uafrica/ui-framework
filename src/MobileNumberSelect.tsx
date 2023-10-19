@@ -58,9 +58,13 @@ function MobileNumberSelect(props: {
   }, [value]);
 
   useEffect(() => {
-    if (mobileNumber && props.onChange) {
-      if (selectedCountry && value !== selectedCountry.dialCode + mobileNumber) {
-        props.onChange(selectedCountry.dialCode + mobileNumber);
+    if (props.onChange) {
+      if (mobileNumber) {
+        if (selectedCountry && value !== selectedCountry.dialCode + mobileNumber) {
+          props.onChange(selectedCountry.dialCode + mobileNumber);
+        }
+      } else {
+        props.onChange("");
       }
     }
   }, [mobileNumber, selectedCountry]);
