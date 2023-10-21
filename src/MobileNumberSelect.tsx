@@ -38,8 +38,24 @@ function MobileNumberSelect(props: {
     showAsterisk
   } = props;
 
-  const shouldValidate = validation && name;
-  const validationRegex = /^\d{9}$/;
+  const shouldValidate = Boolean(validation && name);
+
+  /* Here is a breakdown of this regex pattern:
+
+      ^ : Start of the string.
+      0? : Optional zero at the start.
+      [-\s]? : Optional space or dash.
+      (\d[-\s]?) : A digit followed by an optional space or dash.
+      {9} : The previous group (a digit with an optional space or dash) should appear 9 times.
+      $ : End of the string.
+      This pattern will match strings like:
+
+      01-23 45 6789
+      0-123-456-789
+      0123456789
+      0 123456789
+  */
+  const validationRegex = /^0?[-\s]?(\d[-\s]?){9}$/;
 
   const validCountries: ICountry[] = allowedCountryCodes
     ? countryUtils.getAllCountriesInListOfCodes(allowedCountryCodes, allowOtherCountries)
@@ -82,7 +98,7 @@ function MobileNumberSelect(props: {
     if (!value) {
       // do nothing
     } else {
-      mobileNumber = value.toString().trim();
+      mobileNumber = value.toString();
       if (mobileNumber.indexOf("0") === 0) {
         // remove leading 0, country is assumed to be default country
         mobileNumber = mobileNumber.slice(1);
@@ -150,7 +166,6 @@ function MobileNumberSelect(props: {
             name={name}
             isReadOnly={isReadOnly}
             containerClassName="w-full"
-            disableNumericInputScroll
             prependPadding="pl-14"
             prependTextSize="text-base"
             isLabelInline
