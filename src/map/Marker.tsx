@@ -10,6 +10,7 @@ function Marker(props: {
   onMouseOver: Function;
   onMouseOut: Function;
   onDragEnd: Function;
+  hideTooltip: Function;
 }) {
   let { markerGroup } = props;
 
@@ -43,7 +44,7 @@ function Marker(props: {
                   onMarkerClicked(e, marker);
                 }}
               >
-                {marker.options.tooltip && marker.options.tooltip(marker)}
+                {marker.options.tooltip && marker.options.tooltip(marker, props.hideTooltip)}
               </div>
             );
           })}

@@ -1,6 +1,7 @@
 /**
  * Any custom validation functions to be used by React Hook Form
  */
+import { useForm } from "react-hook-form";
 
 const emailRegex =
   /^((([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})),?;? ?)+$/;
@@ -25,4 +26,30 @@ async function validateContactNumber(value: string) {
   return Boolean(valid);
 }
 
-export { validateEmail, validateContactNumber, emailRegex, contactNumberRegex, URLRegex };
+function withValidation(Component: any) {
+  return function WrappedComponent(props: any) {
+    const { register, handleSubmit, watch, reset, errors, clearErrors, trigger, setValue } =
+      useForm();
+    let validation = {
+      register,
+      handleSubmit,
+      watch,
+      reset,
+      errors,
+      clearErrors,
+      trigger,
+      setValue
+    };
+
+    return <Component {...props} validation={validation} />;
+  };
+}
+
+export {
+  validateEmail,
+  validateContactNumber,
+  emailRegex,
+  contactNumberRegex,
+  URLRegex,
+  withValidation
+};
