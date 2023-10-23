@@ -46,7 +46,7 @@ function CustomTable(props: {
   persistPage?: boolean;
   hideRefreshButton?: boolean;
   rowStyleFunction?: Function;
-  lockDragFunction?: Function; // If this field exists and returns true then the drag functionality will be disabled
+  checkIfRowIsDraggable?: Function; // If this field exists and returns true then the drag functionality will be disabled
 }) {
   let {
     id,
@@ -72,7 +72,7 @@ function CustomTable(props: {
     persistPage,
     hideRefreshButton = false,
     rowStyleFunction,
-    lockDragFunction
+    checkIfRowIsDraggable
   } = props;
   let topRef: any = useRef();
   let rowUniqueIdentifier = props.rowUniqueIdentifier ?? "id";
@@ -677,7 +677,7 @@ function CustomTable(props: {
           />
         ),
         cell: (row: IRow) => {
-          if (lockDragFunction && lockDragFunction(row.original)){
+          if (checkIfRowIsDraggable && checkIfRowIsDraggable(row.original)){
             return  (
               <FontAwesomeIcon
                 // @ts-ignore
