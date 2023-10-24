@@ -41,7 +41,10 @@ function Forms(props: any) {
   const [selectedOne, setSelectedOne] = useState<{ label: string; value: string }>();
 
   const [phoneNumber, setPhoneNumber] = useState<string>("764535606");
-  let [creditCardExpiryDate, setCreditCardExpiryDate] = useState<any>({});
+  let [expiryDate, setExpiryDate] = useState<{ month: string; year: string }>({
+    month: "01",
+    year: "24"
+  });
 
   const setSelectionOptions = () => {
     setTimeout(() => {
@@ -361,12 +364,7 @@ function Forms(props: any) {
           </pre>
         </div>
       )}
-      <ExpiryDateInput
-        onChange={(value: any) => {
-          setCreditCardExpiryDate(value);
-          console.log(creditCardExpiryDate);
-        }}
-      />
+      <ExpiryDateInput value={expiryDate} onChange={setExpiryDate} />
       <InputPrice />
 
       <SelectInput />
