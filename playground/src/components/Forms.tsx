@@ -13,7 +13,8 @@ import {
   Button,
   Checkbox,
   MobileNumberSelect,
-  LabelWithValue
+  LabelWithValue,
+  ExpiryDateInput
 } from "../../../src";
 import { useEffect, useState } from "react";
 import { withValidation } from "../../../src/utils/validationUtils";
@@ -40,6 +41,7 @@ function Forms(props: any) {
   const [selectedOne, setSelectedOne] = useState<{ label: string; value: string }>();
 
   const [phoneNumber, setPhoneNumber] = useState<string>("764535606");
+  let [creditCardExpiryDate, setCreditCardExpiryDate] = useState<any>({});
 
   const setSelectionOptions = () => {
     setTimeout(() => {
@@ -359,6 +361,12 @@ function Forms(props: any) {
           </pre>
         </div>
       )}
+      <ExpiryDateInput
+        onChange={(value: any) => {
+          setCreditCardExpiryDate(value);
+          console.log(creditCardExpiryDate);
+        }}
+      />
       <InputPrice />
 
       <SelectInput />
