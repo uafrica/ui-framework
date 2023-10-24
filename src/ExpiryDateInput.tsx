@@ -31,37 +31,41 @@ function ExpiryDateInput(props: IProps) {
   /* RENDER METHODS */
   /* --------------------------------*/
 
-  return (
-    <div>
-      <Label>Expiry date</Label>
-      <div className="flex rounded-md border border-gray-300 py-1 px-4">
-        <input
-          type="text"
-          placeholder="MM"
-          className="w-8 py-1 border-none shadow-none focus:ring-0 px-0 "
-          value={creditCardMonth}
-          maxLength={2}
-          onChange={(e: any) => {
-            const inputValue = e.target.value;
-            handleDateChange(inputValue, "month");
-          }}
-        />
-        <span className="text-gray-600 pl-1 pr-2 py-1">/</span>
-        <input
-          type="text"
-          placeholder="YY"
-          className="w-8 py-1 border-none shadow-none focus:ring-0 px-0"
-          value={creditCardYear}
-          maxLength={2}
-          onChange={(e: any) => {
-            const inputValue = e.target.value;
-            handleDateChange(inputValue, "year");
-          }}
-          ref={yearInputRef}
-        />
+  function render() {
+    return (
+      <div>
+        <Label>Expiry date</Label>
+        <div className="flex rounded-md border border-gray-300 py-1 px-4">
+          <input
+            type="text"
+            placeholder="MM"
+            className="w-8 py-1 border-none shadow-none focus:ring-0 px-0 "
+            value={creditCardMonth}
+            maxLength={2}
+            onChange={(e: any) => {
+              const inputValue = e.target.value;
+              handleDateChange(inputValue, "month");
+            }}
+          />
+          <span className="text-gray-600 pl-1 pr-2 py-1">/</span>
+          <input
+            type="text"
+            placeholder="YY"
+            className="w-8 py-1 border-none shadow-none focus:ring-0 px-0"
+            value={creditCardYear}
+            maxLength={2}
+            onChange={(e: any) => {
+              const inputValue = e.target.value;
+              handleDateChange(inputValue, "year");
+            }}
+            ref={yearInputRef}
+          />
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
+
+  return render();
 }
 
 export { ExpiryDateInput };
