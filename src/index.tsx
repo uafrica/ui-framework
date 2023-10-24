@@ -44,6 +44,7 @@ import { InfoButton } from "./InfoButton";
 import { InfoPopover } from "./InfoPopover";
 import { Input } from "./Input";
 import { PasswordInputWithStrengthIndicator } from "./PasswordInputWithStrengthIndicator";
+import { ExpiryDateInput } from "./ExpiryDateInput";
 import { Label, LabelWithValue } from "./Label";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { Loader } from "./Loader";
@@ -96,6 +97,7 @@ export {
   CustomTable,
   Input,
   PasswordInputWithStrengthIndicator,
+  ExpiryDateInput,
   Counter,
   Modal,
   Confirm,
