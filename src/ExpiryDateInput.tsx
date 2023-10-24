@@ -1,30 +1,40 @@
 import { Label } from "./Label";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface IProps {
+  value?: any;
   onChange: Function;
 }
 function ExpiryDateInput(props: IProps) {
-  let [creditCardMonth, setCreditCardMonth] = useState<number>();
-  let [creditCardYear, setCreditCardYear] = useState<number>();
-  let [creditCardExpiryDate, setCreditCardExpiryDate] = useState<any>({});
+  let { value } = props;
+  let [expiryMonth, setExpiryMonth] = useState<string>();
+  let [expiryYear, setExpiryYear] = useState<string>();
+  let [expiryDate, setExpiryDate] = useState<any>({});
   const yearInputRef = useRef<HTMLInputElement>(null);
 
+  useEffect(() => {
+    if (value) {
+      setExpiryMonth(value.month);
+      setExpiryYear(value.year);
+    }
+  }, []);
+
   function handleDateChange(inputValue: any, type: string) {
+    value = null;
     if (inputValue.length === 2) {
       yearInputRef.current?.focus();
     }
-    const value = inputValue.replace(/\D/g, "");
+    inputValue = inputValue.replace(/\D/g, "");
     if (type == "month") {
-      setCreditCardMonth(value);
-      creditCardExpiryDate.month = value;
+      setExpiryMonth(inputValue);
+      expiryDate.month = inputValue;
     } else {
-      setCreditCardYear(value);
-      creditCardExpiryDate.year = value;
+      setExpiryYear(inputValue);
+      expiryDate.year = inputValue;
     }
 
-    setCreditCardExpiryDate({ ...creditCardExpiryDate });
-    props.onChange({ ...creditCardExpiryDate });
+    setExpiryDate({ ...expiryDate });
+    props.onChange({ ...expiryDate });
   }
 
   /* --------------------------------*/
@@ -40,7 +50,7 @@ function ExpiryDateInput(props: IProps) {
             type="text"
             placeholder="MM"
             className="w-8 py-1 border-none shadow-none focus:ring-0 px-0 "
-            value={creditCardMonth}
+            value={expiryMonth}
             maxLength={2}
             onChange={(e: any) => {
               const inputValue = e.target.value;
@@ -52,7 +62,7 @@ function ExpiryDateInput(props: IProps) {
             type="text"
             placeholder="YY"
             className="w-8 py-1 border-none shadow-none focus:ring-0 px-0"
-            value={creditCardYear}
+            value={expiryYear}
             maxLength={2}
             onChange={(e: any) => {
               const inputValue = e.target.value;

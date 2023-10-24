@@ -362,6 +362,7 @@ function Forms(props: any) {
         </div>
       )}
       <ExpiryDateInput
+        value={{ month: "01", year: "24" }}
         onChange={(value: any) => {
           setCreditCardExpiryDate(value);
           console.log(creditCardExpiryDate);
