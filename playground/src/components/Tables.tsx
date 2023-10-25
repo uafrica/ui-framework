@@ -3,7 +3,7 @@ import { SectionHeading, Table } from "../../../src";
 function Tables() {
   return (
     <div>
-      <SectionHeading>First tablee</SectionHeading>
+      <SectionHeading>First table</SectionHeading>
       <Table.Table>
         <Table.Head tableHeadColor={"bg-primary-100"}>
           <Table.Row>

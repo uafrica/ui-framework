@@ -45,6 +45,7 @@ function CustomTable(props: {
   persistPage?: boolean;
   hideRefreshButton?: boolean;
   rowStyleFunction?: Function;
+  checkIfRowIsDraggable?: Function; // If this field exists and returns true then the drag functionality will be disabled
 }) {
   let {
     id,
@@ -70,6 +71,7 @@ function CustomTable(props: {
     persistPage,
     hideRefreshButton = false,
     rowStyleFunction,
+    checkIfRowIsDraggable
   } = props;
   let topRef: any = useRef();
   let rowUniqueIdentifier = props.rowUniqueIdentifier ?? "id";
@@ -727,6 +729,17 @@ function CustomTable(props: {
           />
         ),
         cell: (row: IRow) => {
+          if (checkIfRowIsDraggable && checkIfRowIsDraggable(row.original)){
+            return  (
+              <FontAwesomeIcon
+                // @ts-ignore
+                icon={`${rowOrderIcon ? rowOrderIcon : "sort"}`}
+                className="ml-4 "
+                color="#d3d3d3"
+              />
+            )
+          }
+
           return (
             <div
               className="cursor-move"

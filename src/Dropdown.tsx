@@ -16,6 +16,7 @@ interface IDropdown {
   title?: string;
   square?: boolean;
   icon?: IconProp;
+  appendHTML?: IconProp;
   noBackground?: boolean;
   color?: string;
   id?: string;
@@ -45,6 +46,7 @@ interface IDropdown {
 interface IMenuItem {
   title: string;
   icon?: IconProp;
+  appendHTML?: any;
   onClick: any;
   id?: string;
   isDisabled?: boolean;
@@ -283,7 +285,7 @@ function ContextMenu(props: IDropdown) {
 }
 
 function MenuItem(props: IMenuItem) {
-  let { title, icon, id, isDisabled, isLoading, closeOnClick } = props;
+  let { title, icon, appendHTML, id, isDisabled, isLoading, closeOnClick } = props;
 
   let iconToShow = icon;
 
@@ -343,6 +345,7 @@ function MenuItem(props: IMenuItem) {
               </div>
             )}
             {title}
+            <div className="ml-auto">{appendHTML}</div>
           </div>
         )}
       </Menu.Item>

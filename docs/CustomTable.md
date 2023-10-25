@@ -346,3 +346,13 @@ Hides the default refresh button on the table
 ```
 hideRefreshButton
 ```
+
+**checkIfRowIsDraggable**?: Function
+Function to check whether dragging should be disabled for a specific row. Function takes in the `row.original` as its parameter and returns a boolean. Returns true
+if row is meant to be locked and false if the row is not meant to be locked.
+
+```
+checkIfRowIsDraggable={(row: any)=>{
+            return row.isLocked;
+          }}
+```

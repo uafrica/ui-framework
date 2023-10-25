@@ -8,6 +8,7 @@ import { Message } from "./Message";
 
 function MobileNumberSelect(props: {
   allowedCountryCodes?: string[];
+  allowOtherCountries?: boolean;
   defaultCountryCode?: string;
   label?: any;
   onChange?: Function;
@@ -23,6 +24,7 @@ function MobileNumberSelect(props: {
 }) {
   let {
     allowedCountryCodes,
+    allowOtherCountries,
     value,
     label,
     defaultCountryCode,
@@ -36,12 +38,28 @@ function MobileNumberSelect(props: {
     showAsterisk,
   } = props;
 
-  const shouldValidate = validation && name;
-  const validationRegex = /^\d{9}$/;
+  const shouldValidate = Boolean(validation && name);
+
+  /* Here is a breakdown of this regex pattern:
+
+      ^ : Start of the string.
+      0? : Optional zero at the start.
+      [-\s]? : Optional space or dash.
+      (\d[-\s]?) : A digit followed by an optional space or dash.
+      {9} : The previous group (a digit with an optional space or dash) should appear 9 times.
+      $ : End of the string.
+      This pattern will match strings like:
+
+      01-23 45 6789
+      0-123-456-789
+      0123456789
+      0 123456789
+  */
+  const validationRegex = /^0?[-\s]?(\d[-\s]?){9}$/;
 
   const validCountries: ICountry[] = allowedCountryCodes
-    ? countryUtils.getAllCountriesInListOfCodes(allowedCountryCodes)
-    : countryUtils.getAllCountries();
+    ? countryUtils.getAllCountriesInListOfCodes(allowedCountryCodes, allowOtherCountries)
+    : countryUtils.getAllCountries(allowOtherCountries);
 
   let [selectedCountry, setSelectedCountry] = useState<any>();
   let [mobileNumber, setMobileNumber] = useState<string>();
@@ -55,20 +73,24 @@ function MobileNumberSelect(props: {
     }
   }, [value]);
 
-  useEffect(() => {
+  // Occurs when either the mobile number or the country changes.
+  // Not making use of an useEffect here because it competes with the [value] useEffect above.
+  function onChange(_mobileNumber: string | undefined, selectedCountry: ICountry | null) {
     if (props.onChange) {
-      if (
-        selectedCountry &&
-        value !== selectedCountry.dialCode + mobileNumber
-      ) {
-        props.onChange(selectedCountry.dialCode + mobileNumber);
+      if (_mobileNumber) {
+        if (selectedCountry && value !== selectedCountry.dialCode + _mobileNumber) {
+          props.onChange(selectedCountry.dialCode + _mobileNumber);
+        }
+      } else {
+        props.onChange("");
       }
     }
-  }, [mobileNumber, selectedCountry]);
+  }
 
   function cleanReceivedMobileNumber(value: any) {
     let defaultCountry = countryUtils.getCountryByCode(
-      defaultCountryCode ?? "ZA"
+      defaultCountryCode ?? "ZA",
+      allowOtherCountries
     );
 
     let mobileNumber = "";
@@ -76,7 +98,7 @@ function MobileNumberSelect(props: {
     if (!value) {
       // do nothing
     } else {
-      mobileNumber = value.toString().trim();
+      mobileNumber = value.toString();
       if (mobileNumber.indexOf("0") === 0) {
         // remove leading 0, country is assumed to be default country
         mobileNumber = mobileNumber.slice(1);
@@ -111,12 +133,12 @@ function MobileNumberSelect(props: {
   }
 
   function onCountryChanged(countryCode: string | null) {
+    let newSelectedCountry = null;
     if (countryCode) {
-      let newSelectedCountry = countryUtils.getCountryByCode(countryCode);
-      setSelectedCountry(newSelectedCountry);
-    } else {
-      setSelectedCountry(null);
+      newSelectedCountry = countryUtils.getCountryByCode(countryCode, allowOtherCountries);
     }
+    setSelectedCountry(newSelectedCountry);
+    onChange(mobileNumber, newSelectedCountry);
   }
 
   function render() {
@@ -132,6 +154,7 @@ function MobileNumberSelect(props: {
         )}
         <div className="flex flex-row space-x-4">
           <CountrySelect
+            allowOtherCountries={allowOtherCountries}
             isReadOnly={isReadOnly}
             containerClassName={selectedCountry ? "w-16" : "w-24"}
             allowedCountryCodes={allowedCountryCodes}
@@ -139,10 +162,10 @@ function MobileNumberSelect(props: {
             onChange={onCountryChanged}
           />
           <Input
+            hideArrows
             name={name}
             isReadOnly={isReadOnly}
             containerClassName="w-full"
-            disableNumericInputScroll
             prependPadding="pl-14"
             prependTextSize="text-base"
             isLabelInline
@@ -150,7 +173,9 @@ function MobileNumberSelect(props: {
             value={shouldValidate ? undefined : mobileNumber ?? ""}
             defaultValue={shouldValidate ? value : undefined}
             onChange={(e: any) => {
-              setMobileNumber(e.target.value);
+              let value = e.target.value.replace("+", "");
+              setMobileNumber(value);
+              onChange(value, selectedCountry);
             }}
             register={
               validation &&

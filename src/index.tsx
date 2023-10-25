@@ -43,6 +43,8 @@ import { IconWithBackground } from "./IconWithBackground";
 import { InfoButton } from "./InfoButton";
 import { InfoPopover } from "./InfoPopover";
 import { Input } from "./Input";
+import { PasswordInputWithStrengthIndicator } from "./PasswordInputWithStrengthIndicator";
+import { ExpiryDateInput } from "./ExpiryDateInput";
 import { Label, LabelWithValue } from "./Label";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { Loader } from "./Loader";
@@ -55,6 +57,7 @@ import { NavItem, NavItemDivider } from "./NavItem";
 import { NewVersionAvailable } from "./NewVersionAvailable";
 import { PageHeading } from "./PageHeading";
 import { Pagination } from "./Pagination";
+import { ProgressBar } from "./ProgressBar";
 import { Radio } from "./Radio";
 import { SavePanel, SavePanelContainer } from "./SavePanel";
 import { SearchInput } from "./SearchInput";
@@ -93,6 +96,8 @@ export {
   MonthPicker,
   CustomTable,
   Input,
+  PasswordInputWithStrengthIndicator,
+  ExpiryDateInput,
   Counter,
   Modal,
   Confirm,
@@ -153,6 +158,7 @@ export {
   useMediaQuery,
   Banner,
   Pagination,
+  ProgressBar,
   useGetPagination,
   validationUtils,
   roleUtils,
