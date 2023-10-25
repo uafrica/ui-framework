@@ -1,3 +1,5 @@
+import React from "react";
+
 function ProgressBar(props: { percentage: number }) {
   let { percentage } = props;
   function render() {

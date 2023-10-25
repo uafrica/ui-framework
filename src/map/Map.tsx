@@ -8,7 +8,7 @@ import Polyline from "./Polyline";
 import { Button } from "../Button";
 import { DrawingManager, GoogleMap, InfoWindow } from "@react-google-maps/api";
 import { IMarker, IPolygon, IPolyline } from "../interfaces";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 function Map(props: {
   isReadOnly?: boolean;

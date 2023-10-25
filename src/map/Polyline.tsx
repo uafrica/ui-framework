@@ -1,5 +1,5 @@
 import { Polyline as GoogleMapsPolyline } from "@react-google-maps/api";
-import { memo } from "react";
+import React, { memo } from "react";
 import { IPolyline } from "../interfaces/polyline.interface";
 
 function Polyline(props: { polyline: IPolyline; onClick?: Function }) {
