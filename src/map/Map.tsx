@@ -9,6 +9,7 @@ import { Button } from "../Button";
 import { DrawingManager, GoogleMap, InfoWindow } from "@react-google-maps/api";
 import { IMarker, IPolygon, IPolyline } from "../interfaces";
 import React, { useEffect, useRef, useState } from "react";
+import groupBy from "lodash/groupBy";
 
 function Map(props: {
   isReadOnly?: boolean;
@@ -483,7 +484,7 @@ function Map(props: {
     let markersGrouped: any = {};
 
     if (markers) {
-      markersGrouped = _.groupBy(
+      markersGrouped = groupBy(
         markers,
         (marker) => marker.coordinates.lat + ", " + marker.coordinates.lng
       );
