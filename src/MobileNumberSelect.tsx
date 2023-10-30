@@ -69,7 +69,9 @@ function MobileNumberSelect(props: {
 
     if (mobileNumber !== number) {
       setMobileNumber(number);
-      setSelectedCountry(country);
+      if (selectedCountry !== country) {
+        setSelectedCountry(country);
+      }
     }
   }, [value]);
 
@@ -137,8 +139,11 @@ function MobileNumberSelect(props: {
     if (countryCode) {
       newSelectedCountry = countryUtils.getCountryByCode(countryCode, allowOtherCountries);
     }
-    setSelectedCountry(newSelectedCountry);
-    onChange(mobileNumber, newSelectedCountry);
+
+    if (selectedCountry?.code !== newSelectedCountry?.code) {
+      setSelectedCountry(newSelectedCountry);
+      onChange(mobileNumber, newSelectedCountry);
+    }
   }
 
   function render() {
