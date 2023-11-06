@@ -72,6 +72,7 @@ function MobileNumberSelect(props: {
       if (selectedCountry !== country) {
         setSelectedCountry(country);
       }
+      onChange(number, country);
     }
   }, [value]);
 
