@@ -27,26 +27,22 @@ interface IGenericTabs extends ITabs {
 function evaluateScroll(tabNavId: any, children: any) {
   let res = { left: false, right: false };
   if (children.length > 0) {
-    let nav = document.getElementById(tabNavId)?.getBoundingClientRect();
-
-    let leftId = children[0]?.props?.id ?? children[0]?.props?.tabID;
-    if (leftId) {
-      let left: any = document.getElementById(leftId)?.getBoundingClientRect();
-      if (left?.x < (nav?.x ?? 0)) {
+    let navElement = document.getElementById(tabNavId);
+    if (navElement) {
+      if (navElement.scrollLeft > 0) {
         res.left = true;
+      } else {
+        res.left = false;
       }
-    }
 
-    let rightId =
-      children[children.length - 1]?.props?.id ?? children[children.length - 1]?.props?.tabID;
-    if (rightId) {
-      let right: any = document.getElementById(rightId)?.getBoundingClientRect();
-
-      if (right?.x + right?.width > screen.width) {
+      if (navElement.scrollLeft < navElement.scrollWidth - navElement.clientWidth) {
         res.right = true;
+      } else {
+        res.right = false;
       }
     }
   }
+
   return res;
 }
 
