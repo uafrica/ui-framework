@@ -276,7 +276,7 @@ function ButtonsPanel(props: IButtonsPanelProps) {
   }
 
   return (
-    <div className={" w-full u-reverse-flex-col-to-row " + align + (noMargin ? "" : " mt-6")}>
+    <div className={" w-full u-reverse-flex-col-to-row mb-2" + align + (noMargin ? "" : " mt-6")}>
       {children}
     </div>
   );
