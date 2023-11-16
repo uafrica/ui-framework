@@ -1,13 +1,14 @@
 import { Confirm } from "./Confirm";
 import NavigationPrompt from "react-router-navigation-prompt";
 
-export default function NavPrompt({
-                                    shouldPrompt,
-                                    bodyText
-                                  }: {
+interface INavPrompt{
   shouldPrompt: boolean;
   bodyText?: string;
-}) {
+}
+
+function NavPrompt(props: INavPrompt) {
+  let {shouldPrompt, bodyText} = props;
+
   return (
     <>
       <NavigationPrompt
@@ -40,3 +41,5 @@ export default function NavPrompt({
     </>
   );
 }
+
+export { NavPrompt };

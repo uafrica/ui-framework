@@ -54,6 +54,7 @@ import { Modal } from "./Modal";
 import { MobileNumberSelect } from "./MobileNumberSelect";
 import { MonthPicker } from "./monthPicker/MonthPicker";
 import { NavItem, NavItemDivider } from "./NavItem";
+import {NavPrompt} from "./NavPrompt";
 import { NewVersionAvailable } from "./NewVersionAvailable";
 import { PageHeading } from "./PageHeading";
 import { Pagination } from "./Pagination";
@@ -104,6 +105,7 @@ export {
   Select,
   NavItem,
   NavItemDivider,
+  NavPrompt,
   Loader,
   Map,
   Tabs,
