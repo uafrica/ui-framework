@@ -42,7 +42,8 @@
     "react-error-boundary": "^3.1.4",
     "react-popper": "^2.2.5",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "react-router-navigation-prompt": "^1.9.6"
   },
   "peerDependencies": {
     "@popperjs/core": "^2.9.2",
