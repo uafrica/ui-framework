@@ -105,7 +105,7 @@ function Confirm(props: IProps) {
           disablePressEscToClose={disablePressEscToClose}
         >
           {body}
-          <Button.ButtonsPanel>
+          <Modal.ButtonsPanel>
             {cancelButton}
             {(!confirmButtonVariant || confirmButtonVariant === "danger") && (
               <Button.Danger onClick={onConfirm} title={confirmText} />
@@ -114,7 +114,7 @@ function Confirm(props: IProps) {
             {confirmButtonVariant && confirmButtonVariant !== "danger" && (
               <Button.Primary onClick={onConfirm} title={confirmText} />
             )}
-          </Button.ButtonsPanel>
+          </Modal.ButtonsPanel>
         </Modal.Small>
       )}
     </div>
