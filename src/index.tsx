@@ -3,6 +3,7 @@ import * as cacheUtils from "./utils/cacheUtils";
 import * as dateUtils from "./utils/dateUtils";
 import * as generalUtils from "./utils/generalUtils";
 import * as countryUtils from "./utils/countryUtils";
+import * as constants from "./utils/constantsAndDefaults";
 import * as interfaces from "./interfaces/index";
 import * as mapUtils from "./utils/mapUtils";
 import * as navUtils from "./utils/navUtils";
@@ -139,6 +140,7 @@ export {
   timerUtils,
   generalUtils,
   countryUtils,
+  constants,
   stringUtils,
   mapUtils,
   navUtils,
