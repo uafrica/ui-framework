@@ -10,6 +10,8 @@ interface IProps {
   inputLabel?: string;
   extraCriteria?: ICriteria[];
   onChange: Function;
+  passwordValue?: string;
+  shouldAutoFocus?: boolean;
 }
 
 interface ICriteria {
@@ -43,9 +45,11 @@ function PasswordInputWithStrengthIndicator(props: IProps) {
     shouldContainNumbers = true,
     shouldContainSpecialCharacters = true,
     inputLabel,
-    extraCriteria
+    extraCriteria,
+    passwordValue,
+    shouldAutoFocus
   } = props;
-  const [password, setPassword] = useState<string>("");
+  const [password, setPassword] = useState<string>(passwordValue ?? "");
   let [showPassword, setShowPassword] = useState<boolean>(false);
 
   function calculateScore() {
@@ -184,9 +188,10 @@ function PasswordInputWithStrengthIndicator(props: IProps) {
         <div className="relative">
           <input
             type={showPassword ? "text" : "password"}
-            className="w-full py-2 px-3 rounded-md border focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent"
+            className="w-full py-2 px-3 rounded-md border focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent border-gray-300"
             onChange={handlePasswordChange}
             value={password}
+            autoFocus={shouldAutoFocus}
           />
           <span
             className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-primary"
