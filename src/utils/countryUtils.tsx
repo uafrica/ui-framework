@@ -281,18 +281,30 @@ const countries: ICountry[] = [
   { name: "Åland Islands", dialCode: "+358", code: "AX", flag: "🇦🇽" }
 ];
 
-function getAllCountries(): ICountry[] {
+let otherCountry = { name: "Other", dialCode: "+", code: "other", flag: "🚩" };
+
+function getAllCountries(includeOtherCountries?: boolean): ICountry[] {
+  if (includeOtherCountries) {
+    return [...countries, otherCountry];
+  }
   return [...countries];
 }
 
-function getAllCountriesInListOfCodes(codes: string[]): ICountry[] {
-  return countries.filter((country: ICountry) => {
+function getAllCountriesInListOfCodes(
+  codes: string[],
+  includeOtherCountries?: boolean
+): ICountry[] {
+  let countries = getAllCountries(includeOtherCountries).filter((country: ICountry) => {
     return codes.indexOf(country.code) > -1;
   });
+  if (includeOtherCountries) {
+    countries.push(otherCountry);
+  }
+  return countries;
 }
 
-function getCountryByName(name: string): ICountry | null {
-  let filteredCountries = countries.filter((country: ICountry) => {
+function getCountryByName(name: string, includeOtherCountries?: boolean): ICountry | null {
+  let filteredCountries = getAllCountries(includeOtherCountries).filter((country: ICountry) => {
     return country.name === name && !country.secondary;
   });
   if (filteredCountries.length === 0) {
@@ -305,8 +317,8 @@ function getCountryByName(name: string): ICountry | null {
   }
 }
 
-function getCountryByCode(code: string): ICountry | null {
-  let filteredCountries = countries.filter((country: ICountry) => {
+function getCountryByCode(code: string, includeOtherCountries?: boolean): ICountry | null {
+  let filteredCountries = getAllCountries(includeOtherCountries).filter((country: ICountry) => {
     return country.code === code && !country.secondary;
   });
   if (filteredCountries.length === 0) {
@@ -319,8 +331,8 @@ function getCountryByCode(code: string): ICountry | null {
   }
 }
 
-function getCountryByDialCode(dialCode: string): ICountry | null {
-  let filteredCountries = countries.filter((country: ICountry) => {
+function getCountryByDialCode(dialCode: string, includeOtherCountries?: boolean): ICountry | null {
+  let filteredCountries = getAllCountries(includeOtherCountries).filter((country: ICountry) => {
     return country.dialCode === dialCode && !country.secondary;
   });
   if (filteredCountries.length === 0) {
@@ -333,8 +345,8 @@ function getCountryByDialCode(dialCode: string): ICountry | null {
   }
 }
 
-function isValidCountryDialCode(value: string): boolean {
-  let filteredCountries = countries.filter((country: ICountry) => {
+function isValidCountryDialCode(value: string, includeOtherCountries?: boolean): boolean {
+  let filteredCountries = getAllCountries(includeOtherCountries).filter((country: ICountry) => {
     return country.dialCode === value;
   });
 

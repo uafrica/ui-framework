@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   DatePicker,
   InfoButton,
@@ -10,11 +11,16 @@ import {
   Radio,
   TextArea,
   Button,
-  Checkbox
+  Checkbox,
+  MobileNumberSelect,
+  LabelWithValue,
+  ExpiryDateInput
 } from "../../../src";
 import { useEffect, useState } from "react";
+import { withValidation } from "../../../src/utils/validationUtils";
 
-function Forms() {
+function Forms(props: any) {
+  const { validation } = props;
   const [inlineInput, setInlineInput] = useState<boolean>(true);
   const [selection, setSelection] = useState<any>(null);
 
@@ -34,6 +40,12 @@ function Forms() {
   const [selectionOne, setSelectionOne] = useState<Array<{ label: string; value: string }>>([]);
   const [selectedOne, setSelectedOne] = useState<{ label: string; value: string }>();
 
+  const [phoneNumber, setPhoneNumber] = useState<string>("764535606");
+  let [expiryDate, setExpiryDate] = useState<{ month: string; year: string }>({
+    month: "01",
+    year: "24"
+  });
+
   const setSelectionOptions = () => {
     setTimeout(() => {
       return setSelectionOne([
@@ -51,44 +63,67 @@ function Forms() {
     setSelectionOptions();
   }, []);
 
-  // Render methods
-  const InputPrice = () => (
-    <>
-      <div className="max-w-md my-4 flex">
-        <Input
-          label="Price"
-          placeholder={"0.00"}
-          onBlur={(e: any) => console.log("value blured", e.target.value)}
-          isLabelInline={inlineInput}
-          appendText={"/kg"}
-          prependText={"RRR"}
-          inputClassName="pl-11"
-        />
-        {inlineInput && (
-          <div className="flex items-center">
-            <InfoButton>State has been applied with inline input component</InfoButton>
-          </div>
-        )}
-      </div>
+  /* --------------------------------*/
+  /* RENDER METHODS */
+  /* --------------------------------*/
+  function InputPrice() {
+    return (
+      <>
+        <div className="max-w-md my-4 flex">
+          <Input
+            label="Price"
+            placeholder="0.00"
+            onBlur={(e: any) => console.log("value blurred", e.target.value)}
+            isLabelInline={inlineInput}
+            defaultValue=""
+            appendText="/kg"
+            prependText="RRR"
+            name="price"
+            register={validation.register({
+              required: {
+                value: true,
+                message: "This field is required"
+              }
+            })}
+            validationError={
+              validation.errors && validation.errors.price && validation.errors.price
+            }
+            inputClassName="pl-11"
+          />
+          {inlineInput && (
+            <div className="flex items-center">
+              <InfoButton>State has been applied with inline input component</InfoButton>
+            </div>
+          )}
+        </div>
 
-      <Switch
-        isChecked={inlineInput}
-        onChange={() => setInlineInput(!inlineInput)}
-        label="Toggle inline input"
-        containerClassName={"check-here-class"}
-        info={!inlineInput ? "This will not work without state" : ""}
-      />
-      <div className="mt-5">
+        <div className="my-4">
+          <Button.Primary
+            title="Save"
+            onClick={props.validation.handleSubmit(() => {
+              alert("Fake saved");
+            })}
+          />
+        </div>
+
         <Switch
-          isChecked={showInputCode}
-          onChange={() => setShowInputCode(!showInputCode)}
-          label="Toggle input code example"
+          isChecked={inlineInput}
+          onChange={() => setInlineInput(!inlineInput)}
+          label="Toggle inline input"
+          containerClassName={"check-here-class"}
+          info={!inlineInput ? "This will not work without state" : ""}
         />
-      </div>
-      {showInputCode && (
-        <div className="mt-5 w-2/5">
-          <pre>
-            <code>{`  <Input
+        <div className="mt-5">
+          <Switch
+            isChecked={showInputCode}
+            onChange={() => setShowInputCode(!showInputCode)}
+            label="Toggle input code example"
+          />
+        </div>
+        {showInputCode && (
+          <div className="mt-5 w-2/5">
+            <pre>
+              <code>{`  <Input
     prependText="R"
     label="Price"
     isLabelInline
@@ -103,11 +138,12 @@ function Forms() {
        ]
      }}
   />`}</code>
-          </pre>
-        </div>
-      )}
-    </>
-  );
+            </pre>
+          </div>
+        )}
+      </>
+    );
+  }
 
   const SelectInput = () => (
     <div className="max-w-md my-4">
@@ -193,6 +229,7 @@ function Forms() {
           <Dropdown.Menu title="dropdown options" padding={"pr-4 pl-2"} square={true}>
             <Dropdown.MenuItem
               icon="plus"
+              appendHTML={<FontAwesomeIcon icon="crown" color="#FFB600" />}
               isLoading={true}
               title="Option 1"
               onClick={() => alert("Option 1 selected")}
@@ -262,7 +299,18 @@ function Forms() {
       <PageHeading>Form Components</PageHeading>
       <SectionHeading>Input and checkbox components</SectionHeading>
       <hr />
-      <Checkbox isChecked={true} textColor={"red-600"} />
+      <Checkbox isChecked={true} textColor="red-600" />
+      <Checkbox isDisabled={true} label="Disabled" />
+      <MobileNumberSelect
+        allowedCountryCodes={["ZA", "TO"]}
+        label="Mobile number"
+        name="mobile_number"
+        value={phoneNumber}
+        onChange={(value: string) => setPhoneNumber(value)}
+        validation={validation}
+        validationError={validation.errors && validation.errors.mobile_number}
+      />
+      <LabelWithValue label="Phone" value={phoneNumber} />
       <div className="mt-5">
         <Switch
           isChecked={showInputInterface}
@@ -316,6 +364,7 @@ function Forms() {
           </pre>
         </div>
       )}
+      <ExpiryDateInput value={expiryDate} onChange={setExpiryDate} />
       <InputPrice />
 
       <SelectInput />
@@ -449,4 +498,4 @@ function Forms() {
   );
 }
 
-export default Forms;
+export default withValidation(Forms);
