@@ -171,15 +171,19 @@ function GroupedSelect(props: IGroupedSelect) {
      * - the available options are less than or equal to the set limit
      */
     if (shouldShowAllResults) {
-      setShowAllDisabled(true);
-    } else if (
-      showAllButton &&
-      searchTerm.length >= 0 &&
-      optionsLimited.length <= limit
-    ) {
-      setShowAllDisabled(true);
+
+      if (!showAllDisabled) {
+        setShowAllDisabled(true);
+      }
+    } else if (showAllButton && searchTerm.length >= 0 && optionsLimited.length <= limit) {
+      if (!showAllDisabled) {
+        setShowAllDisabled(true);
+      }
+
     } else {
-      setShowAllDisabled(false);
+      if (showAllDisabled) {
+        setShowAllDisabled(false);
+      }
     }
 
     // Limit results

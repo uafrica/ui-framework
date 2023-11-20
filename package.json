@@ -1,10 +1,19 @@
 {
-  "version": "0.1.41",
+  "version": "0.1.42",
   "name": "ui-framework-v2",
-  "author": "Melissa Greyling",
-  "license": "MIT",
+  "license": "BSD-3-Clause",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
+  "description": "A custom set of UI components used by Bob Group, based on TailwindCSS and Headless UI",
+  "repository": "uafrica/ui-framework",
+  "bugs": {
+    "url": "https://github.com/uafrica/ui-framework/issues",
+    "email": "cornel@bob.co.za"
+  },
+  "author": {
+    "name": "Cornel Rautenbach",
+    "email": "cornel@bob.co.za"
+  },
 
   "files": [
     "dist"
