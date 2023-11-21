@@ -182,7 +182,7 @@ function DropdownMenu(props: IDropdown) {
                         : "rounded-full"
                     } inline-flex ${
                       between ? "justify-between" : "justify-center"
-                    } w-full ${componentPadding} font-medium  focus:outline-none ` +
+                    } w-full ${componentPadding} font-bold  focus:outline-none ` +
                     ("text-" + color + " ") +
                     (noBackground
                       ? "my-1 py-1 hover:text-" + color + "-700 font-bold"
