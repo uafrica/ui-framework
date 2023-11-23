@@ -55,7 +55,7 @@ function MobileNumberSelect(props: {
       0123456789
       0 123456789
   */
-  const validationRegex = /^0?[-\s]?(\d[-\s]?){9}$/;
+  const validationRegex = /^0?[-\s]?(\d[-\s]?){9,}$/;
 
   const validCountries: ICountry[] = allowedCountryCodes
     ? countryUtils.getAllCountriesInListOfCodes(allowedCountryCodes, allowOtherCountries)
