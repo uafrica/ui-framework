@@ -31,7 +31,6 @@ import { CustomTable } from "./customTable/CustomTable";
 import { DatePicker } from "./datePicker/DatePicker";
 import { DateRange } from "./DateRange";
 import { Dropdown } from "./Dropdown";
-import { fas } from "@fortawesome/free-solid-svg-icons";
 import {
   FiltersPanel,
   ModalActionsPanel,
@@ -47,7 +46,6 @@ import { Input } from "./Input";
 import { PasswordInputWithStrengthIndicator } from "./PasswordInputWithStrengthIndicator";
 import { ExpiryDateInput } from "./ExpiryDateInput";
 import { Label, LabelWithValue } from "./Label";
-import { library } from "@fortawesome/fontawesome-svg-core";
 import { Loader } from "./Loader";
 import { Map } from "./map/Map";
 import { Message } from "./Message";
@@ -81,8 +79,6 @@ import { withError } from "./errorBoundary/withError";
 import "./index.scss";
 
 const DownloadButton = Button.Download;
-
-library.add(fas);
 
 export {
   SkeletonLoader,
