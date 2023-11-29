@@ -91,19 +91,23 @@ function Marker(props: {
             props.onMouseOut(e, markerGroup);
           }}
           options={{
-            icon: window?.google?.maps
-              ? // @ts-ignore
-                new window.google.maps.MarkerImage(
-                  markerGroup[0].options.icon,
-                  null,
-                  null,
-                  null,
-                  new window.google.maps.Size(
-                    markerGroup[0].options.iconWidth,
-                    markerGroup[0].options.iconHeight
+            icon:
+              markerGroup[0].options.svgMarker !== undefined
+                ? markerGroup[0].options.svgMarker
+                : window?.google?.maps
+                ? // @ts-ignore
+                  new window.google.maps.MarkerImage(
+                    markerGroup[0].options.icon,
+                    null,
+                    null,
+                    null,
+                    new window.google.maps.Size(
+                      markerGroup[0].options?.iconWidth ?? 0,
+                      markerGroup[0].options?.iconHeight ?? 0
+                    )
                   )
-                )
-              : undefined,
+                : undefined
+
           }}
         ></GoogleMapsMarker>
 
