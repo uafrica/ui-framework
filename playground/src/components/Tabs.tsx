@@ -8,6 +8,7 @@ import Buttons from "./Buttons";
 import Utils from "./Utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SecondaryTabs from "./SecondaryTabs";
+import Lists from "./Lists";
 
 function TabsPage() {
   const history = useHistory();
@@ -68,6 +69,9 @@ function TabsPage() {
         </Tabs.Tab>
         <Tabs.Tab tabID="utils" title="Utils">
           <Utils />
+        </Tabs.Tab>
+        <Tabs.Tab tabID="Lists" title="Lists">
+          <Lists/>
         </Tabs.Tab>
       </Tabs.Primary>
     </>
