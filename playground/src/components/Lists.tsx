@@ -4,13 +4,13 @@ function Lists(){
   return (
     <>
     <OrderedList>
-      <ListItem value="First item" />
-      <ListItem className="mx-2 my-2" value="Second item" />
+      <ListItem><b>First Item</b></ListItem>
+      <ListItem className="mx-2 my-2"><span className="link">Second</span> Item</ListItem>
     </OrderedList>
       
       <UnorderedList>
-        <ListItem value="First item" />
-        <ListItem value="Second item" />
+        <ListItem >First item </ListItem>
+        <ListItem><b>Second</b> Item </ListItem>
       </UnorderedList>
     </>
   )
