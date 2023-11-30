@@ -77,6 +77,9 @@ import { useFilters } from "./hooks/useFilters";
 import { useDebounce } from "./hooks/useDebounce";
 import { useLocationState } from "./hooks/useLocationState";
 import { WeekdaySelect } from "./WeekdaySelect";
+import {OrderedList} from "./lists/OrderedList";
+import {UnorderedList} from "./lists/UnorderedList";
+import {ListItem} from "./lists/ListItem";
 import { withError } from "./errorBoundary/withError";
 import "./index.scss";
 
@@ -167,5 +170,8 @@ export {
   tableUtils,
   dateUtils,
   tagUtils,
-  WeekdaySelect
+  WeekdaySelect,
+  OrderedList,
+  UnorderedList,
+  ListItem
 };
