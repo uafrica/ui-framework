@@ -1,16 +1,16 @@
 
 interface IListItemProps {
-  value: string | number;
+  children:React.ReactNode;
   className?: string;
 }
 
 function ListItem( props: IListItemProps){
-  const {value, className} = props
+  const { children, className} = props
 
   const defaultClassName = "my-2"
 
   return (
-    <li className={`${className ? className : defaultClassName}`}>{value}</li>
+    <li className={`${className ? className : defaultClassName}`}>{children}</li>
   );
 }
 
