@@ -1,5 +1,5 @@
 {
-  "version": "0.1.49",
+  "version": "0.1.50",
   "name": "ui-framework-v2",
   "license": "BSD-3-Clause",
   "main": "dist/index.js",
