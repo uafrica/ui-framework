@@ -59,10 +59,11 @@ const Base = ({
       let elements = document.getElementsByClassName("uafrica-modal-overlay");
       if (elements.length > 0 && elements[elements.length - 1].id === modalId) {
         e.preventDefault();
-        onHide();
+        onHide(e);
       }
     }
   }
+  
   const ref = useRef(null);
   const hostElement = document.getElementById(hostElementId);
 
