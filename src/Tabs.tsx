@@ -98,53 +98,61 @@ function Generic(props: IGenericTabs) {
             }}
             aria-label="Tabs"
           >
-            {children.map((child: any) => (
-              <div
-                key={child.props.tabID}
-                id={child.props.id ?? child.props.tabID}
-                onClick={() => {
-                  if (child.props.isClickable !== false) {
-                    props.onSelect(child.props.tabID);
-                  }
-                }}
-                className={
-                  props.isPrimary
-                    ? (props.activeTabID === child.props.tabID
-                        ? "border-primary-500 text-primary-600 "
-                        : "border-transparent text-gray-700  " +
-                          (child.props.isClickable !== false
-                            ? " hover:text-gray-900 hover:border-gray-300"
-                            : "")) +
+            {children.map((child: any) => {
+              let tabClassName = props.isPrimary
+                ? (props.activeTabID === child.props.tabID
+                    ? "border-primary-500 text-primary-600 "
+                    : "border-transparent text-gray-700  " +
                       (child.props.isClickable !== false
-
-                        ? " cursor-pointer "
-                        : " cursor-default ") +
-                      "  group inline-flex items-center py-3 px-1 border-b-2 font-bold"
-                    : (props.activeTabID === child.props.tabID
-                        ? "bg-primary-100 text-primary-700 font-bold"
-                        : "text-black " +
-                          (child.props.isClickable !== false ? " hover:bg-gray-200 " : "")) +
+                        ? " hover:text-gray-900 hover:border-gray-300"
+                        : "")) +
+                  (child.props.isClickable !== false
+                    ? " cursor-pointer "
+                    : " cursor-default ") +
+                  "  group inline-flex items-center py-3 px-1 border-b-2 font-bold"
+                : (props.activeTabID === child.props.tabID
+                    ? "bg-primary-100 text-primary-700 font-bold"
+                    : "text-black " +
                       (child.props.isClickable !== false
-                        ? " cursor-pointer "
-                        : " cursor-default ") +
-                      "  px-3 py-2 font-medium rounded-md"
-                }
-              >
-                <span
-                  className={
-                    "flex flex-row space-x-4 items-center whitespace-nowrap " +
-                    child.props.className
-                  }
+                        ? " hover:bg-gray-200 "
+                        : "")) +
+                  (child.props.isClickable !== false
+                    ? " cursor-pointer "
+                    : " cursor-default ") +
+                  "  px-3 py-2 rounded-md";
+              return (
+                <div
+                  key={child.props.tabID}
+                  id={child.props.id ?? child.props.tabID}
+                  onClick={() => {
+                    if (child.props.isClickable !== false) {
+                      props.onSelect(child.props.tabID);
+                    }
+                  }}
+                  className={tabClassName}
                 >
-
-                  {child.props.title} {child.props.titleHTML && child.props.titleHTML}
-                  {child.props.info && <InfoButton>{child.props.info}</InfoButton>}
-                </span>
-              </div>
-            ))}
+                  <span
+                    className={
+                      "flex flex-row space-x-4 items-center whitespace-nowrap " +
+                      child.props.className
+                    }
+                  >
+                    {child.props.title}{" "}
+                    {child.props.titleHTML && child.props.titleHTML}
+                    {child.props.info && (
+                      <InfoButton>{child.props.info}</InfoButton>
+                    )}
+                  </span>
+                </div>
+              );
+            })}
           </nav>
           {overflowing.right && (
-            <FontAwesomeIcon icon="chevron-right" color="gray" className="m-1" />
+            <FontAwesomeIcon
+              icon="chevron-right"
+              color="gray"
+              className="m-1"
+            />
           )}
         </div>
         <React.Fragment key={props.activeTabID}>{activeTab}</React.Fragment>
