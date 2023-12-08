@@ -170,7 +170,7 @@ function PasswordInputWithStrengthIndicator(props: IProps) {
       bars.push(
         <div
           key={i}
-          className={`h-2 mx-1 ${barColor}`}
+          className={`h-1 mx-1  ${barColor}`}
           style={{
             flex: 1
           }}
@@ -201,7 +201,7 @@ function PasswordInputWithStrengthIndicator(props: IProps) {
           </span>
         </div>
         <div className="mt-2">
-          <div className="h-2 flex justify-between">{renderStrengthBars()}</div>
+          <div className="h-1 flex justify-between">{renderStrengthBars()}</div>
         </div>
         <div className="flex justify-end items-center mt-2">
           <div className="text-sm justify-end items-center mt-2">{getStrengthLabel()}</div>
