@@ -35,7 +35,10 @@ function evaluateScroll(tabNavId: any, children: any) {
         res.left = false;
       }
 
-      if (navElement.scrollLeft < navElement.scrollWidth - navElement.clientWidth) {
+      if (
+        navElement.scrollLeft <
+        navElement.scrollWidth - navElement.clientWidth
+      ) {
         res.right = true;
       } else {
         res.right = false;
@@ -85,10 +88,12 @@ function Generic(props: IGenericTabs) {
         <div
           className={
             "flex items-center border-b border-gray-200 w-full " +
-            (props.isPrimary ? "" : "mt-4 pb-2")
+            (props.isPrimary ? "" : "mt-8 pb-2")
           }
         >
-          {overflowing.left && <FontAwesomeIcon icon="chevron-left" color="gray" className="m-1" />}
+          {overflowing.left && (
+            <FontAwesomeIcon icon="chevron-left" color="gray" className="m-1" />
+          )}
 
           <nav
             id={tabNavId}
