@@ -2,24 +2,9 @@ import * as customTableUtils from "./customTableUtils";
 import React from "react";
 import { IColumn } from "./column.interface";
 import "./CustomTable.scss";
+import { ICustomTableRow } from "./customTableRow.interface";
 
-function CustomTableRow(props: {
-  rowId: any;
-  columnOrder: string[];
-  onRowClicked?: Function;
-  dataIndex: number;
-  rowData: any;
-  data: any;
-  setData: Function;
-  onShowMenu: Function;
-  columns: IColumn[];
-  columnWidths: { id: string; value?: number }[];
-  updateRow: Function;
-  removeRow: Function;
-  onRightClick: any;
-  isLoading: boolean;
-  rowStyleFunction?: Function;
-}) {
+function CustomTableRow(props: ICustomTableRow) {
   let {
     rowId,
     columnOrder,

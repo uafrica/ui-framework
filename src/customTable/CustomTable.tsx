@@ -6,47 +6,15 @@ import { Checkbox } from "../Checkbox";
 import { Dropdown } from "../Dropdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IColumn } from "./column.interface";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { IRow } from "./row.interface";
 import { Loader } from "../Loader";
 import { Message } from "../Message";
 import { Pagination } from "../Pagination";
 import { TableActionsPanel } from "../Panels";
 import "./CustomTable.scss";
+import { ICustomTable } from "./customTable.interface";
 
-function CustomTable(props: {
-  id: string;
-  columns: IColumn[];
-  columnOrder?: string[];
-  columnWidths?: { id: string; value?: number }[];
-  pageSize?: number;
-  fetchFunction: Function;
-  fetchFunctionArguments?: any;
-  draggableRows?: boolean;
-  rowUniqueIdentifier?: string; // default "id"
-  onPageSizeChanged?: Function;
-  onRowClicked?: Function;
-  onSelectionChanged?: Function;
-  onColumnOrderChanged?: Function;
-  onRowOrderChanged?: Function;
-  onColumnWidthsChanged?: Function;
-  onDataChanged?: Function;
-  hidePagination?: boolean;
-  scrollableX?: boolean;
-  contextMenuItems?: Function;
-  contextMenuHeader?: Function;
-  autoRefreshInterval?: number;
-  renderTableActionsHeader?: Function;
-  renderTableActionsChildren?: Function;
-  setTableFunctions?: Function;
-  showNoDataText?: string;
-  loadOnPageChange?: boolean;
-  rowOrderIcon?: IconProp;
-  persistPage?: boolean;
-  hideRefreshButton?: boolean;
-  rowStyleFunction?: Function;
-  checkIfRowIsDraggable?: Function; // If this field exists and returns true then the drag functionality will be disabled
-}) {
+function CustomTable(props: ICustomTable) {
   let {
     id,
     fetchFunction,
@@ -71,7 +39,7 @@ function CustomTable(props: {
     persistPage,
     hideRefreshButton = false,
     rowStyleFunction,
-    checkIfRowIsDraggable
+    checkIfRowIsDraggable,
   } = props;
   let topRef: any = useRef();
   let rowUniqueIdentifier = props.rowUniqueIdentifier ?? "id";
@@ -729,15 +697,15 @@ function CustomTable(props: {
           />
         ),
         cell: (row: IRow) => {
-          if (checkIfRowIsDraggable && checkIfRowIsDraggable(row.original)){
-            return  (
+          if (checkIfRowIsDraggable && checkIfRowIsDraggable(row.original)) {
+            return (
               <FontAwesomeIcon
                 // @ts-ignore
                 icon={`${rowOrderIcon ? rowOrderIcon : "sort"}`}
                 className="ml-4 "
                 color="#d3d3d3"
               />
-            )
+            );
           }
 
           return (
@@ -849,7 +817,7 @@ function CustomTable(props: {
     );
   }
 
-  function renderTable() {
+  function renderDesktopViewTable() {
     return (
       <div
         className={
@@ -999,7 +967,6 @@ function CustomTable(props: {
                       dataIndex={dataIndex}
                       rowData={rowData}
                       data={data}
-                      setData={changeData}
                       columns={columns}
                       columnWidths={columnWidths}
                       updateRow={updateRow}
@@ -1141,29 +1108,81 @@ function CustomTable(props: {
     );
   }
 
+  function renderMobileViewContent() {
+    return (
+      <div>
+        {rowOrder && rowOrder.length > 0
+          ? rowOrder.map((rowId: any, dataIndex: number) => {
+              let rowData = customTableUtils.getDataByRowId(
+                data,
+                rowUniqueIdentifier,
+                rowId
+              );
+              if (props.renderMobileRow) {
+                return (
+                  <div>
+                    {props.renderMobileRow({
+                      index: dataIndex,
+                      original: rowData,
+                      updateRow: (value: any) => {
+                        updateRow(value, dataIndex);
+                      },
+                      removeRow: () => {
+                        removeRow(dataIndex);
+                      },
+                    })}
+                  </div>
+                );
+              }
+              return null;
+            })
+          : null}
+      </div>
+    );
+  }
+
+  function renderDesktopView() {
+    return (
+      <div className={props.renderMobileRow ? "hidden md:block" : ""}>
+        {renderTableActions()}
+
+        <div
+          ref={topRef}
+          className=" custom-table-container rounded-lg relative"
+        >
+          {rowOrder && rowOrder.length === 0 && (
+            <div className="no-data">{noResultsText ?? "No data"}</div>
+          )}
+          {renderDesktopViewTable()}
+          {renderPagination()}
+          {renderContextMenu()}
+        </div>
+      </div>
+    );
+  }
+
+  function renderMobileView() {
+    return (
+      <div className={props.renderMobileRow ? " md:hidden" : "hidden"}>
+        {renderTableActions()}
+        <div ref={topRef}>
+          {rowOrder && rowOrder.length === 0 && (
+            <div className="no-data">{noResultsText ?? "No data"}</div>
+          )}
+          {renderMobileViewContent()}
+          {renderPagination()}
+        </div>
+      </div>
+    );
+  }
+
   function render() {
     return (
       <div>
         {error && <Message.Error>{error}</Message.Error>}
-        {isLoading && data.length === 0 ? (
-          <Loader.Inline />
-        ) : (
-          <div>
-            {renderTableActions()}
-
-            <div
-              ref={topRef}
-              className=" custom-table-container rounded-lg relative"
-            >
-              {rowOrder && rowOrder.length === 0 && (
-                <div className="no-data">{noResultsText ?? "No data"}</div>
-              )}
-              {renderTable()}
-              {renderPagination()}
-              {renderContextMenu()}
-            </div>
-          </div>
-        )}
+        {isLoading && data.length === 0 ? <Loader.Inline /> : <div></div>}
+        {renderDesktopView()}
+        {renderMobileView()}
       </div>
     );
   }
