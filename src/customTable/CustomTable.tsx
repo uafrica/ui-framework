@@ -1,4 +1,5 @@
 import * as customTableUtils from "./customTableUtils";
+import * as generalUtils from "./../utils/generalUtils";
 import CustomTableRow from "./CustomTableRow";
 import React, { useEffect, useRef, useState } from "react";
 import { Button } from "../Button";
@@ -1120,7 +1121,7 @@ function CustomTable(props: ICustomTable) {
               );
               if (props.renderMobileRow) {
                 return (
-                  <div>
+                  <div key={rowId}>
                     {props.renderMobileRow({
                       index: dataIndex,
                       original: rowData,
@@ -1181,8 +1182,8 @@ function CustomTable(props: ICustomTable) {
       <div>
         {error && <Message.Error>{error}</Message.Error>}
         {isLoading && data.length === 0 ? <Loader.Inline /> : <div></div>}
-        {renderDesktopView()}
-        {renderMobileView()}
+        {generalUtils.isScreenDesktopSize() && renderDesktopView()}
+        {!generalUtils.isScreenDesktopSize() && renderMobileView()}
       </div>
     );
   }
