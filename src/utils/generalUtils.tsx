@@ -1,7 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { Message } from "../Message";
 import { ReactElement } from "react";
-import { useMediaQuery } from "../hooks/useMediaQuery";
 import { detect } from "detect-browser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import _ from "lodash";
@@ -331,8 +330,7 @@ function swapValues(obj: any, prop1: string, prop2: string) {
 }
 
 function isScreenDesktopSize(): boolean {
-  // check if screen size is less than 992px (smaller than 992 gets rearranged for mobile)
-  return useMediaQuery("( min-width: 992px)");
+  return window.innerWidth >= 768
 }
 
 function kebabCaseToSentenceCase(originalString: string) {

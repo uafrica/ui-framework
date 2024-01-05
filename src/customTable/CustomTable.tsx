@@ -5,6 +5,7 @@ import { Pagination } from "../Pagination";
 
 import "./CustomTable.scss";
 import * as customTableUtils from "./customTableUtils";
+import * as generalUtils from "./../utils/generalUtils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CustomTableRow from "./CustomTableRow";
 import { IColumn } from "./column.interface";
@@ -1018,7 +1019,7 @@ function CustomTable(props: ICustomTable) {
               let rowData = customTableUtils.getDataByRowId(data, rowUniqueIdentifier, rowId);
               if (props.renderMobileRow) {
                 return (
-                  <div>
+                  <div key={rowId}>
                     {props.renderMobileRow({
                       index: dataIndex,
                       original: rowData,
@@ -1076,8 +1077,8 @@ function CustomTable(props: ICustomTable) {
       <div>
         {error && <Message.Error>{error}</Message.Error>}
         {isLoading && data.length === 0 ? <Loader.Inline /> : <div></div>}
-        {renderDesktopView()}
-        {renderMobileView()}
+        {generalUtils.isScreenDesktopSize() && renderDesktopView()}
+        {!generalUtils.isScreenDesktopSize() && renderMobileView()}
       </div>
     );
   }
