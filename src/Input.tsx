@@ -5,6 +5,7 @@ import { InfoButton } from "./InfoButton";
 import { Label } from "./Label";
 import { Message } from "./Message";
 import { Select } from "./Select";
+import { useState } from "react";
 
 function Input(props: IInputProps) {
   let {
@@ -36,6 +37,10 @@ function Input(props: IInputProps) {
     onClick,
     onFocus,
     prependText,
+    prependTextHasBackground,
+    appendTextHasBackground,
+    prependTextContainerClassName,
+    appendTextContainerClassName,
     prependPadding,
     onBlur,
     containerClassName,
@@ -59,9 +64,10 @@ function Input(props: IInputProps) {
     disableNumericInputScroll,
     pointer,
     dataTest,
-    inputMode
+    inputMode,
   } = props;
 
+  const [isFocussed, setIsFocussed] = useState<boolean>(false);
   type = type ? type : "text";
   labelClassName = labelClassName ? labelClassName : "";
 
@@ -102,6 +108,7 @@ function Input(props: IInputProps) {
       onClick={onClick}
       onFocus={(e: any) => {
         if (!isDisabled) {
+          setIsFocussed(true);
           e.target.placeholder = "";
           onFocus && onFocus(e);
         }
@@ -110,6 +117,8 @@ function Input(props: IInputProps) {
       onKeyPress={onKeyPress}
       onKeyUp={onKeyUp}
       onBlur={(e: any) => {
+        setIsFocussed(false);
+
         if (!isDisabled) {
           if (placeholder) {
             e.target.placeholder = placeholder;
@@ -186,14 +195,18 @@ function Input(props: IInputProps) {
           {prependText && (
             <div
               className={
-                "absolute inset-y-0 left-0 pl-3 flex items-center " +
-                (onAppendIconClick ? "" : " pointer-events-none")
+                "text-gray-500 absolute inset-y-0 left-0 pl-3 u-vertical-center " +
+                (onAppendIconClick ? "" : " pointer-events-none ") +
+                (prependTextContainerClassName ?? "") +
+                (prependTextHasBackground
+                  ? " bg-primary-100 px-4 rounded-l-lg border-t border-l border-b text-primary font-bold " +
+                    (isFocussed ? "border-primary-100" : " border-gray-300")
+                  : "")
               }
             >
               <span
                 className={
-                  "text-gray-500 " +
-                  (prependTextSize ? prependTextSize : "sm:text-sm")
+                  "  " + (prependTextSize ? prependTextSize : "sm:text-sm")
                 }
               >
                 {prependText}
@@ -241,7 +254,12 @@ function Input(props: IInputProps) {
           {appendText && (
             <div
               className={
-                "absolute inset-y-0 right-0 mr-3 flex items-center text-gray-400 pointer-events-none"
+                "absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 pointer-events-none" +
+                (appendTextContainerClassName ?? "") +
+                (appendTextHasBackground
+                  ? " bg-primary-100 px-4 rounded-r-lg border-t border-r border-b text-primary font-bold " +
+                    (isFocussed ? "border-primary-100" : " border-gray-300")
+                  : "")
               }
             >
               {appendText}

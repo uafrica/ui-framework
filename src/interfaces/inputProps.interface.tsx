@@ -43,6 +43,10 @@ export interface IInputProps {
   appendSelectProps?: any;
   prependText?: string;
   prependPadding?: string;
+  prependTextContainerClassName?: string;
+  appendTextContainerClassName?: string;
+  prependTextHasBackground?: boolean;
+  appendTextHasBackground?: boolean;
   inputFieldStyle?: any;
   inputID?: string;
   onClearSearch?: Function;

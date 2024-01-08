@@ -97,7 +97,7 @@ function Counter(props: ICounterProps) {
         <Input
           isLabelInline
           inputID={inputID}
-          containerClassName="w-20"
+          containerClassName="w-full "
           inputClassName="input-counter  border-primary-100 "
           step={step}
           min={min}
