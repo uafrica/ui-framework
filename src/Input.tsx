@@ -195,7 +195,7 @@ function Input(props: IInputProps) {
           {prependText && (
             <div
               className={
-                "text-gray-500 absolute inset-y-0 left-0 pl-3 u-vertical-center " +
+                "text-gray-500 absolute inset-y-0 left-0 pl-3 items-center flex flex-row " +
                 (onAppendIconClick ? "" : " pointer-events-none ") +
                 (prependTextContainerClassName ?? "") +
                 (prependTextHasBackground
@@ -254,7 +254,7 @@ function Input(props: IInputProps) {
           {appendText && (
             <div
               className={
-                "absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 pointer-events-none" +
+                "absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 pointer-events-none " +
                 (appendTextContainerClassName ?? "") +
                 (appendTextHasBackground
                   ? " bg-primary-100 px-4 rounded-r-lg border-t border-r border-b text-primary font-bold " +
