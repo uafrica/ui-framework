@@ -22,6 +22,7 @@ function DateRange(props: {
   isDisabled?: boolean;
   showTimeSelect?: boolean;
   dateFormat?: string;
+  buttonWidth?: string;
 }) {
   let {
     showRange,
@@ -41,6 +42,7 @@ function DateRange(props: {
     isDisabled,
     showTimeSelect,
     dateFormat,
+    buttonWidth,
   } = props;
   useEffect(() => {
     if (showMonth && onMonthChange) {
@@ -70,6 +72,7 @@ function DateRange(props: {
   return (
     <div className={containerClassName ?? "flex flex-row space-x-4"}>
       <Select
+        buttonWidth={buttonWidth}
         options={periodOptions ?? []}
         onChange={(val: string) => {
           if (onPeriodChange) {
