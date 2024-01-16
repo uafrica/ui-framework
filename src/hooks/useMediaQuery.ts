@@ -35,7 +35,7 @@ function useMediaQuery(query: string): boolean {
         matchMedia.removeEventListener("change", handleChange);
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [query]);
 
   return matches;
