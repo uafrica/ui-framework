@@ -1,5 +1,5 @@
 {
-  "version": "0.1.62",
+  "version": "1.0.0",
   "name": "ui-framework-v2",
   "license": "BSD-3-Clause",
   "main": "dist/index.js",
@@ -14,14 +14,12 @@
     "name": "Cornel Rautenbach",
     "email": "cornel@bob.co.za"
   },
-
   "files": [
     "dist"
   ],
   "engines": {
     "node": ">=10"
   },
-
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build && yarn build-tailwind",
@@ -33,7 +31,6 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "build-tailwind": "NODE_ENV=production npx tailwindcss -o ./dist/tailwind.css --minify"
-
   },
   "peerDependencies": {
     "@react-google-maps/api": "^2.18.1",
@@ -96,8 +93,6 @@
   "dependencies": {
     "country-flag-icons": "^1.5.7",
     "react-hook-form": "^6.14.0",
- 
-
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@fortawesome/react-fontawesome": "^0.2.0",

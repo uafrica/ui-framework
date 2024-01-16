@@ -6,15 +6,23 @@ import Marker from "./Marker";
 import Polygon from "./Polygon";
 import Polyline from "./Polyline";
 import { Button } from "../Button";
-import { DrawingManager, GoogleMap, InfoWindow } from "@react-google-maps/api";
+import {
+  Circle,
+  DrawingManager,
+  GoogleMap,
+  InfoWindow,
+} from "@react-google-maps/api";
 import { IMarker, IPolygon, IPolyline } from "../interfaces";
- // @ts-ignore
-    import React, { useEffect, useRef, useState } from "react";
+import { defaultMapStyles } from "../utils/constantsAndDefaults";
+import { ICircle } from "../interfaces/circle.interface";
+// @ts-ignore
+import React, { useEffect, useRef, useState } from "react";
 import groupBy from "lodash/groupBy";
 
 function Map(props: {
   isReadOnly?: boolean;
   polygons?: IPolygon[];
+  circles?: ICircle[];
   polylines?: IPolyline[];
   markers?: IMarker[];
   mapContainerStyle?: any;
@@ -41,6 +49,7 @@ function Map(props: {
   let {
     polygons,
     polylines,
+    circles,
     markers,
     isReadOnly,
     disableScrollZoom,
@@ -132,12 +141,38 @@ function Map(props: {
         strictBounds: true,
       },
     };
+
     if (mapOptions) {
       options = { ...options, ...mapOptions };
     }
 
+    if (!options.styles) {
+      options.styles = [];
+    }
+
+    options.styles = mergeMapStyles(defaultMapStyles, options.styles);
+
     setOptions({ ...options });
   }, [mapOptions]);
+
+  // Merges two map styles arrays, giving preference to the first array
+  function mergeMapStyles(
+    preferredArray: google.maps.MapTypeStyle[],
+    otherArray: google.maps.MapTypeStyle[]
+  ): google.maps.MapTypeStyle[] {
+    const mergedArray: google.maps.MapTypeStyle[] = [...preferredArray];
+
+    otherArray.forEach((otherItem) => {
+      const existingItem = mergedArray.find(
+        (item) => item.featureType === otherItem.featureType
+      );
+      if (!existingItem) {
+        mergedArray.push(otherItem);
+      }
+    });
+
+    return mergedArray;
+  }
 
   function enterEditMode(mode?: "select" | "draw") {
     if (props.onEditModeChange) {
@@ -507,6 +542,22 @@ function Map(props: {
     );
   }
 
+  function renderCircles() {
+    return (
+      circles &&
+      circles.map((circle: ICircle, index: number) => {
+        return (
+          <Circle
+            radius={circle.radius}
+            center={circle.center}
+            options={circle.options}
+            key={index}
+          />
+        );
+      })
+    );
+  }
+
   function renderMarkers() {
     let markersGrouped: any = {};
 
@@ -726,6 +777,7 @@ function Map(props: {
 
           {renderPolygons()}
           {renderPolylines()}
+          {renderCircles()}
           {renderMarkers()}
           {renderAntimeridian()}
           {renderTooltip()}
