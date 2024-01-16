@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { Message } from "../Message";
-import React, { ReactElement } from "react";
+ // @ts-ignore
+    import React, { ReactElement } from "react";
 import { detect } from "detect-browser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import transform from "lodash/transform";

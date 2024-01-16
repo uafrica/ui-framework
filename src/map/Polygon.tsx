@@ -1,5 +1,6 @@
 import * as mapUtils from "../utils/mapUtils";
-import React, { memo, useEffect, useState } from "react";
+ // @ts-ignore
+    import React, { memo, useEffect, useState } from "react";
 import { IPolygon } from "../interfaces/polygon.interface";
 import { Polygon as GoogleMapsPolygon } from "@react-google-maps/api";
 import { useStore } from "../store";

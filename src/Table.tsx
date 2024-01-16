@@ -1,4 +1,5 @@
-import React from "react";
+ // @ts-ignore
+    import React from "react";
 
 const tableBaseClass = "min-w-full divide-y divide-gray-200";
 const tableHeadClass = "bg-gray-50";

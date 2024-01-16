@@ -1,4 +1,5 @@
-import React, { useRef } from "react";
+ // @ts-ignore
+    import React, { useRef } from "react";
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

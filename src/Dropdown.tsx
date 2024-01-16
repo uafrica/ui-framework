@@ -1,4 +1,5 @@
-import React, {
+ // @ts-ignore
+    import React, {
   createContext,
   Fragment,
   useEffect,

@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+ // @ts-ignore
+    import React, { useState } from "react";
 
 interface IProps {
   requiredPasswordLength: number;

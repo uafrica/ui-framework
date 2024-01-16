@@ -1,4 +1,5 @@
-import React, { ReactNode, useEffect, useState } from "react";
+ // @ts-ignore
+    import React, { ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
 function Portal(props: { children: ReactNode }) {

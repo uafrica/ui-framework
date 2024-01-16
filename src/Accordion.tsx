@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+ // @ts-ignore
+    import React, { useEffect } from "react";
 import { Confirm } from "./Confirm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Transition } from "@headlessui/react";

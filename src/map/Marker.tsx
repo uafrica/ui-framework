@@ -1,4 +1,5 @@
-import React, { memo, useState } from "react";
+ // @ts-ignore
+    import React, { memo, useState } from "react";
 import { Button } from "./../Button";
 import { IMarker } from "./../interfaces";
 import { Marker as GoogleMapsMarker } from "@react-google-maps/api";

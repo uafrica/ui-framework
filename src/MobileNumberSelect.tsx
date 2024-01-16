@@ -1,5 +1,6 @@
 import * as countryUtils from "./utils/countryUtils";
-import React, { useEffect, useState } from "react";
+ // @ts-ignore
+    import React, { useEffect, useState } from "react";
 import { CountrySelect } from "./CountrySelect";
 import { ICountry } from "./interfaces/country.interface";
 import { Input } from "./Input";

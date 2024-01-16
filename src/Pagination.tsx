@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+ // @ts-ignore
+    import React, { useEffect, useState } from "react";
 import { Button } from "./Button";
 import { Card } from "./Card";
 import { Select } from "./Select";

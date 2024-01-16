@@ -1,4 +1,5 @@
-import React from "react";
+ // @ts-ignore
+    import React from "react";
 import { InfoButton } from "./InfoButton";
 import { Label } from "./Label";
 import { Message } from "./Message";

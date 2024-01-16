@@ -1,4 +1,5 @@
-import React from "react";
+ // @ts-ignore
+    import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp, SizeProp } from "@fortawesome/fontawesome-svg-core";
 import { Link as RouterLink } from "react-router-dom";

@@ -1,5 +1,6 @@
 import { Label } from "./Label";
-import React, { useRef } from "react";
+ // @ts-ignore
+    import React, { useRef } from "react";
 
 interface IProps {
   value: { month: string; year: string };

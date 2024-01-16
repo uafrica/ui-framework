@@ -1,5 +1,6 @@
 import * as customTableUtils from "./customTableUtils";
-import React from "react";
+ // @ts-ignore
+    import React from "react";
 import { IColumn } from "./column.interface";
 import "./CustomTable.scss";
 import { ICustomTableRow } from "./customTableRow.interface";

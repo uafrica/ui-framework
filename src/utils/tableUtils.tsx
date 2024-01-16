@@ -1,6 +1,7 @@
 import * as numberUtils from "./numberUtils";
 import moment from "moment";
-import React from "react";
+ // @ts-ignore
+    import React from "react";
 import { Link } from "react-router-dom";
 import { Loader } from "./../Loader";
 

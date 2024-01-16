@@ -1,5 +1,6 @@
 import moment from "moment";
-import React, { useEffect } from "react";
+ // @ts-ignore
+    import React, { useEffect } from "react";
 import { DatePicker } from "./datePicker/DatePicker";
 import { MonthPicker } from "./monthPicker/MonthPicker";
 import { Select } from "./Select";

@@ -1,6 +1,7 @@
 import * as countryUtils from "./utils/countryUtils";
 import * as generalUtils from "./utils/generalUtils";
-import React, { useEffect, useState } from "react";
+ // @ts-ignore
+    import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ICountry } from "./interfaces/country.interface";
 import { Select } from "./Select";

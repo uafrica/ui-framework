@@ -1,4 +1,5 @@
-import React from "react";
+ // @ts-ignore
+    import React from "react";
 import { Button } from "./Button";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { PageHeading } from "./PageHeading";

@@ -1,4 +1,5 @@
-import React, { createContext, useContext } from "react";
+ // @ts-ignore
+    import React, { createContext, useContext } from "react";
 // @ts-ignore
 const StoreContext = createContext();
 

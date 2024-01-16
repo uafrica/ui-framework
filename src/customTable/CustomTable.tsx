@@ -1,7 +1,8 @@
 import * as customTableUtils from "./customTableUtils";
 import * as generalUtils from "./../utils/generalUtils";
 import CustomTableRow from "./CustomTableRow";
-import React, { useEffect, useRef, useState } from "react";
+ // @ts-ignore
+    import React, { useEffect, useRef, useState } from "react";
 import { Button } from "../Button";
 import { Checkbox } from "../Checkbox";
 import { Dropdown } from "../Dropdown";

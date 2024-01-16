@@ -1,4 +1,5 @@
-import React from "react";
+ // @ts-ignore
+    import React from "react";
 interface IListItemProps {
   children: React.ReactNode;
   className?: string;
