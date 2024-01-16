@@ -153,3 +153,7 @@ For some background on how it was compiled follow https://www.pluralsight.com/gu
 [CustomTable](https://github.com/uafrica/ui-framework/blob/main/docs/CustomTable.md)
 
 [Pagination](https://github.com/uafrica/ui-framework/blob/main/docs/Pagination.md)
+
+## Developing the framework
+
+In order to test your changes, navigate to the project you want to test it in e.g. Bob Pay. Then in the `bobpay-frontend`, copy the `ui-framework` folder to the `src` folder of Bob Pay and import the framework like this: `import { Map } from "ui-framework/src";`
