@@ -1,4 +1,4 @@
-import { withError } from "../../../src";
+import { withError } from "ui-framework-v2";
 
 function FailComponent() {
   let y: any = null;

@@ -1,4 +1,4 @@
-import { SectionHeading, Table } from "../../../src";
+import { SectionHeading, Table } from "ui-framework-v2";
 
 function Tables() {
   return (

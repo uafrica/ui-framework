@@ -1,6 +1,6 @@
-import { Modal } from "../../src";
+import { Modal } from "ui-framework-v2";
 import TabsPage from "./components/Tabs";
-// import { Button, Input, PageActionsPanel, Select } from "../../src/index";
+import "setupIcons";
 
 function App() {
   return (

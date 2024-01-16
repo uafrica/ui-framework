@@ -1,4 +1,4 @@
-import { PageHeading, Tabs } from "../../../src";
+import { PageHeading, Tabs } from "ui-framework-v2";
 import { useEffect, useState, useRef } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import Modals from "./Modals";
@@ -71,7 +71,7 @@ function TabsPage() {
           <Utils />
         </Tabs.Tab>
         <Tabs.Tab tabID="Lists" title="Lists">
-          <Lists/>
+          <Lists />
         </Tabs.Tab>
       </Tabs.Primary>
     </>

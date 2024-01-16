@@ -15,9 +15,28 @@ import {
   MobileNumberSelect,
   LabelWithValue,
   ExpiryDateInput
-} from "../../../src";
+} from "ui-framework-v2";
+import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import { withValidation } from "../../../src/utils/validationUtils";
+
+export function withValidation(Component: any) {
+  return function WrappedComponent(props: any) {
+    const { register, handleSubmit, watch, reset, errors, clearErrors, trigger, setValue } =
+      useForm();
+    let validation = {
+      register,
+      handleSubmit,
+      watch,
+      reset,
+      errors,
+      clearErrors,
+      trigger,
+      setValue
+    };
+
+    return <Component {...props} validation={validation} />;
+  };
+}
 
 function Forms(props: any) {
   const { validation } = props;
@@ -100,7 +119,7 @@ function Forms(props: any) {
         <div className="my-4">
           <Button.Primary
             title="Save"
-            onClick={props.validation.handleSubmit(() => {
+            onClick={validation.handleSubmit(() => {
               alert("Fake saved");
             })}
           />

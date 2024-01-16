@@ -5,7 +5,7 @@ import {
   Accordion,
   ModalActionsPanel,
   Dropdown
-} from "../../../src";
+} from "ui-framework-v2";
 import { useState } from "react";
 
 function Modals() {

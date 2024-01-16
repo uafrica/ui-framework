@@ -1,4 +1,4 @@
-import { Button, Message } from "../../../src";
+import { Button, Message } from "ui-framework-v2";
 import { useState } from "react";
 
 function Buttons() {
