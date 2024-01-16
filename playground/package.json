@@ -13,36 +13,47 @@
     "email": "cornel@bob.co.za"
   },
   "scripts": {
-    "start": "craco start"
+    "start": "PORT=3010 react-scripts start --preserve-symlinks",
+    "build": "react-scripts build",
+    "analyze": "NODE_ENV=production node analyze.js",
+    "test": "react-scripts test"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "dependencies": {
-    "@popperjs/core": "^2.9.2",
+    "@popperjs/core": "^2.11.7",
     "@react-google-maps/api": "^2.18.1",
-    "@tailwindcss/forms": "^0.3.3",
+    "@tailwindcss/forms": "^0.5.4",
+    "@fortawesome/fontawesome-svg-core": "6.4.2",
+    "@fortawesome/free-brands-svg-icons": "6.4.2",
+    "@fortawesome/free-solid-svg-icons": "6.4.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@types/google-map-react": "^2.1.7",
     "@types/google.maps": "^3.52.2",
-    "react": "16.14.0",
-    "react-dom": "16.13.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-router-dom": "5.2.0",
-    "react-sticky-mouse-tooltip": "^0.0.1",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
+    "react-sticky-mouse-tooltip": "^0.0.1"
   },
   "devDependencies": {
     "@craco/craco": "^6.2.0",
     "@types/node": "15.0.3",
-    "@types/react": "17.0.5",
-    "@types/react-dom": "17.0.5",
-    "@types/react-router-dom": "5.1.7",
-    "autoprefixer": "9.8.6",
-    "eslint-config-prettier": "8.3.0",
-    "eslint-plugin-prettier": "3.4.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@types/react-router-dom": "^5.3.3",
+    "autoprefixer": "^10.4.14",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-react-perf": "^3.3.0",
-    "postcss": "7.0.36",
-    "prettier": "2.3.0",
+    "prettier": "^2.8.8",
     "pretty-quick": "3.1.0",
-    "react-scripts": "4.0.1",
-    "sass": "^1.36.0",
-    "typescript": "4.2.4"
+    "react-scripts": "^5.0.1",
+    "sass": "^1.64.2",
+    "typescript": "^4.7.2"
   },
   "keywords": [
     "uafrica",
@@ -52,9 +63,16 @@
     "tailwindcss",
     "headless-ui"
   ],
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not op_mini all"
-  ]
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }

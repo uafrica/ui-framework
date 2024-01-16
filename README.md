@@ -153,3 +153,12 @@ For some background on how it was compiled follow https://www.pluralsight.com/gu
 [CustomTable](https://github.com/uafrica/ui-framework/blob/main/docs/CustomTable.md)
 
 [Pagination](https://github.com/uafrica/ui-framework/blob/main/docs/Pagination.md)
+
+## Playground
+
+To run playground, you need to build the framework first with `npm run build`.
+
+Then in the ` playground` folder:
+`yarn install`
+`ln -s ../../dist ./node_modules/ui-framework-v2`
+`yarn start`.

@@ -1,6 +1,4 @@
-import { LabelWithValue } from "../../../src";
-
-import { numberUtils } from "../../../src";
+import { LabelWithValue, numberUtils } from "ui-framework-v2";
 
 function Utils() {
   return (

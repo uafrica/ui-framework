@@ -1,4 +1,4 @@
-import { Tabs } from "../../../src";
+import { Tabs } from "ui-framework-v2";
 import { useEffect, useState, useRef } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 
