@@ -164,7 +164,9 @@ function Map(props: {
 
     otherArray.forEach((otherItem) => {
       const existingItem = mergedArray.find(
-        (item) => item.featureType === otherItem.featureType
+        (item) =>
+          item.featureType === otherItem.featureType &&
+          item.elementType === otherItem.elementType
       );
       if (!existingItem) {
         mergedArray.push(otherItem);
