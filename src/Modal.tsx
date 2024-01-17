@@ -1,8 +1,10 @@
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+ // @ts-ignore
+    import React, { createContext, useEffect, useRef, useState } from "react";
+ // @ts-ignore
+    import ReactDOM from "react-dom";
 import { Button } from "./Button";
-import { createContext, useEffect, useRef, useState } from "react";
-import ReactDOM from "react-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 interface ISmallMediumModalProps {
   children: any;
@@ -23,7 +25,11 @@ export const ModalContext = createContext({});
 export const hostElementId = "modal-host";
 
 const isBrowser = () =>
-  !!(typeof window !== "undefined" && window.document && window.document.createElement);
+  !!(
+    typeof window !== "undefined" &&
+    window.document &&
+    window.document.createElement
+  );
 
 const Base = ({
   onHide,
@@ -55,10 +61,11 @@ const Base = ({
       let elements = document.getElementsByClassName("uafrica-modal-overlay");
       if (elements.length > 0 && elements[elements.length - 1].id === modalId) {
         e.preventDefault();
-        onHide();
+        onHide(e);
       }
     }
   }
+  
   const ref = useRef(null);
   const hostElement = document.getElementById(hostElementId);
 
@@ -85,14 +92,18 @@ const Base = ({
           )}
           <div className="mt-4 text-center sm:mt-0 sm:text-left w-full">
             {(title || closeButton) && (
-              <div className="ua-modal-actions-panel u-vertical-center justify-between z-30 text-lg font-bold text-gray-900 text-left pb-4">
+              <div className="ua-modal-actions-panel  flex items-center  justify-between z-30 text-lg font-bold text-gray-900 text-left pb-4">
                 {title && title}
 
                 {closeButton && <Button.Close onClick={onHide} />}
               </div>
             )}
 
-            <div className={title || closeButton ? "mt-10 pt-6" : "mt-24 md:mt-20"}>{children}</div>
+            <div
+              className={title || closeButton ? "mt-10 pt-6" : "mt-24 md:mt-20"}
+            >
+              {children}
+            </div>
           </div>
         </div>
       </div>
@@ -103,7 +114,9 @@ const Base = ({
     return ReactDOM.createPortal(content, hostElement);
   }
 
-  console.warn('Could not find "<Modal.Host />" node.\n Switched to inline rendering mode.');
+  console.warn(
+    'Could not find "<Modal.Host />" node.\n Switched to inline rendering mode.'
+  );
   return content;
 };
 
@@ -132,7 +145,10 @@ function ButtonsPanel(props: any) {
       }
     >
       <div
-        className={(props.fixed ? "" : "mt-10 ") + " u-reverse-flex-col-to-row justify-between  "}
+        className={
+          (props.fixed ? "" : "mt-10 ") +
+          "  flex flex-col-reverse sm:flex-row space-y-4 sm:space-y-0 space-y-reverse space-x-0 sm:space-x-4  justify-between  "
+        }
       >
         {props.children}
       </div>
@@ -145,7 +161,7 @@ const Modal = {
   Small,
   Medium,
   Large,
-  Host
+  Host,
 };
 
 export { Modal };

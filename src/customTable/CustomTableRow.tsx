@@ -1,6 +1,8 @@
-import "./CustomTable.scss";
 import * as customTableUtils from "./customTableUtils";
+ // @ts-ignore
+    import React from "react";
 import { IColumn } from "./column.interface";
+import "./CustomTable.scss";
 import { ICustomTableRow } from "./customTableRow.interface";
 
 function CustomTableRow(props: ICustomTableRow) {
@@ -14,7 +16,7 @@ function CustomTableRow(props: ICustomTableRow) {
     columns,
     columnWidths,
     isLoading,
-    rowStyleFunction
+    rowStyleFunction,
   } = props;
 
   function render() {
@@ -27,14 +29,21 @@ function CustomTableRow(props: ICustomTableRow) {
         style={rowStyle}
         id={rowId.toString()}
         className={
-          "custom-table-tr hover:bg-gray-100 " + (isLoading ? "bg-gray-50 text-gray-300" : "")
+          "custom-table-tr hover:bg-gray-100 " +
+          (isLoading ? "bg-gray-50 text-gray-300" : "")
         }
       >
         {columnOrder.map((columnId: string) => {
-          let column: IColumn = customTableUtils.getColumnById(columns, columnId);
+          let column: IColumn = customTableUtils.getColumnById(
+            columns,
+            columnId
+          );
 
           let columnContentStyle: any = {};
-          let columnWidth = customTableUtils.getColumnWidth(columnWidths, columnId);
+          let columnWidth = customTableUtils.getColumnWidth(
+            columnWidths,
+            columnId
+          );
           if (columnWidth) {
             columnContentStyle.width = columnWidth + "px";
             columnContentStyle.whiteSpace = "nowrap";
@@ -47,12 +56,18 @@ function CustomTableRow(props: ICustomTableRow) {
               key={columnId}
               className={
                 "custom-table-td pr-4 py-2 mx-1 " +
-                (onRowClicked && customTableUtils.isColumnClickable(column) ? "cursor-pointer" : "")
+                (onRowClicked && customTableUtils.isColumnClickable(column)
+                  ? "cursor-pointer"
+                  : "")
               }
               onClick={(e: any) => {
                 onShowMenu(false);
 
-                if (onRowClicked && customTableUtils.isColumnClickable(column) && !isLoading) {
+                if (
+                  onRowClicked &&
+                  customTableUtils.isColumnClickable(column) &&
+                  !isLoading
+                ) {
                   onRowClicked({
                     index: dataIndex,
                     original: rowData,
@@ -62,7 +77,7 @@ function CustomTableRow(props: ICustomTableRow) {
                     removeRow: () => {
                       props.removeRow(dataIndex);
                     },
-                    e: e
+                    e: e,
                   });
                 }
               }}
@@ -93,7 +108,7 @@ function CustomTableRow(props: ICustomTableRow) {
                       },
                       removeRow: () => {
                         props.removeRow(dataIndex);
-                      }
+                      },
                     })
                   : rowData[column.accessor]}
               </div>

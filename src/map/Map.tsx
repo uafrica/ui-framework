@@ -1,18 +1,28 @@
 import * as generalUtils from "../utils/generalUtils";
 import * as mapUtils from "../utils/mapUtils";
-import _ from "lodash";
+import debounce from "lodash/debounce";
 import MapToolbar from "./MapToolbar";
 import Marker from "./Marker";
 import Polygon from "./Polygon";
 import Polyline from "./Polyline";
 import { Button } from "../Button";
-import { DrawingManager, GoogleMap, InfoWindow } from "@react-google-maps/api";
+import {
+  Circle,
+  DrawingManager,
+  GoogleMap,
+  InfoWindow,
+} from "@react-google-maps/api";
 import { IMarker, IPolygon, IPolyline } from "../interfaces";
-import { useEffect, useRef, useState } from "react";
+import { defaultMapStyles } from "../utils/constantsAndDefaults";
+import { ICircle } from "../interfaces/circle.interface";
+// @ts-ignore
+import React, { useEffect, useRef, useState } from "react";
+import groupBy from "lodash/groupBy";
 
 function Map(props: {
   isReadOnly?: boolean;
   polygons?: IPolygon[];
+  circles?: ICircle[];
   polylines?: IPolyline[];
   markers?: IMarker[];
   mapContainerStyle?: any;
@@ -39,6 +49,7 @@ function Map(props: {
   let {
     polygons,
     polylines,
+    circles,
     markers,
     isReadOnly,
     disableScrollZoom,
@@ -52,7 +63,7 @@ function Map(props: {
     editMode,
     customToolbarButtons,
     defaultZoom,
-    mapOptions
+    mapOptions,
   } = props;
 
   const snapDistanceThreshold = 30;
@@ -67,27 +78,36 @@ function Map(props: {
   let [polygonTooltipContent, setPolygonTooltipContent] = useState<any>(null);
   let [tooltipMode, setTooltipMode] = useState<"click" | "hover">("click");
   let [tooltipCoordinates, setTooltipCoordinates] = useState<any>();
-  let [tooltipPixelOffset, setTooltipPixelOffset] = useState<{ x: number; y: number } | null>(null);
+  let [tooltipPixelOffset, setTooltipPixelOffset] = useState<{
+    x: number;
+    y: number;
+  } | null>(null);
 
   let updateMarkerTooltipDebounced = useRef(
-    _.debounce((tooltipContent: any, tooltipPixelOffset?: { x: number; y: number }) => {
-      setMarkerTooltipContent(tooltipContent);
-      if (tooltipPixelOffset) {
-        setTooltipPixelOffset({ ...tooltipPixelOffset });
-      } else {
-        setTooltipPixelOffset(null);
-      }
-    }, 100)
+    debounce(
+      (tooltipContent: any, tooltipPixelOffset?: { x: number; y: number }) => {
+        setMarkerTooltipContent(tooltipContent);
+        if (tooltipPixelOffset) {
+          setTooltipPixelOffset({ ...tooltipPixelOffset });
+        } else {
+          setTooltipPixelOffset(null);
+        }
+      },
+      100
+    )
   );
   let updatePolygonTooltipDebounced = useRef(
-    _.debounce((tooltipContent: any, tooltipPixelOffset?: { x: number; y: number }) => {
-      setPolygonTooltipContent(tooltipContent);
-      if (tooltipPixelOffset) {
-        setTooltipPixelOffset({ ...tooltipPixelOffset });
-      } else {
-        setTooltipPixelOffset(null);
-      }
-    }, 100)
+    debounce(
+      (tooltipContent: any, tooltipPixelOffset?: { x: number; y: number }) => {
+        setPolygonTooltipContent(tooltipContent);
+        if (tooltipPixelOffset) {
+          setTooltipPixelOffset({ ...tooltipPixelOffset });
+        } else {
+          setTooltipPixelOffset(null);
+        }
+      },
+      100
+    )
   );
 
   useEffect(() => {
@@ -118,15 +138,41 @@ function Map(props: {
       gestureHandling: disableScrollZoom ? "cooperative" : "greedy",
       restriction: {
         latLngBounds: { north: 85, south: -85, west: -180, east: 180 },
-        strictBounds: true
-      }
+        strictBounds: true,
+      },
     };
+
     if (mapOptions) {
       options = { ...options, ...mapOptions };
     }
 
+    if (!options.styles) {
+      options.styles = [];
+    }
+
+    options.styles = mergeMapStyles(defaultMapStyles, options.styles);
+
     setOptions({ ...options });
   }, [mapOptions]);
+
+  // Merges two map styles arrays, giving preference to the first array
+  function mergeMapStyles(
+    preferredArray: google.maps.MapTypeStyle[],
+    otherArray: google.maps.MapTypeStyle[]
+  ): google.maps.MapTypeStyle[] {
+    const mergedArray: google.maps.MapTypeStyle[] = [...preferredArray];
+
+    otherArray.forEach((otherItem) => {
+      const existingItem = mergedArray.find(
+        (item) => item.featureType === otherItem.featureType
+      );
+      if (!existingItem) {
+        mergedArray.push(otherItem);
+      }
+    });
+
+    return mergedArray;
+  }
 
   function enterEditMode(mode?: "select" | "draw") {
     if (props.onEditModeChange) {
@@ -167,24 +213,28 @@ function Map(props: {
             if (edge !== undefined) {
               polygonPathsAfterSnap[path].splice(edge + 1, 0, {
                 lat: closestPoint.lat(),
-                lng: closestPoint.lng()
+                lng: closestPoint.lng(),
               });
               polygonPathsAfterSnap[path].splice(edge + 2, 1);
             } else if (vertex !== undefined) {
               polygonPathsAfterSnap[path][vertex] = {
                 lat: closestPoint.lat(),
-                lng: closestPoint.lng()
+                lng: closestPoint.lng(),
               };
             }
 
-            polygonPathsAfterSnap[path] = removeDuplicateLatLngs(polygonPathsAfterSnap[path]);
+            polygonPathsAfterSnap[path] = removeDuplicateLatLngs(
+              polygonPathsAfterSnap[path]
+            );
             return [...polygonPathsAfterSnap];
           } else {
           }
         } else {
           // node was not moved to inside of another polygon
           let polygonPathsAfterNodeMove = [...polygon.paths];
-          polygonPathsAfterNodeMove[path] = removeDuplicateLatLngs(polygonPathsAfterNodeMove[path]);
+          polygonPathsAfterNodeMove[path] = removeDuplicateLatLngs(
+            polygonPathsAfterNodeMove[path]
+          );
           return [...polygonPathsAfterNodeMove];
         }
       } else {
@@ -210,7 +260,10 @@ function Map(props: {
     let closestPoint = null;
     let closestPointDistance: any = null;
     path.forEach((latLng: google.maps.LatLng) => {
-      let distance = google.maps.geometry.spherical.computeDistanceBetween(latLng, cursorLocation);
+      let distance = google.maps.geometry.spherical.computeDistanceBetween(
+        latLng,
+        cursorLocation
+      );
 
       if (closestPointDistance === null || distance < closestPointDistance) {
         closestPointDistance = distance;
@@ -233,11 +286,10 @@ function Map(props: {
     var pointB = new google.maps.LatLng(pointA.lat() + 0.01, pointA.lng());
     var pointBPixel = latLngToPixel(pointB);
     var pixelDistanceBetweenPoints = Math.abs(pointBPixel.y - pointAPixel.y);
-    var realDistanceBetweenPoints = google.maps.geometry.spherical.computeDistanceBetween(
-      pointA,
-      pointB
-    );
-    var pixelDistance = realDistance / (realDistanceBetweenPoints / pixelDistanceBetweenPoints);
+    var realDistanceBetweenPoints =
+      google.maps.geometry.spherical.computeDistanceBetween(pointA, pointB);
+    var pixelDistance =
+      realDistance / (realDistanceBetweenPoints / pixelDistanceBetweenPoints);
     return pixelDistance;
   }
 
@@ -246,7 +298,10 @@ function Map(props: {
     var projection = map.getProjection();
     var bounds: google.maps.LatLngBounds = map.getBounds();
     var nw = projection.fromLatLngToPoint(
-      new google.maps.LatLng(bounds.getNorthEast().lat(), bounds.getSouthWest().lng())
+      new google.maps.LatLng(
+        bounds.getNorthEast().lat(),
+        bounds.getSouthWest().lng()
+      )
     );
     var point = projection.fromLatLngToPoint(latLng);
     return new google.maps.Point(
@@ -266,7 +321,9 @@ function Map(props: {
             for (let path of polygon.paths) {
               let googleLatLngPath: any = []; // required for google polygon
               path.forEach((latLng: any) => {
-                googleLatLngPath.push(new google.maps.LatLng(latLng.lat, latLng.lng));
+                googleLatLngPath.push(
+                  new google.maps.LatLng(latLng.lat, latLng.lng)
+                );
               });
 
               if (
@@ -274,7 +331,7 @@ function Map(props: {
                   cursorLocation,
                   new google.maps.Polygon({
                     // @ts-ignore
-                    path: googleLatLngPath
+                    path: googleLatLngPath,
                   })
                 )
               ) {
@@ -293,7 +350,12 @@ function Map(props: {
     }
   }
 
-  function refitBoundsOfMap(map: any, markers: any[], polygons: IPolygon[], padding: any) {
+  function refitBoundsOfMap(
+    map: any,
+    markers: any[],
+    polygons: IPolygon[],
+    padding: any
+  ) {
     try {
       var bounds = new window.google.maps.LatLngBounds();
       var boundsExtended = false;
@@ -333,7 +395,10 @@ function Map(props: {
     updatePolygonTooltipDebounced.current(null);
   }
 
-  function calculateTooltipCoordinates(baseCoordinates: { lat?: number; lng?: number }) {
+  function calculateTooltipCoordinates(baseCoordinates: {
+    lat?: number;
+    lng?: number;
+  }) {
     if (baseCoordinates.lat && baseCoordinates.lng) {
       let bounds: google.maps.LatLngBounds = map.getBounds();
       let northEast = bounds.getNorthEast();
@@ -343,7 +408,7 @@ function Map(props: {
 
       setTooltipCoordinates({
         lat: baseCoordinates.lat - latModifier,
-        lng: baseCoordinates.lng
+        lng: baseCoordinates.lng,
       });
     }
   }
@@ -352,13 +417,13 @@ function Map(props: {
     const lineSymbol = {
       path: "M 0,-1 0,1",
       strokeOpacity: 1,
-      scale: 4
+      scale: 4,
     };
     let antimeridian: IPolyline = {
       data: { id: "antimeridian" },
       path: [
         { lat: 90, lng: 180 },
-        { lat: -90, lng: 180 }
+        { lat: -90, lng: 180 },
       ],
 
       options: {
@@ -368,10 +433,10 @@ function Map(props: {
           {
             icon: lineSymbol,
             offset: "0",
-            repeat: "20px"
-          }
-        ]
-      }
+            repeat: "20px",
+          },
+        ],
+      },
     };
 
     return <Polyline polyline={antimeridian} />;
@@ -409,7 +474,10 @@ function Map(props: {
                 let tooltipContent = polygon.options.tooltip
                   ? polygon.options.tooltip(polygon)
                   : null;
-                calculateTooltipCoordinates({ lat: e.latLng?.lat(), lng: e.latLng?.lng() });
+                calculateTooltipCoordinates({
+                  lat: e.latLng?.lat(),
+                  lng: e.latLng?.lng(),
+                });
                 setTooltipMode("click");
                 updatePolygonTooltipDebounced.current(
                   tooltipContent,
@@ -427,8 +495,14 @@ function Map(props: {
                 ? polygon.options.tooltip(polygon)
                 : null;
 
-              if (polygon.options.tooltipMode === "hover" || !polygon.options.tooltipMode) {
-                calculateTooltipCoordinates({ lat: e.latLng?.lat(), lng: e.latLng?.lng() });
+              if (
+                polygon.options.tooltipMode === "hover" ||
+                !polygon.options.tooltipMode
+              ) {
+                calculateTooltipCoordinates({
+                  lat: e.latLng?.lat(),
+                  lng: e.latLng?.lng(),
+                });
                 setTooltipMode("hover");
                 updatePolygonTooltipDebounced.current(
                   tooltipContent,
@@ -442,7 +516,10 @@ function Map(props: {
               if (props.onPolygonMouseOut) {
                 props.onPolygonMouseOut(e, polygon);
               }
-              if (polygon.options.tooltipMode === "hover" || !polygon.options.tooltipMode) {
+              if (
+                polygon.options.tooltipMode === "hover" ||
+                !polygon.options.tooltipMode
+              ) {
                 updatePolygonTooltipDebounced.current(null);
               }
             }}
@@ -465,17 +542,33 @@ function Map(props: {
     );
   }
 
+  function renderCircles() {
+    return (
+      circles &&
+      circles.map((circle: ICircle, index: number) => {
+        return (
+          <Circle
+            radius={circle.radius}
+            center={circle.center}
+            options={circle.options}
+            key={index}
+          />
+        );
+      })
+    );
+  }
+
   function renderMarkers() {
     let markersGrouped: any = {};
 
     if (markers) {
-      markersGrouped = _.groupBy(
+      markersGrouped = groupBy(
         markers,
-        marker => marker.coordinates.lat + ", " + marker.coordinates.lng
+        (marker) => marker.coordinates.lat + ", " + marker.coordinates.lng
       );
     }
 
-    return Object.keys(markersGrouped).map(key => {
+    return Object.keys(markersGrouped).map((key) => {
       let markerGroup = markersGrouped[key];
       let tooltipContent = markerGroup[0].options.tooltip
         ? markerGroup[0].options.tooltip(markerGroup[0], hideTooltip)
@@ -502,7 +595,11 @@ function Map(props: {
               ? markerGroup[0].options.tooltip(markerGroup[0])
               : null;
             if (markerGroup.length > 1) {
-              tooltipContent = <div className="px-4 py-2">{markerGroup.length} marker items</div>;
+              tooltipContent = (
+                <div className="px-4 py-2">
+                  {markerGroup.length} marker items
+                </div>
+              );
             }
 
             if (
@@ -544,11 +641,16 @@ function Map(props: {
           options={{
             disableAutoPan: tooltipMode !== "click",
             pixelOffset: tooltipPixelOffset
-              ? new window.google.maps.Size(tooltipPixelOffset.x, tooltipPixelOffset.y)
-              : undefined
+              ? new window.google.maps.Size(
+                  tooltipPixelOffset.x,
+                  tooltipPixelOffset.y
+                )
+              : undefined,
           }}
           children={
-            <div className="map-tooltip">{markerTooltipContent || polygonTooltipContent}</div>
+            <div className="map-tooltip">
+              {markerTooltipContent || polygonTooltipContent}
+            </div>
           }
           position={tooltipCoordinates}
           onCloseClick={hideTooltip}
@@ -613,7 +715,7 @@ function Map(props: {
           mapContainerStyle={mapContainerStyle ?? {}}
           center={center}
           zoom={defaultZoom ?? 5}
-          onLoad={map => {
+          onLoad={(map) => {
             setMap(map);
           }}
           options={options}
@@ -633,18 +735,24 @@ function Map(props: {
                   id: `new_polygon`,
                   data: {},
                   paths,
-                  options: {}
+                  options: {},
                 };
 
                 if (doSnap) {
                   paths.forEach((path: any, pathIndex: number) => {
                     path.forEach(
-                      (coordinates: { lat: number; lng: number }, vertexIndex: number) => {
+                      (
+                        coordinates: { lat: number; lng: number },
+                        vertexIndex: number
+                      ) => {
                         _polygon.paths = snapPointToPolygon(
                           // @ts-ignore
                           { path: pathIndex, vertex: vertexIndex },
                           _polygon,
-                          new google.maps.LatLng(coordinates.lat, coordinates.lng)
+                          new google.maps.LatLng(
+                            coordinates.lat,
+                            coordinates.lng
+                          )
                         );
                       }
                     );
@@ -662,13 +770,14 @@ function Map(props: {
               }}
               drawingMode={window.google.maps.drawing.OverlayType.POLYGON}
               options={{
-                drawingControl: false
+                drawingControl: false,
               }}
             />
           )}
 
           {renderPolygons()}
           {renderPolylines()}
+          {renderCircles()}
           {renderMarkers()}
           {renderAntimeridian()}
           {renderTooltip()}

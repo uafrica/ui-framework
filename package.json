@@ -1,8 +1,10 @@
 {
-  "name": "bob-group-ui-framework",
-  "version": "1.3.60",
-  "description": "A custom set of UI components used by Bob Group, based on TailwindCSS and Headless UI",
+  "version": "1.0.0",
+  "name": "ui-framework-v2",
   "license": "BSD-3-Clause",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "description": "A custom set of UI components used by Bob Group, based on TailwindCSS and Headless UI",
   "repository": "uafrica/ui-framework",
   "bugs": {
     "url": "https://github.com/uafrica/ui-framework/issues",
@@ -12,87 +14,106 @@
     "name": "Cornel Rautenbach",
     "email": "cornel@bob.co.za"
   },
-  "main": "build/index.js",
   "files": [
-    "build"
+    "dist"
   ],
-  "module": "build/index.es.js",
-  "jsnext:main": "build/index.es.js",
-  "scripts": {
-    "start": "craco start",
-    "build": "rollup -c",
-    "test": "craco test",
-    "eject": "react-scripts eject",
-    "prepare": "husky install"
+  "engines": {
+    "node": ">=10"
   },
-  "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "6.4.2",
-    "@fortawesome/free-solid-svg-icons": "6.4.2",
-    "@fortawesome/react-fontawesome": "0.2.0",
-    "@headlessui/react": "^1.3.0",
-    "@react-google-maps/api": "^2.18.1",
-    "@tailwindcss/forms": "^0.3.3",
-    "autoprefixer": "9.8.6",
-    "country-flag-icons": "^1.5.7",
-    "detect-browser": "^5.3.0",
-    "moment": "2.29.1",
-    "react-hook-form": "^6.14.0",
-    "postcss": "7.0.36",
-    "react-content-loader": "6.0.3",
-    "react-error-boundary": "^3.1.4",
-    "react-popper": "^2.2.5",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
-    "uuid": "^9.0.0"
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build && yarn build-tailwind",
+    "test": "tsdx test --passWithNoTests",
+    "lint": "tsdx lint",
+    "prepare": "yarn build",
+    "size": "size-limit",
+    "analyze": "size-limit --why",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
+    "build-tailwind": "NODE_ENV=production npx tailwindcss -o ./dist/tailwind.css --minify"
   },
   "peerDependencies": {
-    "@popperjs/core": "^2.9.2",
-    "@react-google-maps/api": "2.12.0",
-    "lodash": "4.17.21",
-    "node-sass": "^4.14.1",
-    "react": "16.14.0",
-    "react-dom": "16.13.1",
+    "@react-google-maps/api": "^2.18.1",
+    "react": ">=16",
     "react-router-dom": "5.2.0"
-  },
-  "devDependencies": {
-    "@craco/craco": "^6.2.0",
-    "@types/google.maps": "^3.43.3",
-    "@types/lodash": "^4.14.191",
-    "@types/node": "15.0.3",
-    "@types/react": "17.0.5",
-    "@types/react-dom": "17.0.5",
-    "@types/react-router-dom": "5.1.7",
-    "@types/uuid": "^8.3.4",
-    "eslint-config-prettier": "8.3.0",
-    "eslint-plugin-prettier": "3.4.0",
-    "eslint-plugin-react-perf": "^3.3.0",
-    "husky": "^6.0.0",
-    "prettier": "2.3.0",
-    "pretty-quick": "3.1.0",
-    "react-scripts": "4.0.1",
-    "rollup": "^1.32.1",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-peer-deps-external": "^2.2.4",
-    "rollup-plugin-scss": "^3.0.0",
-    "rollup-plugin-typescript2": "^0.30.0",
-    "sass": "^1.36.0",
-    "typescript": "4.2.4"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged"
+      "pre-commit": "tsdx lint"
     }
   },
-  "keywords": [
-    "uafrica",
-    "framework",
-    "react",
-    "tailwindcss",
-    "headless-ui"
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": false,
+    "trailingComma": "es5"
+  },
+  "module": "dist/ui-framework-v2.esm.js",
+  "size-limit": [
+    {
+      "path": "dist/ui-framework-v2.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/ui-framework-v2.esm.js",
+      "limit": "10 KB"
+    }
   ],
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not op_mini all"
-  ]
+  "devDependencies": {
+    "@babel/core": "^7.21.4",
+    "@size-limit/preset-small-lib": "^8.2.4",
+    "@storybook/addon-essentials": "^7.0.7",
+    "@storybook/addon-info": "^5.3.21",
+    "@storybook/addon-links": "^7.0.7",
+    "@storybook/addon-postcss": "^2.0.0",
+    "@storybook/addons": "^7.0.7",
+    "@storybook/cli": "^7.0.7",
+    "@storybook/react": "^7.0.7",
+    "@types/google.maps": "^3.43.3",
+    "@types/lodash": "^4.14.195",
+    "@types/node": "15.0.3",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@types/react-router-dom": "^5.3.3",
+    "@types/uuid": "^9.0.1",
+    "autoprefixer": "^10.4.14",
+    "babel-loader": "^9.1.2",
+    "husky": "^8.0.3",
+    "postcss": "^8.4.27",
+    "prettier": "^2.8.8",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-is": "^18.2.0",
+    "size-limit": "^8.2.4",
+    "tailwindcss": "^3.3.1",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.5.0",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "country-flag-icons": "^1.5.7",
+    "react-hook-form": "^6.14.0",
+    "@fortawesome/fontawesome-svg-core": "^6.4.2",
+    "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@headlessui/react": "^1.7.14",
+    "@popperjs/core": "^2.11.7",
+    "@react-google-maps/api": "^2.18.1",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tailwindcss/forms": "^0.5.4",
+    "@tailwindcss/line-clamp": "^0.4.4",
+    "@tailwindcss/typography": "^0.5.9",
+    "@types/react-dom": "17.0.5",
+    "@types/react-router-dom": "5.1.7",
+    "detect-browser": "^5.3.0",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.4",
+    "react-content-loader": "^6.2.1",
+    "react-error-boundary": "^4.0.10",
+    "react-popper": "^2.3.0",
+    "react-router-dom": "5.2.0",
+    "rollup-plugin-postcss": "^4.0.2",
+    "sass": "^1.64.2",
+    "uuid": "^9.0.0"
+  }
 }

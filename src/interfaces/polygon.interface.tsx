@@ -1,6 +1,6 @@
 export interface IPolygon {
   id: any;
-  data: any; // any additional data linked to the polygon
+  data: any; // Any additional data linked to the polygon
   paths: any[];
   options: {
     strokeColor?: string;

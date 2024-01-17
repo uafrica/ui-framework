@@ -1,9 +1,10 @@
 import * as countryUtils from "./utils/countryUtils";
 import * as generalUtils from "./utils/generalUtils";
+ // @ts-ignore
+    import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ICountry } from "./interfaces/country.interface";
 import { Select } from "./Select";
-import { useEffect, useState } from "react";
 import * as FlagIcons from "country-flag-icons/react/3x2";
 
 function CountrySelect(props: {
@@ -29,12 +30,12 @@ function CountrySelect(props: {
     showAllSelectedCountries,
     containerClassName,
     selectedCountriesContainerClassName,
-    isReadOnly
+    isReadOnly,
   } = props;
 
-  const [countrySelectOptions, setCountrySelectOptions] = useState<{ label: any; value: any }[]>(
-    buildCountrySelectOptions()
-  );
+  const [countrySelectOptions, setCountrySelectOptions] = useState<
+    { label: any; value: any }[]
+  >(buildCountrySelectOptions());
   const [selection, setSelection] = useState<any>(isMultiSelection ? [] : null);
   const [customSelectionValue, setCustomSelectionValue] = useState<any>();
 
@@ -127,7 +128,11 @@ function CountrySelect(props: {
 
   function renderSelectedCountries() {
     return (
-      <div className={selectedCountriesContainerClassName ?? "max-h-24 overflow-auto"}>
+      <div
+        className={
+          selectedCountriesContainerClassName ?? "max-h-24 overflow-auto"
+        }
+      >
         <div className="flex flex-wrap">
           {selection.map((code: string, index: number) => {
             let country: ICountry | null = countryUtils.getCountryByCode(code, allowOtherCountries);
@@ -179,7 +184,9 @@ function CountrySelect(props: {
             isMultiSelection={isMultiSelection}
           />
         </div>
-        {showAllSelectedCountries && isMultiSelection && renderSelectedCountries()}
+        {showAllSelectedCountries &&
+          isMultiSelection &&
+          renderSelectedCountries()}
       </div>
     );
   }

@@ -1,5 +1,7 @@
-import { IconProp, SizeProp } from "@fortawesome/fontawesome-svg-core";
+ // @ts-ignore
+    import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconProp, SizeProp } from "@fortawesome/fontawesome-svg-core";
 import { Link as RouterLink } from "react-router-dom";
 
 // Interfaces
@@ -67,7 +69,7 @@ function Primary(props: IButtonProps) {
     <BaseButton
       {...props}
       buttonTypeClassNames={
-        "focus:outline-none focus:ring-1 focus:ring-primary u-button border-transparent text-white bg-" +
+        "focus:outline-none focus:ring-1 focus:ring-primary  inline-flex justify-center items-center px-5 py-2 border leading-4 font-medium rounded-full shadow-sm focus: outline-none  border-transparent text-white bg-" +
         bgColor +
         " hover:bg-" +
         bgColor +
@@ -85,7 +87,7 @@ function Secondary(props: IButtonProps) {
     <BaseButton
       {...props}
       buttonTypeClassNames={
-        "u-focus u-button border-" +
+        " focus:outline-none focus:ring-1 focus:ring-primary   inline-flex justify-center items-center px-5 py-2 border leading-4 font-medium rounded-full shadow-sm focus: outline-none  border-" +
         bgColor +
         " text-" +
         bgColor +
@@ -102,7 +104,7 @@ function Tertiary(props: IButtonProps) {
     <BaseButton
       {...props}
       buttonTypeClassNames={
-        "u-focus u-button border-gray-900 text-gray-99 bg-white hover:text-primary hover:border-primary "
+        " focus:outline-none focus:ring-1 focus:ring-primary   inline-flex justify-center items-center px-5 py-2 border leading-4 font-medium rounded-full shadow-sm focus: outline-none  border-gray-900 text-gray-99 bg-white hover:text-primary hover:border-primary "
       }
     />
   );
@@ -113,7 +115,7 @@ function Danger(props: IButtonProps) {
     <BaseButton
       {...props}
       buttonTypeClassNames={
-        "focus:outline-none focus:ring-1 focus:ring-red u-button border-transparent text-white bg-red hover:bg-red-dark "
+        "focus:outline-none focus:ring-1 focus:ring-red  inline-flex justify-center items-center px-5 py-2 border leading-4 font-medium rounded-full shadow-sm focus: outline-none  border-transparent text-white bg-red hover:bg-red-dark "
       }
     />
   );
@@ -128,7 +130,7 @@ function Icon(props: IButtonProps) {
       {...props}
       iconSize={props.iconSize ? props.iconSize : "lg"}
       buttonTypeClassNames={
-        "u-focus u-button border-transparent text-" +
+        " focus:outline-none focus:ring-1 focus:ring-primary   inline-flex justify-center items-center px-5 py-2 border leading-4 font-medium rounded-full shadow-sm focus: outline-none  border-transparent text-" +
         color +
         " bg-" +
         bgColor +
@@ -149,7 +151,7 @@ function Cancel(props: IButtonProps) {
       {...props}
       title={title}
       buttonTypeClassNames={
-        "u-focus u-button justify-center border-gray-300 text-gray-700 bg-white hover:bg-gray-50 "
+        " focus:outline-none focus:ring-1 focus:ring-primary   inline-flex justify-center items-center px-5 py-2 border leading-4 font-medium rounded-full shadow-sm focus: outline-none  justify-center border-gray-300 text-gray-700 bg-white hover:bg-gray-50 "
       }
     />
   );
@@ -207,7 +209,7 @@ function BaseButton(props: IButtonBaseProps) {
     hoverTitle,
     leftRounded,
     rightRounded,
-    iconClassName = "mr-3"
+    iconClassName = "mr-3",
   } = props;
 
   let disabledOrLoading = isDisabled || isLoading;
@@ -231,7 +233,11 @@ function BaseButton(props: IButtonBaseProps) {
       type={type ? type : "button"}
       title={hoverTitle}
       className={
-        (leftRounded ? "rounded-r h-9" : rightRounded ? "rounded-l h-9" : "rounded-full h-9 ") +
+        (leftRounded
+          ? "rounded-r h-9"
+          : rightRounded
+          ? "rounded-l h-9"
+          : "rounded-full h-9 ") +
         buttonTypeClassNames +
         " items-center " +
         (isCenter ? " block mx-auto " : "") +
@@ -276,7 +282,11 @@ function ButtonsPanel(props: IButtonsPanelProps) {
   }
 
   return (
-    <div className={" w-full u-reverse-flex-col-to-row " + align + (noMargin ? "" : " mt-6 mb-1")}>
+    <div
+      className={
+        " w-full  flex flex-col-reverse sm:flex-row space-y-4 sm:space-y-0 space-y-reverse space-x-0 sm:space-x-4  " + align + (noMargin ? "" : " mt-6 mb-1")
+      }
+    >
       {children}
     </div>
   );
@@ -323,7 +333,7 @@ const Button = {
   ButtonsPanel,
   Icon,
   Download,
-  Close
+  Close,
 };
 
 export { Button };

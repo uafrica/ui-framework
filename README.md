@@ -154,11 +154,6 @@ For some background on how it was compiled follow https://www.pluralsight.com/gu
 
 [Pagination](https://github.com/uafrica/ui-framework/blob/main/docs/Pagination.md)
 
-## Playground
+## Developing the framework
 
-To run playground, you need to build the framework first with `npm run build`.
-
-Then in the ` playground` folder:
-`yarn install`
-`ln -s ../../dist ./node_modules/ui-framework-v2`
-`yarn start`.
+In order to test your changes, navigate to the project you want to test it in e.g. Bob Pay. Then in the `bobpay-frontend`, copy the `ui-framework` folder to the `src` folder of Bob Pay and import the framework like this: `import { Map } from "ui-framework/src";`

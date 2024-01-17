@@ -1,9 +1,10 @@
 import * as countryUtils from "./utils/countryUtils";
+ // @ts-ignore
+    import React, { useEffect, useState } from "react";
 import { CountrySelect } from "./CountrySelect";
 import { ICountry } from "./interfaces/country.interface";
 import { Input } from "./Input";
 import { Label } from "./Label";
-import { useEffect, useState } from "react";
 import { Message } from "./Message";
 
 function MobileNumberSelect(props: {
@@ -35,7 +36,7 @@ function MobileNumberSelect(props: {
     validation,
     isRequired,
     mobileNumberRegex,
-    showAsterisk
+    showAsterisk,
   } = props;
 
   const shouldValidate = Boolean(validation && name);
@@ -108,7 +109,7 @@ function MobileNumberSelect(props: {
         mobileNumberCountry = defaultCountry;
       } else if (mobileNumber.indexOf("+") === 0) {
         let wasFound = false;
-        validCountries.forEach(validCountry => {
+        validCountries.forEach((validCountry) => {
           if (mobileNumber.indexOf(validCountry.dialCode) === 0) {
             wasFound = true;
             mobileNumber = mobileNumber.slice(validCountry.dialCode.length);
@@ -188,12 +189,12 @@ function MobileNumberSelect(props: {
               validation.register({
                 required: {
                   value: isRequired,
-                  message: "This field is required"
+                  message: "This field is required",
                 },
                 pattern: {
                   value: mobileNumberRegex ?? validationRegex,
-                  message: "Invalid mobile number"
-                }
+                  message: "Invalid mobile number",
+                },
               })
             }
           />

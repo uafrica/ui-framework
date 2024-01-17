@@ -1,3 +1,6 @@
+
+ // @ts-ignore
+    import React from "react";
 function addressObjFromGoogleResult(place: any): {
   company: any;
   street_address: any;

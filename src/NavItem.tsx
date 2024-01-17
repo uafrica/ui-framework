@@ -1,3 +1,5 @@
+ // @ts-ignore
+    import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
@@ -25,7 +27,7 @@ function NavItem(props: IProps) {
     <div
       id={"nav_" + item.displayName.replaceAll(" ", "_").toLowerCase()}
       className={
-        "nav-item text-gray-700 hover:bg-gray-100 hover:text-gray-900 group u-vertical-center px-2 py-1.5 rounded-md mb-1 " +
+        "nav-item text-gray-700 hover:bg-gray-100 hover:text-gray-900 group  flex items-center  px-2 py-1.5 rounded-md mb-1 " +
         bgClass
       }
     >

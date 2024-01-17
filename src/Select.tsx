@@ -1,11 +1,12 @@
-import { createContext, useEffect, useRef, useState } from "react";
-import { Popover } from "@headlessui/react";
+ // @ts-ignore
+    import React, { createContext, useEffect, useRef, useState } from "react";
+import { Button } from "./Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { InfoButton } from "./InfoButton";
 import { Input } from "./Input";
 import { Label } from "./Label";
 import { Manager, Popper, Reference } from "react-popper";
-import { Button } from "./Button";
+import { Popover } from "@headlessui/react";
 
 // Interface
 interface ISelect extends IBase {
@@ -85,7 +86,7 @@ function GroupedSelect(props: IGroupedSelect) {
     showAllButton,
     showAllSelectedText,
     allSelectedText,
-    popoverHeight
+    popoverHeight,
   } = props;
 
   if (placeholder === undefined) {
@@ -143,7 +144,10 @@ function GroupedSelect(props: IGroupedSelect) {
   }
 
   // renders an option group with its list of options
-  function renderOptionGroup(optionGroup: IOptionGroup, shouldShowAllResults?: boolean) {
+  function renderOptionGroup(
+    optionGroup: IOptionGroup,
+    shouldShowAllResults?: boolean
+  ) {
     let limit = 100;
 
     // Search
@@ -168,6 +172,7 @@ function GroupedSelect(props: IGroupedSelect) {
      * - the available options are less than or equal to the set limit
      */
     if (shouldShowAllResults) {
+
       if (!showAllDisabled) {
         setShowAllDisabled(true);
       }
@@ -175,6 +180,7 @@ function GroupedSelect(props: IGroupedSelect) {
       if (!showAllDisabled) {
         setShowAllDisabled(true);
       }
+
     } else {
       if (showAllDisabled) {
         setShowAllDisabled(false);
@@ -191,7 +197,9 @@ function GroupedSelect(props: IGroupedSelect) {
       optionsLimited.length > 0 && (
         <div key={optionGroup.label} className="mb-4">
           {optionGroup.label && (
-            <div className="text-gray-600 uppercase text-xs p-2 mt-4">{optionGroup.label}</div>
+            <div className="text-gray-600 uppercase text-xs p-2 mt-4">
+              {optionGroup.label}
+            </div>
           )}
           {optionsLimited.map((option: any) => {
             let selected;
@@ -205,7 +213,7 @@ function GroupedSelect(props: IGroupedSelect) {
               <div key={option.value} className="flex flex-row items-center">
                 <div
                   tabIndex={0}
-                  onKeyPress={e => {
+                  onKeyPress={(e) => {
                     if (e.key === "Enter") {
                       clickOption(option);
                     }
@@ -214,9 +222,11 @@ function GroupedSelect(props: IGroupedSelect) {
                     clickOption(option);
                   }}
                   className={
-                    "flex-1 select-none relative py-2 pl-2 pr-9 hover:bg-gray-100 focus:bg-gray-100 u-focus rounded-md mt-1 mx-1  " +
+                    "flex-1 select-none relative py-2 pl-2 pr-9 hover:bg-gray-100 focus:bg-gray-100  focus:outline-none focus:ring-1 focus:ring-primary  rounded-md mt-1 mx-1  " +
                     (selected ? "bg-gray-100" : "text-gray-900") +
-                    (option.disabled === true ? " cursor-not-allowed " : " cursor-pointer ")
+                    (option.disabled === true
+                      ? " cursor-not-allowed "
+                      : " cursor-pointer ")
                   }
                 >
                   <span
@@ -232,27 +242,37 @@ function GroupedSelect(props: IGroupedSelect) {
                   {selected ? (
                     <span
                       className={
-                        "absolute inset-y-0 right-0 u-vertical-center pr-4 " +
-                        (option.disabled === true ? " text-gray-500 " : " text-primary-600 ")
+                        "absolute inset-y-0 right-0  flex items-center  pr-4 " +
+                        (option.disabled === true
+                          ? " text-gray-500 "
+                          : " text-primary-600 ")
                       }
                     >
-                      <FontAwesomeIcon icon="check" className="h-5 w-5" aria-hidden="true" />
+                      <FontAwesomeIcon
+                        icon="check"
+                        className="h-5 w-5"
+                        aria-hidden="true"
+                      />
                     </span>
                   ) : null}
                 </div>
                 {onDelete && !option.disableDelete && option.disabled !== true && (
-                  <span className="u-vertical-center p-2 text-red hover:text-red-700 cursor-pointer">
+                  <span className=" flex items-center  p-2 text-red hover:text-red-700 cursor-pointer">
                     <FontAwesomeIcon
                       icon="trash"
                       title="Delete"
-                      onClick={() => onDelete && onDelete(option.label, option.value)}
+                      onClick={() =>
+                        onDelete && onDelete(option.label, option.value)
+                      }
                     />
                   </span>
                 )}
               </div>
             );
           })}
-          {optionsOmitted > 0 && <div className="pl-2 mt-2">+ {optionsOmitted} more</div>}
+          {optionsOmitted > 0 && (
+            <div className="pl-2 mt-2">+ {optionsOmitted} more</div>
+          )}
         </div>
       )
     );
@@ -269,17 +289,24 @@ function GroupedSelect(props: IGroupedSelect) {
   if (value) {
     if (isMultiSelection) {
       if (value.length === 1) {
-        let selectedItem = flattenedOptions.find((option: any) => option.value === value[0]);
+        let selectedItem = flattenedOptions.find(
+          (option: any) => option.value === value[0]
+        );
         if (selectedItem) {
           labelWithValue = selectedItem.label;
         }
-      } else if (value.length === flattenedOptions.length && showAllSelectedText) {
+      } else if (
+        value.length === flattenedOptions.length &&
+        showAllSelectedText
+      ) {
         labelWithValue = allSelectedText ?? "All selected";
       } else if (value.length > 1) {
         labelWithValue = value.length + " selected";
       }
     } else {
-      let selectedItem = flattenedOptions.find((option: any) => option.value === value);
+      let selectedItem = flattenedOptions.find(
+        (option: any) => option.value === value
+      );
       if (selectedItem) {
         labelWithValue = selectedItem.label;
       }
@@ -290,7 +317,9 @@ function GroupedSelect(props: IGroupedSelect) {
   try {
     allOptionsSearched = flattenedOptions.filter((option: any) => {
       if (typeof option?.label === "string" && searchTerm) {
-        return option.label.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0;
+        return (
+          option.label.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0
+        );
       }
       return true;
     });
@@ -331,12 +360,15 @@ function GroupedSelect(props: IGroupedSelect) {
 
   try {
     if (isMultiSelection) {
-      const selectedDisabledOptions = value.filter((v: any) => disabledOptions.includes(v));
+      const selectedDisabledOptions = value.filter((v: any) =>
+        disabledOptions.includes(v)
+      );
       const notSelectedDisabledOptions = disabledOptions.filter(
         (v: any) => !selectedDisabledOptions.includes(v)
       );
       let allSelected =
-        flattenedOptions.length - notSelectedDisabledOptions.length === value.length;
+        flattenedOptions.length - notSelectedDisabledOptions.length ===
+        value.length;
       selectAllButton = (
         <Button.Link
           key="select-deselect"
@@ -350,10 +382,18 @@ function GroupedSelect(props: IGroupedSelect) {
               onChange &&
                 onChange(
                   (flattenedOptions ? flattenedOptions : [])
-                    .filter((option: { value: string | number; disabled?: boolean }) => {
-                      return notSelectedDisabledOptions.indexOf(option.value) === -1;
-                    })
-                    .map(option => option.value)
+                    .filter(
+                      (option: {
+                        value: string | number;
+                        disabled?: boolean;
+                      }) => {
+                        return (
+                          notSelectedDisabledOptions.indexOf(option.value) ===
+                          -1
+                        );
+                      }
+                    )
+                    .map((option) => option.value)
                 );
             }
           }}
@@ -366,17 +406,28 @@ function GroupedSelect(props: IGroupedSelect) {
 
   let placement = "bottom-start";
   return (
-    <div className={_containerClassName} onClick={(e: any) => e.stopPropagation()}>
+    <div
+      className={_containerClassName}
+      onClick={(e: any) => e.stopPropagation()}
+    >
       <Popover>
-        <div className={isLabelInline ? "flex flex-row items-center space-x-4" : ""}>
+        <div
+          className={
+            isLabelInline ? "flex flex-row items-center space-x-4" : ""
+          }
+        >
           {label && (
             <Label className={labelClassName} noMargin={isLabelInline}>
-              {label} {showAsterisk && " *"} {info && <InfoButton>{info}</InfoButton>}
+              {label} {showAsterisk && " *"}{" "}
+              {info && <InfoButton>{info}</InfoButton>}
             </Label>
           )}
 
           {/* Button that is clicked on to open the dropdown */}
-          <GroupedSelectCtx.Provider value={ctxValue} key={ctxValue.isVisible.toString()}>
+          <GroupedSelectCtx.Provider
+            value={ctxValue}
+            key={ctxValue.isVisible.toString()}
+          >
             {/* @ts-ignore */}
             <Manager>
               {/* @ts-ignore */}
@@ -387,10 +438,14 @@ function GroupedSelect(props: IGroupedSelect) {
                   >
                     <div
                       ref={ref}
-                      className={"relative " + (className ? className : "") + _buttonWidth}
+                      className={
+                        "relative " +
+                        (className ? className : "") +
+                        _buttonWidth
+                      }
                     >
                       <div
-                        className="u-focus rounded-md"
+                        className=" focus:outline-none focus:ring-1 focus:ring-primary  rounded-md"
                         tabIndex={0}
                         onKeyPress={(e: any) => {
                           if (e.key === "Enter") {
@@ -419,7 +474,9 @@ function GroupedSelect(props: IGroupedSelect) {
                           setTimeout(() => {
                             try {
                               // @ts-ignore
-                              document.getElementById("ui-framework-search").focus();
+                              document
+                                .getElementById("ui-framework-search")
+                                .focus();
                             } catch (e) {
                               console.log(e);
                             }
@@ -429,7 +486,9 @@ function GroupedSelect(props: IGroupedSelect) {
                         <div
                           className={
                             "relative border border-gray-300 rounded-md shadow-sm pl-3 pr-6 py-2 text-left w-full " +
-                            (isDisabled ? "bg-gray-100" : "bg-white cursor-pointer")
+                            (isDisabled
+                              ? "bg-gray-100"
+                              : "bg-white cursor-pointer")
                           }
                           id={id}
                         >
@@ -437,9 +496,11 @@ function GroupedSelect(props: IGroupedSelect) {
                             {customSelectionValue ??
                               (labelWithValue ? labelWithValue : placeholder)}
                           </span>
-                          <span className="absolute inset-y-0 right-0 u-vertical-center pr-2 pointer-events-none">
+                          <span className="absolute inset-y-0 right-0  flex items-center  pr-2 pointer-events-none">
                             <FontAwesomeIcon
-                              icon={ctxValue.isVisible ? "caret-up" : "caret-down"}
+                              icon={
+                                ctxValue.isVisible ? "caret-up" : "caret-down"
+                              }
                               className="h-5 w-5 text-gray-400"
                               aria-hidden="true"
                             />
@@ -447,7 +508,9 @@ function GroupedSelect(props: IGroupedSelect) {
                         </div>
                       </div>
                     </div>
-                    <div className="mt-3">{!label && info && <InfoButton>{info}</InfoButton>}</div>
+                    <div className="mt-3">
+                      {!label && info && <InfoButton>{info}</InfoButton>}
+                    </div>
                   </div>
                 )}
               </Reference>
@@ -455,14 +518,14 @@ function GroupedSelect(props: IGroupedSelect) {
               <Popper
                 // @ts-ignore
                 placement={placement}
-                innerRef={node => (popupNode.current = node)}
+                innerRef={(node) => (popupNode.current = node)}
                 modifiers={[
                   {
                     name: "offset",
                     options: {
-                      offset: [0, 5]
-                    }
-                  }
+                      offset: [0, 5],
+                    },
+                  },
                 ]}
               >
                 {({ ref, style }) =>
@@ -472,7 +535,7 @@ function GroupedSelect(props: IGroupedSelect) {
                       style={style}
                       ref={ref}
                       className={
-                        "overflow-hidden z-50 rounded-lg shadow-lg u-black-ring px-4 pb-2 bg-white " +
+                        "overflow-hidden z-50 rounded-lg shadow-lg  ring-1 ring-black ring-opacity-5  px-4 pb-2 bg-white " +
                         (popoverWidth ? popoverWidth : "w-72")
                       }
                     >
@@ -504,14 +567,19 @@ function GroupedSelect(props: IGroupedSelect) {
                         )}
                         {optionGroups.map((optionGroup: IOptionGroup) => {
                           if (showAllClicked) {
-                            return renderOptionGroup(optionGroup, showAllClicked);
+                            return renderOptionGroup(
+                              optionGroup,
+                              showAllClicked
+                            );
                           } else {
                             return renderOptionGroup(optionGroup);
                           }
                         })}
                       </div>
                       {buttons && (
-                        <div className="-ml-1 border-t border-gray-200 pt-1">{buttons}</div>
+                        <div className="-ml-1 border-t border-gray-200 pt-1">
+                          {buttons}
+                        </div>
                       )}
                       {showAllButton && (
                         <div className="-ml-1 border-t border-gray-200 pt-1">
@@ -543,8 +611,8 @@ function Select(props: ISelect) {
   let optionGroups = [
     {
       label: "",
-      options: props.options
-    }
+      options: props.options,
+    },
   ];
 
   return <GroupedSelect {...props} optionGroups={optionGroups} />;
@@ -561,7 +629,7 @@ interface GroupedSelectContextType {
 const GroupedSelectCtx = createContext<GroupedSelectContextType>({
   isVisible: false,
   showSelect: () => {},
-  hideSelect: () => {}
+  hideSelect: () => {},
 });
 
 function useGroupedSelectCtx(
@@ -603,6 +671,6 @@ function useGroupedSelectCtx(
   return {
     isVisible,
     showSelect: () => setVisible(true),
-    hideSelect: () => setVisible(false)
+    hideSelect: () => setVisible(false),
   };
 }

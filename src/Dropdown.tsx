@@ -1,8 +1,15 @@
-import { createContext, Fragment, useEffect, useRef, useState } from "react";
-import { Menu, Transition } from "@headlessui/react";
+ // @ts-ignore
+    import React, {
+  createContext,
+  Fragment,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { Manager, Popper, Reference } from "react-popper";
+import { Menu, Transition } from "@headlessui/react";
 
 // Interface
 interface IDropdown {
@@ -67,7 +74,7 @@ interface DropdownMenuContextType {
 const DropdownMenuCtx = createContext<DropdownMenuContextType>({
   isVisible: false,
   showDropdownMenu: () => {},
-  hideDropdownMenu: () => {}
+  hideDropdownMenu: () => {},
 });
 
 function useDropdownMenuCtx(
@@ -97,7 +104,7 @@ function useDropdownMenuCtx(
   return {
     isVisible,
     showDropdownMenu: () => setVisible(true),
-    hideDropdownMenu: () => setVisible(false)
+    hideDropdownMenu: () => setVisible(false),
   };
 }
 
@@ -117,7 +124,7 @@ function DropdownMenu(props: IDropdown) {
     borderColor,
     leftRounded,
     rightRounded,
-    buttonStyle
+    buttonStyle,
   } = props;
 
   const popupNode = useRef<HTMLElement>();
@@ -138,7 +145,11 @@ function DropdownMenu(props: IDropdown) {
   return (
     <DropdownMenuCtx.Provider value={ctxValue}>
       <Manager>
-        <div className={`inline-block text-left cursor-pointer ${buttonWidth ? buttonWidth : ""}`}>
+        <div
+          className={`inline-block text-left cursor-pointer ${
+            buttonWidth ? buttonWidth : ""
+          }`}
+        >
           <Reference>
             {({ ref }) => (
               <div
@@ -162,7 +173,7 @@ function DropdownMenu(props: IDropdown) {
                   id={id}
                   style={buttonStyle && buttonStyle}
                   className={
-                    `items-center u-focus ${
+                    `items-center  focus:outline-none focus:ring-1 focus:ring-primary  ${
                       leftRounded
                         ? "rounded-r"
                         : rightRounded
@@ -172,7 +183,7 @@ function DropdownMenu(props: IDropdown) {
                         : "rounded-full"
                     } inline-flex ${
                       between ? "justify-between" : "justify-center"
-                    } w-full ${componentPadding} font-medium  focus:outline-none ` +
+                    } w-full ${componentPadding} font-bold  focus:outline-none ` +
                     ("text-" + color + " ") +
                     (noBackground
                       ? "my-1 py-1 hover:text-" + color + "-700 font-bold"
@@ -186,7 +197,9 @@ function DropdownMenu(props: IDropdown) {
                       <FontAwesomeIcon icon={icon} aria-hidden="true" />
                     </div>
                   )}
-                  {Boolean(title) && <span className="ml-2 truncate">{title}</span>}
+                  {Boolean(title) && (
+                    <span className="ml-2 truncate">{title}</span>
+                  )}
                   <div className="h-5 w-5 flex items-center">
                     <FontAwesomeIcon
                       icon="caret-down"
@@ -205,11 +218,11 @@ function DropdownMenu(props: IDropdown) {
               {
                 name: "offset",
                 options: {
-                  offset: [0, 5]
-                }
-              }
+                  offset: [0, 5],
+                },
+              },
             ]}
-            innerRef={node => (popupNode.current = node)}
+            innerRef={(node) => (popupNode.current = node)}
           >
             {({ ref, style }) =>
               ctxValue.isVisible ? (
@@ -222,7 +235,7 @@ function DropdownMenu(props: IDropdown) {
                   // @ts-ignore
                   style={{ margin: 0, ...style }}
                   className={
-                    "z-50 origin-top-right absolute right-0 rounded-md shadow-lg bg-white u-black-ring focus:outline-none m-1 " +
+                    "z-50 origin-top-right absolute right-0 rounded-md shadow-lg bg-white  ring-1 ring-black ring-opacity-5  focus:outline-none m-1 " +
                     widthClass
                   }
                 >
@@ -243,7 +256,11 @@ function ContextMenu(props: IDropdown) {
   widthClass = widthClass ? widthClass : "w-72";
 
   return (
-    <Menu as="div" id={id ? id : "context_menu"} className="relative inline-block text-left">
+    <Menu
+      as="div"
+      id={id ? id : "context_menu"}
+      className="relative inline-block text-left"
+    >
       <Transition
         show={true}
         as={Fragment}
@@ -257,7 +274,7 @@ function ContextMenu(props: IDropdown) {
         <Menu.Items
           static
           className={
-            "z-10 origin-top-right absolute py-3 right-0 mt-2 rounded-md shadow-lg bg-white u-black-ring focus:outline-none " +
+            "z-10 origin-top-right absolute py-3 right-0 mt-2 rounded-md shadow-lg bg-white  ring-1 ring-black ring-opacity-5  focus:outline-none " +
             widthClass
           }
         >
@@ -281,7 +298,7 @@ function MenuItem(props: IMenuItem) {
     <div
       id={id}
       tabIndex={0}
-      className="u-focus rounded-md mx-1"
+      className=" focus:outline-none focus:ring-1 focus:ring-primary  rounded-md mx-1"
       onKeyPress={(e: any) => {
         if (e.key === "Enter" && !isDisabled) {
           document.body.click();
@@ -293,7 +310,7 @@ function MenuItem(props: IMenuItem) {
         {({ active }) => (
           <div
             className={
-              " group u-vertical-center px-4 py-2 cursor-pointer font-semibold " +
+              " group  flex items-center  px-4 py-2 cursor-pointer font-semibold " +
               (isDisabled
                 ? "bg-gray-100 text-gray-500"
                 : active
@@ -319,7 +336,10 @@ function MenuItem(props: IMenuItem) {
                   icon={iconToShow}
                   spin={isLoading}
                   className={
-                    "  " + (isDisabled ? "text-gray-500" : "text-black group-hover:text-gray-900")
+                    "  " +
+                    (isDisabled
+                      ? "text-gray-500"
+                      : "text-black group-hover:text-gray-900")
                   }
                   aria-hidden="true"
                 />
@@ -347,7 +367,7 @@ function MenuHeading(props: IMenuHeading) {
         {() => (
           <div
             className={
-              "group flex u-vertical-center px-4 py-2 cursor-pointer font-semibold text-gray-700"
+              "group flex  flex items-center  px-4 py-2 cursor-pointer font-semibold text-gray-700"
             }
           >
             {icon && (
@@ -368,7 +388,7 @@ function MenuHeading(props: IMenuHeading) {
 }
 
 DropdownMenu.defaultProps = {
-  borderColor: "gray-300"
+  borderColor: "gray-300",
 };
 
 const Dropdown = {
@@ -376,7 +396,7 @@ const Dropdown = {
   MenuItem,
   MenuHeading,
   Menu: DropdownMenu,
-  ContextMenu
+  ContextMenu,
 };
 
 export { Dropdown };

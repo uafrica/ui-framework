@@ -1,5 +1,6 @@
-import { createContext, useEffect, useState } from "react";
 import moment from "moment";
+ // @ts-ignore
+    import React, { createContext, useEffect, useState } from "react";
 
 type ViewState = "date" | "month" | "year";
 
@@ -46,7 +47,7 @@ export const DatePickerCtx = createContext<DatePickerContextType>({
   maxDate: undefined,
   visible: {
     month: 0,
-    year: 1970
+    year: 1970,
   },
   time: { hours: 0, minutes: 0 },
   view: "date",
@@ -68,7 +69,7 @@ export const DatePickerCtx = createContext<DatePickerContextType>({
   toggleCalendar: () => {},
   isSelectedDate: () => false,
   isWithinRange: () => true,
-  showTimeSelect: false
+  showTimeSelect: false,
 });
 
 export function useDatePickerCtx(
@@ -82,11 +83,11 @@ export function useDatePickerCtx(
 ): DatePickerContextType {
   const [monthYear, setMonthYear] = useState<MonthYear>({
     month: date?.getMonth() ?? new Date().getMonth(),
-    year: date?.getFullYear() ?? new Date().getFullYear()
+    year: date?.getFullYear() ?? new Date().getFullYear(),
   });
   const [time, setTime] = useState<Time>({
     hours: date?.getHours() ?? new Date().getHours(),
-    minutes: date?.getMinutes() ?? new Date().getMinutes()
+    minutes: date?.getMinutes() ?? new Date().getMinutes(),
   });
 
   const [view, setView] = useState<ViewState>("date");
@@ -106,7 +107,9 @@ export function useDatePickerCtx(
 
   const selectDate = (d: number) => {
     if (showTimeSelect) {
-      onChange(new Date(monthYear.year, monthYear.month, d, time.hours, time.minutes));
+      onChange(
+        new Date(monthYear.year, monthYear.month, d, time.hours, time.minutes)
+      );
     } else {
       onChange(new Date(monthYear.year, monthYear.month, d));
     }
@@ -119,7 +122,13 @@ export function useDatePickerCtx(
     let inRange = true;
     let date: Date;
     if (showTimeSelect) {
-      date = new Date(monthYear.year, monthYear.month, d, time.hours, time.minutes);
+      date = new Date(
+        monthYear.year,
+        monthYear.month,
+        d,
+        time.hours,
+        time.minutes
+      );
     } else {
       date = new Date(monthYear.year, monthYear.month, d);
     }
@@ -149,14 +158,14 @@ export function useDatePickerCtx(
   };
 
   const selectMinutes = (m: number) => {
-    setTime(state => ({ ...state, minutes: m }));
+    setTime((state) => ({ ...state, minutes: m }));
     let newDate = date;
     newDate.setHours(time.hours);
     newDate.setMinutes(m);
     onChange(new Date(newDate));
   };
   const selectHours = (h: number) => {
-    setTime(state => ({ ...state, hours: h }));
+    setTime((state) => ({ ...state, hours: h }));
     let newDate = date;
     newDate.setHours(h);
     newDate.setMinutes(time.minutes);
@@ -164,12 +173,12 @@ export function useDatePickerCtx(
   };
 
   const selectMonth = (m: number) => {
-    setMonthYear(state => ({ ...state, month: m }));
+    setMonthYear((state) => ({ ...state, month: m }));
     setView("date");
   };
 
   const selectYear = (y: number) => {
-    setMonthYear(state => ({ ...state, year: y }));
+    setMonthYear((state) => ({ ...state, year: y }));
     setView("month");
   };
 
@@ -198,21 +207,25 @@ export function useDatePickerCtx(
     time: time,
     view,
     nextMonth: () =>
-      setMonthYear(state =>
+      setMonthYear((state) =>
         state.month >= 11
           ? { month: 0, year: state.year + 1 }
           : { month: state.month + 1, year: state.year }
       ),
     prevMonth: () =>
-      setMonthYear(state =>
+      setMonthYear((state) =>
         state.month <= 0
           ? { month: 11, year: state.year - 1 }
           : { month: state.month - 1, year: state.year }
       ),
-    nextYear: () => setMonthYear(state => ({ ...state, year: state.year + 1 })),
-    prevYear: () => setMonthYear(state => ({ ...state, year: state.year - 1 })),
-    nextDecade: () => setMonthYear(state => ({ ...state, year: state.year + 12 })),
-    prevDecade: () => setMonthYear(state => ({ ...state, year: state.year - 12 })),
+    nextYear: () =>
+      setMonthYear((state) => ({ ...state, year: state.year + 1 })),
+    prevYear: () =>
+      setMonthYear((state) => ({ ...state, year: state.year - 1 })),
+    nextDecade: () =>
+      setMonthYear((state) => ({ ...state, year: state.year + 12 })),
+    prevDecade: () =>
+      setMonthYear((state) => ({ ...state, year: state.year - 12 })),
     selectMinutes,
     selectHours,
     selectMonth,
@@ -222,9 +235,9 @@ export function useDatePickerCtx(
     viewYears: () => setView("year"),
     isVisible,
     showCalendar: () => setVisible(true),
-    toggleCalendar: () => setVisible(state => !state),
+    toggleCalendar: () => setVisible((state) => !state),
     isSelectedDate,
     isWithinRange,
-    showTimeSelect
+    showTimeSelect,
   };
 }

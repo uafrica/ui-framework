@@ -17,7 +17,7 @@ const daysOfWeek = [
   { label: "Thursday", value: 4 },
   { label: "Friday", value: 5 },
   { label: "Saturday", value: 6 },
-  { label: "Sunday", value: 0 }
+  { label: "Sunday", value: 0 },
 ];
 
 const provinces = [
@@ -29,7 +29,7 @@ const provinces = [
   { label: "Mpumalanga", value: "MP" },
   { label: "Northern Cape", value: "NC" },
   { label: "North West", value: "NW" },
-  { label: "Western Cape", value: "WC" }
+  { label: "Western Cape", value: "WC" },
 ];
 
 const browserVersions = {
@@ -41,63 +41,114 @@ const browserVersions = {
   fxios: "91.0", // 2021-08-10
   edge: "87.0.664.75", // 2021-01-07
   "edge-chromium": "87.0.664.75", // 2021-01-07
-  "edge-ios": "87.0.664.75" // 2021-01-07
+  "edge-ios": "87.0.664.75", // 2021-01-07
 };
 
 const googleAutocompleteOptions = {
   componentRestrictions: {
-    country: []
+    country: [],
   },
-  fields: ["address_component", "geometry.location", "name", "type"]
+  fields: ["address_component", "geometry.location", "name", "type"],
 };
 
 const statusCode = [
   {
     label: "200s",
-    value: "200"
+    value: "200",
   },
   {
     label: "300s",
-    value: "300"
+    value: "300",
   },
   {
     label: "400s",
-    value: "400"
+    value: "400",
   },
   {
     label: "500s",
-    value: "500"
-  }
+    value: "500",
+  },
 ];
 
 const requestMethod = [
   {
     label: "GET",
-    value: "GET"
+    value: "GET",
   },
   {
     label: "POST",
-    value: "POST"
+    value: "POST",
   },
   {
     label: "PATCH",
-    value: "PATCH"
+    value: "PATCH",
   },
   {
     label: "PUT",
-    value: "PUT"
+    value: "PUT",
   },
   {
     label: "DELETE",
-    value: "DELETE"
+    value: "DELETE",
   },
   {
     label: "SOAP",
-    value: "SOAP"
-  }
+    value: "SOAP",
+  },
+];
+
+const defaultMapStyles = [
+  {
+    featureType: "poi",
+    elementType: "geometry.fill",
+    stylers: [{ color: "#c8dccd" }],
+  },
+  {
+    featureType: "landscape.natural.landcover",
+    elementType: "geometry",
+    stylers: [
+      {
+        color: "#fafafa",
+      },
+    ],
+  },
+  {
+    featureType: "administrative",
+    elementType: "geometry.stroke",
+    stylers: [
+      {
+        color: "#000000",
+      },
+      {
+        lightness: 17,
+      },
+      {
+        weight: 1.2,
+      },
+    ],
+  },
+  {
+    featureType: "landscape.natural.terrain",
+    elementType: "all",
+    stylers: [
+      {
+        color: "#c8dccd",
+      },
+    ],
+  },
+  {
+    featureType: "water",
+    elementType: "all",
+    stylers: [
+      {
+        color: "#aee0f4",
+      },
+    ],
+  },
 ];
 
 export {
+  defaultMapStyles,
   defaultTablePageSize,
   defaultTablePageSizeSmall,
   defaultTablePageSizeLarge,
@@ -108,5 +159,5 @@ export {
   browserVersions,
   googleAutocompleteOptions,
   statusCode,
-  requestMethod
+  requestMethod,
 };

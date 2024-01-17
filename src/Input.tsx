@@ -1,9 +1,11 @@
+ // @ts-ignore
+    import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Select } from "./Select";
+import { IInputProps } from "./interfaces/inputProps.interface";
 import { InfoButton } from "./InfoButton";
 import { Label } from "./Label";
 import { Message } from "./Message";
-import { IInputProps } from "./interfaces/inputProps.interface";
+import { Select } from "./Select";
 import { useState } from "react";
 
 function Input(props: IInputProps) {
@@ -61,8 +63,9 @@ function Input(props: IInputProps) {
     showAsterisk,
     hideArrows,
     disableNumericInputScroll,
+    pointer,
     dataTest,
-    inputMode
+    inputMode,
   } = props;
 
   const [isFocussed, setIsFocussed] = useState<boolean>(false);
@@ -70,7 +73,11 @@ function Input(props: IInputProps) {
   labelClassName = labelClassName ? labelClassName : "";
 
   // @ts-ignore
-  let inputClasses = prependPadding ? ` ${prependPadding} ` : prependText ? ` pl-7 ` : "";
+  let inputClasses = prependPadding
+    ? ` ${prependPadding} `
+    : prependText
+    ? ` pl-7 `
+    : "";
 
   if (inputClassName) {
     inputClasses = inputClassName;
@@ -97,7 +104,7 @@ function Input(props: IInputProps) {
       defaultValue={defaultValue}
       value={value}
       id={inputID}
-      readOnly={isDisabled || isReadOnly} // if we make the input disabled then react-hooks-form doesn't submit the defaultValue https://twitter.com/bluebill1049/status/1300231640392716288
+      readOnly={isDisabled || isReadOnly} // if we make the input isDisabled then react-hooks-form doesn't submit the defaultValue https://twitter.com/bluebill1049/status/1300231640392716288
       onChange={onChange}
       onClick={onClick}
       onFocus={(e: any) => {
@@ -124,12 +131,15 @@ function Input(props: IInputProps) {
       min={min}
       max={max}
       maxLength={maxLength}
-      autoComplete={autoComplete === "off" ? "something-chrome-does-not-know" : autoComplete} // setting autoComplete to off is not reliable
+      autoComplete={
+        autoComplete === "off" ? "something-chrome-does-not-know" : autoComplete
+      } // setting autoComplete to off is not reliable
       className={
         "focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent shadow-sm block w-full border-gray-300 rounded-md " +
         inputClasses +
         " " +
-        (isDisabled ? " bg-gray-100" : "")
+        (isDisabled ? " bg-gray-100" : "") +
+        (pointer ? " cursor-pointer" : "")
       }
       onWheel={(e: any) => {
         if (disableNumericInputScroll) {
@@ -148,13 +158,17 @@ function Input(props: IInputProps) {
         (containerClassName
           ? containerClassName
           : isLabelInline
-          ? "u-vertical-center flex-row space-x-4"
+          ? "flex items-center flex-row space-x-4"
           : "mt-4 max-w-sm")
       }
     >
       {label && label.length > 0 && (
         <div className="flex justify-between">
-          <Label htmlFor={htmlFor} className={labelClassName} noMargin={isLabelInline}>
+          <Label
+            htmlFor={htmlFor}
+            className={labelClassName}
+            noMargin={isLabelInline}
+          >
             <span className="inline-block whitespace-nowrap">
               {label}
               {showAsterisk && " *"}
@@ -168,7 +182,11 @@ function Input(props: IInputProps) {
           )}
         </div>
       )}
-      <div className="u-vertical-center flex-row w-full" id={inputFieldID} style={inputFieldStyle}>
+      <div
+        className="flex items-center flex-row w-full"
+        id={inputFieldID}
+        style={inputFieldStyle}
+      >
         {prependSelectProps && (
           <div className="-mr-2 z-10">
             <Select {...prependSelectProps} noMargin isDisabled={isDisabled} />
@@ -178,7 +196,7 @@ function Input(props: IInputProps) {
           {prependText && (
             <div
               className={
-                "text-gray-500 absolute inset-y-0 left-0 pl-3 u-vertical-center " +
+                "text-gray-500 absolute inset-y-0 left-0 pl-3 items-center flex flex-row " +
                 (onAppendIconClick ? "" : " pointer-events-none ") +
                 (prependTextContainerClassName ?? "") +
                 (prependTextHasBackground
@@ -187,15 +205,22 @@ function Input(props: IInputProps) {
                   : "")
               }
             >
-              <span className={"  " + (prependTextSize ? prependTextSize : "sm:text-sm")}>
+              <span
+                className={
+                  "  " + (prependTextSize ? prependTextSize : "sm:text-sm")
+                }
+              >
                 {prependText}
               </span>
             </div>
           )}
 
           {InputElement}
+          {/* @ts-ignore */}
           {(appendIcon || onClearSearch) && (
-            <div className={"absolute inset-y-0 right-0 mr-3 flex items-center"}>
+            <div
+              className={"absolute inset-y-0 right-0 mr-3 flex items-center"}
+            >
               {appendIcon && (
                 <div
                   className={
@@ -230,7 +255,7 @@ function Input(props: IInputProps) {
           {appendText && (
             <div
               className={
-                "absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 pointer-events-none" +
+                "absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 pointer-events-none " +
                 (appendTextContainerClassName ?? "") +
                 (appendTextHasBackground
                   ? " bg-primary-100 px-4 rounded-r-lg border-t border-r border-b text-primary font-bold " +

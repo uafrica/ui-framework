@@ -1,7 +1,9 @@
-import { useEffect } from "react";
-import { useState } from "react";
+ // @ts-ignore
+    import React from "react";
 import { Button } from "./Button";
 import { Modal } from "./Modal";
+import { useEffect } from "react";
+import { useState } from "react";
 
 // Interface
 interface IProps {
@@ -33,7 +35,7 @@ function Confirm(props: IProps) {
     title,
     confirmText,
     disableClickOutsideToClose,
-    disablePressEscToClose
+    disablePressEscToClose,
   } = props;
 
   let [isOpen, setOpen] = useState<boolean>(Boolean(props.isVisible));

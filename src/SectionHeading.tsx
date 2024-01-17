@@ -1,5 +1,7 @@
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
+ // @ts-ignore
+    import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 interface ISectionHeading {
   children: any;
@@ -25,13 +27,13 @@ function SectionHeading(props: ISectionHeading) {
     isCenter: center,
     marginTop,
     noMarginBottom,
-    options
+    options,
   } = props;
 
   return (
     <div
       className={
-        "u-vertical-center flex-row space-x-4 " +
+        " flex items-center  flex-row space-x-4 " +
         (center ? "justify-center" : "") +
         (marginTop ? " mt-8" : "") +
         (noMarginBottom ? "" : " mb-4 ")
@@ -41,7 +43,9 @@ function SectionHeading(props: ISectionHeading) {
         <div className="w-8">
           <div
             className={
-              "rounded-full u-center h-8 w-8 bg-" + (iconColor ? iconColor : "black") + "-100"
+              "rounded-full  flex items-center justify-center  h-8 w-8 bg-" +
+              (iconColor ? iconColor : "black") +
+              "-100"
             }
           >
             <FontAwesomeIcon
@@ -53,11 +57,17 @@ function SectionHeading(props: ISectionHeading) {
         </div>
       )}
 
-      <h2 className="text-lg font-bold text-gray-900 mt-1 u-vertical-center ">{children}</h2>
+      <h2 className="text-lg font-bold text-gray-900 mt-1  flex items-center  ">
+        {children}
+      </h2>
       {toggleEditMode && !hideEditMode && (
         <FontAwesomeIcon
           icon="pencil-alt"
-          className={editIconClassName ? editIconClassName : "mt-1 text-primary cursor-pointer"}
+          className={
+            editIconClassName
+              ? editIconClassName
+              : "mt-1 text-primary cursor-pointer"
+          }
           onClick={() => toggleEditMode()}
         />
       )}

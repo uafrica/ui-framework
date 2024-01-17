@@ -1,5 +1,7 @@
-import { Switch as HeadlessSwitch } from "@headlessui/react";
+ // @ts-ignore
+    import React from "react";
 import { InfoButton } from "./InfoButton";
+import { Switch as HeadlessSwitch } from "@headlessui/react";
 
 interface IProps {
   isChecked: boolean;
@@ -12,12 +14,21 @@ interface IProps {
 }
 
 export default function Switch(props: IProps) {
-  let { isChecked, label, info, isDisabled, containerClassName, isDoublePositive } = props;
+  let {
+    isChecked,
+    label,
+    info,
+    isDisabled,
+    containerClassName,
+    isDoublePositive,
+  } = props;
 
   function renderCheck() {
     return (
       <svg
-        className={`h-3 w-3 ${isDisabled ? "text-gray-600" : "text-primary-600"} `}
+        className={`h-3 w-3 ${
+          isDisabled ? "text-gray-600" : "text-primary-600"
+        } `}
         fill="currentColor"
         viewBox="0 0 12 12"
       >
@@ -43,7 +54,8 @@ export default function Switch(props: IProps) {
   return (
     <div
       className={
-        "u-vertical-center flex-row space-x-4 " + (containerClassName ? containerClassName : "")
+        " flex items-center  flex-row space-x-4 " +
+        (containerClassName ? containerClassName : "")
       }
       onClick={() => {
         if (!isDisabled) {
@@ -57,7 +69,9 @@ export default function Switch(props: IProps) {
         disabled={isDisabled}
         className={
           " relative inline-flex flex-shrink-0 h-6.5 w-11 border-2 border-transparent rounded-full transition-colors ease-in-out duration-200  " +
-          (isDisabled ? "pointer-events-none " : " hover:border-primary cursor-pointer ") +
+          (isDisabled
+            ? "pointer-events-none "
+            : " hover:border-primary cursor-pointer ") +
           (isChecked
             ? isDisabled
               ? "bg-gray-400"
@@ -76,8 +90,10 @@ export default function Switch(props: IProps) {
         >
           <span
             className={
-              "absolute inset-0 h-full w-full u-center transition-opacity " +
-              (isChecked ? "opacity-0 ease-out duration-100" : "opacity-100 ease-in duration-200")
+              "absolute inset-0 h-full w-full  flex items-center justify-center  transition-opacity " +
+              (isChecked
+                ? "opacity-0 ease-out duration-100"
+                : "opacity-100 ease-in duration-200")
             }
             aria-hidden="true"
           >
@@ -85,8 +101,10 @@ export default function Switch(props: IProps) {
           </span>
           <span
             className={
-              "absolute inset-0 h-full w-full u-center transition-opacity " +
-              (isChecked ? "opacity-100 ease-in duration-200" : "opacity-0 ease-out duration-100")
+              "absolute inset-0 h-full w-full  flex items-center justify-center  transition-opacity " +
+              (isChecked
+                ? "opacity-100 ease-in duration-200"
+                : "opacity-0 ease-out duration-100")
             }
             aria-hidden="true"
           >
@@ -94,7 +112,11 @@ export default function Switch(props: IProps) {
           </span>
         </span>
       </HeadlessSwitch>
-      {label && <div className={isDisabled ? "text-gray-500" : "cursor-pointer"}>{label}</div>}
+      {label && (
+        <div className={isDisabled ? "text-gray-500" : "cursor-pointer"}>
+          {label}
+        </div>
+      )}
       {info && <InfoButton>{info}</InfoButton>}
     </div>
   );

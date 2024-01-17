@@ -1,3 +1,5 @@
+ // @ts-ignore
+    import React from "react";
 import { InfoButton } from "./InfoButton";
 
 // Interface
@@ -41,10 +43,15 @@ function Label(props: ILabel) {
 }
 
 function LabelWithValue(props: ILabelWithValue) {
-  let { label, value, noMargin, info, labelColor, doNotShowEnDash, dataTest } = props;
+  let { label, value, noMargin, info, labelColor, doNotShowEnDash, dataTest } =
+    props;
 
   return (
-    <div className={"flex flex-row items-center flex-wrap " + (noMargin ? "" : " mb-2 pt-2")}>
+    <div
+      className={
+        "flex flex-row items-center flex-wrap " + (noMargin ? "" : " mb-2 pt-2")
+      }
+    >
       <label
         className={
           "font-semibold mr-2 flex items-center text-left self-baseline" +
@@ -55,7 +62,11 @@ function LabelWithValue(props: ILabelWithValue) {
         {label}
       </label>
       <div className="ml-2 text-left" data-test={dataTest}>
-        {doNotShowEnDash ? value : value !== undefined && value !== "" ? value : "–"}
+        {doNotShowEnDash
+          ? value
+          : value !== undefined && value !== ""
+          ? value
+          : "–"}
       </div>
       {info && (
         <div>

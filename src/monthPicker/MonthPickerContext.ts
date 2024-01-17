@@ -1,5 +1,6 @@
-import { createContext, useEffect, useState } from "react";
 import moment from "moment";
+ // @ts-ignore
+    import React, { createContext, useEffect, useState } from "react";
 
 type ViewState = "month" | "year";
 
@@ -37,7 +38,7 @@ export const MonthPickerCtx = createContext<MonthPickerContextType>({
   maxDate: undefined,
   visible: {
     month: 0,
-    year: 1970
+    year: 1970,
   },
   view: "month",
   nextMonth: () => {},
@@ -54,7 +55,7 @@ export const MonthPickerCtx = createContext<MonthPickerContextType>({
   showCalendar: () => {},
   toggleCalendar: () => {},
   isSelectedMonth: () => false,
-  isWithinRange: () => true
+  isWithinRange: () => true,
 });
 
 export function useMonthPickerCtx(
@@ -67,7 +68,7 @@ export function useMonthPickerCtx(
 ): MonthPickerContextType {
   const [monthYear, setMonthYear] = useState<MonthYear>({
     month: date?.getMonth() ?? new Date().getMonth(),
-    year: date?.getFullYear() ?? new Date().getFullYear()
+    year: date?.getFullYear() ?? new Date().getFullYear(),
   });
 
   const [view, setView] = useState<ViewState>("month");
@@ -112,14 +113,14 @@ export function useMonthPickerCtx(
   };
 
   const selectMonth = (m: number) => {
-    setMonthYear(state => ({ ...state, month: m }));
+    setMonthYear((state) => ({ ...state, month: m }));
     let dateFrom = new Date(monthYear.year, m, 1);
     onChange(dateFrom);
     setVisible(false);
   };
 
   const selectYear = (y: number) => {
-    setMonthYear(state => ({ ...state, year: y }));
+    setMonthYear((state) => ({ ...state, year: y }));
     setView("month");
   };
 
@@ -147,29 +148,33 @@ export function useMonthPickerCtx(
     visible: monthYear,
     view,
     nextMonth: () =>
-      setMonthYear(state =>
+      setMonthYear((state) =>
         state.month >= 11
           ? { month: 0, year: state.year + 1 }
           : { month: state.month + 1, year: state.year }
       ),
     prevMonth: () =>
-      setMonthYear(state =>
+      setMonthYear((state) =>
         state.month <= 0
           ? { month: 11, year: state.year - 1 }
           : { month: state.month - 1, year: state.year }
       ),
-    nextYear: () => setMonthYear(state => ({ ...state, year: state.year + 1 })),
-    prevYear: () => setMonthYear(state => ({ ...state, year: state.year - 1 })),
-    nextDecade: () => setMonthYear(state => ({ ...state, year: state.year + 12 })),
-    prevDecade: () => setMonthYear(state => ({ ...state, year: state.year - 12 })),
+    nextYear: () =>
+      setMonthYear((state) => ({ ...state, year: state.year + 1 })),
+    prevYear: () =>
+      setMonthYear((state) => ({ ...state, year: state.year - 1 })),
+    nextDecade: () =>
+      setMonthYear((state) => ({ ...state, year: state.year + 12 })),
+    prevDecade: () =>
+      setMonthYear((state) => ({ ...state, year: state.year - 12 })),
     selectMonth,
     selectYear,
     viewMonths: () => setView("month"),
     viewYears: () => setView("year"),
     isVisible,
     showCalendar: () => setVisible(true),
-    toggleCalendar: () => setVisible(state => !state),
+    toggleCalendar: () => setVisible((state) => !state),
     isSelectedMonth,
-    isWithinRange
+    isWithinRange,
   };
 }

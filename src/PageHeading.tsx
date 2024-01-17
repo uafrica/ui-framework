@@ -1,5 +1,7 @@
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
+ // @ts-ignore
+    import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 interface IPageHeading {
   children: any;
@@ -18,7 +20,10 @@ function PageHeading(props: IPageHeading) {
   }
 
   return (
-    <div className={isCenter ? " mx-auto text-center items-center " : ""} id={id}>
+    <div
+      className={isCenter ? " mx-auto text-center items-center " : ""}
+      id={id}
+    >
       <h1 className={`text-xl font-bold text-gray-900 ${uppercaseText}`}>
         {icon && <FontAwesomeIcon icon={icon} className={"mr-3"} size="sm" />}
         {children}

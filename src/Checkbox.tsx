@@ -1,3 +1,5 @@
+ // @ts-ignore
+    import React from "react";
 import { InfoButton } from "./InfoButton";
 
 interface IProps {
@@ -40,14 +42,14 @@ function Checkbox(props: IProps) {
     noPadding,
     isDisabled,
     textColor,
-    dataTest
+    dataTest,
   } = props;
 
   const labelEl = (
     <label
       className={
         (isDisabled ? "text-gray-500 " : "text-base cursor-pointer ") +
-        " u-vertical-center " +
+        "  flex items-center  " +
         (labelClassName ? labelClassName : "")
       }
       htmlFor={htmlFor}
@@ -57,7 +59,8 @@ function Checkbox(props: IProps) {
     </label>
   );
 
-  let textDisplayColor = textColor && textColor.length > 0 ? textColor : "primary";
+  let textDisplayColor =
+    textColor && textColor.length > 0 ? textColor : "primary";
 
   return (
     <div className="flex items-start">
@@ -67,7 +70,7 @@ function Checkbox(props: IProps) {
         key={key}
         className={
           (noPadding ? "" : "py-2 px-1 ") +
-          " u-vertical-center space-x-4 " +
+          "  flex items-center  space-x-4 " +
           (center ? " justify-center " : "") +
           (isDisabled ? "" : " cursor-pointer ")
         }
@@ -83,7 +86,7 @@ function Checkbox(props: IProps) {
           type="checkbox"
           data-test={dataTest}
           className={
-            "u-focus " +
+            " focus:outline-none focus:ring-1 focus:ring-primary  " +
             (isDisabled
               ? "text-gray-500 "
               : `text-${textDisplayColor} hover:border-primary cursor-pointer `) +

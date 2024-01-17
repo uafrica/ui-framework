@@ -1,3 +1,5 @@
+ // @ts-ignore
+    import React from "react";
 import { Button } from "./../Button";
 
 function MapToolbar(props: {
@@ -37,7 +39,9 @@ function MapToolbar(props: {
       />
 
       <Button.Tertiary
-        hoverTitle={doSnap ? "Disable polygon point snap" : "Enable polygon point snap"}
+        hoverTitle={
+          doSnap ? "Disable polygon point snap" : "Enable polygon point snap"
+        }
         icon={snapIcon}
         className={doSnap ? "ring-2 ring-primary" : ""}
         onClick={(e: any) => {
@@ -46,7 +50,7 @@ function MapToolbar(props: {
       />
 
       {customToolbarButtons &&
-        customToolbarButtons.map(button => {
+        customToolbarButtons.map((button) => {
           return button;
         })}
     </div>

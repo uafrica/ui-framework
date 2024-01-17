@@ -1,19 +1,19 @@
-import { useEffect, useRef, useState } from "react";
-import { Checkbox } from "../Checkbox";
-import { Loader } from "../Loader";
-import { Pagination } from "../Pagination";
-
-import "./CustomTable.scss";
 import * as customTableUtils from "./customTableUtils";
 import * as generalUtils from "./../utils/generalUtils";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CustomTableRow from "./CustomTableRow";
+ // @ts-ignore
+    import React, { useEffect, useRef, useState } from "react";
+import { Button } from "../Button";
+import { Checkbox } from "../Checkbox";
+import { Dropdown } from "../Dropdown";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IColumn } from "./column.interface";
 import { IRow } from "./row.interface";
+import { Loader } from "../Loader";
 import { Message } from "../Message";
+import { Pagination } from "../Pagination";
 import { TableActionsPanel } from "../Panels";
-import { Dropdown } from "../Dropdown";
-import { Button } from "../Button";
+import "./CustomTable.scss";
 import { ICustomTable } from "./customTable.interface";
 
 function CustomTable(props: ICustomTable) {
@@ -41,7 +41,7 @@ function CustomTable(props: ICustomTable) {
     persistPage,
     hideRefreshButton = false,
     rowStyleFunction,
-    checkIfRowIsDraggable
+    checkIfRowIsDraggable,
   } = props;
   let topRef: any = useRef();
   let rowUniqueIdentifier = props.rowUniqueIdentifier ?? "id";
@@ -61,29 +61,38 @@ function CustomTable(props: ICustomTable) {
     customTableUtils.initialiseColumnOrder(props.columns, props.columnOrder)
   );
   let [rowOrder, setRowOrder] = useState<any[]>([]);
-  let [columnWidths, setColumnWidths] = useState<{ id: string; value?: number }[]>(
+  let [columnWidths, setColumnWidths] = useState<
+    { id: string; value?: number }[]
+  >(
     props.columnWidths && props.columnWidths.length > 0
       ? props.columnWidths
-      : props.columns.map(column => {
+      : props.columns.map((column) => {
           return { id: column.id, value: column.width };
         })
   );
 
   // Row selection
-  let [selectedRowIdentifiers, setSelectedRowIdentifiers] = useState<string[]>([]);
+  let [selectedRowIdentifiers, setSelectedRowIdentifiers] = useState<string[]>(
+    []
+  );
   let [allRowsSelected, setAllRowsSelected] = useState<boolean>(false);
 
   // Pagination
   let [count, setCount] = useState<number>(1);
   let [page, setPage] = useState<number>(1);
   let [totalPages, setTotalPages] = useState<number>(0);
-  let [pageSize, setPageSize] = useState<number>(props.pageSize ?? defaultPageSize);
+  let [pageSize, setPageSize] = useState<number>(
+    props.pageSize ?? defaultPageSize
+  );
 
   // Menu
   let [showMenu, setShowMenu] = useState<boolean>(false);
   let [contextMenuMaxHeight, setContextMenuMaxHeight] = useState<any>();
   let [clickPosition, setClickPosition] = useState<any>({ x: 0, y: 0 });
-  let [activeRow, setActiveRow] = useState<any>({ rowData: null, dataIndex: null });
+  let [activeRow, setActiveRow] = useState<any>({
+    rowData: null,
+    dataIndex: null,
+  });
 
   // Dragging
   let [list, setList] = useState<any>();
@@ -92,8 +101,10 @@ function CustomTable(props: ICustomTable) {
   let [draggingRowIndex, setDraggingRowIndex] = useState<any>();
   let [placeholder, setPlaceholder] = useState<any>();
   let [isDraggingStarted, setIsDraggingStarted] = useState<boolean>(false);
-  let [columnEventListenersAdded, setColumnEventListenersAdded] = useState<boolean>(false);
-  let [rowEventListenersAdded, setRowEventListenersAdded] = useState<boolean>(false);
+  let [columnEventListenersAdded, setColumnEventListenersAdded] =
+    useState<boolean>(false);
+  let [rowEventListenersAdded, setRowEventListenersAdded] =
+    useState<boolean>(false);
 
   // Column resize
   let [resizeColumnId, setResizeColumnId] = useState<string>("");
@@ -106,7 +117,9 @@ function CustomTable(props: ICustomTable) {
   useEffect(() => {
     // Rerun when props.columnOrder
     // when the parent component only sets the widths on mount and not in the useState hook call
-    setColumnOrder(customTableUtils.initialiseColumnOrder(props.columns, props.columnOrder));
+    setColumnOrder(
+      customTableUtils.initialiseColumnOrder(props.columns, props.columnOrder)
+    );
   }, [props.columnOrder]);
 
   useEffect(() => {
@@ -114,7 +127,7 @@ function CustomTable(props: ICustomTable) {
     setColumnWidths(
       props.columnWidths && props.columnWidths.length > 0
         ? props.columnWidths
-        : props.columns.map(column => {
+        : props.columns.map((column) => {
             return { id: column.id, value: column.width };
           })
     );
@@ -128,7 +141,7 @@ function CustomTable(props: ICustomTable) {
         },
         refresh: () => {
           refreshRef.current();
-        }
+        },
       });
     }
   }, [data, rowOrder]);
@@ -219,7 +232,12 @@ function CustomTable(props: ICustomTable) {
     var table = document.getElementById(id);
     var contextMenu = document.getElementById("table-dropdown-menu");
 
-    if (table && !table.contains(e.target) && contextMenu && !contextMenu.contains(e.target)) {
+    if (
+      table &&
+      !table.contains(e.target) &&
+      contextMenu &&
+      !contextMenu.contains(e.target)
+    ) {
       // Do not show menu if click was outside table container
       setShowMenu(false);
     }
@@ -245,10 +263,13 @@ function CustomTable(props: ICustomTable) {
 
   function dragColumnMouseMoveHandler(e: any) {
     let table = document.getElementById(props.id);
-    let scrollableContainer = document.getElementById(props.id + "_scrollable_container");
+    let scrollableContainer = document.getElementById(
+      props.id + "_scrollable_container"
+    );
     if (table && scrollableContainer && draggingElement) {
       let tableBoundaries = table.getBoundingClientRect();
-      let scrollableContainerBoundaries = scrollableContainer.getBoundingClientRect();
+      let scrollableContainerBoundaries =
+        scrollableContainer.getBoundingClientRect();
 
       if (!isDraggingStarted) {
         isDraggingStarted = true;
@@ -263,7 +284,10 @@ function CustomTable(props: ICustomTable) {
 
         placeholder = document.createElement("div");
         placeholder.classList.add("placeholder");
-        draggingElement.parentNode.insertBefore(placeholder, draggingElement.nextSibling);
+        draggingElement.parentNode.insertBefore(
+          placeholder,
+          draggingElement.nextSibling
+        );
         placeholder.style.width = `${draggingElement.offsetWidth}px`;
       }
 
@@ -286,14 +310,20 @@ function CustomTable(props: ICustomTable) {
 
       let amountScrolled = scrollableContainer?.scrollLeft ?? 0;
 
-      if (tableBoundaries.left <= e.clientX && e.clientX <= tableBoundaries.right) {
+      if (
+        tableBoundaries.left <= e.clientX &&
+        e.clientX <= tableBoundaries.right
+      ) {
         left = e.clientX + amountScrolled - scrollableContainerBoundaries.left;
       } else if (tableBoundaries.left > e.clientX) {
         // Max left reached
         left = 0;
       } else if (e.clientX > tableBoundaries.right) {
         // Max right reached
-        left = tableBoundaries.right + amountScrolled - scrollableContainerBoundaries.left;
+        left =
+          tableBoundaries.right +
+          amountScrolled -
+          scrollableContainerBoundaries.left;
       }
 
       draggingElement.style.left = `${left}px`;
@@ -301,13 +331,19 @@ function CustomTable(props: ICustomTable) {
       let previousElement = draggingElement.previousElementSibling;
       let nextElement = placeholder.nextElementSibling;
 
-      if (previousElement && customTableUtils.isOnLeft(draggingElement, previousElement)) {
+      if (
+        previousElement &&
+        customTableUtils.isOnLeft(draggingElement, previousElement)
+      ) {
         customTableUtils.swap(placeholder, draggingElement);
         customTableUtils.swap(placeholder, previousElement);
         return;
       }
 
-      if (nextElement && customTableUtils.isOnLeft(nextElement, draggingElement)) {
+      if (
+        nextElement &&
+        customTableUtils.isOnLeft(nextElement, draggingElement)
+      ) {
         customTableUtils.swap(nextElement, placeholder);
         customTableUtils.swap(nextElement, draggingElement);
       }
@@ -329,8 +365,10 @@ function CustomTable(props: ICustomTable) {
         draggingElement?.style.removeProperty("left");
         draggingElement?.style.removeProperty("position");
         setDraggingElement(draggingElement);
-        // @ts-ignore
-        let endColumnIndex = [].slice.call(list.children).indexOf(draggingElement);
+        let endColumnIndex = [].slice
+          .call(list.children)
+          // @ts-ignore
+          .indexOf(draggingElement);
         isDraggingStarted = false;
         setIsDraggingStarted(false);
         list.parentNode?.removeChild(list);
@@ -377,7 +415,10 @@ function CustomTable(props: ICustomTable) {
 
         placeholder = document.createElement("div");
         placeholder.classList.add("placeholder");
-        draggingElement.parentNode.insertBefore(placeholder, draggingElement.nextSibling);
+        draggingElement.parentNode.insertBefore(
+          placeholder,
+          draggingElement.nextSibling
+        );
         placeholder.style.height = `${draggingElement.offsetHeight}px`;
       }
 
@@ -410,7 +451,10 @@ function CustomTable(props: ICustomTable) {
         return;
       }
 
-      if (nextElement && customTableUtils.isAbove(nextElement, draggingElement)) {
+      if (
+        nextElement &&
+        customTableUtils.isAbove(nextElement, draggingElement)
+      ) {
         customTableUtils.swap(nextElement, placeholder);
         customTableUtils.swap(nextElement, draggingElement);
       }
@@ -443,7 +487,10 @@ function CustomTable(props: ICustomTable) {
       let _draggingRowIndex = draggingRowIndex + 1;
       _draggingRowIndex > endRowIndex
         ? // @ts-ignore
-          rows[endRowIndex].parentNode.insertBefore(rows[_draggingRowIndex], rows[endRowIndex])
+          rows[endRowIndex].parentNode.insertBefore(
+            rows[_draggingRowIndex],
+            rows[endRowIndex]
+          )
         : // @ts-ignore
           rows[endRowIndex].parentNode.insertBefore(
             rows[_draggingRowIndex],
@@ -464,7 +511,7 @@ function CustomTable(props: ICustomTable) {
   function resizeColumnMouseMoveHandler(e: any) {
     let newWidth = e.clientX - resizeColumnStartX + resizeColumnStartWidth;
 
-    columnWidths.forEach(c => {
+    columnWidths.forEach((c) => {
       if (c.id === resizeColumnId) {
         c.value = newWidth;
       }
@@ -508,8 +555,10 @@ function CustomTable(props: ICustomTable) {
   }
 
   function changeSelection(selectedRowIdentifiers: any[]) {
-    let selectedRows = data.filter(d => {
-      return selectedRowIdentifiers.indexOf(d[rowUniqueIdentifier].toString()) > -1;
+    let selectedRows = data.filter((d) => {
+      return (
+        selectedRowIdentifiers.indexOf(d[rowUniqueIdentifier].toString()) > -1
+      );
     });
     if (onSelectionChanged && !isInitialising) {
       onSelectionChanged(selectedRows);
@@ -528,9 +577,11 @@ function CustomTable(props: ICustomTable) {
   function updateColumnOrder() {
     let table = document.getElementById(props.id);
     if (table) {
-      let newColumnOrder = [].slice.call(table.querySelectorAll("th")).map((e: any) => {
-        return e.id;
-      });
+      let newColumnOrder = [].slice
+        .call(table.querySelectorAll("th"))
+        .map((e: any) => {
+          return e.id;
+        });
       changeColumnOrder(newColumnOrder);
     }
   }
@@ -544,7 +595,7 @@ function CustomTable(props: ICustomTable) {
       let newRowOrder = {
         order: [...order].slice(1),
         startingIndex: startingIndex,
-        endingIndex: endingIndex
+        endingIndex: endingIndex,
       };
 
       setRowOrder(newRowOrder.order);
@@ -606,7 +657,9 @@ function CustomTable(props: ICustomTable) {
                   selectedRowIdentifiers.splice(selectedIndex, 1);
                   changeSelection(selectedRowIdentifiers);
                 } else {
-                  selectedRowIdentifiers.push(row.original[rowUniqueIdentifier].toString());
+                  selectedRowIdentifiers.push(
+                    row.original[rowUniqueIdentifier].toString()
+                  );
                   if (selectedRowIdentifiers.length === pageSize) {
                     setAllRowsSelected(true);
                   }
@@ -615,7 +668,7 @@ function CustomTable(props: ICustomTable) {
               }}
             />
           );
-        }
+        },
       };
 
       if (selectColumnIndex < 0) {
@@ -671,7 +724,7 @@ function CustomTable(props: ICustomTable) {
               />
             </div>
           );
-        }
+        },
       };
       if (rowDragColumnIndex < 0) {
         newColumns.splice(0, 0, rowDragColumn);
@@ -686,7 +739,12 @@ function CustomTable(props: ICustomTable) {
     setColumnOrder([...newColumnOrder]);
   }
 
-  async function load(reset: boolean, page: number, pageSize: number, shouldLoad?: boolean) {
+  async function load(
+    reset: boolean,
+    page: number,
+    pageSize: number,
+    shouldLoad?: boolean
+  ) {
     if (fetchFunction) {
       if (reset || shouldLoad) {
         setIsLoading(true);
@@ -764,17 +822,25 @@ function CustomTable(props: ICustomTable) {
   function renderDesktopViewTable() {
     return (
       <div
-        className={"rounded-lg " + (scrollableX ? "scrollable-table-container" : "")}
+        className={
+          "rounded-lg " + (scrollableX ? "scrollable-table-container" : "")
+        }
         id={id + "_scrollable_container"}
       >
         <table id={id} className="custom-table">
           <thead className="custom-table-head">
             <tr className="custom-table-tr">
               {columnOrder.map((columnId: string, columnIndex: number) => {
-                let column: IColumn = customTableUtils.getColumnById(columns, columnId);
+                let column: IColumn = customTableUtils.getColumnById(
+                  columns,
+                  columnId
+                );
                 let columnStyle: any = {};
                 let columnContentStyle: any = {};
-                let columnWidth = customTableUtils.getColumnWidth(columnWidths, columnId);
+                let columnWidth = customTableUtils.getColumnWidth(
+                  columnWidths,
+                  columnId
+                );
                 if (columnWidth) {
                   if (scrollableX) {
                     columnContentStyle.width = columnWidth + "px";
@@ -803,20 +869,31 @@ function CustomTable(props: ICustomTable) {
                     id={columnId}
                     key={columnId}
                     onMouseDown={() => {
-                      if (customTableUtils.isColumnDraggable(column) && !isLoading) {
+                      if (
+                        customTableUtils.isColumnDraggable(column) &&
+                        !isLoading
+                      ) {
                         setDraggingColumnIndex(columnIndex);
                       }
                     }}
-                    className={"custom-table-th justify-between items-center font-bold"}
+                    className={
+                      "custom-table-th justify-between items-center font-bold"
+                    }
                   >
                     <div className="flex flex-row justify-between items-center ">
                       <div className="flex flex-row justify-between whitespace-nowrap mx-2">
                         <div
                           style={columnContentStyle}
                           onMouseDown={(e: any) => {
-                            if (customTableUtils.isColumnSortable(column) && !isLoading) {
+                            if (
+                              customTableUtils.isColumnSortable(column) &&
+                              !isLoading
+                            ) {
                               e.stopPropagation();
-                              let args = { order: "DESC", order_by: column.accessor };
+                              let args = {
+                                order: "DESC",
+                                order_by: column.accessor,
+                              };
                               if (orderingArguments.order === "DESC") {
                                 args.order = "ASC";
                               }
@@ -824,7 +901,9 @@ function CustomTable(props: ICustomTable) {
                             }
                           }}
                         >
-                          {typeof column.header === "function" ? column.header() : column.header}
+                          {typeof column.header === "function"
+                            ? column.header()
+                            : column.header}
                         </div>
                       </div>
                       {customTableUtils.isColumnResizable(column) ? (
@@ -835,13 +914,18 @@ function CustomTable(props: ICustomTable) {
                           onMouseDown={(e: any) => {
                             e.preventDefault();
                             e.stopPropagation();
-                            let columnElement = document.getElementById(column.id);
+                            let columnElement = document.getElementById(
+                              column.id
+                            );
 
                             if (columnElement && !isLoading) {
                               columnElement?.classList.add("resizable");
 
-                              let columnStyles = window.getComputedStyle(columnElement);
-                              setResizeColumnStartWidth(parseInt(columnStyles.width, 10));
+                              let columnStyles =
+                                window.getComputedStyle(columnElement);
+                              setResizeColumnStartWidth(
+                                parseInt(columnStyles.width, 10)
+                              );
                               setResizeColumnStartX(e.clientX);
                               setResizeColumnId(column.id);
                             }
@@ -866,7 +950,11 @@ function CustomTable(props: ICustomTable) {
           <tbody className="custom-table-tbody">
             {rowOrder && rowOrder.length > 0
               ? rowOrder.map((rowId: any, dataIndex: number) => {
-                  let rowData = customTableUtils.getDataByRowId(data, rowUniqueIdentifier, rowId);
+                  let rowData = customTableUtils.getDataByRowId(
+                    data,
+                    rowUniqueIdentifier,
+                    rowId
+                  );
                   return (
                     <CustomTableRow
                       rowStyleFunction={rowStyleFunction}
@@ -885,7 +973,11 @@ function CustomTable(props: ICustomTable) {
                       columnWidths={columnWidths}
                       updateRow={updateRow}
                       removeRow={removeRow}
-                      onRightClick={(event: any, rowData: any, dataIndex: number) => {
+                      onRightClick={(
+                        event: any,
+                        rowData: any,
+                        dataIndex: number
+                      ) => {
                         setActiveRow({ rowData, dataIndex });
                         setShowMenu(true);
                         setClickPosition({ x: event?.pageX, y: event?.pageY });
@@ -937,14 +1029,21 @@ function CustomTable(props: ICustomTable) {
   function renderTableActions() {
     let title = "";
     if (props.renderTableActionsHeader) {
-      title = props.renderTableActionsHeader(data, count, page, pageSize, isLoading);
+      title = props.renderTableActionsHeader(
+        data,
+        count,
+        page,
+        pageSize,
+        isLoading
+      );
     }
 
     if (props.renderTableActionsHeader || props.renderTableActionsChildren) {
       return (
         props.renderTableActionsHeader && (
           <TableActionsPanel title={title}>
-            {props.renderTableActionsChildren && props.renderTableActionsChildren(data, isLoading)}
+            {props.renderTableActionsChildren &&
+              props.renderTableActionsChildren(data, isLoading)}
             {!hideRefreshButton && (
               <Button.Link
                 color="black"
@@ -971,7 +1070,7 @@ function CustomTable(props: ICustomTable) {
             id="context-content"
             style={{
               maxHeight: contextMenuMaxHeight,
-              overflowY: "scroll"
+              overflowY: "scroll",
             }}
           >
             {contextMenuHeader && (
@@ -985,7 +1084,7 @@ function CustomTable(props: ICustomTable) {
                     },
                     removeRow: () => {
                       removeRow(activeRow.dataIndex);
-                    }
+                    },
                   })}
                 </label>
                 <hr />
@@ -1001,7 +1100,7 @@ function CustomTable(props: ICustomTable) {
                   },
                   removeRow: () => {
                     removeRow(activeRow.dataIndex);
-                  }
+                  },
                 })}
               </label>
             )}
@@ -1016,7 +1115,11 @@ function CustomTable(props: ICustomTable) {
       <div>
         {rowOrder && rowOrder.length > 0
           ? rowOrder.map((rowId: any, dataIndex: number) => {
-              let rowData = customTableUtils.getDataByRowId(data, rowUniqueIdentifier, rowId);
+              let rowData = customTableUtils.getDataByRowId(
+                data,
+                rowUniqueIdentifier,
+                rowId
+              );
               if (props.renderMobileRow) {
                 return (
                   <div key={rowId}>
@@ -1028,7 +1131,7 @@ function CustomTable(props: ICustomTable) {
                       },
                       removeRow: () => {
                         removeRow(dataIndex);
-                      }
+                      },
                     })}
                   </div>
                 );
@@ -1045,7 +1148,10 @@ function CustomTable(props: ICustomTable) {
       <div className={props.renderMobileRow ? "hidden md:block" : ""}>
         {renderTableActions()}
 
-        <div ref={topRef} className=" custom-table-container rounded-lg relative">
+        <div
+          ref={topRef}
+          className=" custom-table-container rounded-lg relative"
+        >
           {rowOrder && rowOrder.length === 0 && (
             <div className="no-data">{noResultsText ?? "No data"}</div>
           )}

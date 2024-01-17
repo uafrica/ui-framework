@@ -1,3 +1,5 @@
+ // @ts-ignore
+    import React from "react";
 
 interface IOrderedListProps {
   children: React.ReactNode;
@@ -5,14 +7,14 @@ interface IOrderedListProps {
 }
 
 function OrderedList(props: IOrderedListProps) {
-  const {children, className} = props
-  const defaultClassName = "mx-6"
+  const { children, className } = props;
+  const defaultClassName = "mx-6";
 
   return (
-    <ol className={`list-decimal ${className? className : defaultClassName}`}>
+    <ol className={`list-decimal ${className ? className : defaultClassName}`}>
       {children}
     </ol>
-  )
+  );
 }
 
-export {OrderedList};
+export { OrderedList };
