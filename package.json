@@ -1,6 +1,6 @@
 {
-  "version": "1.0.0",
-  "name": "ui-framework-v2",
+  "version": "1.0.1",
+  "name": "bob-group-ui-framework",
   "license": "BSD-3-Clause",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
