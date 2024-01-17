@@ -117,7 +117,7 @@ const defaultMapStyles = [
     elementType: "geometry.stroke",
     stylers: [
       {
-        color: "#000000",
+        color: "#cccccc",
       },
       {
         lightness: 17,
