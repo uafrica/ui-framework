@@ -501,7 +501,7 @@ function GroupedSelect(props: IGroupedSelect) {
                       >
                         <div
                           className={
-                            "relative border border-gray-300 rounded-md shadow-sm pl-3 pr-6 py-2 text-left w-full " +
+                            "relative border border-gray-300 rounded-md shadow-sm pl-3 pr-6 py-2 text-left w-full flex items-center " +
                             (isDisabled
                               ? "bg-gray-100"
                               : "bg-white cursor-pointer") +
