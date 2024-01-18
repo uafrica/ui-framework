@@ -19,6 +19,7 @@ function CountrySelect(props: {
   containerClassName?: string;
   selectedCountriesContainerClassName?: string;
   isReadOnly?: boolean;
+  shouldOverlapLabel?: boolean;
 }) {
   let {
     label,
@@ -31,6 +32,7 @@ function CountrySelect(props: {
     containerClassName,
     selectedCountriesContainerClassName,
     isReadOnly,
+    shouldOverlapLabel,
   } = props;
 
   const [countrySelectOptions, setCountrySelectOptions] = useState<
@@ -68,16 +70,20 @@ function CountrySelect(props: {
     if (isMultiSelection) {
       if (selectedCountryCodes.length === 1) {
         setCustomSelectionValue(
-          countryUtils.getCountryByCode(selectedCountryCodes[0], allowOtherCountries) ?? (
-            <FontAwesomeIcon icon="flag" />
-          )
+          countryUtils.getCountryByCode(
+            selectedCountryCodes[0],
+            allowOtherCountries
+          ) ?? <FontAwesomeIcon icon="flag" />
         );
       } else {
         setCustomSelectionValue(null);
       }
     } else {
       if (selectedCountryCodes) {
-        let country = countryUtils.getCountryByCode(selectedCountryCodes, allowOtherCountries);
+        let country = countryUtils.getCountryByCode(
+          selectedCountryCodes,
+          allowOtherCountries
+        );
         // @ts-ignore
         let Flag: any = FlagIcons[country.code.toUpperCase()];
         setCustomSelectionValue(
@@ -101,7 +107,10 @@ function CountrySelect(props: {
 
   function buildCountrySelectOptions(allowedCountryCodes?: string[]) {
     const allCountries: ICountry[] = allowedCountryCodes
-      ? countryUtils.getAllCountriesInListOfCodes(allowedCountryCodes, allowOtherCountries)
+      ? countryUtils.getAllCountriesInListOfCodes(
+          allowedCountryCodes,
+          allowOtherCountries
+        )
       : countryUtils.getAllCountries(allowOtherCountries);
 
     let displayCountries = [...allCountries];
@@ -135,7 +144,10 @@ function CountrySelect(props: {
       >
         <div className="flex flex-wrap">
           {selection.map((code: string, index: number) => {
-            let country: ICountry | null = countryUtils.getCountryByCode(code, allowOtherCountries);
+            let country: ICountry | null = countryUtils.getCountryByCode(
+              code,
+              allowOtherCountries
+            );
             if (country) {
               // @ts-ignore
               let Flag: any = FlagIcons[country.code.toUpperCase()];
@@ -170,6 +182,7 @@ function CountrySelect(props: {
       <div>
         <div className={containerClassName ?? ""}>
           <Select
+            shouldOverlapLabel={shouldOverlapLabel}
             isDisabled={isReadOnly}
             noMargin
             label={label}

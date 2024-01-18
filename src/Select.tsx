@@ -25,6 +25,7 @@ interface IOptionGroup {
 interface IBase {
   label?: any;
   isLabelInline?: boolean;
+  shouldOverlapLabel?: boolean;
   labelClassName?: string;
   className?: string;
   containerClassName?: string;
@@ -67,6 +68,7 @@ function GroupedSelect(props: IGroupedSelect) {
     value,
     optionGroups,
     isLabelInline,
+    shouldOverlapLabel,
     noMargin,
     className,
     buttonWidth,
@@ -102,6 +104,7 @@ function GroupedSelect(props: IGroupedSelect) {
   // State for the show all button
   const [showAllClicked, setShowAllClicked] = useState<boolean>(false);
   const [showAllDisabled, setShowAllDisabled] = useState<boolean>(false);
+  const [isFocussed, setIsFocussed] = useState<boolean>(false);
 
   // Happens when an item is selected
   function onSelectToggle(_value: any) {
@@ -143,6 +146,14 @@ function GroupedSelect(props: IGroupedSelect) {
     }
   }
 
+  function renderLabel() {
+    return (
+      <Label className={labelClassName} noMargin={isLabelInline}>
+        {label} {showAsterisk && " *"} {info && <InfoButton>{info}</InfoButton>}
+      </Label>
+    );
+  }
+
   // renders an option group with its list of options
   function renderOptionGroup(
     optionGroup: IOptionGroup,
@@ -172,15 +183,17 @@ function GroupedSelect(props: IGroupedSelect) {
      * - the available options are less than or equal to the set limit
      */
     if (shouldShowAllResults) {
-
       if (!showAllDisabled) {
         setShowAllDisabled(true);
       }
-    } else if (showAllButton && searchTerm.length >= 0 && optionsLimited.length <= limit) {
+    } else if (
+      showAllButton &&
+      searchTerm.length >= 0 &&
+      optionsLimited.length <= limit
+    ) {
       if (!showAllDisabled) {
         setShowAllDisabled(true);
       }
-
     } else {
       if (showAllDisabled) {
         setShowAllDisabled(false);
@@ -416,12 +429,7 @@ function GroupedSelect(props: IGroupedSelect) {
             isLabelInline ? "flex flex-row items-center space-x-4" : ""
           }
         >
-          {label && (
-            <Label className={labelClassName} noMargin={isLabelInline}>
-              {label} {showAsterisk && " *"}{" "}
-              {info && <InfoButton>{info}</InfoButton>}
-            </Label>
-          )}
+          {!shouldOverlapLabel && label && renderLabel()}
 
           {/* Button that is clicked on to open the dropdown */}
           <GroupedSelectCtx.Provider
@@ -445,7 +453,15 @@ function GroupedSelect(props: IGroupedSelect) {
                       }
                     >
                       <div
-                        className=" focus:outline-none focus:ring-1 focus:ring-primary  rounded-md"
+                        onFocus={() => {
+                          if (!isDisabled) {
+                            setIsFocussed(true);
+                          }
+                        }}
+                        onBlur={() => {
+                          setIsFocussed(false);
+                        }}
+                        className="focus:outline-none focus:ring-1 focus:ring-primary rounded-md"
                         tabIndex={0}
                         onKeyPress={(e: any) => {
                           if (e.key === "Enter") {
@@ -488,7 +504,8 @@ function GroupedSelect(props: IGroupedSelect) {
                             "relative border border-gray-300 rounded-md shadow-sm pl-3 pr-6 py-2 text-left w-full " +
                             (isDisabled
                               ? "bg-gray-100"
-                              : "bg-white cursor-pointer")
+                              : "bg-white cursor-pointer") +
+                            (shouldOverlapLabel ? " h-12" : "")
                           }
                           id={id}
                         >
@@ -507,6 +524,16 @@ function GroupedSelect(props: IGroupedSelect) {
                           </span>
                         </div>
                       </div>
+                      {shouldOverlapLabel && label && (
+                        <div className="absolute -top-2 left-2 inline-block px-1 text-xs font-medium text-gray-900">
+                          <div className="pl-2">{renderLabel()}</div>
+                          <div
+                            className={`bg-white h-2 -mt-4 ${
+                              isFocussed ? "ring-1 ring-white" : ""
+                            }`}
+                          ></div>
+                        </div>
+                      )}
                     </div>
                     <div className="mt-3">
                       {!label && info && <InfoButton>{info}</InfoButton>}

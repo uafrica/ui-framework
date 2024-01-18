@@ -46,6 +46,7 @@ function Input(props: IInputProps) {
     onBlur,
     containerClassName,
     isLabelInline,
+    shouldOverlapLabel,
     shouldAutoFocus,
     onKeyPress,
     onKeyUp,
@@ -139,7 +140,8 @@ function Input(props: IInputProps) {
         inputClasses +
         " " +
         (isDisabled ? " bg-gray-100" : "") +
-        (pointer ? " cursor-pointer" : "")
+        (pointer ? " cursor-pointer" : "") +
+        (shouldOverlapLabel ? " h-12" : "")
       }
       onWheel={(e: any) => {
         if (disableNumericInputScroll) {
@@ -150,6 +152,22 @@ function Input(props: IInputProps) {
       inputMode={inputMode ?? (type === "number" ? "decimal" : "text")}
     />
   );
+
+  function renderLabel() {
+    return (
+      <Label
+        htmlFor={htmlFor}
+        className={labelClassName}
+        noMargin={isLabelInline}
+      >
+        <span className="inline-block whitespace-nowrap">
+          {label}
+          {showAsterisk && " *"}
+        </span>
+        {info && <InfoButton>{info}</InfoButton>}
+      </Label>
+    );
+  }
 
   return (
     <div
@@ -164,17 +182,7 @@ function Input(props: IInputProps) {
     >
       {label && label.length > 0 && (
         <div className="flex justify-between">
-          <Label
-            htmlFor={htmlFor}
-            className={labelClassName}
-            noMargin={isLabelInline}
-          >
-            <span className="inline-block whitespace-nowrap">
-              {label}
-              {showAsterisk && " *"}
-            </span>
-            {info && <InfoButton>{info}</InfoButton>}
-          </Label>
+          {!shouldOverlapLabel && renderLabel()}
           {isOptional && (
             <span className="text-gray-500">
               {typeof isOptional === "string" ? isOptional : "(Optional)"}
@@ -193,6 +201,16 @@ function Input(props: IInputProps) {
           </div>
         )}
         <div className={"relative rounded-m w-full"}>
+          {shouldOverlapLabel && label && (
+            <div className="absolute -top-2 left-2 inline-block px-1 text-xs font-medium text-gray-900">
+              <div className="pl-2">{renderLabel()}</div>
+              <div
+                className={`bg-white h-2 -mt-4 ${
+                  isFocussed ? "ring-1 ring-white" : ""
+                }`}
+              ></div>
+            </div>
+          )}
           {prependText && (
             <div
               className={

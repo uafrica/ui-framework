@@ -3,6 +3,7 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 export interface IInputProps {
   label?: string;
   isLabelInline?: boolean;
+  shouldOverlapLabel?: boolean;
   labelClassName?: string;
   htmlFor?: string;
   register?: any;

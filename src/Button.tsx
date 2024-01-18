@@ -234,10 +234,10 @@ function BaseButton(props: IButtonBaseProps) {
       title={hoverTitle}
       className={
         (leftRounded
-          ? "rounded-r h-9"
+          ? "rounded-r h-12 md:h-9 "
           : rightRounded
-          ? "rounded-l h-9"
-          : "rounded-full h-9 ") +
+          ? "rounded-l h-12 md:h-9 "
+          : "rounded-full h-12 md:h-9 ") +
         buttonTypeClassNames +
         " items-center " +
         (isCenter ? " block mx-auto " : "") +

@@ -12,6 +12,7 @@ function MobileNumberSelect(props: {
   allowOtherCountries?: boolean;
   defaultCountryCode?: string;
   label?: any;
+  shouldOverlapLabel?: boolean;
   onChange?: Function;
   value?: any;
   isReadOnly?: boolean;
@@ -37,6 +38,7 @@ function MobileNumberSelect(props: {
     isRequired,
     mobileNumberRegex,
     showAsterisk,
+    shouldOverlapLabel,
   } = props;
 
   const shouldValidate = Boolean(validation && name);
@@ -59,11 +61,15 @@ function MobileNumberSelect(props: {
   const validationRegex = /^0?[-\s]?(\d[-\s]?){9,}$/;
 
   const validCountries: ICountry[] = allowedCountryCodes
-    ? countryUtils.getAllCountriesInListOfCodes(allowedCountryCodes, allowOtherCountries)
+    ? countryUtils.getAllCountriesInListOfCodes(
+        allowedCountryCodes,
+        allowOtherCountries
+      )
     : countryUtils.getAllCountries(allowOtherCountries);
 
   let [selectedCountry, setSelectedCountry] = useState<any>();
   let [mobileNumber, setMobileNumber] = useState<string>();
+  let [isInputFocussed, setIsInputFocussed] = useState<boolean>(false);
 
   useEffect(() => {
     let { number, country } = cleanReceivedMobileNumber(value);
@@ -79,10 +85,16 @@ function MobileNumberSelect(props: {
 
   // Occurs when either the mobile number or the country changes.
   // Not making use of an useEffect here because it competes with the [value] useEffect above.
-  function onChange(_mobileNumber: string | undefined, selectedCountry: ICountry | null) {
+  function onChange(
+    _mobileNumber: string | undefined,
+    selectedCountry: ICountry | null
+  ) {
     if (props.onChange) {
       if (_mobileNumber) {
-        if (selectedCountry && value !== selectedCountry.dialCode + _mobileNumber) {
+        if (
+          selectedCountry &&
+          value !== selectedCountry.dialCode + _mobileNumber
+        ) {
           props.onChange(selectedCountry.dialCode + _mobileNumber);
         }
       } else {
@@ -139,7 +151,10 @@ function MobileNumberSelect(props: {
   function onCountryChanged(countryCode: string | null) {
     let newSelectedCountry = null;
     if (countryCode) {
-      newSelectedCountry = countryUtils.getCountryByCode(countryCode, allowOtherCountries);
+      newSelectedCountry = countryUtils.getCountryByCode(
+        countryCode,
+        allowOtherCountries
+      );
     }
 
     if (selectedCountry?.code !== newSelectedCountry?.code) {
@@ -148,19 +163,24 @@ function MobileNumberSelect(props: {
     }
   }
 
+  function renderLabel() {
+    return (
+      <Label>
+        <span className="inline-block whitespace-nowrap">
+          {label}
+          {showAsterisk && " *"}
+        </span>
+      </Label>
+    );
+  }
+
   function render() {
     return (
       <div className="mt-4">
-        {label && (
-          <Label>
-            <span className="inline-block whitespace-nowrap">
-              {label}
-              {showAsterisk && " *"}
-            </span>
-          </Label>
-        )}
+        {label && !shouldOverlapLabel && renderLabel()}
         <div className="flex flex-row space-x-4">
           <CountrySelect
+            shouldOverlapLabel={shouldOverlapLabel}
             allowOtherCountries={allowOtherCountries}
             isReadOnly={isReadOnly}
             containerClassName={selectedCountry ? "w-16" : "w-24"}
@@ -168,36 +188,56 @@ function MobileNumberSelect(props: {
             value={selectedCountry?.code}
             onChange={onCountryChanged}
           />
-          <Input
-            hideArrows
-            name={name}
-            isReadOnly={isReadOnly}
-            containerClassName="w-full"
-            prependPadding="pl-14"
-            prependTextSize="text-base"
-            isLabelInline
-            prependText={selectedCountry?.dialCode}
-            value={shouldValidate ? undefined : mobileNumber ?? ""}
-            defaultValue={shouldValidate ? value : undefined}
-            onChange={(e: any) => {
-              let value = e.target.value.replace("+", "");
-              setMobileNumber(value);
-              onChange(value, selectedCountry);
-            }}
-            register={
-              validation &&
-              validation.register({
-                required: {
-                  value: isRequired,
-                  message: "This field is required",
-                },
-                pattern: {
-                  value: mobileNumberRegex ?? validationRegex,
-                  message: "Invalid mobile number",
-                },
-              })
-            }
-          />
+          <div className="relative">
+            <Input
+              onFocus={() => {
+                setIsInputFocussed(true);
+              }}
+              onBlur={() => {
+                setIsInputFocussed(false);
+              }}
+              shouldOverlapLabel={shouldOverlapLabel}
+              inputMode="numeric"
+              hideArrows
+              name={name}
+              isReadOnly={isReadOnly}
+              containerClassName="w-full"
+              prependPadding="pl-14"
+              prependTextSize="text-base"
+              isLabelInline
+              prependText={selectedCountry?.dialCode}
+              value={shouldValidate ? undefined : mobileNumber ?? ""}
+              defaultValue={shouldValidate ? value : undefined}
+              onChange={(e: any) => {
+                let value = e.target.value.replace("+", "");
+                setMobileNumber(value);
+                onChange(value, selectedCountry);
+              }}
+              register={
+                validation &&
+                validation.register({
+                  required: {
+                    value: isRequired,
+                    message: "This field is required",
+                  },
+                  pattern: {
+                    value: mobileNumberRegex ?? validationRegex,
+                    message: "Invalid mobile number",
+                  },
+                })
+              }
+            />
+            {shouldOverlapLabel && label && (
+              <div className="absolute -top-2 left-2 inline-block px-1 text-xs font-medium text-gray-900 ">
+                <div className="pl-2">{renderLabel()}</div>
+                <div
+                  className={`bg-white h-2 -mt-4 ${
+                    isInputFocussed ? "ring-1 ring-white" : ""
+                  }`}
+                ></div>
+              </div>
+            )}
+          </div>
         </div>
         <div>
           {validationError &&
