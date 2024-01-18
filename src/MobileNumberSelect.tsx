@@ -188,7 +188,7 @@ function MobileNumberSelect(props: {
             value={selectedCountry?.code}
             onChange={onCountryChanged}
           />
-          <div className="relative">
+          <div className="relative w-full">
             <Input
               onFocus={() => {
                 setIsInputFocussed(true);
