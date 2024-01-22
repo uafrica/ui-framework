@@ -1,8 +1,8 @@
 import * as customTableUtils from "./customTableUtils";
 import * as generalUtils from "./../utils/generalUtils";
 import CustomTableRow from "./CustomTableRow";
- // @ts-ignore
-    import React, { useEffect, useRef, useState } from "react";
+// @ts-ignore
+import React, { useEffect, useRef, useState } from "react";
 import { Button } from "../Button";
 import { Checkbox } from "../Checkbox";
 import { Dropdown } from "../Dropdown";
@@ -266,7 +266,8 @@ function CustomTable(props: ICustomTable) {
     let scrollableContainer = document.getElementById(
       props.id + "_scrollable_container"
     );
-    if (table && scrollableContainer && draggingElement) {
+
+    if (table && scrollableContainer) {
       let tableBoundaries = table.getBoundingClientRect();
       let scrollableContainerBoundaries =
         scrollableContainer.getBoundingClientRect();
@@ -278,21 +279,25 @@ function CustomTable(props: ICustomTable) {
         list = customTableUtils.cloneColumnTable(props.id, list);
 
         draggingElement = [].slice.call(list.children)[draggingColumnIndex];
+        if (draggingElement) {
+          draggingElement.classList.add("dragging");
+          draggingElement.classList.add("dragging-column");
 
-        draggingElement.classList.add("dragging");
-        draggingElement.classList.add("dragging-column");
-
-        placeholder = document.createElement("div");
-        placeholder.classList.add("placeholder");
-        draggingElement.parentNode.insertBefore(
-          placeholder,
-          draggingElement.nextSibling
-        );
-        placeholder.style.width = `${draggingElement.offsetWidth}px`;
+          placeholder = document.createElement("div");
+          placeholder.classList.add("placeholder");
+          draggingElement.parentNode.insertBefore(
+            placeholder,
+            draggingElement.nextSibling
+          );
+          placeholder.style.width = `${draggingElement.offsetWidth}px`;
+        }
       }
 
-      draggingElement.style.position = "absolute";
-      draggingElement.style.top = `0px`;
+      if (draggingElement) {
+        draggingElement.style.position = "absolute";
+        draggingElement.style.top = `0px`;
+      }
+
       let left = 0;
 
       if (
@@ -326,26 +331,28 @@ function CustomTable(props: ICustomTable) {
           scrollableContainerBoundaries.left;
       }
 
-      draggingElement.style.left = `${left}px`;
+      if (draggingElement) {
+        draggingElement.style.left = `${left}px`;
 
-      let previousElement = draggingElement.previousElementSibling;
-      let nextElement = placeholder.nextElementSibling;
+        let previousElement = draggingElement.previousElementSibling;
+        let nextElement = placeholder.nextElementSibling;
 
-      if (
-        previousElement &&
-        customTableUtils.isOnLeft(draggingElement, previousElement)
-      ) {
-        customTableUtils.swap(placeholder, draggingElement);
-        customTableUtils.swap(placeholder, previousElement);
-        return;
-      }
+        if (
+          previousElement &&
+          customTableUtils.isOnLeft(draggingElement, previousElement)
+        ) {
+          customTableUtils.swap(placeholder, draggingElement);
+          customTableUtils.swap(placeholder, previousElement);
+          return;
+        }
 
-      if (
-        nextElement &&
-        customTableUtils.isOnLeft(nextElement, draggingElement)
-      ) {
-        customTableUtils.swap(nextElement, placeholder);
-        customTableUtils.swap(nextElement, draggingElement);
+        if (
+          nextElement &&
+          customTableUtils.isOnLeft(nextElement, draggingElement)
+        ) {
+          customTableUtils.swap(nextElement, placeholder);
+          customTableUtils.swap(nextElement, draggingElement);
+        }
       }
 
       setDraggingElement(draggingElement);
