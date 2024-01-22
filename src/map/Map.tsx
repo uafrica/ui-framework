@@ -16,7 +16,7 @@ import { IMarker, IPolygon, IPolyline } from "../interfaces";
 import { defaultMapStyles } from "../utils/constantsAndDefaults";
 import { ICircle } from "../interfaces/circle.interface";
 // @ts-ignore
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import groupBy from "lodash/groupBy";
 
 function Map(props: {
@@ -108,6 +108,23 @@ function Map(props: {
       },
       100
     )
+  );
+
+  const renderMarkersWithMemo = useMemo(() => renderMarkers(), [markers]);
+  const renderCirclesWithMemo = useMemo(() => renderCircles(), [circles]);
+  const renderPolylinesWithMemo = useMemo(() => renderPolylines(), [polylines]);
+  const renderPolygonsWithMemo = useMemo(
+    () => renderPolygons(),
+    [polygons, selectedPolygon, doSnap, isReadOnly]
+  );
+  const renderAntimeridianWithMemo = useMemo(() => renderAntimeridian(), []);
+  const renderTooltipWithMemo = useMemo(
+    () => renderTooltip(),
+    [tooltipCoordinates, markerTooltipContent, polygonTooltipContent]
+  );
+  const renderMapWithMemo = useMemo(
+    () => renderMap(),
+    [markers, polygons, polylines, circles, editMode]
   );
 
   useEffect(() => {
@@ -661,6 +678,80 @@ function Map(props: {
     );
   }
 
+  function renderMap() {
+    return (
+      <GoogleMap
+        id="bob_map"
+        mapContainerStyle={mapContainerStyle ?? {}}
+        center={center}
+        zoom={defaultZoom ?? 5}
+        onLoad={(map) => {
+          setMap(map);
+        }}
+        options={options}
+        onClick={(e: google.maps.MapMouseEvent) => {
+          if (props.onMapClick) {
+            props.onMapClick(e);
+          }
+        }}
+      >
+        {editMode === "draw" && (
+          <DrawingManager
+            onPolygonComplete={(polygon: google.maps.Polygon) => {
+              enterEditMode("select");
+              let paths = mapUtils.getPathFromGooglePolygon(polygon);
+
+              let _polygon: IPolygon = {
+                id: `new_polygon`,
+                data: {},
+                paths,
+                options: {},
+              };
+
+              if (doSnap) {
+                paths.forEach((path: any, pathIndex: number) => {
+                  path.forEach(
+                    (
+                      coordinates: { lat: number; lng: number },
+                      vertexIndex: number
+                    ) => {
+                      _polygon.paths = snapPointToPolygon(
+                        // @ts-ignore
+                        { path: pathIndex, vertex: vertexIndex },
+                        _polygon,
+                        new google.maps.LatLng(coordinates.lat, coordinates.lng)
+                      );
+                    }
+                  );
+                });
+              }
+
+              if (props.onPolygonCreated) {
+                polygon.setVisible(false);
+                props.onPolygonCreated(_polygon);
+              }
+
+              if (props.onPolygonSelectionChanged) {
+                props.onPolygonSelectionChanged(_polygon, true);
+              }
+            }}
+            drawingMode={window.google.maps.drawing.OverlayType.POLYGON}
+            options={{
+              drawingControl: false,
+            }}
+          />
+        )}
+
+        {renderPolygonsWithMemo}
+        {renderPolylinesWithMemo}
+        {renderCirclesWithMemo}
+        {renderMarkersWithMemo}
+        {renderAntimeridianWithMemo}
+        {renderTooltipWithMemo}
+      </GoogleMap>
+    );
+  }
+
   function render() {
     return mapId ? (
       <div className="relative" id={mapId}>
@@ -712,78 +803,7 @@ function Map(props: {
             )}
           </div>
         </div>
-        <GoogleMap
-          id="bob_map"
-          mapContainerStyle={mapContainerStyle ?? {}}
-          center={center}
-          zoom={defaultZoom ?? 5}
-          onLoad={(map) => {
-            setMap(map);
-          }}
-          options={options}
-          onClick={(e: google.maps.MapMouseEvent) => {
-            if (props.onMapClick) {
-              props.onMapClick(e);
-            }
-          }}
-        >
-          {editMode === "draw" && (
-            <DrawingManager
-              onPolygonComplete={(polygon: google.maps.Polygon) => {
-                enterEditMode("select");
-                let paths = mapUtils.getPathFromGooglePolygon(polygon);
-
-                let _polygon: IPolygon = {
-                  id: `new_polygon`,
-                  data: {},
-                  paths,
-                  options: {},
-                };
-
-                if (doSnap) {
-                  paths.forEach((path: any, pathIndex: number) => {
-                    path.forEach(
-                      (
-                        coordinates: { lat: number; lng: number },
-                        vertexIndex: number
-                      ) => {
-                        _polygon.paths = snapPointToPolygon(
-                          // @ts-ignore
-                          { path: pathIndex, vertex: vertexIndex },
-                          _polygon,
-                          new google.maps.LatLng(
-                            coordinates.lat,
-                            coordinates.lng
-                          )
-                        );
-                      }
-                    );
-                  });
-                }
-
-                if (props.onPolygonCreated) {
-                  polygon.setVisible(false);
-                  props.onPolygonCreated(_polygon);
-                }
-
-                if (props.onPolygonSelectionChanged) {
-                  props.onPolygonSelectionChanged(_polygon, true);
-                }
-              }}
-              drawingMode={window.google.maps.drawing.OverlayType.POLYGON}
-              options={{
-                drawingControl: false,
-              }}
-            />
-          )}
-
-          {renderPolygons()}
-          {renderPolylines()}
-          {renderCircles()}
-          {renderMarkers()}
-          {renderAntimeridian()}
-          {renderTooltip()}
-        </GoogleMap>
+        {renderMapWithMemo}
       </div>
     ) : (
       <></>
