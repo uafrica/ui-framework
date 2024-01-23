@@ -30,7 +30,11 @@ export interface ICustomTable {
   }) => void;
   onSelectionChanged?: (selectedRows: any[]) => void;
   onColumnOrderChanged?: (order: string[]) => void;
-  onRowOrderChanged?: (order: { endingIndex: number; order: any[]; startingIndex: number }) => void;
+  onRowOrderChanged?: (order: {
+    endingIndex: number;
+    order: any[];
+    startingIndex: number;
+  }) => void;
   onColumnWidthsChanged?: (widths: { id: any; value?: number }[]) => void;
   onDataChanged?: (data: any[]) => void;
   hidePagination?: boolean;
@@ -56,7 +60,10 @@ export interface ICustomTable {
     isLoading: boolean
   ) => any;
 
-  renderTableActionsChildren?: (data: any[], isLoading: boolean) => React.ReactNode;
+  renderTableActionsChildren?: (
+    data: any[],
+    isLoading: boolean
+  ) => React.ReactNode;
   setTableFunctions?: (functions: {
     insertRow: (object: any, index?: number) => void;
     refresh: () => void;
@@ -74,4 +81,5 @@ export interface ICustomTable {
     updateRow: (value: any) => void;
     removeRow: () => void;
   }) => React.ReactNode;
+  style?: any;
 }

@@ -42,6 +42,7 @@ function CustomTable(props: ICustomTable) {
     hideRefreshButton = false,
     rowStyleFunction,
     checkIfRowIsDraggable,
+    style,
   } = props;
   let topRef: any = useRef();
   let rowUniqueIdentifier = props.rowUniqueIdentifier ?? "id";
@@ -619,7 +620,7 @@ function CustomTable(props: ICustomTable) {
     if (onSelectionChanged) {
       let selectColumnIndex = newColumnOrder.indexOf("select");
 
-      let selectAllColumn = {
+      let selectAllColumn: IColumn = {
         width: 30,
         id: "select",
         accessor: "select",
@@ -628,26 +629,28 @@ function CustomTable(props: ICustomTable) {
         isClickable: false,
         isRightClickable: false,
 
-        header: (
-          <Checkbox
-            hoverTitle={allRowsSelected ? "Deselect all" : "Select all"}
-            isChecked={allRowsSelected}
-            onClick={() => {
-              if (allRowsSelected) {
-                setAllRowsSelected(false);
-                changeSelection([]);
-              } else {
-                let _selected: any = [];
-                for (let i = 0; i < data.length; i++) {
-                  _selected.push(data[i][rowUniqueIdentifier].toString());
-                }
+        header: () => {
+          return (
+            <Checkbox
+              hoverTitle={allRowsSelected ? "Deselect all" : "Select all"}
+              isChecked={allRowsSelected}
+              onClick={() => {
+                if (allRowsSelected) {
+                  setAllRowsSelected(false);
+                  changeSelection([]);
+                } else {
+                  let _selected: any = [];
+                  for (let i = 0; i < data.length; i++) {
+                    _selected.push(data[i][rowUniqueIdentifier].toString());
+                  }
 
-                setAllRowsSelected(true);
-                changeSelection(_selected);
-              }
-            }}
-          />
-        ),
+                  setAllRowsSelected(true);
+                  changeSelection(_selected);
+                }
+              }}
+            />
+          );
+        },
         cell: (row: IRow) => {
           return (
             <Checkbox
@@ -689,7 +692,7 @@ function CustomTable(props: ICustomTable) {
 
     if (draggableRows) {
       let rowDragColumnIndex = newColumnOrder.indexOf("rowDrag");
-      let rowDragColumn = {
+      let rowDragColumn: IColumn = {
         width: 30,
         id: "rowDrag",
         accessor: "rowDrag",
@@ -697,14 +700,16 @@ function CustomTable(props: ICustomTable) {
         sortable: false,
         isClickable: false,
         isRightClickable: false,
-        header: (
-          <FontAwesomeIcon
-            // @ts-ignore
-            icon={`${rowOrderIcon ? rowOrderIcon : "sort"}`}
-            className="ml-4"
-            title="Drag rows"
-          />
-        ),
+        header: () => {
+          return (
+            <FontAwesomeIcon
+              // @ts-ignore
+              icon={`${rowOrderIcon ? rowOrderIcon : "sort"}`}
+              className="ml-4"
+              title="Drag rows"
+            />
+          );
+        },
         cell: (row: IRow) => {
           if (checkIfRowIsDraggable && checkIfRowIsDraggable(row.original)) {
             return (
@@ -829,6 +834,7 @@ function CustomTable(props: ICustomTable) {
   function renderDesktopViewTable() {
     return (
       <div
+        style={style}
         className={
           "rounded-lg " + (scrollableX ? "scrollable-table-container" : "")
         }
