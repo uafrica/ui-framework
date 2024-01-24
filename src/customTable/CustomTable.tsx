@@ -163,7 +163,7 @@ function CustomTable(props: ICustomTable) {
 
   useEffect(() => {
     manageStaticColumns(columns);
-  }, [data, selectedRowIdentifiers]);
+  }, [data, selectedRowIdentifiers, props.columns]);
 
   useEffect(() => {
     fetchFunctionArgumentsRef.current = fetchFunctionArguments;
@@ -258,7 +258,10 @@ function CustomTable(props: ICustomTable) {
 
   function startAutoRefreshInterval() {
     interval = setInterval(() => {
-      load(false, page, pageSize);
+      setPage((page) => {
+        load(false, page, pageSize);
+        return page;
+      });
     }, autoRefreshInterval);
   }
 

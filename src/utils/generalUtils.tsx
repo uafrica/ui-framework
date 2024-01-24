@@ -473,7 +473,7 @@ function getFileExtension(filename: string): string | undefined {
   return filename.split(".").pop();
 }
 
-function openInNewTab(url: string, store: any) {
+function openInNewTab(url: string, store: any): boolean {
   let newWindow = window.open(url, "_blank");
   newWindow && newWindow.focus();
 
@@ -549,7 +549,10 @@ function openInNewTab(url: string, store: any) {
       okButtonText: "Okay, thanks",
       return: async () => {},
     });
+
+    return false;
   }
+  return true;
 }
 
 function calculateSum(items: any[], field: string, decimals?: number) {
