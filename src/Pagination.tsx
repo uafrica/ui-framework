@@ -1,8 +1,10 @@
- // @ts-ignore
-    import React, { useEffect, useState } from "react";
+// @ts-ignore
+import React, { useEffect, useState } from "react";
 import { Button } from "./Button";
 import { Card } from "./Card";
 import { Select } from "./Select";
+import * as generalUtils from "./utils/generalUtils";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface IProps {
   handler: Function;
@@ -17,19 +19,19 @@ interface IProps {
 
 function Pagination({
   handler,
-  active,
-  pages,
+  active: activePageNumber,
+  pages: totalPageCount,
   setActive,
   isLoading,
   setRows,
-  rows,
+  rows: amountOfRows,
   scrollRef,
 }: IProps) {
-  const [pageVal, setPageVal] = useState<number>(active);
+  const [pageVal, setPageVal] = useState<number>(activePageNumber);
 
   useEffect(() => {
-    setPageVal(active);
-  }, [active]);
+    setPageVal(activePageNumber);
+  }, [activePageNumber]);
 
   useEffect(() => {
     // checkPage
@@ -41,19 +43,38 @@ function Pagination({
     }
   }, []);
 
-  return (
-    <Card className={`${isLoading && "mt-20"}`}>
+  function goToPage(pageNumber: number) {
+    if (pageNumber >= 1 && pageNumber <= totalPageCount) {
+      setPageVal(pageNumber);
+      handler(pageNumber);
+      scrollRef?.current?.scrollIntoView();
+    }
+  }
+
+  function goToNextPage() {
+    goToPage(pageVal + 1);
+  }
+
+  function goToPreviousPage() {
+    goToPage(pageVal - 1);
+  }
+
+  function goToFirstPage() {
+    goToPage(1);
+  }
+  function goToLastPage() {
+    goToPage(totalPageCount);
+  }
+
+  function renderForDesktop() {
+    return (
       <div className={`flex justify-between items-center`}>
         <div>
           <Button.Link
             id="pagination__go_to_previous_page"
             title="Previous"
-            isDisabled={active === 1}
-            onClick={() => {
-              setPageVal(pageVal - 1);
-              handler(active - 1);
-              scrollRef?.current?.scrollIntoView();
-            }}
+            isDisabled={activePageNumber === 1}
+            onClick={goToPreviousPage}
           />
         </div>
         <div className={"flex items-center"}>
@@ -72,30 +93,26 @@ function Pagination({
                   if (parseInt(e.target.value) === pageVal) {
                     return;
                   }
-                  setActive(pageVal);
-                  handler(pageVal);
-                  scrollRef?.current?.scrollIntoView();
+                  goToPage(pageVal);
                 }}
                 onKeyDown={(e: any) => {
                   if (parseInt(e.target.value) === pageVal) {
                     return;
                   }
-                  if (e.key === "Enter" && active !== pageVal) {
-                    setActive(pageVal);
-                    handler(pageVal);
-                    scrollRef?.current?.scrollIntoView();
+                  if (e.key === "Enter" && activePageNumber !== pageVal) {
+                    goToPage(pageVal);
                   }
                 }}
                 min={1}
-                max={pages}
+                max={totalPageCount}
               />
             </div>
             of
             <span className="total-pages" id="total-pages">
-              {pages}
+              {totalPageCount}
             </span>{" "}
           </div>
-          {setRows && rows && (
+          {setRows && amountOfRows && (
             <div>
               <Select
                 options={["5", "10", "20", "25", "50", "100"].map(
@@ -104,7 +121,7 @@ function Pagination({
                     value: parseInt(item),
                   })
                 )}
-                value={rows}
+                value={amountOfRows}
                 onChange={(val: any) => setRows(val)}
                 buttonWidth={"w-20 -mt-4 ml-8"}
               />
@@ -115,17 +132,113 @@ function Pagination({
           <Button.Link
             id="pagination__go_to_next_page"
             title="Next"
-            onClick={() => {
-              setPageVal(pageVal + 1);
-              handler(active + 1);
-              scrollRef?.current?.scrollIntoView();
-            }}
-            isDisabled={active === pages}
+            onClick={goToNextPage}
+            isDisabled={activePageNumber === totalPageCount}
           />
         </div>
       </div>
-    </Card>
-  );
+    );
+  }
+
+  function renderPageNumber(pageNumber: number) {
+    return (
+      <div
+        className={
+          activePageNumber === pageNumber ? "font-bold text-primary" : ""
+        }
+        onClick={() => {
+          goToPage(pageNumber);
+        }}
+      >
+        {pageNumber}
+      </div>
+    );
+  }
+
+  function renderEllipses() {
+    return <div>...</div>;
+  }
+
+  function renderPageNumbers() {
+    const pageNumberElements: any[] = [];
+
+    if (totalPageCount <= 3) {
+      for (let i = 1; i <= totalPageCount; i++) {
+        pageNumberElements.push(renderPageNumber(i));
+      }
+    } else {
+      pageNumberElements.push(renderPageNumber(1));
+      if (activePageNumber > 3) {
+        pageNumberElements.push(renderEllipses());
+      }
+      if (activePageNumber > 2) {
+        pageNumberElements.push(renderPageNumber(activePageNumber - 1));
+      }
+      if (activePageNumber > 1 && activePageNumber < totalPageCount) {
+        pageNumberElements.push(renderPageNumber(activePageNumber));
+      }
+      if (activePageNumber < totalPageCount - 1) {
+        pageNumberElements.push(renderPageNumber(activePageNumber + 1));
+      }
+      if (activePageNumber < totalPageCount - 2) {
+        pageNumberElements.push(renderEllipses());
+      }
+      pageNumberElements.push(renderPageNumber(totalPageCount));
+    }
+
+    return (
+      <div className="flex flex-wrap space-x-4 w-full justify-center items-center">
+        {pageNumberElements.map((pageNumberElement) => {
+          return pageNumberElement;
+        })}
+      </div>
+    );
+  }
+
+  function renderForMobile() {
+    return (
+      <div className="flex flex-row justify-stretch space-x-4 items-center text-lg">
+        <div className="w-6">
+          {activePageNumber !== 1 && (
+            <FontAwesomeIcon icon="angles-left" onClick={goToFirstPage} />
+          )}
+        </div>
+        <div className="w-6">
+          <FontAwesomeIcon
+            icon="angle-left"
+            onClick={goToPreviousPage}
+            className={activePageNumber === 1 ? "text-gray-400" : ""}
+          />
+        </div>
+        {renderPageNumbers()}
+        <div className="w-6">
+          <FontAwesomeIcon
+            icon="angle-right"
+            onClick={goToNextPage}
+            className={
+              activePageNumber === totalPageCount ? "text-gray-400" : ""
+            }
+          />
+        </div>
+        <div className="w-6">
+          {activePageNumber !== totalPageCount && (
+            <FontAwesomeIcon icon="angles-right" onClick={goToLastPage} />
+          )}
+        </div>
+      </div>
+    );
+  }
+  function render() {
+    return (
+      <Card className={`${isLoading && "mt-20"}`}>
+        {generalUtils.isScreenDesktopSize()
+          ? renderForDesktop()
+          : renderForMobile()}
+      </Card>
+    );
+  }
+
+  return render();
 }
 
 export { Pagination };
