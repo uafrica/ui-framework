@@ -110,21 +110,30 @@ function Map(props: {
     )
   );
 
-  const renderMarkersWithMemo = useMemo(() => renderMarkers(), [markers]);
-  const renderCirclesWithMemo = useMemo(() => renderCircles(), [circles]);
-  const renderPolylinesWithMemo = useMemo(() => renderPolylines(), [polylines]);
+  const renderMarkersWithMemo = useMemo(
+    () => renderMarkers(),
+    [markers, map, tooltipCoordinates]
+  );
+  const renderCirclesWithMemo = useMemo(
+    () => renderCircles(),
+    [circles, map, tooltipCoordinates]
+  );
+  const renderPolylinesWithMemo = useMemo(
+    () => renderPolylines(),
+    [polylines, map, tooltipCoordinates]
+  );
   const renderPolygonsWithMemo = useMemo(
     () => renderPolygons(),
-    [polygons, selectedPolygon, doSnap, isReadOnly]
+    [polygons, selectedPolygon, doSnap, isReadOnly, map, tooltipCoordinates]
   );
   const renderAntimeridianWithMemo = useMemo(() => renderAntimeridian(), []);
   const renderTooltipWithMemo = useMemo(
     () => renderTooltip(),
-    [tooltipCoordinates, markerTooltipContent, polygonTooltipContent]
+    [tooltipCoordinates, markerTooltipContent, polygonTooltipContent, map]
   );
   const renderMapWithMemo = useMemo(
     () => renderMap(),
-    [markers, polygons, polylines, circles, editMode]
+    [markers, polygons, polylines, circles, editMode, map, tooltipCoordinates]
   );
 
   useEffect(() => {
@@ -418,7 +427,7 @@ function Map(props: {
     lat?: number;
     lng?: number;
   }) {
-    if (baseCoordinates.lat && baseCoordinates.lng) {
+    if (baseCoordinates.lat && baseCoordinates.lng && map) {
       let bounds: google.maps.LatLngBounds = map.getBounds();
       let northEast = bounds.getNorthEast();
       let southWest = bounds.getSouthWest();
@@ -489,6 +498,7 @@ function Map(props: {
                   props.onPolygonClicked(e, polygon);
                 }
               }
+
               if (polygon.options.tooltipMode === "click") {
                 let tooltipContent = polygon.options.tooltip
                   ? polygon.options.tooltip(polygon)
