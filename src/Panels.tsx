@@ -44,12 +44,12 @@ function TableActionsPanel(props: IProps) {
   return (
     <div
       className={
-        "flex flex-col-reverse xs:flex-row justify-between mt-2 items-start xs:items-center py-2" +
+        "flex flex-col-reverse md:flex-row md:justify-between mt-2 md:items-center py-2" +
         (className ? className : "")
       }
     >
       <div className="text-sm">{title}</div>
-      <div className="xs:ml-auto flex flex-wrap flex-gap-x-1 flex-grow-0 mb-4 xs:mb-0">
+      <div className="flex flex-col md:flex-row justify-end items-center">
         {props.children}
       </div>
     </div>
