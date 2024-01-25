@@ -21,6 +21,7 @@ interface ICounterProps {
   inputID?: string;
   containerClassName?: string;
   htmlFor?: string;
+  shouldOverlapLabel?: boolean;
 }
 
 function Counter(props: ICounterProps) {
@@ -39,6 +40,7 @@ function Counter(props: ICounterProps) {
     label,
     htmlFor,
     labelClassName,
+    shouldOverlapLabel,
   } = props;
 
   if (step === undefined) {
@@ -75,7 +77,7 @@ function Counter(props: ICounterProps) {
       )}
       <div className=" flex items-center  flex-row w-full">
         <div
-          style={{ height: "37px" }}
+          style={{ height: shouldOverlapLabel ? "49px" : "37px" }}
           className={
             "flex justify-center items-center w-12 shadow-sm border rounded-l-md " +
             (decreaseDisabled
@@ -84,8 +86,8 @@ function Counter(props: ICounterProps) {
           }
           onClick={() => {
             if (!decreaseDisabled) {
-              setInputValue(inputValue - step);
-              onChange(inputValue - step);
+              setInputValue(Number(inputValue) - step);
+              onChange(Number(inputValue) - step);
             }
           }}
         >
@@ -96,6 +98,7 @@ function Counter(props: ICounterProps) {
         </div>
 
         <Input
+          shouldOverlapLabel={shouldOverlapLabel}
           isLabelInline
           inputID={inputID}
           containerClassName="w-full "
@@ -103,7 +106,7 @@ function Counter(props: ICounterProps) {
           step={step}
           min={min}
           max={max}
-          value={inputValue}
+          value={inputValue !== 0 && inputValue !== undefined ? inputValue : ""}
           isDisabled={isDisabled}
           placeholder={placeholder}
           type="number"
@@ -144,7 +147,7 @@ function Counter(props: ICounterProps) {
           }}
         />
         <div
-          style={{ height: "37px" }}
+          style={{ height: shouldOverlapLabel ? "49px" : "37px" }}
           className={
             "flex justify-center items-center w-12 shadow-sm border rounded-r-md " +
             (increaseDisabled
@@ -153,8 +156,8 @@ function Counter(props: ICounterProps) {
           }
           onClick={() => {
             if (!increaseDisabled) {
-              setInputValue(inputValue + step);
-              onChange(inputValue + step);
+              setInputValue(Number(inputValue) + step);
+              onChange(Number(inputValue) + step);
             }
           }}
         >

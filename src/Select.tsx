@@ -505,7 +505,7 @@ function GroupedSelect(props: IGroupedSelect) {
                             (isDisabled
                               ? "bg-gray-100"
                               : "bg-white cursor-pointer") +
-                            (shouldOverlapLabel ? " h-12" : "")
+                            (shouldOverlapLabel ? " h-14" : "")
                           }
                           id={id}
                         >

@@ -141,7 +141,7 @@ function Input(props: IInputProps) {
         " " +
         (isDisabled ? " bg-gray-100" : "") +
         (pointer ? " cursor-pointer" : "") +
-        (shouldOverlapLabel ? " h-12" : "")
+        (shouldOverlapLabel ? " h-14" : "")
       }
       onWheel={(e: any) => {
         if (disableNumericInputScroll) {

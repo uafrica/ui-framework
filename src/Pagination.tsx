@@ -143,6 +143,7 @@ function Pagination({
   function renderPageNumber(pageNumber: number) {
     return (
       <div
+        key={pageNumber}
         className={
           activePageNumber === pageNumber ? "font-bold text-primary" : ""
         }
@@ -155,8 +156,8 @@ function Pagination({
     );
   }
 
-  function renderEllipses() {
-    return <div>...</div>;
+  function renderEllipses(key: string) {
+    return <div key={key}>...</div>;
   }
 
   function renderPageNumbers() {
@@ -169,7 +170,7 @@ function Pagination({
     } else {
       pageNumberElements.push(renderPageNumber(1));
       if (activePageNumber > 3) {
-        pageNumberElements.push(renderEllipses());
+        pageNumberElements.push(renderEllipses("before"));
       }
       if (activePageNumber > 2) {
         pageNumberElements.push(renderPageNumber(activePageNumber - 1));
@@ -181,7 +182,7 @@ function Pagination({
         pageNumberElements.push(renderPageNumber(activePageNumber + 1));
       }
       if (activePageNumber < totalPageCount - 2) {
-        pageNumberElements.push(renderEllipses());
+        pageNumberElements.push(renderEllipses("after"));
       }
       pageNumberElements.push(renderPageNumber(totalPageCount));
     }

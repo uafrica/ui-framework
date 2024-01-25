@@ -1061,7 +1061,7 @@ function CustomTable(props: ICustomTable) {
             {props.renderTableActionsChildren &&
               props.renderTableActionsChildren(data, isLoading)}
             {!hideRefreshButton && (
-              <div className="flex justify-end items-center">
+              <div className="flex flex-row justify-end items-center">
                 <Button.Link
                   color="black"
                   title="Refresh"

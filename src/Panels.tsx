@@ -49,7 +49,7 @@ function TableActionsPanel(props: IProps) {
       }
     >
       <div className="text-sm">{title}</div>
-      <div className="flex flex-col md:flex-row justify-end items-center">
+      <div className="flex flex-col md:flex-row justify-end md:items-center">
         {props.children}
       </div>
     </div>
