@@ -112,7 +112,7 @@ function Map(props: {
 
   const renderMarkersWithMemo = useMemo(
     () => renderMarkers(),
-    [markers, map, tooltipCoordinates]
+    [markers, map, tooltipCoordinates, markerTooltipContent]
   );
   const renderCirclesWithMemo = useMemo(
     () => renderCircles(),
@@ -129,11 +129,26 @@ function Map(props: {
   const renderAntimeridianWithMemo = useMemo(() => renderAntimeridian(), []);
   const renderTooltipWithMemo = useMemo(
     () => renderTooltip(),
-    [tooltipCoordinates, markerTooltipContent, polygonTooltipContent, map]
+    [
+      tooltipCoordinates,
+      markerTooltipContent,
+      polygonTooltipContent,
+      map,
+      markers,
+    ]
   );
   const renderMapWithMemo = useMemo(
     () => renderMap(),
-    [markers, polygons, polylines, circles, editMode, map, tooltipCoordinates]
+    [
+      markers,
+      polygons,
+      polylines,
+      circles,
+      editMode,
+      map,
+      tooltipCoordinates,
+      markerTooltipContent,
+    ]
   );
 
   useEffect(() => {
@@ -599,9 +614,6 @@ function Map(props: {
 
     return Object.keys(markersGrouped).map((key) => {
       let markerGroup = markersGrouped[key];
-      let tooltipContent = markerGroup[0].options.tooltip
-        ? markerGroup[0].options.tooltip(markerGroup[0], hideTooltip)
-        : null;
 
       return (
         <Marker
@@ -610,9 +622,15 @@ function Map(props: {
           markerGroup={markerGroup}
           onClick={() => {
             if (markerGroup[0].options.tooltipMode === "click") {
+              let tooltipContent = markerGroup[0].options.tooltip
+                ? markerGroup[0].options.tooltip(
+                    markerGroup[0],
+                    hideTooltip,
+                    markerGroup.length === 1 ? "single" : "multiple"
+                  )
+                : null;
               calculateTooltipCoordinates(markerGroup[0].coordinates);
               setTooltipMode("click");
-
               updateMarkerTooltipDebounced.current(
                 tooltipContent,
                 markerGroup[0].options?.tooltipPixelOffset
@@ -620,21 +638,24 @@ function Map(props: {
             }
           }}
           onMouseOver={() => {
-            let tooltipContent = markerGroup[0].options.tooltip
-              ? markerGroup[0].options.tooltip(markerGroup[0])
-              : null;
-            if (markerGroup.length > 1) {
-              tooltipContent = (
-                <div className="px-4 py-2">
-                  {markerGroup.length} marker items
-                </div>
-              );
-            }
-
             if (
               markerGroup[0].options.tooltipMode === "hover" ||
               !markerGroup[0].options.tooltipMode
             ) {
+              let tooltipContent = markerGroup[0].options.tooltip
+                ? markerGroup[0].options.tooltip(
+                    markerGroup[0],
+                    hideTooltip,
+                    markerGroup.length === 1 ? "single" : "multiple"
+                  )
+                : null;
+              if (markerGroup.length > 1) {
+                tooltipContent = (
+                  <div className="px-4 py-2">
+                    {markerGroup.length} marker items
+                  </div>
+                );
+              }
               calculateTooltipCoordinates({ ...markerGroup[0].coordinates });
               setTooltipMode("hover");
 

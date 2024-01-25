@@ -1,5 +1,5 @@
- // @ts-ignore
-    import React, { memo, useState } from "react";
+// @ts-ignore
+import React, { memo, useState } from "react";
 import { Button } from "./../Button";
 import { IMarker } from "./../interfaces";
 import { Marker as GoogleMapsMarker } from "@react-google-maps/api";
@@ -50,7 +50,8 @@ function Marker(props: {
                   onMarkerClicked(e, marker);
                 }}
               >
-                {marker.options.tooltip && marker.options.tooltip(marker, props.hideTooltip)}
+                {marker.options.tooltip &&
+                  marker.options.tooltip(marker, props.hideTooltip, "modal")}
               </div>
             );
           })}
@@ -107,8 +108,7 @@ function Marker(props: {
                       markerGroup[0].options?.iconHeight ?? 0
                     )
                   )
-                : undefined
-
+                : undefined,
           }}
         ></GoogleMapsMarker>
 
