@@ -1,11 +1,12 @@
 import moment from "moment";
- // @ts-ignore
-    import React, { useEffect } from "react";
+// @ts-ignore
+import React, { useEffect } from "react";
 import { DatePicker } from "./datePicker/DatePicker";
 import { MonthPicker } from "./monthPicker/MonthPicker";
 import { Select } from "./Select";
 
 function DateRange(props: {
+  isLabelInline?: boolean;
   showRange?: boolean;
   showMonth?: boolean;
   period?: string;
@@ -26,6 +27,7 @@ function DateRange(props: {
   buttonWidth?: string;
 }) {
   let {
+    isLabelInline,
     showRange,
     showMonth,
     period,
@@ -73,6 +75,7 @@ function DateRange(props: {
   return (
     <div className={containerClassName ?? "flex flex-row space-x-4"}>
       <Select
+        isLabelInline={isLabelInline}
         buttonWidth={buttonWidth}
         options={periodOptions ?? []}
         onChange={(val: string) => {
@@ -88,6 +91,7 @@ function DateRange(props: {
       {showRange && (
         <>
           <DatePicker
+            isLabelInline={isLabelInline}
             showTimeSelect={showTimeSelect}
             label="From"
             selectedDate={dateFrom ?? defaultDateFrom}
@@ -99,6 +103,7 @@ function DateRange(props: {
             dateFormat={dateFormat ?? "yyyy-MM-DD"}
           />
           <DatePicker
+            isLabelInline={isLabelInline}
             showTimeSelect={showTimeSelect}
             label="To"
             selectedDate={dateTo ?? defaultDateTo}
@@ -114,6 +119,7 @@ function DateRange(props: {
       {showMonth && (
         <div>
           <MonthPicker
+            isLabelInline={isLabelInline}
             label="Select month"
             dateFrom={dateFrom ?? defaultDateFrom}
             onChange={(dateFrom: any) => {
