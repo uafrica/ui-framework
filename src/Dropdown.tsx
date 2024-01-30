@@ -13,6 +13,8 @@ import { Menu, Transition } from "@headlessui/react";
 
 // Interface
 interface IDropdown {
+  onClick?: any;
+  containerRef?: any;
   children: any;
   title?: string;
   square?: boolean;
@@ -125,6 +127,8 @@ function DropdownMenu(props: IDropdown) {
     leftRounded,
     rightRounded,
     buttonStyle,
+    onClick,
+    containerRef,
   } = props;
 
   const popupNode = useRef<HTMLElement>();
@@ -146,6 +150,7 @@ function DropdownMenu(props: IDropdown) {
     <DropdownMenuCtx.Provider value={ctxValue}>
       <Manager>
         <div
+          ref={containerRef}
           className={`inline-block text-left cursor-pointer ${
             buttonWidth ? buttonWidth : ""
           }`}
@@ -157,6 +162,7 @@ function DropdownMenu(props: IDropdown) {
                 ref={ref}
                 onClick={() => {
                   ctxValue.showDropdownMenu();
+                  onClick && onClick();
                 }}
               >
                 <div
@@ -286,7 +292,8 @@ function ContextMenu(props: IDropdown) {
 }
 
 function MenuItem(props: IMenuItem) {
-  let { title, icon, appendHTML, id, isDisabled, isLoading, closeOnClick } = props;
+  let { title, icon, appendHTML, id, isDisabled, isLoading, closeOnClick } =
+    props;
 
   let iconToShow = icon;
 

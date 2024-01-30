@@ -54,7 +54,7 @@ function Banner(props: IProps) {
 
   return (
     <div
-      className={`${backgroundColorClass} p-4 flex justify-between items-center ${textColorClass} font-bold sticky top-0 z-20 -mt-6 mb-4 -mx-4`}
+      className={`${backgroundColorClass} p-4 flex justify-between items-center ${textColorClass} font-bold md:sticky top-0 z-20 -mt-6 mb-4 -mx-4`}
     >
       {typeof children === "string" ? (
         <div className="flex flex-row justify-between space-x-4 items-center w-full">

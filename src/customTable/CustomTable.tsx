@@ -1182,15 +1182,16 @@ function CustomTable(props: ICustomTable) {
   }
 
   function renderMobileView() {
+    let hasNoData = rowOrder && rowOrder.length === 0;
     return (
       <div className={props.renderMobileRow ? " md:hidden" : "hidden"}>
-        {renderTableActions()}
+        {!hasNoData && renderTableActions()}
         <div ref={topRef}>
-          {rowOrder && rowOrder.length === 0 && (
+          {hasNoData && (
             <div className="no-data">{noResultsText ?? "No data"}</div>
           )}
-          {renderMobileViewContent()}
-          {renderPagination()}
+          {!hasNoData && renderMobileViewContent()}
+          {!hasNoData && renderPagination()}
         </div>
       </div>
     );

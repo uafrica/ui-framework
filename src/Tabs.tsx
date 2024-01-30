@@ -98,7 +98,7 @@ function Generic(props: IGenericTabs) {
 
           <nav
             id={tabNavId}
-            className="-mb-px flex space-x-8 overflow-x-auto"
+            className="-mb-px flex space-x-0 md:space-x-8 overflow-x-auto"
             onScroll={() => {
               setOverflowing(evaluateScroll(tabNavId, props.children));
             }}
