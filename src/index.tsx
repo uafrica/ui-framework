@@ -48,6 +48,7 @@ import { ExpiryDateInput } from "./ExpiryDateInput";
 import { Label, LabelWithValue } from "./Label";
 import { Loader } from "./Loader";
 import { Map } from "./map/Map";
+import { OpenStreetMap } from "./openStreetMap/OpenStreetMap";
 import { Message } from "./Message";
 import { Modal } from "./Modal";
 import { MobileNumberSelect } from "./MobileNumberSelect";
@@ -106,6 +107,7 @@ export {
   NavItemDivider,
   Loader,
   Map,
+  OpenStreetMap,
   Tabs,
   PageActionsPanel,
   ModalActionsPanel,

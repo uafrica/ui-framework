@@ -7,5 +7,5 @@ export interface IPolyline {
     strokeWeight?: number;
     icons?: any[];
   };
-  onClick?: Function;
+  onClick?: (e: any, polyline: IPolyline) => void;
 }

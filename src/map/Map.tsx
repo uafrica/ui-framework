@@ -28,22 +28,31 @@ function Map(props: {
   mapContainerStyle?: any;
   defaultCenter: { lat: number; lng: number };
   disableScrollZoom?: boolean;
-  onPolygonClicked?: Function;
-  onPolygonMouseOver?: Function;
-  onPolygonMouseOut?: Function;
-  onPolygonUpdated?: Function;
-  onPolygonCreated?: Function;
+  onPolygonClicked?: (e: google.maps.PolyMouseEvent, polygon: IPolygon) => void;
+  onPolygonMouseOver?: (
+    e: google.maps.PolyMouseEvent,
+    polygon: IPolygon
+  ) => void;
+  onPolygonMouseOut?: (
+    e: google.maps.PolyMouseEvent,
+    polygon: IPolygon
+  ) => void;
+  onPolygonUpdated?: (polygon: IPolygon) => void;
+  onPolygonCreated?: (polygon: IPolygon) => void;
   selectedPolygon?: IPolygon | null;
-  onPolygonSelectionChanged?: Function;
+  onPolygonSelectionChanged?: (
+    polygon: IPolygon,
+    refitBounds?: boolean
+  ) => void;
   bounds?: google.maps.LatLngBounds;
   toolbarLeft?: any;
   toolbarMiddle?: any;
   toolbarRight?: any;
-  editMode: "draw" | "select" | null;
-  onEditModeChange?: Function;
+  editMode: "draw" | "select" | null | undefined;
+  onEditModeChange?: (mode?: "select" | "draw" | null | undefined) => void;
   customToolbarButtons?: any[];
   defaultZoom?: number;
-  onMapClick?: Function;
+  onMapClick?: (e: google.maps.MapMouseEvent) => void;
   mapOptions?: google.maps.MapOptions;
 }) {
   let {

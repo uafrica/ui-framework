@@ -8,5 +8,5 @@ export interface ICircle {
     fillColor?: string;
     fillOpacity?: number;
   };
-  onClick?: Function;
+  onClick?: (e: any, circle: ICircle) => void;
 }

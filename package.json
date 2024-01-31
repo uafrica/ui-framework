@@ -1,5 +1,5 @@
 {
-  "version": "2.0.17",
+  "version": "2.0.18",
   "name": "bob-group-ui-framework",
   "license": "BSD-3-Clause",
   "main": "dist/index.js",
@@ -78,6 +78,7 @@
     "@types/uuid": "^9.0.1",
     "autoprefixer": "^10.4.14",
     "babel-loader": "^9.1.2",
+    "@types/leaflet": "^1.9.8",
     "husky": "^8.0.3",
     "postcss": "^8.4.27",
     "prettier": "^2.8.8",
@@ -92,6 +93,7 @@
   },
   "dependencies": {
     "country-flag-icons": "^1.5.7",
+    "leaflet": "^1.9.4",
     "react-hook-form": "^6.14.0",
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",

@@ -9,10 +9,10 @@ export interface IPolygon {
     fillColor?: string;
     fillOpacity?: number;
     editable?: boolean;
-    tooltip?: Function;
+    tooltip?: (polygon: IPolygon) => JSX.Element | null;
     tooltipPixelOffset?: { x: number; y: number };
-    isEditable?: Function;
+    isEditable?: (polygon: IPolygon) => boolean;
     tooltipMode?: "click" | "hover";
   };
-  onClick?: Function;
+  onClick?: (e: any, polygon: IPolygon) => void;
 }
