@@ -4,6 +4,10 @@ import "leaflet/dist/leaflet.css";
 import L, { Layer, Map } from "leaflet";
 import { IMarker, IPolygon, IPolyline, ICircle } from "../interfaces";
 import * as generalUtils from "../utils/generalUtils";
+import { GestureHandling } from "leaflet-gesture-handling";
+
+import "leaflet/dist/leaflet.css";
+import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 
 function OpenStreetMap(props: {
   polygons?: IPolygon[];
@@ -48,6 +52,7 @@ function OpenStreetMap(props: {
 
   useEffect(() => {
     if (!map) {
+      L.Map.addInitHook("addHandler", "gestureHandling", GestureHandling);
       setMap((map) => {
         map = L.map(mapId, {
           center: [
@@ -55,6 +60,8 @@ function OpenStreetMap(props: {
             defaultCenter.lng ?? 22.9551257,
           ],
           zoom: defaultZoom ?? 5,
+          // @ts-ignore
+          gestureHandling: true,
         });
         L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
           maxZoom: 19,
