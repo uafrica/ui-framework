@@ -183,7 +183,7 @@ function MobileNumberSelect(props: {
             shouldOverlapLabel={shouldOverlapLabel}
             allowOtherCountries={allowOtherCountries}
             isReadOnly={isReadOnly}
-            containerClassName={selectedCountry ? "w-16" : "w-24"}
+            containerClassName={selectedCountry ? "w-20" : "w-24"}
             allowedCountryCodes={allowedCountryCodes}
             value={selectedCountry?.code}
             onChange={onCountryChanged}

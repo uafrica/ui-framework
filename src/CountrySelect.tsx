@@ -88,7 +88,7 @@ function CountrySelect(props: {
         let Flag: any = FlagIcons[country.code.toUpperCase()];
         setCustomSelectionValue(
           (
-            <div>
+            <div className="pr-4">
               {Flag ? (
                 <div className="h-6 flex items-center">
                   <Flag className="h-4" />
