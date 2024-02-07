@@ -405,6 +405,7 @@ function CustomTable(props: ICustomTable) {
         document.removeEventListener("mouseup", dragColumnMouseUpHandler);
         setDraggingColumnIndex(undefined);
         setColumnEventListenersAdded(false);
+        setDraggingElement(null);
       }
     } catch (e) {
       console.log(e);
