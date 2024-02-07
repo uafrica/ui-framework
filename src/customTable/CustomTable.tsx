@@ -914,6 +914,8 @@ function CustomTable(props: ICustomTable) {
                                 args.order = "ASC";
                               }
                               setOrderingArguments(args);
+                            } else {
+                              e.stopPropagation();
                             }
                           }}
                         >
