@@ -125,13 +125,25 @@ function CustomTable(props: ICustomTable) {
 
   useEffect(() => {
     // When the parent component only sets the widths on mount and not in the useState hook call
-    setColumnWidths(
+    let widths =
       props.columnWidths && props.columnWidths.length > 0
         ? props.columnWidths
         : props.columns.map((column) => {
             return { id: column.id, value: column.width };
-          })
-    );
+          });
+
+    // Add any new columns that are not included in the setting for column widths
+    let columnIdsThatHaveWidths = widths.map((column) => {
+      return column.id;
+    });
+
+    props.columns.forEach((column) => {
+      if (columnIdsThatHaveWidths.indexOf(column.id) === -1) {
+        widths.push({ id: column.id, value: column.width });
+      }
+    });
+
+    setColumnWidths(widths);
   }, [props.columnWidths]);
 
   useEffect(() => {
