@@ -9,4 +9,16 @@ function formatToSnakeCase(sentence: string | undefined): string {
     .join("_");
 }
 
-export {formatToSnakeCase}
+function convertToSentenceCase(sentence: string) {
+  const tokens = sentence.split(". ");
+  let convertedSentence = "";
+
+  for (let i = 0; i < tokens.length; i++) {
+    tokens[i] = tokens[i].charAt(0).toUpperCase() + tokens[i].slice(1);
+    convertedSentence += tokens[i].trimEnd() + ". ";
+  }
+
+  return convertedSentence;
+}
+
+export {formatToSnakeCase, convertToSentenceCase}
