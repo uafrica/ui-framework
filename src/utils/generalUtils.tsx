@@ -693,6 +693,19 @@ function generateRandomString(length: number): string {
   return result;
 }
 
+
+function convertToSentenceCase(sentence: string) {
+  const tokens = sentence.split(". ");
+  let convertedSentence = "";
+
+  for (let i = 0; i < tokens.length; i++) {
+    tokens[i] = tokens[i].charAt(0).toUpperCase() + tokens[i].slice(1);
+    convertedSentence += tokens[i].trimEnd() + ". ";
+  }
+
+  return convertedSentence;
+}
+
 export {
   capitalize,
   getError,
@@ -736,4 +749,5 @@ export {
   duplicateObjectsInArray,
   addFiltersToArgsCheck,
   generateRandomString,
+  convertToSentenceCase,
 };
