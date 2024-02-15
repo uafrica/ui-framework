@@ -10,6 +10,10 @@ function formatToSnakeCase(sentence: string | undefined): string {
 }
 
 function convertToSentenceCase(sentence: string) {
+  if (!sentence) {
+    return "";
+  }
+
   const tokens = sentence.split(". ");
   let convertedSentence = "";
 
