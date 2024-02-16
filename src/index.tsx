@@ -73,6 +73,7 @@ import { usePrevious } from "./hooks/usePrevious";
 import { useSignedRequest } from "./hooks/useSignedRequest";
 import { useTabs } from "./hooks/useTabs";
 import { useFilters } from "./hooks/useFilters";
+import { useFilterWithURLParams } from "./hooks/useFilterWithURLParams";
 import { useDebounce } from "./hooks/useDebounce";
 import { useLocationState } from "./hooks/useLocationState";
 import { WeekdaySelect } from "./WeekdaySelect";
@@ -157,6 +158,7 @@ export {
   useSignedRequest,
   useDebounce,
   useFilters,
+  useFilterWithURLParams,
   useLocationState,
   useMediaQuery,
   Banner,
