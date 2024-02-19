@@ -181,17 +181,18 @@ const brandColours = {
     0: "#282828",
   },
   slack: {
+    primary: "#611f69",
     0: "#89D3DF",
     1: "#ECB32D",
     2: "#E01A59",
     3: "#63C1A0",
   },
   microsoft: {
+    primary: "#737373",
     0: "#F25022",
     1: "#7FBA00",
     2: "#00A4EF",
     3: "#FFB900",
-    primary: "#737373",
   },
   android: {
     primary: "#78C257",
