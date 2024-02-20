@@ -1,4 +1,5 @@
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
+import { useLocation } from "react-router-dom";
 
 type IFilter = {
   [key: string]: any;
@@ -8,7 +9,17 @@ type IUseFilterWithURLParams = [IFilter, Dispatch<SetStateAction<IFilter>>];
 function useFilterWithURLParams(
   defaultFilters: IFilter = {}
 ): IUseFilterWithURLParams {
+  const location = useLocation();
   const [filters, setFilters] = useState<any>(getInitialFilters);
+  const [isInitialised, setIsInitialised] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (isInitialised) {
+      setFilters({ ...defaultFilters });
+    } else {
+      setIsInitialised(true);
+    }
+  }, [location, location.key]);
 
   useEffect(() => {
     const urlSearchParams = new URLSearchParams();
