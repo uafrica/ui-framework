@@ -1,6 +1,6 @@
 import * as countryUtils from "./utils/countryUtils";
- // @ts-ignore
-    import React, { useEffect, useState } from "react";
+// @ts-ignore
+import React, { useEffect, useState } from "react";
 import { CountrySelect } from "./CountrySelect";
 import { ICountry } from "./interfaces/country.interface";
 import { Input } from "./Input";
@@ -112,11 +112,11 @@ function MobileNumberSelect(props: {
     let mobileNumber = "";
     let mobileNumberCountry: ICountry | null = defaultCountry;
     if (!value) {
-      // do nothing
+      // Do nothing
     } else {
       mobileNumber = value.toString();
       if (mobileNumber.indexOf("0") === 0) {
-        // remove leading 0, country is assumed to be default country
+        // Remove leading 0, country is assumed to be default country
         mobileNumber = mobileNumber.slice(1);
         mobileNumberCountry = defaultCountry;
       } else if (mobileNumber.indexOf("+") === 0) {
@@ -130,7 +130,7 @@ function MobileNumberSelect(props: {
         });
 
         if (!wasFound) {
-          // if no matching dial code found, remove "+" and deselect country
+          // If no matching dial code found, remove "+" and deselect country
           mobileNumberCountry = null;
           mobileNumber = mobileNumber.slice(1);
         }
@@ -138,7 +138,7 @@ function MobileNumberSelect(props: {
     }
 
     if (mobileNumber.indexOf("0") === 0) {
-      // mobile number should not start with 0 anymore
+      // Mobile number should not start with 0 anymore
       mobileNumber = mobileNumber.slice(1);
     }
 

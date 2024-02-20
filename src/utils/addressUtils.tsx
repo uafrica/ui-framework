@@ -1,6 +1,5 @@
-
- // @ts-ignore
-    import React from "react";
+// @ts-ignore
+import React from "react";
 function addressObjFromGoogleResult(place: any): {
   company: any;
   street_address: any;
@@ -24,7 +23,7 @@ function addressObjFromGoogleResult(place: any): {
     administrative_area_level_2: "short_name",
     administrative_area_level_1: "long_name",
     country: "short_name",
-    postal_code: "short_name"
+    postal_code: "short_name",
   };
 
   var googleAddressObj: any = {};
@@ -36,12 +35,12 @@ function addressObjFromGoogleResult(place: any): {
     lng:
       typeof place.geometry.location.lng === "function"
         ? place.geometry.location.lng()
-        : place.geometry.location.lng
+        : place.geometry.location.lng,
   };
 
   for (var i = 0; i < place.address_components.length; i++) {
     place.address_components[i].types.forEach((addressType: any) => {
-      // get the long/short version of the place address component base on componentForm
+      // Get the long/short version of the place address component base on componentForm
       if (googleComponentShortOrLong[addressType]) {
         googleAddressObj[addressType] =
           place.address_components[i][googleComponentShortOrLong[addressType]];
@@ -83,7 +82,7 @@ function addressObjFromGoogleResult(place: any): {
     lat: googleAddressObj.lat_lng.lat,
     lng: googleAddressObj.lat_lng.lng,
     entered_address: "",
-    types: place.types
+    types: place.types,
   };
 
   addressObj.entered_address = generateEnteredAddress(addressObj);
@@ -132,13 +131,17 @@ function formatEnteredAddress(address: string): any {
 }
 
 function generateEnteredAddress(addressObj: any): string {
-  let { company, street_address, local_area, city, code, zone, country } = addressObj;
+  let { company, street_address, local_area, city, code, zone, country } =
+    addressObj;
 
-  return concatNonEmpty([company, street_address, local_area, city, code, zone, country], ", ");
+  return concatNonEmpty(
+    [company, street_address, local_area, city, code, zone, country],
+    ", "
+  );
 }
 
 function validateAddress(address: any) {
-  // existing addresses will not be judged
+  // Existing addresses will not be judged
   if (address.id && address.entered_address) {
     return "success";
   }
@@ -175,8 +178,11 @@ function validateAddress(address: any) {
   return `requires the following: ${validationString}`;
 }
 
-function validateGoogleAddressType(addressObj: any, invalidTypes: string[]): boolean {
-  // place types: https://developers.google.com/maps/documentation/places/web-service/supported_types#table1
+function validateGoogleAddressType(
+  addressObj: any,
+  invalidTypes: string[]
+): boolean {
+  // Place types: https://developers.google.com/maps/documentation/places/web-service/supported_types#table1
   let isValid = true;
   if (addressObj.types) {
     invalidTypes.forEach((invalidType: string) => {
@@ -239,5 +245,5 @@ export {
   validateGoogleAddressType,
   validateAddress,
   cleanProvince,
-  provinceAbbreviationToName
+  provinceAbbreviationToName,
 };

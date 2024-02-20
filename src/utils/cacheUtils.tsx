@@ -55,7 +55,13 @@ function getFromStoreWhereKeyMatchesValues(
 function setInStore(store: any, cacheKey: string, data: any[]) {
   let cacheData = store.cache ?? {};
   cacheData[cacheKey] = data ?? [];
-  store.set("cache", {...cacheData});
+  store.set("cache", { ...cacheData });
 }
 
-export { upsertItem, deleteItems, getFromStore, setInStore, getFromStoreWhereKeyMatchesValues };
+export {
+  upsertItem,
+  deleteItems,
+  getFromStore,
+  setInStore,
+  getFromStoreWhereKeyMatchesValues,
+};

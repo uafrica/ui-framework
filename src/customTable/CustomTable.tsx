@@ -117,7 +117,7 @@ function CustomTable(props: ICustomTable) {
 
   useEffect(() => {
     // Rerun when props.columnOrder
-    // when the parent component only sets the widths on mount and not in the useState hook call
+    // When the parent component only sets the widths on mount and not in the useState hook call
     setColumnOrder(
       customTableUtils.initialiseColumnOrder(props.columns, props.columnOrder)
     );
@@ -818,7 +818,7 @@ function CustomTable(props: ICustomTable) {
   }
 
   function repositionMenu() {
-    // witchcraft to prevent long context menus from falling off bottom of screen
+    // Witchcraft to prevent long context menus from falling off bottom of screen
     let contextMenuElement = document.getElementById("table-dropdown-menu");
     let contextMenuContentElement = document.getElementById("context-content");
     if (!contextMenuElement || !contextMenuContentElement) return;

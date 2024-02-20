@@ -43,7 +43,7 @@ function Polygon(props: {
             path[0].lat === path[path.length - 1].lat &&
             path[0].lng === path[path.length - 1].lng
           ) {
-            // first and last coordinates can possibly be the same, polygon should have 3 pairs of *unique* coordinates
+            // First and last coordinates can possibly be the same, polygon should have 3 pairs of *unique* coordinates
             uniqueCoordinates = uniqueCoordinates - 1;
           }
           if (uniqueCoordinates > 3) {
@@ -133,13 +133,13 @@ function Polygon(props: {
             props.onMouseOut(e, polygon);
           }}
           onRightClick={(e: google.maps.PolyMouseEvent) => {
-            // remove node if more than 3 nodes
+            // Remove node if more than 3 nodes
             if (e.vertex !== null && e.vertex !== undefined) {
               if (e.latLng) {
                 removeNodeFromPolygon(e.latLng);
               }
             } else {
-              // not a node that can be removed
+              // Not a node that can be removed
             }
           }}
           onMouseUp={(e: google.maps.PolyMouseEvent) => {
@@ -156,9 +156,9 @@ function Polygon(props: {
               );
               // @ts-ignore
               if (e.domEvent.button !== 2) {
-                // not when right clicking
+                // Not when right clicking
                 if (e?.vertex !== undefined || e?.edge !== undefined) {
-                  // do snapping if enabled
+                  // Do snapping if enabled
 
                   if (doSnap) {
                     props.onPolygonUpdated({

@@ -1,5 +1,5 @@
- // @ts-ignore
-    import React, {
+// @ts-ignore
+import React, {
   createContext,
   Fragment,
   useEffect,
@@ -24,7 +24,7 @@ interface IDropdown {
   color?: string;
   id?: string;
   style?: string;
-  widthClass?: string; // tailwind w-X class e.g. w-56
+  widthClass?: string; // Tailwind w-X class e.g. w-56
   buttonWidth?: string;
   borderColor?: string;
   leftRounded?: boolean;

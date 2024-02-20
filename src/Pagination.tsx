@@ -34,7 +34,7 @@ function Pagination({
   }, [activePageNumber]);
 
   useEffect(() => {
-    // checkPage
+    // CheckPage
     const newUrlParams = new URLSearchParams(window.location.search);
     const page = newUrlParams.get("page");
     if (page) {

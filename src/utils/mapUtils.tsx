@@ -2,7 +2,7 @@ const polygonOptions = {
   fillOpacity: 0.5,
   strokeOpacity: 0.8,
   strokeWeight: 2,
-  editable: false
+  editable: false,
 };
 
 const polygonOptionsFaded = {
@@ -10,7 +10,7 @@ const polygonOptionsFaded = {
   strokeOpacity: 0.5,
   strokeWeight: 2,
   editable: false,
-  somethingChanged: false
+  somethingChanged: false,
 };
 
 function loadGoogleMaps(store: any, scriptSrc: string) {
@@ -44,11 +44,10 @@ function getGeometryJSONFromPath(path: any) {
 }
 
 function getPathFromGeometryJSON(objectWithGeometryJSON: string) {
-  let geometryJSON: { type: string; coordinates: any[] } = objectWithGeometryJSON
-    ? JSON.parse(objectWithGeometryJSON)
-    : {};
+  let geometryJSON: { type: string; coordinates: any[] } =
+    objectWithGeometryJSON ? JSON.parse(objectWithGeometryJSON) : {};
 
-  // convert polygons to multi-polygons
+  // Convert polygons to multi-polygons
   if (geometryJSON.type === "Polygon") {
     geometryJSON.coordinates = [geometryJSON.coordinates];
     geometryJSON.type = "MultiPolygon";
@@ -63,10 +62,10 @@ function getPathFromGeometryJSON(objectWithGeometryJSON: string) {
         path.push(polygonPoints);
 
         // Multi polygon
-        polygon.forEach(coordinate => {
+        polygon.forEach((coordinate) => {
           polygonPoints.push({
             lng: coordinate[0],
-            lat: coordinate[1]
+            lat: coordinate[1],
           });
         });
       });
@@ -112,21 +111,21 @@ function refitBoundsOfMap(
     var bounds = new window.google.maps.LatLngBounds();
     var boundsExtended = false;
 
-    markers.forEach(marker => {
+    markers.forEach((marker) => {
       bounds.extend(marker);
       boundsExtended = true;
     });
 
-    polylines.forEach(polyline => {
+    polylines.forEach((polyline) => {
       polyline.path.forEach((coord: { lng: number; lat: number }) => {
         bounds.extend(coord);
         boundsExtended = true;
       });
     });
 
-    polygons.forEach(multiPolygon => {
+    polygons.forEach((multiPolygon) => {
       if (multiPolygon.path) {
-        multiPolygon.path.forEach(polygon => {
+        multiPolygon.path.forEach((polygon) => {
           polygon.forEach((coord: { lng: number; lat: number }) => {
             bounds.extend(coord);
             boundsExtended = true;
@@ -149,7 +148,7 @@ function refitBoundsOfMap(
 }
 
 function closePolygon(path: { lat: number; lng: number }[]) {
-  // check to close up polygon
+  // Check to close up polygon
   if (path.length >= 2) {
     let latStart = path[0].lat;
     let lngStart = path[0].lng;
@@ -165,18 +164,24 @@ function closePolygon(path: { lat: number; lng: number }[]) {
   return path;
 }
 
-function canEditPolygonVertices(paths: { lat: number; lng: number }[][], maxNodeCount: number) {
+function canEditPolygonVertices(
+  paths: { lat: number; lng: number }[][],
+  maxNodeCount: number
+) {
   let count: number = 0;
-  paths.forEach(path => {
+  paths.forEach((path) => {
     count += path.length;
   });
 
   return count <= maxNodeCount;
 }
 
-function polygonExceedsMinimumNodes(paths: { lat: number; lng: number }[][], minNodeCount: number) {
+function polygonExceedsMinimumNodes(
+  paths: { lat: number; lng: number }[][],
+  minNodeCount: number
+) {
   let count: number = 0;
-  paths.forEach(path => {
+  paths.forEach((path) => {
     count += path.length;
   });
 
@@ -205,12 +210,16 @@ function removeDuplicateLatLngs(path: { lat: any; lng: any }[]) {
   return path;
 }
 
-function pathCrossesAntimeridian(path: { lat: number; lng: number }[]): boolean {
+function pathCrossesAntimeridian(
+  path: { lat: number; lng: number }[]
+): boolean {
   let crosses = false;
   for (let i = 0; i < path.length; i++) {
     let indexBefore = i === 0 ? path.length - 1 : i - 1;
-    let max = path[i].lng > path[indexBefore].lng ? path[i].lng : path[indexBefore].lng;
-    let min = path[i].lng < path[indexBefore].lng ? path[i].lng : path[indexBefore].lng;
+    let max =
+      path[i].lng > path[indexBefore].lng ? path[i].lng : path[indexBefore].lng;
+    let min =
+      path[i].lng < path[indexBefore].lng ? path[i].lng : path[indexBefore].lng;
     if (max - min > 180) {
       crosses = true;
     }
@@ -225,21 +234,26 @@ function getAntimeridianCrossings(
 
   for (let i = 0; i < path.length; i++) {
     let indexBefore = i === 0 ? path.length - 1 : i - 1;
-    let max = path[i].lng > path[indexBefore].lng ? path[i].lng : path[indexBefore].lng;
-    let min = path[i].lng < path[indexBefore].lng ? path[i].lng : path[indexBefore].lng;
+    let max =
+      path[i].lng > path[indexBefore].lng ? path[i].lng : path[indexBefore].lng;
+    let min =
+      path[i].lng < path[indexBefore].lng ? path[i].lng : path[indexBefore].lng;
     if (max - min > 180) {
-      // x0 and x1 are determined by transposing the polygon to be on the x=0 axis instead of x = -180/180
-      let x0 = path[i].lng > 0 ? -(180 - Math.abs(path[i].lng)) : 180 - Math.abs(path[i].lng);
+      // X0 and x1 are determined by transposing the polygon to be on the x=0 axis instead of x = -180/180
+      let x0 =
+        path[i].lng > 0
+          ? -(180 - Math.abs(path[i].lng))
+          : 180 - Math.abs(path[i].lng);
       let x1 =
         path[indexBefore].lng > 0
           ? -(180 - Math.abs(path[indexBefore].lng))
           : 180 - Math.abs(path[indexBefore].lng);
       let m = (path[i].lat - path[indexBefore].lat) / (x0 - x1);
-      let c = path[i].lat - m * x0; // c is the y intercept and will be the same at x = -180/180
+      let c = path[i].lat - m * x0; // C is the y intercept and will be the same at x = -180/180
       crossings.push({
         index: i,
         indexBefore,
-        crossingLat: c
+        crossingLat: c,
       });
     }
   }
@@ -256,7 +270,7 @@ function getAntimeridianCrossings(
 }
 
 function pathToFollowRightHandRule(path: any) {
-  // ensures the path follows an anticlockwise direction
+  // Ensures the path follows an anticlockwise direction
   let signedArea = google.maps.geometry.spherical.computeSignedArea(path);
   let rightHandPath = [];
   if (signedArea < 0) {
@@ -283,14 +297,14 @@ function startPathBeforeFirstCrossing(path: any) {
 }
 
 function splitAcrossAntimeridian(path: any): any[] {
-  path = pathToFollowRightHandRule(path); // standard convention
+  path = pathToFollowRightHandRule(path); // Standard convention
   let crosses = pathCrossesAntimeridian(path);
 
   if (crosses) {
     path = startPathBeforeFirstCrossing(path);
     let crossings = getAntimeridianCrossings(path);
-    let polygonA: any = []; // always to the left of antimeridian because of startPathBeforeFirstCrossing
-    let polygonB: any = []; // always to the right of antimeridian because of startPathBeforeFirstCrossing
+    let polygonA: any = []; // Always to the left of antimeridian because of startPathBeforeFirstCrossing
+    let polygonB: any = []; // Always to the right of antimeridian because of startPathBeforeFirstCrossing
 
     path.forEach((c: { lat: number; lng: number }, i: number) => {
       if (i === crossings[0].indexBefore) {
@@ -314,7 +328,9 @@ function splitAcrossAntimeridian(path: any): any[] {
       }
     });
 
-    return splitAcrossAntimeridian(polygonA).concat(splitAcrossAntimeridian(polygonB));
+    return splitAcrossAntimeridian(polygonA).concat(
+      splitAcrossAntimeridian(polygonB)
+    );
   } else {
     return [path];
   }
@@ -343,5 +359,5 @@ export {
   polygonOptions,
   polygonOptionsFaded,
   removeDuplicateLatLngs,
-  ensureValidPolygonOverAntimeridian
+  ensureValidPolygonOverAntimeridian,
 };

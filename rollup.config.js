@@ -15,26 +15,26 @@ export default {
       file: pkg.main,
       format: "cjs",
       exports: "named",
-      sourcemap: true
+      sourcemap: true,
     },
     {
       file: pkg.module,
       format: "es",
       exports: "named",
-      sourcemap: true
-    }
+      sourcemap: true,
+    },
   ],
   plugins: [
     external(),
     resolve(),
     scss({
       processor: () => postcss([autoprefixer()]),
-      outputStyle: "compressed"
+      outputStyle: "compressed",
     }),
     typescript({
       rollupCommonJSResolveHack: true,
       exclude: "**/__tests__/**",
-      clean: true
+      clean: true,
     }),
     commonjs({
       include: ["node_modules/**"],
@@ -58,13 +58,13 @@ export default {
           "useCallback",
           "useMemo",
           "useReducer",
-          "createRef"
+          "createRef",
         ],
         "node_modules/react-is/index.js": ["isValidElementType"],
         "node_modules/react-dom/index.js": ["render", "createPortal"],
         "react/jsx-runtime": ["jsx", "jsxs", "Fragment"],
-        "react/jsx-dev-runtime": ["jsx", "jsxs", "jsxDEV"]
-      }
-    })
-  ]
+        "react/jsx-dev-runtime": ["jsx", "jsxs", "jsxDEV"],
+      },
+    }),
+  ],
 };

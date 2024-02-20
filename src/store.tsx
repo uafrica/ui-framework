@@ -1,5 +1,5 @@
- // @ts-ignore
-    import React, { createContext, useContext } from "react";
+// @ts-ignore
+import React, { createContext, useContext } from "react";
 // @ts-ignore
 const StoreContext = createContext();
 
@@ -24,7 +24,7 @@ const createStore = (WrappedComponent: any) => {
         const state: any = this.state;
         delete state[key];
         this.setState(state);
-      }
+      },
     };
     render() {
       return (
@@ -40,7 +40,7 @@ const withStore = (WrappedComponent: any) => {
     render() {
       return (
         <StoreContext.Consumer>
-          {context => <WrappedComponent store={context} {...this.props} />}
+          {(context) => <WrappedComponent store={context} {...this.props} />}
         </StoreContext.Consumer>
       );
     }

@@ -1,5 +1,5 @@
- // @ts-ignore
-    import React, { useEffect, useState } from "react";
+// @ts-ignore
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { InfoButton } from "./InfoButton";
 

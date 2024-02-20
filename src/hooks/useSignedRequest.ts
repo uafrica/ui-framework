@@ -43,12 +43,14 @@ export function useSignedRequest({
   onError,
   initialLoadingState,
   signedRequest,
-  disallowRequest = false
+  disallowRequest = false,
 }: IProps) {
   const store = useStore();
   const [response, setResponse] = useState<any>(null);
   const [error, setError] = useState<string | null>("");
-  const [isLoading, setIsLoading] = useState<boolean>(initialLoadingState ?? true);
+  const [isLoading, setIsLoading] = useState<boolean>(
+    initialLoadingState ?? true
+  );
 
   useEffect(() => {
     // Do not fetch on mount by default
@@ -60,7 +62,10 @@ export function useSignedRequest({
     fetchData();
   }, []);
 
-  const makeRequest = async (params?: ObjectType, disableLoadingState?: boolean) => {
+  const makeRequest = async (
+    params?: ObjectType,
+    disableLoadingState?: boolean
+  ) => {
     let responseData: any;
     let errorData: any;
     if (disallowRequest) {

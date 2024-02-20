@@ -1,7 +1,7 @@
- // @ts-ignore
-    import React, { useRef } from "react";
- // @ts-ignore
-    import ReactDOM from "react-dom";
+// @ts-ignore
+import React, { useRef } from "react";
+// @ts-ignore
+import ReactDOM from "react-dom";
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { Manager, Popper, Reference } from "react-popper";

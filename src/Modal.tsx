@@ -1,7 +1,7 @@
- // @ts-ignore
-    import React, { createContext, useEffect, useRef, useState } from "react";
- // @ts-ignore
-    import ReactDOM from "react-dom";
+// @ts-ignore
+import React, { createContext, useEffect, useRef, useState } from "react";
+// @ts-ignore
+import ReactDOM from "react-dom";
 import { Button } from "./Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
@@ -65,7 +65,7 @@ const Base = ({
       }
     }
   }
-  
+
   const ref = useRef(null);
   const hostElement = document.getElementById(hostElementId);
 

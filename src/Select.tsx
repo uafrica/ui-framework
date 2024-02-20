@@ -1,5 +1,5 @@
- // @ts-ignore
-    import React, { createContext, useEffect, useRef, useState } from "react";
+// @ts-ignore
+import React, { createContext, useEffect, useRef, useState } from "react";
 import { Button } from "./Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { InfoButton } from "./InfoButton";
@@ -42,16 +42,16 @@ interface IBase {
   isDisabled?: boolean;
   disableSearch?: boolean;
   placeholder?: any;
-  customSelectionValue?: any; // overrides placeholder and other selection text
+  customSelectionValue?: any; // Overrides placeholder and other selection text
   isMultiSelection?: boolean;
   buttons?: any; // If you want an add option buttons to the bottom of the list, add Button.Link elements
   onDelete?: (label: any, value: any) => void; // Renders a delete button next to each option
-  allowDeselect?: boolean; // single select mode does not allow for the deselection of an option by default, only switching to another option. override by setting this to true
+  allowDeselect?: boolean; // Single select mode does not allow for the deselection of an option by default, only switching to another option. override by setting this to true
   showAsterisk?: boolean;
   dataTest?: string | undefined;
-  showAllButton?: boolean; // conditionally display a button to show all available options
-  showAllSelectedText?: boolean; // show "All selected" if the options selected is equal to the amount of options in the array
-  allSelectedText?: string | undefined; // custom all selected text
+  showAllButton?: boolean; // Conditionally display a button to show all available options
+  showAllSelectedText?: boolean; // Show "All selected" if the options selected is equal to the amount of options in the array
+  allSelectedText?: string | undefined; // Custom all selected text
   popoverHeight?: string;
 }
 
@@ -154,7 +154,7 @@ function GroupedSelect(props: IGroupedSelect) {
     );
   }
 
-  // renders an option group with its list of options
+  // Renders an option group with its list of options
   function renderOptionGroup(
     optionGroup: IOptionGroup,
     shouldShowAllResults?: boolean
@@ -293,7 +293,7 @@ function GroupedSelect(props: IGroupedSelect) {
 
   let flattenedOptions: any[] = [].concat.apply(
     [],
-    //@ts-ignore
+    // @ts-ignore
     optionGroups.map((optionGroup: IOptionGroup) => optionGroup.options)
   );
 
@@ -388,10 +388,10 @@ function GroupedSelect(props: IGroupedSelect) {
           title={allSelected ? "Deselect all" : "Select all"}
           onClick={() => {
             if (allSelected) {
-              // deselect all, ignore disabled options
+              // Deselect all, ignore disabled options
               onChange && onChange(selectedDisabledOptions);
             } else {
-              // select all, ignore disabled options
+              // Select all, ignore disabled options
               onChange &&
                 onChange(
                   (flattenedOptions ? flattenedOptions : [])
@@ -568,7 +568,7 @@ function GroupedSelect(props: IGroupedSelect) {
                     >
                       {!disableSearch && (
                         <Input
-                          shouldAutoFocus={false} // set too false to not make page jump on initial open
+                          shouldAutoFocus={false} // Set too false to not make page jump on initial open
                           autoComplete="off"
                           inputID="ui-framework-search"
                           containerClassName="mt-4 w-full"
@@ -611,7 +611,7 @@ function GroupedSelect(props: IGroupedSelect) {
                       {showAllButton && (
                         <div className="-ml-1 border-t border-gray-200 pt-1">
                           <Button.Link
-                            isDisabled={showAllDisabled} // disable button if show all is clicked
+                            isDisabled={showAllDisabled} // Disable button if show all is clicked
                             title="Show all"
                             onClick={() => {
                               setShowAllClicked(true);
@@ -634,7 +634,7 @@ function GroupedSelect(props: IGroupedSelect) {
 }
 
 function Select(props: ISelect) {
-  // convert options into a group
+  // Convert options into a group
   let optionGroups = [
     {
       label: "",
@@ -675,9 +675,9 @@ function useGroupedSelectCtx(
 
     // @ts-ignore
     function keyDownListener(e: KeyboardEvent) {
-      // does not play well with modal esc
-      // if (e.key === "Escape") {
-      //   setVisible(false);
+      // Does not play well with modal esc
+      // If (e.key === "Escape") {
+      //   SetVisible(false);
       // }
     }
 
@@ -690,7 +690,7 @@ function useGroupedSelectCtx(
       window.removeEventListener("keydown", keyDownListener);
       document.removeEventListener("mousedown", mouseDownListener);
       if (onSearchBlur) {
-        onSearchBlur(); // fires on search blur whenever the dropdown is closed
+        onSearchBlur(); // Fires on search blur whenever the dropdown is closed
       }
     };
   }, [isVisible]);

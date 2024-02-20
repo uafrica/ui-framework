@@ -1,6 +1,6 @@
 import ContentLoader from "react-content-loader";
- // @ts-ignore
-    import React from "react";
+// @ts-ignore
+import React from "react";
 
 function ShipmentLoader() {
   return (

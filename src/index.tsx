@@ -36,7 +36,7 @@ import {
   ModalActionsPanel,
   PageActionsPanel,
   SectionActionsPanel,
-  TableActionsPanel
+  TableActionsPanel,
 } from "./Panels";
 import { GroupedSelect, Select } from "./Select";
 import { IconWithBackground } from "./IconWithBackground";
@@ -77,9 +77,9 @@ import { useFilterWithURLParams } from "./hooks/useFilterWithURLParams";
 import { useDebounce } from "./hooks/useDebounce";
 import { useLocationState } from "./hooks/useLocationState";
 import { WeekdaySelect } from "./WeekdaySelect";
-import {OrderedList} from "./list/OrderedList";
-import {UnorderedList} from "./list/UnorderedList";
-import {ListItem} from "./list/ListItem";
+import { OrderedList } from "./list/OrderedList";
+import { UnorderedList } from "./list/UnorderedList";
+import { ListItem } from "./list/ListItem";
 import { withError } from "./errorBoundary/withError";
 import "./index.scss";
 
@@ -173,5 +173,5 @@ export {
   WeekdaySelect,
   OrderedList,
   UnorderedList,
-  ListItem
+  ListItem,
 };

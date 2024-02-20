@@ -1,5 +1,5 @@
- // @ts-ignore
-    import React from "react";
+// @ts-ignore
+import React from "react";
 import { Button } from "./Button";
 import { Modal } from "./Modal";
 import { useEffect } from "react";

@@ -2,7 +2,12 @@ export interface IGenericUser {
   account_id: number;
   created_by: string;
   email: string;
-  role: { id: number; name: string; permissions: string[], permissions_ui: string[] };
+  role: {
+    id: number;
+    name: string;
+    permissions: string[];
+    permissions_ui: string[];
+  };
   role_id: number;
   name: string;
   phone_number: string;
@@ -15,4 +20,3 @@ export interface IGenericUser {
   api_key?: string;
   secret_key?: string;
 }
-

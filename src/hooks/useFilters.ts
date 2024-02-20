@@ -6,12 +6,12 @@ type ObjectType = {
   [k: string]: any;
 };
 interface IUseFilters {
-  defaultFilters: ObjectType; // default filters to be added initially
-  shouldAppendToURL?: boolean; // should the filters be appended to the url
-  filtersChangeCallback?: Function; // function that runs after a filter change
-  overrideDefaultFilters?: boolean; // should the default filters be overridden by the url filters
-  advancedFilterNames?: ObjectType; // advanced filters to be shown
-  handleInitialFilters?: (val: string) => void; // saved filters to be shown
+  defaultFilters: ObjectType; // Default filters to be added initially
+  shouldAppendToURL?: boolean; // Should the filters be appended to the url
+  filtersChangeCallback?: Function; // Function that runs after a filter change
+  overrideDefaultFilters?: boolean; // Should the default filters be overridden by the url filters
+  advancedFilterNames?: ObjectType; // Advanced filters to be shown
+  handleInitialFilters?: (val: string) => void; // Saved filters to be shown
 }
 
 export function useFilters({
@@ -20,11 +20,13 @@ export function useFilters({
   filtersChangeCallback,
   overrideDefaultFilters = true,
   advancedFilterNames = {},
-  handleInitialFilters
+  handleInitialFilters,
 }: IUseFilters) {
   const history = useHistory();
   const [filters, setFilters] = useState(defaultFilters);
-  const [advancedFiltersChecked, setAdvancedFiltersChecked] = useState<Array<any>>([]);
+  const [advancedFiltersChecked, setAdvancedFiltersChecked] = useState<
+    Array<any>
+  >([]);
 
   function IsJsonString(str: any) {
     try {
@@ -56,13 +58,13 @@ export function useFilters({
 
     if (advancedFilterNames) {
       Object.keys(advancedFilterNames).forEach((key: string) => {
-        // if the preset contains an advanced filter, show the filter
+        // If the preset contains an advanced filter, show the filter
 
         let advancedFilterKey = advancedFilterNames[key];
         if (newFilters[advancedFilterKey]) {
           advancedFiltersChecked.push(advancedFilterNames[key]);
         } else if (handleInitialFilters) {
-          handleInitialFilters(key); // if the preset contains an advanced filter, show the filter
+          handleInitialFilters(key); // If the preset contains an advanced filter, show the filter
         }
       });
     }
@@ -72,7 +74,7 @@ export function useFilters({
     } else {
       newFilters = {
         ...newFilters,
-        ...defaultFilters
+        ...defaultFilters,
       };
     }
     setFilters(newFilters);
@@ -98,10 +100,12 @@ export function useFilters({
       delete filtersClone.end_date;
     }
 
-    let value = generalUtils.serialize(generalUtils.addFiltersToArgsCheck(filtersClone, {}));
+    let value = generalUtils.serialize(
+      generalUtils.addFiltersToArgsCheck(filtersClone, {})
+    );
     history.push({
       pathname: location.pathname,
-      search: value.toString()
+      search: value.toString(),
     });
   }
 
@@ -129,6 +133,6 @@ export function useFilters({
     setFilters,
     handleFilterChange,
     advancedFiltersChecked,
-    setAdvancedFiltersChecked
+    setAdvancedFiltersChecked,
   };
 }

@@ -1,6 +1,6 @@
 import moment from "moment";
- // @ts-ignore
-    import React, { useContext, useRef } from "react";
+// @ts-ignore
+import React, { useContext, useRef } from "react";
 import { DatePickerCtx, useDatePickerCtx } from "./DatePickerContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Input } from "../Input";

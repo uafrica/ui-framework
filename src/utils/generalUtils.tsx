@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { Message } from "../Message";
- // @ts-ignore
-    import React, { ReactElement } from "react";
+// @ts-ignore
+import React, { ReactElement } from "react";
 import { detect } from "detect-browser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import transform from "lodash/transform";
@@ -131,7 +131,7 @@ function getErrorString(result: any): string {
   try {
     result = JSON.parse(result);
   } catch (_) {
-    // no json, but a string
+    // No json, but a string
   }
 
   if (typeof result === "object") {
@@ -150,7 +150,7 @@ function getErrorString(result: any): string {
         }
         return result;
       } catch (_) {
-        // no json, but a string
+        // No json, but a string
       }
 
       return result.error.message;
@@ -203,7 +203,7 @@ function getError(result: any, hideConsoleLog?: boolean | null): string {
     }
   }
 
-  if (error && error?.trim() === "the account has been closed") return ""; // handled by the 423 code
+  if (error && error?.trim() === "the account has been closed") return ""; // Handled by the 423 code
 
   return capitalize(error);
 }
@@ -247,7 +247,7 @@ function keyToHumanReadable(key: string | undefined): string {
   keyHumanReadable = keyHumanReadable.replaceAll("receiver", "delivery");
   keyHumanReadable = keyHumanReadable.replaceAll("-", " ");
 
-  // camel case to sentence case
+  // Camel case to sentence case
   keyHumanReadable = keyHumanReadable.replace(/([A-Z])/g, " $1").trim();
 
   let sentenceCaseKey =
@@ -277,12 +277,12 @@ function cleanPhone(phone: string, removeSpaces?: boolean): string {
   const countryCode = "27";
 
   var cleanPhone = phone.replaceAll(" ", "");
-  // convert e.g. 0027 to +27
+  // Convert e.g. 0027 to +27
   if (cleanPhone.indexOf("00" + countryCode) === 0) {
     cleanPhone = "+27" + cleanPhone.substr(4);
   }
 
-  // convert e.g. 076 to +2776
+  // Convert e.g. 076 to +2776
   if (cleanPhone.indexOf("0") === 0) {
     cleanPhone = "+27" + cleanPhone.substr(1);
   }
@@ -440,11 +440,11 @@ function IsJsonString(str: any) {
 }
 
 function parseFieldsAsFloatsInsideObject(objData: any, arr: string[]) {
-  // myData represents the array of values that will be matched to the arr fed to the function
+  // MyData represents the array of values that will be matched to the arr fed to the function
   let myData: any = [];
   // Parse values in an object based on the array passed. The array should include the fields that you wanna parse
   Object.keys(objData)
-    // get order of arrays correct
+    // Get order of arrays correct
     .sort((a, b) => arr.indexOf(a) - arr.indexOf(b))
     .filter((el) => callback(el, arr))
     .forEach((el) => {
@@ -521,6 +521,7 @@ function openInNewTab(url: string, store: any): boolean {
               href={url}
               target="_blank"
               className="text-primary cursor-pointer font-bold"
+              rel="noreferrer"
             >
               {url}
             </a>{" "}
@@ -533,6 +534,7 @@ function openInNewTab(url: string, store: any): boolean {
                 href={docs}
                 target="_blank"
                 className="text-primary cursor-pointer font-bold"
+                rel="noreferrer"
               >
                 instructions
               </a>

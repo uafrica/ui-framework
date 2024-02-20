@@ -1,5 +1,5 @@
- // @ts-ignore
-    import React, { useEffect, useState } from "react";
+// @ts-ignore
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface IProps {
@@ -29,7 +29,7 @@ function Banner(props: IProps) {
         element.offsetHeight < element.scrollHeight ||
         element.offsetWidth < element.scrollWidth
       ) {
-        // element has overflow and is truncated
+        // Element has overflow and is truncated
         if (isMultiline === false) {
           setIsMultiline(true);
         }

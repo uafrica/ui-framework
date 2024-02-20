@@ -1,5 +1,5 @@
- // @ts-ignore
-    import React from "react";
+// @ts-ignore
+import React from "react";
 import { Button } from "./Button";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { PageHeading } from "./PageHeading";
@@ -60,7 +60,12 @@ function SectionActionsPanel(props: ISectionActionsPanel) {
   let { title, className, toggleEditMode, hideEditMode, icon, iconColor } =
     props;
   return (
-    <div className={" flex justify-between flex-col md:flex-row items-start md:items-center z-30  " + (className ? className : "")}>
+    <div
+      className={
+        " flex justify-between flex-col md:flex-row items-start md:items-center z-30  " +
+        (className ? className : "")
+      }
+    >
       {title && (
         <SectionHeading
           icon={icon}

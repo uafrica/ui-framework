@@ -173,7 +173,7 @@ function Map(props: {
 
   useEffect(() => {
     if (!isMapLoaded && map !== undefined) {
-      // map initial load
+      // Map initial load
       setIsMapLoaded(true);
       if (bounds) {
         map.fitBounds(bounds);
@@ -245,7 +245,7 @@ function Map(props: {
   ) {
     if (polygons) {
       let { edge, vertex, path } = e;
-      // check if cursor was on polygon outline
+      // Check if cursor was on polygon outline
       if (path !== undefined && (edge !== undefined || vertex !== undefined)) {
         let polygonPathContaingCoordinates = findPolygonPathContaingCoordinates(
           cursorLocation,
@@ -253,13 +253,13 @@ function Map(props: {
         );
 
         if (polygonPathContaingCoordinates) {
-          // node was moved to inside another polygon
+          // Node was moved to inside another polygon
           let closestPoint: any = findClosestPointInPath(
             cursorLocation,
             polygonPathContaingCoordinates
           );
 
-          // replace the dragged point with the point to which it should snap
+          // Replace the dragged point with the point to which it should snap
           if (closestPoint) {
             let polygonPathsAfterSnap = [...polygon.paths];
             if (edge !== undefined) {
@@ -282,7 +282,7 @@ function Map(props: {
           } else {
           }
         } else {
-          // node was not moved to inside of another polygon
+          // Node was not moved to inside of another polygon
           let polygonPathsAfterNodeMove = [...polygon.paths];
           polygonPathsAfterNodeMove[path] = removeDuplicateLatLngs(
             polygonPathsAfterNodeMove[path]
@@ -332,7 +332,7 @@ function Map(props: {
   }
 
   function getPixelDistanceByRealDistance(realDistance: number) {
-    // obtained from https://www.programmersought.com/article/88374418694/
+    // Obtained from https://www.programmersought.com/article/88374418694/
     var pointA = map.getCenter();
     var pointAPixel = latLngToPixel(pointA);
     var pointB = new google.maps.LatLng(pointA.lat() + 0.01, pointA.lng());
@@ -371,7 +371,7 @@ function Map(props: {
         if (polygon?.id !== selectedPolygon?.id) {
           if (polygon.paths) {
             for (let path of polygon.paths) {
-              let googleLatLngPath: any = []; // required for google polygon
+              let googleLatLngPath: any = []; // Required for google polygon
               path.forEach((latLng: any) => {
                 googleLatLngPath.push(
                   new google.maps.LatLng(latLng.lat, latLng.lng)

@@ -234,7 +234,7 @@ function OpenStreetMap(props: {
                 icon: L.icon({
                   iconUrl: marker.options.icon ?? "",
                   iconSize: [iconWidth, iconHeight],
-                  iconAnchor: [iconWidth / 2, iconHeight], // middle bottom
+                  iconAnchor: [iconWidth / 2, iconHeight], // Middle bottom
                 }),
               }
             ).addEventListener("click", (e: any) => {

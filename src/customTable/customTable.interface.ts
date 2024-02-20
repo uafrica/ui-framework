@@ -19,7 +19,7 @@ export interface ICustomTable {
   }>;
   fetchFunctionArguments?: any;
   draggableRows?: boolean;
-  rowUniqueIdentifier?: string; // default "id"
+  rowUniqueIdentifier?: string; // Default "id"
   onPageSizeChanged?: (pageSize: number) => void;
   onRowClicked?: (row: {
     index: number;

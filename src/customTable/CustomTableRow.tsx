@@ -1,6 +1,6 @@
 import * as customTableUtils from "./customTableUtils";
- // @ts-ignore
-    import React from "react";
+// @ts-ignore
+import React from "react";
 import { IColumn } from "./column.interface";
 import "./CustomTable.scss";
 import { ICustomTableRow } from "./customTableRow.interface";
@@ -90,9 +90,9 @@ function CustomTableRow(props: ICustomTableRow) {
               }}
               onMouseDown={(e: any) => {
                 if (e.button === 0 && e.buttons === 1) {
-                  // right click (allows text selection)
+                  // Right click (allows text selection)
                 } else {
-                  // left click
+                  // Left click
                   e.preventDefault();
                   e.stopPropagation();
                 }

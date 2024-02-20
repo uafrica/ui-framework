@@ -1,5 +1,5 @@
- // @ts-ignore
-    import React from "react";
+// @ts-ignore
+import React from "react";
 import { useState } from "react";
 
 function WeekdaySelect(props: { value?: number[]; onChange?: Function }) {

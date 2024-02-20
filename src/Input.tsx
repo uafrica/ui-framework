@@ -1,5 +1,5 @@
- // @ts-ignore
-    import React from "react";
+// @ts-ignore
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IInputProps } from "./interfaces/inputProps.interface";
 import { InfoButton } from "./InfoButton";
@@ -105,7 +105,7 @@ function Input(props: IInputProps) {
       defaultValue={defaultValue}
       value={value}
       id={inputID}
-      readOnly={isDisabled || isReadOnly} // if we make the input isDisabled then react-hooks-form doesn't submit the defaultValue https://twitter.com/bluebill1049/status/1300231640392716288
+      readOnly={isDisabled || isReadOnly} // If we make the input isDisabled then react-hooks-form doesn't submit the defaultValue https://twitter.com/bluebill1049/status/1300231640392716288
       onChange={onChange}
       onClick={onClick}
       onFocus={(e: any) => {
@@ -134,7 +134,7 @@ function Input(props: IInputProps) {
       maxLength={maxLength}
       autoComplete={
         autoComplete === "off" ? "something-chrome-does-not-know" : autoComplete
-      } // setting autoComplete to off is not reliable
+      } // Setting autoComplete to off is not reliable
       className={
         "focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent shadow-sm block w-full border-gray-300 rounded-md " +
         inputClasses +

@@ -1,9 +1,9 @@
-import {INavItem} from "../interfaces/navitem.interface"
+import { INavItem } from "../interfaces/navitem.interface";
 
 function checkIfUserHasAccessToNavSection(section: INavItem[]) {
   if (section) {
     let hasAccessToSection = false;
-    section.map(item => {
+    section.map((item) => {
       if (item.displayCondition && item.hasAccess) {
         hasAccessToSection = true;
       }
@@ -15,4 +15,4 @@ function checkIfUserHasAccessToNavSection(section: INavItem[]) {
   }
 }
 
-export {checkIfUserHasAccessToNavSection}
+export { checkIfUserHasAccessToNavSection };

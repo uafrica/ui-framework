@@ -1,5 +1,5 @@
- // @ts-ignore
-    import React from "react";
+// @ts-ignore
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp, SizeProp } from "@fortawesome/fontawesome-svg-core";
 import { Link as RouterLink } from "react-router-dom";
@@ -20,7 +20,7 @@ interface IButtonProps {
   hoverTitle?: string;
   leftRounded?: boolean;
   rightRounded?: boolean;
-  bgColor?: string; // overrides icon bg
+  bgColor?: string; // Overrides icon bg
   iconClassName?: string;
 }
 
@@ -284,7 +284,9 @@ function ButtonsPanel(props: IButtonsPanelProps) {
   return (
     <div
       className={
-        " w-full  flex flex-col-reverse sm:flex-row space-y-4 sm:space-y-0 space-y-reverse space-x-0 sm:space-x-4  " + align + (noMargin ? "" : " mt-6 mb-1")
+        " w-full  flex flex-col-reverse sm:flex-row space-y-4 sm:space-y-0 space-y-reverse space-x-0 sm:space-x-4  " +
+        align +
+        (noMargin ? "" : " mt-6 mb-1")
       }
     >
       {children}

@@ -3,5 +3,5 @@ export interface ICountry {
   dialCode: string;
   code: string;
   flag: string;
-  secondary?: boolean
+  secondary?: boolean;
 }

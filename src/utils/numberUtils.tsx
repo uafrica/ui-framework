@@ -23,10 +23,14 @@ function formatNumberWithCurrency(
 
   let amountOutput;
   if (forceAsInteger) {
-    amountOutput = addSpaces ? numberWithSpaces(Math.floor(amount)) : amount + "";
+    amountOutput = addSpaces
+      ? numberWithSpaces(Math.floor(amount))
+      : amount + "";
   } else {
     amount = parseFloat(amount);
-    amountOutput = addSpaces ? numberWithSpaces(amount.toFixed(2)) : amount.toFixed(2);
+    amountOutput = addSpaces
+      ? numberWithSpaces(amount.toFixed(2))
+      : amount.toFixed(2);
   }
 
   return (isNegative ? "- " : "") + currency + " " + amountOutput;
@@ -47,7 +51,11 @@ function formatWeight(weight: any) {
   return weightOutput + "kg";
 }
 
-function formatNumber(amount: any, formatAsInteger: boolean, addSpaces: boolean) {
+function formatNumber(
+  amount: any,
+  formatAsInteger: boolean,
+  addSpaces: boolean
+) {
   if (amount === null || typeof amount === "undefined") return "";
 
   amount = amount.toString().replace(/\s/g, "");
@@ -108,7 +116,7 @@ function roundAndFormatNumberWithSpaces(value: any, maxDecimals: number) {
   return numberWithSpaces(value);
 }
 
-// formats number to be displayed as eg. 12k instead of 12000
+// Formats number to be displayed as eg. 12k instead of 12000
 function abbreviatedNumber(num: number, digits: number) {
   let isNegative = false;
   if (num < 0) {
@@ -122,7 +130,7 @@ function abbreviatedNumber(num: number, digits: number) {
     { value: 1e9, symbol: "G" },
     { value: 1e12, symbol: "T" },
     { value: 1e15, symbol: "P" },
-    { value: 1e18, symbol: "E" }
+    { value: 1e18, symbol: "E" },
   ];
   const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
   var item = lookup
@@ -133,7 +141,9 @@ function abbreviatedNumber(num: number, digits: number) {
     });
 
   return item
-    ? (isNegative ? "-" : "") + (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol
+    ? (isNegative ? "-" : "") +
+        (num / item.value).toFixed(digits).replace(rx, "$1") +
+        item.symbol
     : "0";
 }
 
@@ -166,5 +176,5 @@ export {
   abbreviatedNumber,
   getPrimeNumbersBetween,
   getRandomNumberBetween,
-  getRandomPrimeBetween
+  getRandomPrimeBetween,
 };

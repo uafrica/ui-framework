@@ -1,5 +1,5 @@
- // @ts-ignore
-    import React from "react";
+// @ts-ignore
+import React from "react";
 
 // Interface
 interface ILoader {
@@ -47,7 +47,8 @@ function BaseLoader(props: IBaseLoader) {
   return (
     <div
       className={
-        " flex items-center justify-center  " + (props.containerClassName ? props.containerClassName : "")
+        " flex items-center justify-center  " +
+        (props.containerClassName ? props.containerClassName : "")
       }
     >
       <div

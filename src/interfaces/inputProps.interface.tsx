@@ -30,7 +30,7 @@ export interface IInputProps {
   containerClassName?: string;
   errorMessage?: string;
   shouldAutoFocus?: any;
-  isOptional?: any; // when boolean displays the text "optional" next to the label, when string displays string value
+  isOptional?: any; // When boolean displays the text "optional" next to the label, when string displays string value
   isReadOnly?: boolean;
   inputClassName?: string;
   info?: any;
@@ -55,8 +55,16 @@ export interface IInputProps {
   prependTextSize?: string;
   showAsterisk?: boolean;
   hideArrows?: boolean;
-  disableNumericInputScroll?: boolean; // scrolling over a numeric input causes the input value to change
+  disableNumericInputScroll?: boolean; // Scrolling over a numeric input causes the input value to change
   dataTest?: string | undefined;
   pointer?: any;
-  inputMode?: "none" | "text" | "tel" | "url" | "email" | "numeric" | "decimal" | "search";
+  inputMode?:
+    | "none"
+    | "text"
+    | "tel"
+    | "url"
+    | "email"
+    | "numeric"
+    | "decimal"
+    | "search";
 }

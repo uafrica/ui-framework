@@ -11,10 +11,10 @@ function DateRange(props: {
   showMonth?: boolean;
   period?: string;
   defaultPeriod?: string;
-  dateFrom?: any; // used for range and/or month selection
-  defaultDateFrom?: any; // used for range and/or month selection
-  dateTo?: any; // used for range and/or month selection
-  defaultDateTo?: any; // used for range and/or month selection
+  dateFrom?: any; // Used for range and/or month selection
+  defaultDateFrom?: any; // Used for range and/or month selection
+  dateTo?: any; // Used for range and/or month selection
+  defaultDateTo?: any; // Used for range and/or month selection
   onPeriodChange?: Function;
   onRangeChange?: Function;
   onMonthChange?: Function;
@@ -49,7 +49,7 @@ function DateRange(props: {
   } = props;
   useEffect(() => {
     if (showMonth && onMonthChange) {
-      // ensure default values are from start to end of month
+      // Ensure default values are from start to end of month
       let defaultToMonth = Date.parse(
         moment(defaultDateTo).endOf("month").format("YYYY-MM-DD HH:mm:ss")
       );
@@ -60,8 +60,8 @@ function DateRange(props: {
       if (dateFrom) {
         dateFrom = moment(dateFrom)
           .startOf("month")
-          .format("YYYY-MM-DD HH:mm:ss"); // removed .format("YYYY-MM-DD HH:mm:ss) to make things work on safari
-        dateTo = moment(dateFrom).endOf("month").format("YYYY-MM-DD HH:mm:ss"); // added .format back because safari seems to be working again
+          .format("YYYY-MM-DD HH:mm:ss"); // Removed .format("YYYY-MM-DD HH:mm:ss) to make things work on safari
+        dateTo = moment(dateFrom).endOf("month").format("YYYY-MM-DD HH:mm:ss"); // Added .format back because safari seems to be working again
       }
 
       onMonthChange(dateFrom ?? defaultFromMonth, dateTo ?? defaultToMonth);

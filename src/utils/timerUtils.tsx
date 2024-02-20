@@ -14,21 +14,23 @@ function setIntervalAccurately(
     const now = new Date().getTime();
     let lastExecutedTime: number = 0;
 
-    // cache last executed time in memory
+    // Cache last executed time in memory
     if (intervals[name]) {
       lastExecutedTime = intervals[name];
     } else {
-      lastExecutedTime = parseInt(localStorage.getItem(`interval-${name}`) || "0");
+      lastExecutedTime = parseInt(
+        localStorage.getItem(`interval-${name}`) || "0"
+      );
     }
 
-    // initialize values
+    // Initialize values
     if (!lastExecutedTime) {
       lastExecutedTime = now;
       intervals[name] = now;
       localStorage.setItem(`interval-${name}`, `${lastExecutedTime}`);
     }
 
-    // if enough time passed, execute the function and update last execution time
+    // If enough time passed, execute the function and update last execution time
     if (now >= lastExecutedTime + intervalInMs) {
       localStorage.setItem(`interval-${name}`, `${now}`);
       intervals[name] = now;

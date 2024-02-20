@@ -1,6 +1,6 @@
 import moment from "moment";
- // @ts-ignore
-    import React, { createContext, useEffect, useState } from "react";
+// @ts-ignore
+import React, { createContext, useEffect, useState } from "react";
 
 type ViewState = "month" | "year";
 

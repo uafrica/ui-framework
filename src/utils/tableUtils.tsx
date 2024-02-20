@@ -1,7 +1,7 @@
 import * as numberUtils from "./numberUtils";
 import moment from "moment";
- // @ts-ignore
-    import React from "react";
+// @ts-ignore
+import React from "react";
 import { Link } from "react-router-dom";
 import { Loader } from "./../Loader";
 
@@ -96,7 +96,7 @@ function getTableCountDivWithDateRangeIndication(
   if (absolute_query === "month") {
     timeRangeString = " for the selected month";
   } else if (absolute_query === "date_range") {
-    // date range
+    // Date range
     let duration = moment.duration(moment(endDate).diff(moment(startDate)));
     let days = Math.ceil(duration.asDays());
     let weeks = Math.round(duration.asWeeks());
@@ -109,7 +109,7 @@ function getTableCountDivWithDateRangeIndication(
             timeCount === 1 ? "" : "s"
           }`;
   } else {
-    // date period
+    // Date period
     try {
       let _absoluteQuery: any =
         absolute_query &&
@@ -180,7 +180,7 @@ function linkableTableRow(
   return ((componentClass, displayName) => {
     // @ts-ignore
     const cmp: any = ({ children, className, ...rest }) => {
-      // headings
+      // Headings
       if (!rest || !rest[key]) {
         return (
           <div className={componentClass} {...rest}>
@@ -201,7 +201,7 @@ function linkableTableRow(
         children = children.splice(0, children.length - 1);
       }
 
-      // body
+      // Body
       cmp.displayName = displayName;
 
       return (
@@ -231,7 +231,7 @@ function clickableTableRow(
   return ((componentClass, displayName) => {
     // @ts-ignore
     const cmp: any = ({ children, className, ...rest }) => {
-      // headings
+      // Headings
       if (!rest || !className) {
         return (
           <div className={componentClass} {...rest}>
@@ -252,7 +252,7 @@ function clickableTableRow(
         children = children.splice(0, children.length - 1);
       }
 
-      // body
+      // Body
       cmp.displayName = displayName;
 
       if (typeof onClickEvent === "function") {

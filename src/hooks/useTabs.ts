@@ -23,7 +23,7 @@ function useTabs(defaultTab: string, clearParams?: boolean) {
     }
   });
 
-  // pass extra params through as object
+  // Pass extra params through as object
   function onTabSelected(tab: any, extraParams?: any, overrideClear?: boolean) {
     const queryParams = new URLSearchParams(location.search);
     queryParams.set("tab", tab);
@@ -36,7 +36,8 @@ function useTabs(defaultTab: string, clearParams?: boolean) {
 
     history.push({
       pathname: location.pathname,
-      search: clearParams && !overrideClear ? `tab=${tab}` : queryParams.toString()
+      search:
+        clearParams && !overrideClear ? `tab=${tab}` : queryParams.toString(),
     });
   }
 

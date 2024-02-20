@@ -1,6 +1,6 @@
 import { Label } from "./Label";
- // @ts-ignore
-    import React, { useRef } from "react";
+// @ts-ignore
+import React, { useRef } from "react";
 
 interface IProps {
   value: { month: string; year: string };
@@ -11,9 +11,9 @@ function ExpiryDateInput(props: IProps) {
 
   const yearInputRef = useRef<HTMLInputElement>(null);
 
-  /* --------------------------------*/
+  /* -------------------------------- */
   /* RENDER METHODS */
-  /* --------------------------------*/
+  /* -------------------------------- */
 
   function render() {
     return (

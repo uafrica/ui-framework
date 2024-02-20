@@ -1,5 +1,5 @@
- // @ts-ignore
-    import React from "react";
+// @ts-ignore
+import React from "react";
 
 interface IOrderedListProps {
   children: React.ReactNode;

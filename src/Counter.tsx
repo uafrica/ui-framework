@@ -1,5 +1,5 @@
- // @ts-ignore
-    import React from "react";
+// @ts-ignore
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Input } from "./Input";
 import { Label } from "./Label";
@@ -112,7 +112,7 @@ function Counter(props: ICounterProps) {
           type="number"
           shouldAutoFocus={shouldAutoFocus}
           onChange={(e: any) => {
-            // only change value if within any specified limits
+            // Only change value if within any specified limits
             setInputValue(e.target.value);
             if (min !== undefined && max !== undefined) {
               if (e.target.value >= min && e.target.value <= max) {
@@ -131,7 +131,7 @@ function Counter(props: ICounterProps) {
             }
           }}
           onBlur={() => {
-            // ensures the user did not manually enter a value exceeding the limits
+            // Ensures the user did not manually enter a value exceeding the limits
             if (min !== undefined || max !== undefined) {
               if (min && inputValue < min) {
                 setInputValue(min);

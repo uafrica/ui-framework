@@ -28,8 +28,16 @@ async function validateContactNumber(value: string) {
 
 function withValidation(Component: any) {
   return function WrappedComponent(props: any) {
-    const { register, handleSubmit, watch, reset, errors, clearErrors, trigger, setValue } =
-      useForm();
+    const {
+      register,
+      handleSubmit,
+      watch,
+      reset,
+      errors,
+      clearErrors,
+      trigger,
+      setValue,
+    } = useForm();
     let validation = {
       register,
       handleSubmit,
@@ -38,7 +46,7 @@ function withValidation(Component: any) {
       errors,
       clearErrors,
       trigger,
-      setValue
+      setValue,
     };
 
     return <Component {...props} validation={validation} />;
@@ -51,5 +59,5 @@ export {
   emailRegex,
   contactNumberRegex,
   URLRegex,
-  withValidation
+  withValidation,
 };

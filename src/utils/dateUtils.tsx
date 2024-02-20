@@ -4,16 +4,25 @@ import { clone } from "./generalUtils";
 function shortenFromNow(str: string): string {
   if (str === "a few seconds ago") str = "now";
 
-  str = str.replaceAll("hours", "h").replaceAll("minutes", "m").replaceAll("seconds", "s");
-  str = str.replaceAll("hour", "h").replaceAll("minute", "m").replaceAll("second", "s");
+  str = str
+    .replaceAll("hours", "h")
+    .replaceAll("minutes", "m")
+    .replaceAll("seconds", "s");
+  str = str
+    .replaceAll("hour", "h")
+    .replaceAll("minute", "m")
+    .replaceAll("second", "s");
   str = str.replaceAll("days", "d").replaceAll("day", "d");
   str = str.replaceAll("months", "mo").replaceAll("month", "mo");
-  str = str.replaceAll(" ago", "").replaceAll("an ", " 1 ").replaceAll("a ", " 1 ");
+  str = str
+    .replaceAll(" ago", "")
+    .replaceAll("an ", " 1 ")
+    .replaceAll("a ", " 1 ");
 
   str = str.replaceAll(" ", "");
 
   if (str === "in1fews") {
-    // happens when server is a few seconds ahead of machine
+    // Happens when server is a few seconds ahead of machine
     return "now";
   }
   return str;
@@ -25,7 +34,10 @@ function pgFormatDate(date: string | Date | Moment | undefined): string {
   return momentDate.format("YYYY-MM-DD HH:mm:ssZ");
 }
 
-function humanFormatTime(date: string | Date | Moment | undefined, includeSeconds?: boolean): any {
+function humanFormatTime(
+  date: string | Date | Moment | undefined,
+  includeSeconds?: boolean
+): any {
   if (!date) return "";
   let momentDate: Moment = moment(date);
   if (momentDate.isValid()) {
@@ -59,7 +71,9 @@ function humanFormatDate(date: string | Date | Moment | undefined): string {
   return momentDate.format("D MMM YYYY");
 }
 
-function humanFormatDateWithDay(date: string | Date | Moment | undefined): string {
+function humanFormatDateWithDay(
+  date: string | Date | Moment | undefined
+): string {
   if (!date) return "";
   let momentDate: Moment = moment(date);
   return momentDate.format("ddd, D MMM YYYY");
@@ -75,7 +89,7 @@ function humanFormatBetweenDates(dateFrom: string, dateTo: string) {
   return { from: dateFrom, to: dateTo };
 }
 
-// returns amount of minutes between two dates where startDate is chronologically first and endDate is chronologically last
+// Returns amount of minutes between two dates where startDate is chronologically first and endDate is chronologically last
 function getMinutesBetweenDates(
   startDate: string | Date | Moment,
   endDate: string | Date | Moment
@@ -120,11 +134,11 @@ function getTimeslots(
   let maxHourExcludeHalfHour;
 
   if (!startTimeClone) {
-    startTimeClone = "08:00"; // default
+    startTimeClone = "08:00"; // Default
   }
 
   if (!endTimeClone) {
-    endTimeClone = "17:00"; // default
+    endTimeClone = "17:00"; // Default
   }
 
   minHour = parseInt(startTimeClone.substr(0, 2));
@@ -146,14 +160,14 @@ function getTimeslots(
     if (i !== minHour || !minHourExcludeHour) {
       timeslots.push({
         id: i,
-        display: (i < 10 ? "0" + i : i) + ":00"
+        display: (i < 10 ? "0" + i : i) + ":00",
       });
     }
 
     if (i !== maxHour || !maxHourExcludeHalfHour) {
       timeslots.push({
         id: i + 0.5,
-        display: (i < 10 ? "0" + i : i) + ":30"
+        display: (i < 10 ? "0" + i : i) + ":30",
       });
     }
   }
@@ -170,7 +184,7 @@ function getTimeslots(
 }
 
 function orderDays(days: any[]) {
-  // order the days
+  // Order the days
   const sorter: any = {
     monday: 1,
     tuesday: 2,
@@ -178,7 +192,7 @@ function orderDays(days: any[]) {
     thursday: 4,
     friday: 5,
     saturday: 6,
-    sunday: 7
+    sunday: 7,
   };
 
   days.sort(function sortByDay(a, b) {
@@ -201,5 +215,5 @@ export {
   formatDateTodayTomorrow,
   timeslotAsInt,
   orderDays,
-  getTimeslots
+  getTimeslots,
 };
