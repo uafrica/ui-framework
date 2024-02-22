@@ -1224,7 +1224,9 @@ function CustomTable(props: ICustomTable) {
         {error && <Message.Error>{error}</Message.Error>}
         {isLoading && data.length === 0 ? <Loader.Inline /> : <div></div>}
         {generalUtils.isScreenDesktopSize() && renderDesktopView()}
-        {!generalUtils.isScreenDesktopSize() && renderMobileView()}
+        {!generalUtils.isScreenDesktopSize() && props.renderMobileRow
+          ? renderMobileView()
+          : renderDesktopView()}
       </div>
     );
   }
