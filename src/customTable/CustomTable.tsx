@@ -153,11 +153,17 @@ function CustomTable(props: ICustomTable) {
           insertRowRef.current(data, rowOrder, object, index ?? 0);
         },
         refresh: () => {
-          refreshRef.current();
+          refreshRef.current(page, pageSize);
         },
       });
     }
   }, [data, rowOrder]);
+
+  useEffect(() => {
+    refreshRef.current = (page, pageSize) => {
+      refresh(page, pageSize);
+    };
+  }, [page, pageSize]);
 
   useEffect(() => {
     if (autoRefreshInterval) {
@@ -229,7 +235,7 @@ function CustomTable(props: ICustomTable) {
     repositionMenu();
   }, [clickPosition]);
 
-  function refresh(shouldLoad?: boolean) {
+  function refresh(page: number, pageSize: number, shouldLoad?: boolean) {
     load(false, page, pageSize, shouldLoad);
   }
 
@@ -1081,7 +1087,7 @@ function CustomTable(props: ICustomTable) {
                   color="black"
                   title="Refresh"
                   onClick={() => {
-                    refreshRef.current(true);
+                    refreshRef.current(page, pageSize, true);
                   }}
                   icon="redo-alt"
                 />
