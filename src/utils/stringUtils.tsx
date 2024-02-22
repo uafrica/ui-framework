@@ -9,7 +9,7 @@ function formatToSnakeCase(sentence: string | undefined): string {
 }
 
 function convertToSentenceCase(sentence: string) {
-  if (!sentence) {
+  if (!sentence || typeof (sentence) !== "string" || !sentence.split) {
     return "";
   }
 
