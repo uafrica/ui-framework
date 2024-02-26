@@ -1,6 +1,6 @@
 import moment from "moment";
 // @ts-ignore
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { DatePickerCtx, useDatePickerCtx } from "./DatePickerContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Input } from "../Input";
@@ -209,6 +209,8 @@ const Calendar: React.FC<CalendarProps> = React.forwardRef<
 
 const TimeSelection: React.FC<{}> = (_) => {
   const { selectHours, selectMinutes, date } = useContext(DatePickerCtx);
+  const [hours, setHours] = useState<number>();
+  const [minutes, setMinutes] = useState<number>();
   return (
     <div className="mt-1 text-center">
       <div>
@@ -223,23 +225,28 @@ const TimeSelection: React.FC<{}> = (_) => {
             step={1}
             min={0}
             max={23}
+            value={hours}
             defaultValue={moment(date).format("HH")}
             placeholder="hh"
             onChange={(e: any) => {
               let hours = e.target.value;
+              const length = hours.length;
               try {
                 hours = parseInt(hours);
                 if (isNaN(hours)) {
+                  setHours(undefined);
                   selectHours(0);
                   return;
                 }
                 if (hours < 0) {
                   hours = 0;
-                } else if (hours > 23) {
+                } else if (hours > 23 || length > 2) {
                   hours = 23;
                 }
+                setHours(hours);
                 selectHours(hours);
               } catch (e) {
+                setHours(0);
                 selectHours(0);
               }
             }}
@@ -256,23 +263,28 @@ const TimeSelection: React.FC<{}> = (_) => {
             step={1}
             min={0}
             max={59}
+            value={minutes}
             defaultValue={moment(date).format("mm")}
             placeholder="mm"
             onChange={(e: any) => {
               let minutes = e.target.value;
+              const length = minutes.length;
               try {
                 minutes = parseInt(minutes);
                 if (isNaN(minutes)) {
+                  setMinutes(undefined);
                   selectMinutes(0);
                   return;
                 }
                 if (minutes < 0) {
                   minutes = 0;
-                } else if (minutes > 59) {
+                } else if (minutes > 59 || length > 2) {
                   minutes = 59;
                 }
+                setMinutes(minutes);
                 selectMinutes(minutes);
               } catch (e) {
+                setMinutes(0);
                 selectMinutes(0);
               }
             }}
