@@ -6,6 +6,9 @@ import { IPolygon } from "./polygon.interface";
 import { IPolyline } from "./polyline.interface";
 import { ICircle } from "./circle.interface";
 import { ICountry } from "./country.interface";
+import { IAdvancedFilterSection } from "./advancedFilter/advancedFilterSection.interface";
+import { IFilterSection } from "./advancedFilter/filterSection.interface";
+import { IFilter } from "./advancedFilter/filter.interface";
 import { IColumn } from "./../customTable/column.interface";
 import { IRow } from "./../customTable/row.interface";
 
@@ -20,4 +23,7 @@ export type {
   ICountry,
   IColumn,
   IRow,
+  IAdvancedFilterSection,
+  IFilterSection,
+  IFilter,
 };

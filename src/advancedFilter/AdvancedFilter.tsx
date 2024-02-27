@@ -1,10 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // @ts-ignore
-import React, { ReactNode, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./AdvancedFilter.scss";
-import { IInputProps } from "../interfaces/inputProps.interface";
 import debounce from "lodash/debounce";
-import { ISelectBase } from "../interfaces/selectBase.interface";
 import * as generalUtils from "./../utils/generalUtils";
 import * as dateUtils from "./../utils/dateUtils";
 import moment from "moment";
@@ -16,91 +14,16 @@ import { Select } from "../Select";
 import { DateRange } from "../DateRange";
 import Switch from "../Switch";
 import { Button } from "../Button";
+import { IFilter } from "../interfaces/advancedFilter/filter.interface";
+import { IFilterSection } from "../interfaces/advancedFilter/filterSection.interface";
+import { ISearchInputFilterComponent } from "../interfaces/advancedFilter/searchInputFilterComponent";
+import { ISelectFilterComponent } from "../interfaces/advancedFilter/selectFilterComponent.interface";
+import { IDateRangeFilterComponent } from "../interfaces/advancedFilter/dateRangeFilterComponent";
+import { IDateFilterComponent } from "../interfaces/advancedFilter/dateFilterComponent.interface";
+import { ICustomFilterComponent } from "../interfaces/advancedFilter/customFilterComponent";
+import { IAdvancedFilter } from "../interfaces/advancedFilter/advancedFilter.interface";
 
-interface IFilterSection {
-  filterComponents: (
-    | ISearchInputFilterComponent
-    | ISelectFilterComponent
-    | IDateRangeComponent
-    | IDateComponent
-    | ICustomComponent
-  )[];
-}
-
-interface IAdvancedFilterSection {
-  filterComponents: (
-    | ISearchInputFilterComponent
-    | ISelectFilterComponent
-    | IDateComponent
-    | ICustomComponent
-  )[];
-}
-
-interface ISearchInputFilterComponent {
-  type: "search";
-  label?: string;
-  filterProperty: string;
-  inputProps?: IInputProps;
-  shouldShow?: boolean;
-}
-
-interface ISelectFilterComponent {
-  type: "select";
-  label?: string;
-  filterProperty: string;
-  options: {
-    [key: string]: any;
-  }[];
-  selectProps?: ISelectBase;
-  shouldShow?: boolean;
-}
-
-interface IDateComponent {
-  type: "date";
-  label?: string;
-  filterProperty: string;
-  dateFormat?: string;
-  shouldShow?: boolean;
-}
-
-interface IDateRangeComponent {
-  type: "dateRange";
-  label?: string;
-  fromFilterProperty: string;
-  toFilterProperty: string;
-  periodFilterProperty: string;
-  periodOptions: { label: string; value: string }[];
-  dateFormat?: string;
-  shouldShowTimeSelect?: boolean;
-  shouldShow?: boolean;
-}
-
-interface ICustomComponent {
-  type: "custom";
-  filterProperties: string[];
-  component: (
-    currentFilters: IFilter,
-    onChange: (newFilters: IFilter) => void
-  ) => ReactNode;
-  shouldShow?: boolean;
-}
-
-interface IFilter {
-  [key: string]: any;
-}
-
-function AdvancedFilter(props: {
-  id: string;
-  defaultFilters: IFilter;
-  onFiltersChanged: (changedFilters: IFilter) => void;
-  advancedFilterSections?: IAdvancedFilterSection[];
-  filterSection?: IFilterSection;
-  setFilterFunctions?: (functions: {
-    resetFilters: () => void; // Reset filter value to default
-    setFilters: (filters: IFilter, shouldApplyFilter?: boolean) => void; // Override existing filters value
-  }) => void;
-  shouldShowShareButton?: boolean;
-}) {
+function AdvancedFilter(props: IAdvancedFilter) {
   let {
     id,
     advancedFilterSections,
@@ -383,9 +306,9 @@ function AdvancedFilter(props: {
     filterComponent:
       | ISearchInputFilterComponent
       | ISelectFilterComponent
-      | IDateRangeComponent
-      | IDateComponent
-      | ICustomComponent
+      | IDateRangeFilterComponent
+      | IDateFilterComponent
+      | ICustomFilterComponent
   ) {
     switch (filterComponent.type) {
       case "search": {
