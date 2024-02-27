@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // @ts-ignore
-import { React, ReactNode, useEffect, useRef, useState } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 import "./AdvancedFilter.scss";
 import { IInputProps } from "../interfaces/inputProps.interface";
 import debounce from "lodash/debounce";
