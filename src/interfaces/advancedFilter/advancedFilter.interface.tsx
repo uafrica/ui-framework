@@ -13,4 +13,5 @@ export interface IAdvancedFilter {
     setFilters: (filters: IFilter, shouldApplyFilter?: boolean) => void; // Override existing filters value
   }) => void;
   shouldShowShareButton?: boolean;
+  containerClassName?: string;
 }

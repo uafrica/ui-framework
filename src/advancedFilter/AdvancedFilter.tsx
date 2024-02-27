@@ -30,6 +30,7 @@ function AdvancedFilter(props: IAdvancedFilter) {
     filterSection,
     defaultFilters,
     shouldShowShareButton,
+    containerClassName,
   } = props;
   const localStorageShouldKeepExpanded = localStorage.getItem(`${id}-expanded`);
   const [filtersInternal, setFiltersInternal] = useState<IFilter>({});
@@ -221,14 +222,17 @@ function AdvancedFilter(props: IAdvancedFilter) {
   function renderHeading() {
     return (
       <div
-        className="flex flex-row justify-between items-center"
+        className="flex flex-row justify-between items-start md:items-center"
         onClick={() => {
           setIsExpanded(!isExpanded);
         }}
       >
-        <div className="flex flex-row space-x-4 items-center">
-          <FontAwesomeIcon icon="filter" />
-          <SectionHeading noMarginBottom>Advanced filters</SectionHeading>
+        <div className="flex flex-col md:flex-row md:space-x-4 items-center">
+          <div className="flex flex-row space-x-4 items-center">
+            <FontAwesomeIcon icon="filter" />
+            <SectionHeading noMarginBottom>Advanced filters</SectionHeading>
+          </div>
+
           {advancedFiltersChangedCount > 0 && (
             <div className=" text-gray-500">
               ( {advancedFiltersChangedCount} filter
@@ -249,7 +253,7 @@ function AdvancedFilter(props: IAdvancedFilter) {
               <FontAwesomeIcon icon="share-from-square" />
             </div>
           )}
-          <div className="flex flex-row space-x-4 text-primary items-center cursor-pointer">
+          <div className="flex flex-row space-x-4 text-primary items-center cursor-pointer mt-1 md:mt-0">
             <div className="font-bold">
               {isExpanded ? "Collapse" : "Expand"}
             </div>
@@ -262,14 +266,15 @@ function AdvancedFilter(props: IAdvancedFilter) {
 
   function renderCollapsableContent() {
     return (
-      <div
-        className={`advanced-filter-content ${
-          isExpanded ? "expanded" : "collapsed"
-        }`}
-      >
-        {renderAdvancedFilterSections()}
-
-        {renderFooter()}
+      <div>
+        <div
+          className={`advanced-filter-content ${
+            isExpanded ? "expanded" : "collapsed"
+          }`}
+        >
+          {renderAdvancedFilterSections()}
+        </div>
+        {isExpanded && renderFooter()}
       </div>
     );
   }
@@ -469,6 +474,7 @@ function AdvancedFilter(props: IAdvancedFilter) {
           }}
         />
         <Button.Primary
+          className="whitespace-nowrap"
           title="Apply filters"
           isDisabled={!didSomethingChange}
           onClick={() => {
@@ -486,7 +492,12 @@ function AdvancedFilter(props: IAdvancedFilter) {
           <FiltersPanel>{renderFilterSection(filterSection)}</FiltersPanel>
         )}
         {advancedFilterSections && (
-          <div className="border border-gray-200 rounded-md p-4 bg-white my-4">
+          <div
+            className={
+              containerClassName ??
+              "border border-gray-200 rounded-md p-4 bg-white my-4"
+            }
+          >
             {renderHeading()}
             {renderCollapsableContent()}
           </div>
