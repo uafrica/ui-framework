@@ -41,6 +41,7 @@ interface ISearchInputFilterComponent {
   label?: string;
   filterProperty: string;
   inputProps?: IInputProps;
+  shouldShow?: boolean;
 }
 
 interface ISelectFilterComponent {
@@ -51,6 +52,7 @@ interface ISelectFilterComponent {
     [key: string]: any;
   }[];
   selectProps?: ISelectBase;
+  shouldShow?: boolean;
 }
 
 interface IDateComponent {
@@ -58,6 +60,7 @@ interface IDateComponent {
   label?: string;
   filterProperty: string;
   dateFormat?: string;
+  shouldShow?: boolean;
 }
 
 interface IDateRangeComponent {
@@ -69,12 +72,17 @@ interface IDateRangeComponent {
   periodOptions: { label: string; value: string }[];
   dateFormat?: string;
   shouldShowTimeSelect?: boolean;
+  shouldShow?: boolean;
 }
 
 interface ICustomComponent {
   type: "custom";
-  filterProperty: string;
-  component: (value: any, onChange: (value: any) => void) => ReactNode;
+  filterProperties: string[];
+  component: (
+    currentFilters: IFilter,
+    onChange: (newFilters: IFilter) => void
+  ) => ReactNode;
+  shouldShow?: boolean;
 }
 
 interface IFilter {
@@ -148,12 +156,15 @@ function AdvancedFilter(props: {
     let normalProps: string[] = [];
 
     filterSection?.filterComponents.forEach((filterComponent) => {
-      if (filterComponent.type !== "dateRange") {
-        normalProps.push(filterComponent.filterProperty);
-      } else if (filterComponent.type === "dateRange") {
+      if (filterComponent.type === "custom") {
+        normalProps = normalProps.concat(filterComponent.filterProperties);
+      }
+      if (filterComponent.type === "dateRange") {
         normalProps.push(filterComponent.fromFilterProperty);
         normalProps.push(filterComponent.toFilterProperty);
         normalProps.push(filterComponent.periodFilterProperty);
+      } else if (filterComponent.type !== "custom") {
+        normalProps.push(filterComponent.filterProperty);
       }
     });
 
@@ -165,7 +176,13 @@ function AdvancedFilter(props: {
 
     advancedFilterSections?.forEach((advancedFilterSection) => {
       advancedFilterSection.filterComponents.forEach((filterComponent) => {
-        advancedProps.push(filterComponent.filterProperty);
+        if (filterComponent.type === "custom") {
+          advancedProps = advancedProps.concat(
+            filterComponent.filterProperties
+          );
+        } else {
+          advancedProps.push(filterComponent.filterProperty);
+        }
       });
     });
 
@@ -341,7 +358,7 @@ function AdvancedFilter(props: {
         return (
           <div
             key={"section" + index}
-            className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 gap-y-4"
+            className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 "
           >
             {renderFilterSection(filterSection)}
           </div>
@@ -353,9 +370,11 @@ function AdvancedFilter(props: {
   function renderFilterSection(filterSection: IFilterSection) {
     return filterSection.filterComponents.map((filterComponent, index) => {
       return (
-        <div key={"component" + index} className="mx-1">
-          {renderFilterComponent(filterComponent)}
-        </div>
+        filterComponent.shouldShow !== false && (
+          <div key={"component" + index} className="mx-1">
+            {renderFilterComponent(filterComponent)}
+          </div>
+        )
       );
     });
   }
@@ -384,7 +403,11 @@ function AdvancedFilter(props: {
       case "select": {
         return (
           <Select
-            buttonWidth="w-full"
+            buttonWidth={
+              getAdvancedFilterProps().includes(filterComponent.filterProperty)
+                ? "w-full"
+                : ""
+            }
             value={
               filtersInternal[filterComponent.filterProperty] ??
               (filterComponent.selectProps?.isMultiSelection ? [] : null)
@@ -499,12 +522,9 @@ function AdvancedFilter(props: {
       default: {
         return (
           <div>
-            {filterComponent.component(
-              filtersInternal[filterComponent.filterProperty],
-              (value) => {
-                onFiltersChanged(filterComponent.filterProperty, value);
-              }
-            )}
+            {filterComponent.component(filtersInternal, (filters) => {
+              setFilters({ ...filters }, false);
+            })}
           </div>
         );
       }
@@ -542,10 +562,12 @@ function AdvancedFilter(props: {
         {filterSection && (
           <FiltersPanel>{renderFilterSection(filterSection)}</FiltersPanel>
         )}
-        <div className="border border-gray-200 rounded-md p-4 bg-white my-4">
-          {renderHeading()}
-          {renderCollapsableContent()}
-        </div>
+        {advancedFilterSections && (
+          <div className="border border-gray-200 rounded-md p-4 bg-white my-4">
+            {renderHeading()}
+            {renderCollapsableContent()}
+          </div>
+        )}
       </div>
     );
   }
