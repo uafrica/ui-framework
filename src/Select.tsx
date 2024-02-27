@@ -7,55 +7,10 @@ import { Input } from "./Input";
 import { Label } from "./Label";
 import { Manager, Popper, Reference } from "react-popper";
 import { Popover } from "@headlessui/react";
+import { IGroupedSelect } from "./interfaces/groupedSelect.interface";
+import { ISelectOptionGroup } from "./interfaces/selectOptionGroup.interface";
+import { ISelect } from "./interfaces/select.interface";
 
-// Interface
-interface ISelect extends IBase {
-  options: any;
-}
-
-interface IGroupedSelect extends IBase {
-  optionGroups: IOptionGroup[];
-}
-
-interface IOptionGroup {
-  label?: string;
-  options: any[];
-}
-
-interface IBase {
-  label?: any;
-  isLabelInline?: boolean;
-  shouldOverlapLabel?: boolean;
-  labelClassName?: string;
-  className?: string;
-  containerClassName?: string;
-  noMargin?: boolean;
-  popoverWidth?: string;
-  buttonWidth?: string;
-  id?: string;
-  value?: any;
-  info?: any;
-  onChange?: (value: any) => void;
-  onClick?: () => void;
-  onSearchBlur?: () => void;
-  onSearchFocus?: () => void;
-  isDisabled?: boolean;
-  disableSearch?: boolean;
-  placeholder?: any;
-  customSelectionValue?: any; // Overrides placeholder and other selection text
-  isMultiSelection?: boolean;
-  buttons?: any; // If you want an add option buttons to the bottom of the list, add Button.Link elements
-  onDelete?: (label: any, value: any) => void; // Renders a delete button next to each option
-  allowDeselect?: boolean; // Single select mode does not allow for the deselection of an option by default, only switching to another option. override by setting this to true
-  showAsterisk?: boolean;
-  dataTest?: string | undefined;
-  showAllButton?: boolean; // Conditionally display a button to show all available options
-  showAllSelectedText?: boolean; // Show "All selected" if the options selected is equal to the amount of options in the array
-  allSelectedText?: string | undefined; // Custom all selected text
-  popoverHeight?: string;
-}
-
-// Implementation
 function GroupedSelect(props: IGroupedSelect) {
   let {
     label,
@@ -156,7 +111,7 @@ function GroupedSelect(props: IGroupedSelect) {
 
   // Renders an option group with its list of options
   function renderOptionGroup(
-    optionGroup: IOptionGroup,
+    optionGroup: ISelectOptionGroup,
     shouldShowAllResults?: boolean
   ) {
     let limit = 100;
@@ -592,7 +547,7 @@ function GroupedSelect(props: IGroupedSelect) {
                         {allOptionsSearched.length === 0 && (
                           <div className="pl-2 mt-2">No options</div>
                         )}
-                        {optionGroups.map((optionGroup: IOptionGroup) => {
+                        {optionGroups.map((optionGroup: ISelectOptionGroup) => {
                           if (showAllClicked) {
                             return renderOptionGroup(
                               optionGroup,

@@ -1,0 +1,13 @@
+.advanced-filter-content {
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out;
+}
+
+.collapsed {
+  max-height: 0;
+}
+
+.expanded {
+  max-height: 100vh;
+  overflow-y: auto;
+}

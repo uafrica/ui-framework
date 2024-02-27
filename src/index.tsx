@@ -15,6 +15,7 @@ import * as tableUtils from "./utils/tableUtils";
 import * as tagUtils from "./utils/tagUtils";
 import * as validationUtils from "./utils/validationUtils";
 import Accordion from "./Accordion";
+import { AdvancedFilter } from "./advancedFilter/AdvancedFilter";
 import CopyText from "./CopyText";
 import ResponsiveRow from "./ResponsiveRow";
 import SkeletonLoader from "./SkeletonLoaders";
@@ -129,6 +130,7 @@ export {
   TableActionsPanel,
   FiltersPanel,
   Accordion,
+  AdvancedFilter,
   ResponsiveRow,
   GroupedSelect,
   LabelWithValue,

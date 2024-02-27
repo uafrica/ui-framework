@@ -695,6 +695,51 @@ function generateRandomString(length: number): string {
   return result;
 }
 
+function compareValues(value1: any, value2: any) {
+  if (typeof value1 !== typeof value2) {
+    return false;
+  }
+
+  // For arrays, recursively compare each element
+  if (Array.isArray(value1) && Array.isArray(value2)) {
+    if (value1.length !== value2.length) {
+      return false;
+    }
+    for (let i = 0; i < value1.length; i++) {
+      if (!compareValues(value1[i], value2[i])) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // For objects, recursively compare each property
+  if (
+    typeof value1 === "object" &&
+    value1 !== null &&
+    typeof value2 === "object" &&
+    value2 !== null
+  ) {
+    const keys1 = Object.keys(value1);
+    const keys2 = Object.keys(value2);
+
+    if (keys1.length !== keys2.length) {
+      return false;
+    }
+
+    for (const key of keys1) {
+      if (!compareValues(value1[key], value2[key])) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  // For other types, perform a simple equality check
+  return value1 === value2;
+}
+
 export {
   capitalize,
   getError,
@@ -738,4 +783,5 @@ export {
   duplicateObjectsInArray,
   addFiltersToArgsCheck,
   generateRandomString,
+  compareValues,
 };
