@@ -1,6 +1,6 @@
 import moment from "moment";
 // @ts-ignore
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { DatePickerCtx, useDatePickerCtx } from "./DatePickerContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Input } from "../Input";
@@ -209,6 +209,13 @@ const Calendar: React.FC<CalendarProps> = React.forwardRef<
 
 const TimeSelection: React.FC<{}> = (_) => {
   const { selectHours, selectMinutes, date } = useContext(DatePickerCtx);
+  const [hours, setHours] = useState<string>(
+    date ? moment(date).format("HH") : ""
+  );
+  const [minutes, setMinutes] = useState<string>(
+    date ? moment(date).format("mm") : ""
+  );
+
   return (
     <div className="mt-1 text-center">
       <div>
@@ -219,17 +226,19 @@ const TimeSelection: React.FC<{}> = (_) => {
           <Input
             label=""
             isLabelInline={true}
-            type="number"
+            type="text"
             step={1}
             min={0}
             max={23}
-            defaultValue={moment(date).format("HH")}
+            value={hours}
             placeholder="hh"
             onChange={(e: any) => {
               let hours = e.target.value;
+
               try {
                 hours = parseInt(hours);
                 if (isNaN(hours)) {
+                  setHours("");
                   selectHours(0);
                   return;
                 }
@@ -238,8 +247,10 @@ const TimeSelection: React.FC<{}> = (_) => {
                 } else if (hours > 23) {
                   hours = 23;
                 }
+                setHours(hours.toString());
                 selectHours(hours);
               } catch (e) {
+                setHours("");
                 selectHours(0);
               }
             }}
@@ -252,17 +263,19 @@ const TimeSelection: React.FC<{}> = (_) => {
           <Input
             label=""
             isLabelInline={true}
-            type="number"
+            type="text"
             step={1}
             min={0}
             max={59}
-            defaultValue={moment(date).format("mm")}
+            value={minutes}
             placeholder="mm"
             onChange={(e: any) => {
               let minutes = e.target.value;
+
               try {
                 minutes = parseInt(minutes);
                 if (isNaN(minutes)) {
+                  setMinutes("");
                   selectMinutes(0);
                   return;
                 }
@@ -271,8 +284,10 @@ const TimeSelection: React.FC<{}> = (_) => {
                 } else if (minutes > 59) {
                   minutes = 59;
                 }
+                setMinutes(minutes.toString());
                 selectMinutes(minutes);
               } catch (e) {
+                setMinutes("");
                 selectMinutes(0);
               }
             }}
