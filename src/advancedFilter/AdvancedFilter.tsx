@@ -1,13 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // @ts-ignore
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./AdvancedFilter.scss";
-import debounce from "lodash/debounce";
 import * as generalUtils from "./../utils/generalUtils";
 import * as dateUtils from "./../utils/dateUtils";
 import moment from "moment";
 import { DatePicker } from "../datePicker/DatePicker";
-import { FiltersPanel } from "../Panels";
 import { SectionHeading } from "../SectionHeading";
 import { SearchInput } from "../SearchInput";
 import { Select } from "../Select";
@@ -31,8 +29,10 @@ function AdvancedFilter(props: IAdvancedFilter) {
     defaultFilters,
     shouldShowShareButton,
     containerClassName,
+    filters,
   } = props;
   const localStorageShouldKeepExpanded = localStorage.getItem(`${id}-expanded`);
+  const [hasBeenInitialised, setHasBeenInitialised] = useState<boolean>(false);
   const [filtersInternal, setFiltersInternal] = useState<IFilter>({});
   const [didSomethingChange, setDidSomethingChange] = useState<boolean>(false);
   const [shouldKeepFiltersExpanded, setShouldKeepFiltersExpanded] =
@@ -48,7 +48,6 @@ function AdvancedFilter(props: IAdvancedFilter) {
   );
   const [advancedFiltersChangedCount, setAdvancedFiltersChangedCount] =
     useState<number>(0);
-  const debouncedApplyFilter = useRef(debounce(applyFilters, 1000));
 
   useEffect(() => {
     let initFilters = { ...defaultFilters };
@@ -62,8 +61,7 @@ function AdvancedFilter(props: IAdvancedFilter) {
     }
 
     setFiltersInternal(initFilters);
-    debouncedApplyFilter.current(initFilters, shouldKeepFiltersExpanded);
-    checkFilterChangedCount(initFilters);
+    applyFilters(initFilters, shouldKeepFiltersExpanded);
     if (props.setFilterFunctions) {
       props.setFilterFunctions({
         resetFilters: () => {
@@ -75,6 +73,18 @@ function AdvancedFilter(props: IAdvancedFilter) {
       });
     }
   }, []);
+
+  useEffect(() => {
+    if (hasBeenInitialised) {
+      setFilters(filters, true);
+    }
+  }, [filters]);
+
+  useEffect(() => {
+    if (filtersInternal) {
+      checkFilterChangedCount(filtersInternal);
+    }
+  }, [filtersInternal]);
 
   function getNormalFilterProps() {
     let normalProps: string[] = [];
@@ -114,25 +124,29 @@ function AdvancedFilter(props: IAdvancedFilter) {
   }
 
   function setFilters(filters: IFilter, shouldApplyFilter?: boolean) {
-    setFiltersInternal({ ...filters });
+    if (!generalUtils.checkIfObjectsAreEqual(filters, filtersInternal)) {
+      setFiltersInternal({ ...filters });
 
-    if (shouldApplyFilter === false) {
-      setDidSomethingChange(true);
-    } else {
-      debouncedApplyFilter.current({ ...filters }, true);
+      if (shouldApplyFilter === false) {
+        setDidSomethingChange(true);
+      } else {
+        applyFilters({ ...filters }, true);
+      }
     }
   }
 
   function onFiltersChanged(property: string, value: any) {
-    if (value) {
-      filtersInternal[property] = value;
-    } else {
-      delete filtersInternal[property];
-    }
-    setDidSomethingChange(true);
-    setFiltersInternal({ ...filtersInternal });
-    if (getNormalFilterProps().indexOf(property) > -1) {
-      debouncedApplyFilter.current(filtersInternal, true);
+    if (filtersInternal && hasBeenInitialised) {
+      if (value) {
+        filtersInternal[property] = value;
+      } else {
+        delete filtersInternal[property];
+      }
+      setDidSomethingChange(true);
+      setFiltersInternal({ ...filtersInternal });
+      if (getNormalFilterProps().indexOf(property) > -1) {
+        applyFilters(filtersInternal, true);
+      }
     }
   }
 
@@ -140,13 +154,19 @@ function AdvancedFilter(props: IAdvancedFilter) {
     filtersInternal: IFilter,
     shouldKeepFiltersExpanded: boolean
   ) {
-    props.onFiltersChanged({ ...filtersInternal });
+    updateParentFilters({ ...filtersInternal });
     setDidSomethingChange(false);
     if (!shouldKeepFiltersExpanded) {
       setIsExpanded(false);
     }
     localStorage.setItem(`${id}-filter`, JSON.stringify(filtersInternal));
-    checkFilterChangedCount(filtersInternal);
+    setHasBeenInitialised(true);
+  }
+
+  function updateParentFilters(filtersInternal: IFilter) {
+    if (!generalUtils.checkIfObjectsAreEqual(filters, filtersInternal)) {
+      props.onFiltersChanged({ ...filtersInternal });
+    }
   }
 
   function buildURLToShare() {
@@ -207,7 +227,9 @@ function AdvancedFilter(props: IAdvancedFilter) {
 
     const advancedFilterProps = getAdvancedFilterProps();
     advancedFilterProps.forEach((key) => {
-      if (!generalUtils.compareValues(filters[key], defaultFilters[key])) {
+      if (
+        !generalUtils.checkIfObjectsAreEqual(filters[key], defaultFilters[key])
+      ) {
         count += 1;
       }
     });
@@ -334,7 +356,7 @@ function AdvancedFilter(props: IAdvancedFilter) {
             buttonWidth={
               getAdvancedFilterProps().includes(filterComponent.filterProperty)
                 ? "w-full"
-                : ""
+                : "w-full md:w-56"
             }
             value={
               filtersInternal[filterComponent.filterProperty] ??
@@ -366,8 +388,8 @@ function AdvancedFilter(props: IAdvancedFilter) {
         return (
           <DateRange
             label={filterComponent?.label}
-            containerClassName="w-full flex flex-row space-x-4"
-            buttonWidth="w-full md:w-52"
+            containerClassName="w-full flex flex-col md:flex-row md:space-x-4"
+            buttonWidth="w-full md:w-56"
             dateFormat={filterComponent.dateFormat ?? "yyyy-MM-DD"}
             showTimeSelect={filterComponent.shouldShowTimeSelect}
             showRange={
@@ -461,7 +483,7 @@ function AdvancedFilter(props: IAdvancedFilter) {
 
   function renderFooter() {
     return (
-      <div className="flex flex-row justify-between mt-8">
+      <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:justify-between mt-8">
         <Switch
           label="Keep advanced filters expanded"
           isChecked={shouldKeepFiltersExpanded}
@@ -487,22 +509,26 @@ function AdvancedFilter(props: IAdvancedFilter) {
 
   function render() {
     return (
-      <div>
-        {filterSection && (
-          <FiltersPanel>{renderFilterSection(filterSection)}</FiltersPanel>
-        )}
-        {advancedFilterSections && (
-          <div
-            className={
-              containerClassName ??
-              "border border-gray-200 rounded-md p-4 bg-white my-4"
-            }
-          >
-            {renderHeading()}
-            {renderCollapsableContent()}
-          </div>
-        )}
-      </div>
+      filtersInternal && (
+        <div>
+          {filterSection && (
+            <div className="flex flex-col md:flex-row md:flex-wrap md:space-x-4">
+              {renderFilterSection(filterSection)}
+            </div>
+          )}
+          {advancedFilterSections && (
+            <div
+              className={
+                containerClassName ??
+                "border border-gray-200 rounded-md p-4 bg-white my-4"
+              }
+            >
+              {renderHeading()}
+              {renderCollapsableContent()}
+            </div>
+          )}
+        </div>
+      )
     );
   }
   return render();

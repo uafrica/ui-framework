@@ -695,7 +695,7 @@ function generateRandomString(length: number): string {
   return result;
 }
 
-function compareValues(value1: any, value2: any) {
+function checkIfObjectsAreEqual(value1: any, value2: any) {
   if (typeof value1 !== typeof value2) {
     return false;
   }
@@ -706,7 +706,7 @@ function compareValues(value1: any, value2: any) {
       return false;
     }
     for (let i = 0; i < value1.length; i++) {
-      if (!compareValues(value1[i], value2[i])) {
+      if (!checkIfObjectsAreEqual(value1[i], value2[i])) {
         return false;
       }
     }
@@ -728,7 +728,7 @@ function compareValues(value1: any, value2: any) {
     }
 
     for (const key of keys1) {
-      if (!compareValues(value1[key], value2[key])) {
+      if (!checkIfObjectsAreEqual(value1[key], value2[key])) {
         return false;
       }
     }
@@ -783,5 +783,5 @@ export {
   duplicateObjectsInArray,
   addFiltersToArgsCheck,
   generateRandomString,
-  compareValues,
+  checkIfObjectsAreEqual,
 };

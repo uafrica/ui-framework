@@ -5,6 +5,7 @@ import { IFilterSection } from "./filterSection.interface";
 export interface IAdvancedFilter {
   id: string;
   defaultFilters: IFilter;
+  filters: IFilter;
   onFiltersChanged: (changedFilters: IFilter) => void;
   advancedFilterSections?: IAdvancedFilterSection[];
   filterSection?: IFilterSection;

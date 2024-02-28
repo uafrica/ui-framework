@@ -9,12 +9,12 @@ import { Dropdown } from "../Dropdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IColumn } from "./column.interface";
 import { IRow } from "./row.interface";
-import { Loader } from "../Loader";
 import { Message } from "../Message";
 import { Pagination } from "../Pagination";
 import { TableActionsPanel } from "../Panels";
 import "./CustomTable.scss";
 import { ICustomTable } from "./customTable.interface";
+import debounce from "lodash/debounce";
 
 function CustomTable(props: ICustomTable) {
   let {
@@ -43,6 +43,7 @@ function CustomTable(props: ICustomTable) {
     rowStyleFunction,
     checkIfRowIsDraggable,
     style,
+    loadDebounceTime,
   } = props;
   let topRef: any = useRef();
   let rowUniqueIdentifier = props.rowUniqueIdentifier ?? "id";
@@ -115,6 +116,10 @@ function CustomTable(props: ICustomTable) {
   let refreshRef = useRef(refresh);
   let fetchFunctionArgumentsRef = useRef(fetchFunctionArguments);
 
+  let debouncedLoad = useRef(
+    debounce(load, loadDebounceTime !== undefined ? loadDebounceTime : 1000)
+  );
+
   useEffect(() => {
     // Rerun when props.columnOrder
     // When the parent component only sets the widths on mount and not in the useState hook call
@@ -186,15 +191,15 @@ function CustomTable(props: ICustomTable) {
   useEffect(() => {
     fetchFunctionArgumentsRef.current = fetchFunctionArguments;
     if (persistPage) {
-      load(false, page, pageSize);
+      debouncedLoad.current(false, page, pageSize);
     } else {
-      load(true, page, pageSize);
+      debouncedLoad.current(true, page, pageSize);
     }
   }, [fetchFunctionArguments]);
 
   useEffect(() => {
     if (!isInitialising) {
-      load(true, page, pageSize);
+      debouncedLoad.current(true, page, pageSize);
     }
   }, [orderingArguments]);
 
@@ -566,7 +571,7 @@ function CustomTable(props: ICustomTable) {
       onPageSizeChanged(size);
     }
     if (doLoad) {
-      load(true, 1, size);
+      debouncedLoad.current(true, 1, size);
     }
   }
 
@@ -1045,7 +1050,7 @@ function CustomTable(props: ICustomTable) {
                 _page = totalPages;
               }
               setPage(_page);
-              load(false, _page, pageSize, loadOnPageChange);
+              debouncedLoad.current(false, _page, pageSize, loadOnPageChange);
             }}
             active={page}
             pages={totalPages}
@@ -1222,7 +1227,6 @@ function CustomTable(props: ICustomTable) {
     return (
       <div>
         {error && <Message.Error>{error}</Message.Error>}
-        {isLoading && data.length === 0 ? <Loader.Inline /> : <div></div>}
         {generalUtils.isScreenDesktopSize() && renderDesktopView()}
         {!generalUtils.isScreenDesktopSize() && (
           <>
