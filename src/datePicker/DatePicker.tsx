@@ -127,8 +127,8 @@ function DatePicker(props: IDatePicker) {
                   isDisabled
                     ? undefined
                     : ctxValue.isVisible
-                    ? "caret-up"
-                    : "caret-down"
+                      ? "caret-up"
+                      : "caret-down"
                 }
                 onAppendIconClick={() => {
                   ctxValue.toggleCalendar();
@@ -225,36 +225,49 @@ const TimeSelection: React.FC<{}> = (_) => {
         <div style={{ width: "55px" }}>
           <Input
             label=""
-            isLabelInline={true}
+            isLabelInline
             type="text"
-            step={1}
-            min={0}
-            max={23}
+            maxLength={2}
             value={hours}
             placeholder="hh"
             onChange={(e: any) => {
-              let hours = e.target.value;
+              const hours = e.target.value;
+              setHours(hours);
 
               try {
-                hours = parseInt(hours);
-                if (isNaN(hours)) {
-                  setHours("");
+                const numberedHours = parseInt(hours);
+                if (isNaN(numberedHours)) {
                   selectHours(0);
-                  return;
+                } else if (numberedHours < 0) {
+                  selectHours(0);
+                } else if (numberedHours > 23) {
+                  selectHours(23);
+                } else {
+                  selectHours(numberedHours);
                 }
-                if (hours < 0) {
-                  hours = 0;
-                } else if (hours > 23) {
-                  hours = 23;
-                }
-                setHours(hours.toString());
-                selectHours(hours);
               } catch (e) {
-                setHours("");
                 selectHours(0);
               }
             }}
+            onBlur={(e: any) => {
+              let hours = e.target.value;
+
+              try {
+                const numberedHours = parseInt(hours);
+                if (isNaN(numberedHours)) {
+                  hours = "";
+                } else if (numberedHours < 0) {
+                  hours = "0";
+                } else if (numberedHours > 23) {
+                  hours = "23";
+                }
+                setHours(hours);
+              } catch (e) {
+                setHours("");
+              }
+            }}
           />
+
         </div>
         <div className="mt-2 pl-2">
           <Label>:</Label>
@@ -262,36 +275,49 @@ const TimeSelection: React.FC<{}> = (_) => {
         <div style={{ width: "55px" }}>
           <Input
             label=""
-            isLabelInline={true}
+            isLabelInline
             type="text"
-            step={1}
-            min={0}
-            max={59}
+            maxLength={2}
             value={minutes}
             placeholder="mm"
             onChange={(e: any) => {
-              let minutes = e.target.value;
+              const minutes = e.target.value;
+              setMinutes(minutes);
 
               try {
-                minutes = parseInt(minutes);
-                if (isNaN(minutes)) {
-                  setMinutes("");
+                const numberedMinutes = parseInt(minutes);
+                if (isNaN(numberedMinutes)) {
                   selectMinutes(0);
-                  return;
+                } else if (numberedMinutes < 0) {
+                  selectMinutes(0);
+                } else if (numberedMinutes > 59) {
+                  selectMinutes(59);
+                } else {
+                  selectMinutes(numberedMinutes);
                 }
-                if (minutes < 0) {
-                  minutes = 0;
-                } else if (minutes > 59) {
-                  minutes = 59;
-                }
-                setMinutes(minutes.toString());
-                selectMinutes(minutes);
               } catch (e) {
-                setMinutes("");
                 selectMinutes(0);
               }
             }}
+            onBlur={(e: any) => {
+              let minutes = e.target.value;
+
+              try {
+                const numberedMinutes = parseInt(minutes);
+                if (isNaN(numberedMinutes)) {
+                  minutes = "";
+                } else if (numberedMinutes < 0) {
+                  minutes = "0";
+                } else if (numberedMinutes > 59) {
+                  minutes = "59";
+                }
+                setMinutes(minutes);
+              } catch (e) {
+                setMinutes("");
+              }
+            }}
           />
+
         </div>
       </div>
     </div>
