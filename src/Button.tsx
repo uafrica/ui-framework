@@ -69,7 +69,7 @@ function Primary(props: IButtonProps) {
     <BaseButton
       {...props}
       buttonTypeClassNames={
-        "focus:outline-none focus:ring-1 focus:ring-primary  inline-flex justify-center items-center px-5 py-2 border leading-4 font-medium rounded-full shadow-sm focus: outline-none  border-transparent text-white bg-" +
+        "focus:outline-none focus:ring-1 focus:ring-primary  inline-flex justify-center items-center px-5 py-2 border leading-4 font-medium rounded-full shadow-sm focus: outline-none border-transparent text-white bg-" +
         bgColor +
         " hover:bg-" +
         bgColor +
@@ -233,6 +233,7 @@ function BaseButton(props: IButtonBaseProps) {
       type={type ? type : "button"}
       title={hoverTitle}
       className={
+        "button " +
         (leftRounded
           ? "rounded-r h-12 md:h-9 "
           : rightRounded

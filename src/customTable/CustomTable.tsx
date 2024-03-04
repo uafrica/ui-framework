@@ -916,9 +916,7 @@ function CustomTable(props: ICustomTable) {
                         setDraggingColumnIndex(columnIndex);
                       }
                     }}
-                    className={
-                      "custom-table-th justify-between items-center font-bold"
-                    }
+                    className="custom-table-th justify-between items-center font-bold bg-primary-100 border-b border-primary"
                   >
                     <div className="flex flex-row justify-between items-center ">
                       <div className="flex flex-row justify-between whitespace-nowrap mx-2">
