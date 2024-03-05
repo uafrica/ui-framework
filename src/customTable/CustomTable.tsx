@@ -117,7 +117,7 @@ function CustomTable(props: ICustomTable) {
   let fetchFunctionArgumentsRef = useRef(fetchFunctionArguments);
 
   let debouncedLoad = useRef(
-    debounce(load, loadDebounceTime !== undefined ? loadDebounceTime : 1000)
+    debounce(load, loadDebounceTime !== undefined ? loadDebounceTime : 0)
   );
 
   useEffect(() => {
