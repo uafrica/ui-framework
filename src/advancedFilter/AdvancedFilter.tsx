@@ -53,7 +53,15 @@ function AdvancedFilter(props: IAdvancedFilter) {
     let initFilters = { ...defaultFilters };
     const localStorageFilter = localStorage.getItem(`${id}-filter`);
     const urlFilters = readURL();
-    if (urlFilters && Object.keys(urlFilters).length > 0) {
+    let allFilterProps = getNormalFilterProps().concat(
+      getAdvancedFilterProps()
+    );
+    if (
+      urlFilters &&
+      Object.keys(urlFilters).filter((key) => {
+        return allFilterProps.indexOf(key) > -1;
+      }).length > 0
+    ) {
       initFilters = urlFilters;
       clearFiltersFromURL();
     } else if (localStorageFilter) {
@@ -137,7 +145,7 @@ function AdvancedFilter(props: IAdvancedFilter) {
 
   function onFiltersChanged(property: string, value: any) {
     if (filtersInternal && hasBeenInitialised) {
-      if (value) {
+      if (value !== null && value !== undefined) {
         filtersInternal[property] = value;
       } else {
         delete filtersInternal[property];
@@ -351,6 +359,12 @@ function AdvancedFilter(props: IAdvancedFilter) {
         );
       }
       case "select": {
+        let value =
+          filtersInternal[filterComponent.filterProperty] ??
+          (filterComponent.selectProps?.isMultiSelection ? [] : null);
+        if (filterComponent.valueModifier) {
+          value = filterComponent.valueModifier(value);
+        }
         return (
           <Select
             buttonWidth={
@@ -358,15 +372,19 @@ function AdvancedFilter(props: IAdvancedFilter) {
                 ? "w-full"
                 : "w-full md:w-56"
             }
-            value={
-              filtersInternal[filterComponent.filterProperty] ??
-              (filterComponent.selectProps?.isMultiSelection ? [] : null)
-            }
+            value={value}
             label={filterComponent?.label}
             options={filterComponent?.options ?? []}
             allowDeselect
             onChange={(value) => {
-              onFiltersChanged(filterComponent.filterProperty, value);
+              if (filterComponent.onChangeModifier) {
+                onFiltersChanged(
+                  filterComponent.filterProperty,
+                  filterComponent.onChangeModifier(value)
+                );
+              } else {
+                onFiltersChanged(filterComponent.filterProperty, value);
+              }
             }}
             {...filterComponent.selectProps}
           />

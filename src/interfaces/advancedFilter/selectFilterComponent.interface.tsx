@@ -9,4 +9,6 @@ export interface ISelectFilterComponent {
   }[];
   selectProps?: ISelectBase;
   shouldShow?: boolean;
+  valueModifier?: (value: any) => any;
+  onChangeModifier?: (value: any) => any;
 }

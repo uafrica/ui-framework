@@ -82,5 +82,5 @@ export interface ICustomTable {
     removeRow: () => void;
   }) => React.ReactNode;
   style?: any;
-  loadDebounceTime?: number
+  loadDebounceTime?: number;
 }
