@@ -45,6 +45,15 @@
 
 // Map
 
+.leaflet-tooltip {
+  font-family: "Montserrat";
+  background-color: white;
+  padding: 12px !important;
+  font-size: 0.875rem;
+  color: black;
+  border-radius: 0.5rem !important;
+}
+
 .leaflet-container {
   z-index: 0 !important;
 }

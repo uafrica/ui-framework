@@ -2,7 +2,12 @@
 import React, { useEffect, useMemo, useState } from "react";
 import "leaflet/dist/leaflet.css";
 import L, { Layer, Map } from "leaflet";
-import { IMarker, IPolygon, IPolyline, ICircle } from "../interfaces";
+import {
+  IOpenStreetMapMarker,
+  IPolygon,
+  IPolyline,
+  ICircle,
+} from "../interfaces";
 import * as generalUtils from "../utils/generalUtils";
 import { GestureHandling } from "leaflet-gesture-handling";
 
@@ -13,7 +18,7 @@ function OpenStreetMap(props: {
   polygons?: IPolygon[];
   circles?: ICircle[];
   polylines?: IPolyline[];
-  markers?: IMarker[];
+  markers?: IOpenStreetMapMarker[];
   mapContainerStyle?: any;
   defaultCenter: { lat: number; lng: number };
   bounds?: google.maps.LatLngBounds;
@@ -249,6 +254,19 @@ function OpenStreetMap(props: {
             ).addEventListener("click", (e: any) => {
               marker.onClick && marker.onClick(e, marker);
             });
+
+            if (marker.options.tooltip) {
+              markerObject
+                .bindTooltip(marker.options.tooltip, {
+                  opacity: 1,
+                  direction: "top",
+                  offset: new L.Point(
+                    marker?.options?.tooltipPixelOffset?.x ?? 0,
+                    marker?.options?.tooltipPixelOffset?.y ?? 0
+                  ),
+                })
+                .openTooltip();
+            }
 
             return markerObject;
           })
