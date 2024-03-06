@@ -45,6 +45,10 @@
 
 // Map
 
+.leaflet-container {
+  z-index: 0 !important;
+}
+
 .map-tooltip {
   font-family: "Montserrat";
 }

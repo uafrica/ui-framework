@@ -6,7 +6,6 @@ import * as generalUtils from "./../utils/generalUtils";
 import * as dateUtils from "./../utils/dateUtils";
 import moment from "moment";
 import { DatePicker } from "../datePicker/DatePicker";
-import { SectionHeading } from "../SectionHeading";
 import { SearchInput } from "../SearchInput";
 import { Select } from "../Select";
 import { DateRange } from "../DateRange";
@@ -260,7 +259,7 @@ function AdvancedFilter(props: IAdvancedFilter) {
         <div className="flex flex-col md:flex-row md:space-x-4 items-center">
           <div className="flex flex-row space-x-4 items-center">
             <FontAwesomeIcon icon="filter" />
-            <SectionHeading noMarginBottom>Advanced filters</SectionHeading>
+            <div className="font-bold ">Advanced filters</div>
           </div>
 
           {advancedFiltersChangedCount > 0 && (

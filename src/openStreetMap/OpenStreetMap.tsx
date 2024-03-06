@@ -74,6 +74,15 @@ function OpenStreetMap(props: {
   }, []);
 
   useEffect(() => {
+    if (map) {
+      map.setView(
+        new L.LatLng(defaultCenter.lat, defaultCenter.lng),
+        defaultZoom
+      );
+    }
+  }, [defaultCenter]);
+
+  useEffect(() => {
     if (map && bounds) {
       let northEast = L.latLng(
         bounds?.getNorthEast().lat(),
