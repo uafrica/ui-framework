@@ -21,7 +21,7 @@ function OpenStreetMap(props: {
   markers?: IOpenStreetMapMarker[];
   mapContainerStyle?: any;
   defaultCenter: { lat: number; lng: number };
-  bounds?: google.maps.LatLngBounds;
+  bounds?: google.maps.LatLngBounds | L.LatLngBounds;
   defaultZoom?: number;
 }) {
   let {
@@ -84,22 +84,26 @@ function OpenStreetMap(props: {
         new L.LatLng(defaultCenter.lat, defaultCenter.lng),
         defaultZoom
       );
-    }
-  }, [defaultCenter]);
 
-  useEffect(() => {
-    if (map && bounds) {
-      let northEast = L.latLng(
-        bounds?.getNorthEast().lat(),
-        bounds?.getNorthEast().lng()
-      );
-      let southWest = L.latLng(
-        bounds?.getSouthWest().lat(),
-        bounds?.getSouthWest().lng()
-      );
-      map.fitBounds(L.latLngBounds(northEast, southWest));
+      if (bounds) {
+        if ("isValid" in bounds) {
+          // Leaflet bounds
+          map.fitBounds(bounds);
+        } else {
+          // Google maps bounds
+          let northEast = L.latLng(
+            bounds?.getNorthEast().lat(),
+            bounds?.getNorthEast().lng()
+          );
+          let southWest = L.latLng(
+            bounds?.getSouthWest().lat(),
+            bounds?.getSouthWest().lng()
+          );
+          map.fitBounds(new L.LatLngBounds(northEast, southWest));
+        }
+      }
     }
-  }, [bounds, map]);
+  }, [defaultCenter, bounds, map]);
 
   useEffect(() => {
     if (map) {
