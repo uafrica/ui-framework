@@ -9,7 +9,6 @@ import { DatePicker } from "../datePicker/DatePicker";
 import { SearchInput } from "../SearchInput";
 import { Select } from "../Select";
 import { DateRange } from "../DateRange";
-import Switch from "../Switch";
 import { Button } from "../Button";
 import { IFilter } from "../interfaces/advancedFilter/filter.interface";
 import { IFilterSection } from "../interfaces/advancedFilter/filterSection.interface";
@@ -26,9 +25,9 @@ function AdvancedFilter(props: IAdvancedFilter) {
     advancedFilterSections,
     filterSection,
     defaultFilters,
-    shouldShowShareButton,
     containerClassName,
     filters,
+    store,
   } = props;
   const localStorageShouldKeepExpanded = localStorage.getItem(`${id}-expanded`);
   const [hasBeenInitialised, setHasBeenInitialised] = useState<boolean>(false);
@@ -191,8 +190,18 @@ function AdvancedFilter(props: IAdvancedFilter) {
       }
     }
 
-    const url = `${window.location.pathname}?${urlSearchParams.toString()}`;
-    console.log("🚀 ~ URL:", url); // Functionality to be confirmed
+    const url = `${window.location.origin}${
+      window.location.pathname
+    }?${urlSearchParams.toString()}`;
+    navigator.clipboard.writeText(url);
+
+    if (store && store.emitter) {
+      store.emitter.emit("showToast", {
+        text: "URL copied to keyboard",
+        variant: "success",
+        autoHide: 3000,
+      });
+    }
   }
 
   function readURL() {
@@ -250,12 +259,7 @@ function AdvancedFilter(props: IAdvancedFilter) {
 
   function renderHeading() {
     return (
-      <div
-        className="flex flex-row justify-between items-start md:items-center"
-        onClick={() => {
-          setIsExpanded(!isExpanded);
-        }}
-      >
+      <div className="flex flex-row justify-between items-start md:items-center">
         <div className="flex flex-col md:flex-row md:space-x-4 items-center">
           <div className="flex flex-row space-x-4 items-center">
             <FontAwesomeIcon icon="filter" />
@@ -270,19 +274,43 @@ function AdvancedFilter(props: IAdvancedFilter) {
           )}
         </div>
         <div className="flex flex-row space-x-4 items-center">
-          {shouldShowShareButton && (
-            <div
-              className="flex flex-row space-x-4 text-black items-center cursor-pointer"
-              onClick={(e: any) => {
-                e.stopPropagation();
-                buildURLToShare();
-              }}
-            >
-              <div className="font-bold">Share</div>
-              <FontAwesomeIcon icon="share-from-square" />
-            </div>
-          )}
-          <div className="flex flex-row space-x-4 text-primary items-center cursor-pointer mt-1 md:mt-0">
+          <div
+            title="Share filter selection"
+            className="flex flex-row space-x-4 text-black items-center cursor-pointer mr-2"
+            onClick={() => {
+              buildURLToShare();
+            }}
+          >
+            <FontAwesomeIcon icon="share-from-square" />
+          </div>
+
+          <FontAwesomeIcon
+            title={
+              shouldKeepFiltersExpanded
+                ? "Advanced filters remain open after being applied"
+                : "Advanced filters collapse after being applied"
+            }
+            icon="thumbtack"
+            className={
+              "cursor-pointer " +
+              (shouldKeepFiltersExpanded ? "text-primary" : "text-gray-400")
+            }
+            onClick={() => {
+              setShouldKeepFiltersExpanded(!shouldKeepFiltersExpanded);
+
+              localStorage.setItem(
+                `${id}-expanded`,
+                JSON.stringify(!shouldKeepFiltersExpanded)
+              );
+            }}
+          />
+
+          <div
+            className="flex flex-row space-x-4 text-primary items-center cursor-pointer mt-1 md:mt-0"
+            onClick={() => {
+              setIsExpanded(!isExpanded);
+            }}
+          >
             <div className="font-bold">
               {isExpanded ? "Collapse" : "Expand"}
             </div>
@@ -315,7 +343,7 @@ function AdvancedFilter(props: IAdvancedFilter) {
         return (
           <div
             key={"section" + index}
-            className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 "
+            className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 mb-1"
           >
             {renderFilterSection(filterSection)}
           </div>
@@ -487,31 +515,14 @@ function AdvancedFilter(props: IAdvancedFilter) {
         );
       }
       default: {
-        return (
-          <div>
-            {filterComponent.component(filtersInternal, (filters) => {
-              setFilters({ ...filters }, false);
-            })}
-          </div>
-        );
+        return <div>{filterComponent.component(filtersInternal)}</div>;
       }
     }
   }
 
   function renderFooter() {
     return (
-      <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:justify-between mt-8">
-        <Switch
-          label="Keep advanced filters expanded"
-          isChecked={shouldKeepFiltersExpanded}
-          onChange={() => {
-            setShouldKeepFiltersExpanded(!shouldKeepFiltersExpanded);
-            localStorage.setItem(
-              `${id}-expanded`,
-              JSON.stringify(!shouldKeepFiltersExpanded)
-            );
-          }}
-        />
+      <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:justify-end mt-8">
         <Button.Primary
           className="whitespace-nowrap"
           title="Apply filters"

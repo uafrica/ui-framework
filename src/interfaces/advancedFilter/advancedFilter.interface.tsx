@@ -13,6 +13,6 @@ export interface IAdvancedFilter {
     resetFilters: () => void; // Reset filter value to default
     setFilters: (filters: IFilter, shouldApplyFilter?: boolean) => void; // Override existing filters value
   }) => void;
-  shouldShowShareButton?: boolean;
   containerClassName?: string;
+  store: any
 }

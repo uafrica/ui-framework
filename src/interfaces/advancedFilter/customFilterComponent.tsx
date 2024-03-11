@@ -4,9 +4,6 @@ import { IFilter } from "./filter.interface";
 export interface ICustomFilterComponent {
   type: "custom";
   filterProperties: string[];
-  component: (
-    currentFilters: IFilter,
-    onChange: (newFilters: IFilter) => void
-  ) => ReactNode;
+  component: (currentFilters: IFilter) => ReactNode;
   shouldShow?: boolean;
 }
