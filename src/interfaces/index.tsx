@@ -8,6 +8,7 @@ import { IPolyline } from "./polyline.interface";
 import { ICircle } from "./circle.interface";
 import { ICountry } from "./country.interface";
 import { IAdvancedFilterSection } from "./advancedFilter/advancedFilterSection.interface";
+import { IAdvancedFilterFunctions } from "./advancedFilter/advancedFilterFunctions.interface";
 import { IFilterSection } from "./advancedFilter/filterSection.interface";
 import { IFilter } from "./advancedFilter/filter.interface";
 import { IColumn } from "./../customTable/column.interface";
@@ -26,6 +27,7 @@ export type {
   IColumn,
   IRow,
   IAdvancedFilterSection,
+  IAdvancedFilterFunctions,
   IFilterSection,
   IFilter,
 };
