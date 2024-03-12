@@ -191,15 +191,15 @@ function CustomTable(props: ICustomTable) {
   useEffect(() => {
     fetchFunctionArgumentsRef.current = fetchFunctionArguments;
     if (persistPage) {
-      debouncedLoad.current(false, page, pageSize);
+      dynamicLoad(false, page, pageSize, orderingArguments);
     } else {
-      debouncedLoad.current(true, page, pageSize);
+      dynamicLoad(true, page, pageSize, orderingArguments);
     }
   }, [fetchFunctionArguments]);
 
   useEffect(() => {
     if (!isInitialising) {
-      debouncedLoad.current(true, page, pageSize);
+      dynamicLoad(true, page, pageSize, orderingArguments);
     }
   }, [orderingArguments]);
 
@@ -240,8 +240,21 @@ function CustomTable(props: ICustomTable) {
     repositionMenu();
   }, [clickPosition]);
 
+  function dynamicLoad(
+    reset: boolean,
+    page: number,
+    pageSize: number,
+    orderingArguments: any,
+    shouldLoad?: boolean
+  ) {
+    if (isInitialising) {
+      load(reset, page, pageSize, orderingArguments, shouldLoad);
+    } else {
+      debouncedLoad.current(reset, page, pageSize, orderingArguments, shouldLoad);
+    }
+  }
   function refresh(page: number, pageSize: number, shouldLoad?: boolean) {
-    load(false, page, pageSize, shouldLoad);
+    load(false, page, pageSize, orderingArguments, shouldLoad);
   }
 
   function insertRow(data: any[], rowOrder: any[], object: any, index: number) {
@@ -282,7 +295,7 @@ function CustomTable(props: ICustomTable) {
   function startAutoRefreshInterval() {
     interval = setInterval(() => {
       setPage((page) => {
-        load(false, page, pageSize);
+        load(false, page, pageSize, orderingArguments);
         return page;
       });
     }, autoRefreshInterval);
@@ -571,7 +584,7 @@ function CustomTable(props: ICustomTable) {
       onPageSizeChanged(size);
     }
     if (doLoad) {
-      debouncedLoad.current(true, 1, size);
+      dynamicLoad(true, 1, size, orderingArguments);
     }
   }
 
@@ -782,6 +795,7 @@ function CustomTable(props: ICustomTable) {
     reset: boolean,
     page: number,
     pageSize: number,
+    orderingArguments: any,
     shouldLoad?: boolean
   ) {
     if (fetchFunction) {
@@ -1048,7 +1062,13 @@ function CustomTable(props: ICustomTable) {
                 _page = totalPages;
               }
               setPage(_page);
-              debouncedLoad.current(false, _page, pageSize, loadOnPageChange);
+              dynamicLoad(
+                false,
+                _page,
+                pageSize,
+                orderingArguments,
+                loadOnPageChange
+              );
             }}
             active={page}
             pages={totalPages}
