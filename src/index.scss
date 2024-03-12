@@ -92,7 +92,7 @@ button.gm-ui-hover-effect {
   z-index: 11;
 
   .content {
-    max-height: calc(100vh - 90px) !important;
+    max-height: calc(100vh - 70px) !important;
     max-width: calc(95vw) !important;
   }
 
@@ -164,7 +164,6 @@ button.gm-ui-hover-effect {
 @media (max-width: 475px) {
   .uafrica-modal {
     .content {
-      max-height: calc(100vh - 180px) !important;
       max-width: calc(98vw) !important;
     }
   }
@@ -183,14 +182,6 @@ button.gm-ui-hover-effect {
     margin-bottom: 0.5rem;
     margin-top: 0.5rem;
     margin-left: 0;
-  }
-}
-
-@media (max-height: 750px) {
-  .uafrica-modal {
-    .content {
-      max-height: calc(100vh - 22vh) !important;
-    }
   }
 }
 
