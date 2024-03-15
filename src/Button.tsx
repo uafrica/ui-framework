@@ -300,6 +300,7 @@ function Download(props: {
   download: any;
   downloadType: string;
   isDisabled?: boolean;
+  hideText?: boolean;
 }) {
   return (
     <Button.Link
@@ -307,8 +308,8 @@ function Download(props: {
       onClick={() => props.download()}
       icon="download"
       isLoading={props.isDownloading}
-      title={"Download " + props.downloadType}
-      loadingTitle={"Download " + props.downloadType}
+      title={props.hideText ? "" : "Download " + props.downloadType}
+      loadingTitle={props.hideText ? "" : "Download " + props.downloadType}
     />
   );
 }
