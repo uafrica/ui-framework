@@ -1,5 +1,5 @@
 {
-  "version": "2.0.58",
+  "version": "2.0.59",
   "name": "bob-group-ui-framework",
   "license": "BSD-3-Clause",
   "main": "dist/index.js",
