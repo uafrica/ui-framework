@@ -1,6 +1,5 @@
 import * as generalUtils from "../utils/generalUtils";
 import * as mapUtils from "../utils/mapUtils";
-import debounce from "lodash/debounce";
 import MapToolbar from "./MapToolbar";
 import Marker from "./Marker";
 import Polygon from "./Polygon";
@@ -16,7 +15,7 @@ import { IMarker, IPolygon, IPolyline } from "../interfaces";
 import { defaultMapStyles } from "../utils/constantsAndDefaults";
 import { ICircle } from "../interfaces/circle.interface";
 // @ts-ignore
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import groupBy from "lodash/groupBy";
 
 function Map(props: {
@@ -80,7 +79,7 @@ function Map(props: {
   let [map, setMap] = useState<any>();
   let [mapId, setMapId] = useState<string>("");
   let [doSnap, setDoSnap] = useState<boolean>(false);
-  let [center, setCenter] = useState(defaultCenter);
+  let [center, setCenter] = useState({ ...defaultCenter });
   let [isMapLoaded, setIsMapLoaded] = useState(false);
   let [options, setOptions] = useState({});
   let [markerTooltipContent, setMarkerTooltipContent] = useState<any>(null);
@@ -92,32 +91,29 @@ function Map(props: {
     y: number;
   } | null>(null);
 
-  let updateMarkerTooltipDebounced = useRef(
-    debounce(
-      (tooltipContent: any, tooltipPixelOffset?: { x: number; y: number }) => {
-        setMarkerTooltipContent(tooltipContent);
-        if (tooltipPixelOffset) {
-          setTooltipPixelOffset({ ...tooltipPixelOffset });
-        } else {
-          setTooltipPixelOffset(null);
-        }
-      },
-      100
-    )
-  );
-  let updatePolygonTooltipDebounced = useRef(
-    debounce(
-      (tooltipContent: any, tooltipPixelOffset?: { x: number; y: number }) => {
-        setPolygonTooltipContent(tooltipContent);
-        if (tooltipPixelOffset) {
-          setTooltipPixelOffset({ ...tooltipPixelOffset });
-        } else {
-          setTooltipPixelOffset(null);
-        }
-      },
-      100
-    )
-  );
+  function updateMarkerTooltip(
+    tooltipContent: any,
+    tooltipPixelOffset?: { x: number; y: number }
+  ) {
+    setMarkerTooltipContent(tooltipContent);
+    if (tooltipPixelOffset) {
+      setTooltipPixelOffset({ ...tooltipPixelOffset });
+    } else {
+      setTooltipPixelOffset({ x: 100, y: 100 });
+    }
+  }
+
+  function updatePolygonTooltip(
+    tooltipContent: any,
+    tooltipPixelOffset?: { x: number; y: number }
+  ) {
+    setPolygonTooltipContent(tooltipContent);
+    if (tooltipPixelOffset) {
+      setTooltipPixelOffset({ ...tooltipPixelOffset });
+    } else {
+      setTooltipPixelOffset(null);
+    }
+  }
 
   const renderMarkersWithMemo = useMemo(
     () => renderMarkers(),
@@ -156,6 +152,7 @@ function Map(props: {
       editMode,
       map,
       tooltipCoordinates,
+      polygonTooltipContent,
       markerTooltipContent,
     ]
   );
@@ -279,7 +276,6 @@ function Map(props: {
               polygonPathsAfterSnap[path]
             );
             return [...polygonPathsAfterSnap];
-          } else {
           }
         } else {
           // Node was not moved to inside of another polygon
@@ -443,11 +439,11 @@ function Map(props: {
   }
 
   function hideTooltip() {
-    updateMarkerTooltipDebounced.current(null);
-    updatePolygonTooltipDebounced.current(null);
+    updateMarkerTooltip(null);
+    updatePolygonTooltip(null);
   }
 
-  function calculateTooltipCoordinates(baseCoordinates: {
+  function updateTooltipCoordinates(baseCoordinates: {
     lat?: number;
     lng?: number;
   }) {
@@ -510,7 +506,7 @@ function Map(props: {
             polygon={polygon}
             key={index}
             zIndex={index}
-            onClick={(e: google.maps.PolyMouseEvent, polygon: IPolygon) => {
+            onClick={(e: google.maps.PolyMouseEvent) => {
               if (props.onPolygonSelectionChanged) {
                 props.onPolygonSelectionChanged(polygon, true);
                 refitBounds(polygon);
@@ -527,23 +523,23 @@ function Map(props: {
                 let tooltipContent = polygon.options.tooltip
                   ? polygon.options.tooltip(polygon)
                   : null;
-                calculateTooltipCoordinates({
+                updateTooltipCoordinates({
                   lat: e.latLng?.lat(),
                   lng: e.latLng?.lng(),
                 });
                 setTooltipMode("click");
-                updatePolygonTooltipDebounced.current(
+                updatePolygonTooltip(
                   tooltipContent,
                   polygon.options.tooltipPixelOffset
                 );
               }
             }}
-            onMouseOver={() => {}}
-            onMouseMove={(e: google.maps.PolyMouseEvent, polygon: IPolygon) => {
+            onMouseOver={(e: google.maps.PolyMouseEvent) => {
               if (props.onPolygonMouseOver) {
                 props.onPolygonMouseOver(e, polygon);
               }
-
+            }}
+            onMouseMove={(e: google.maps.PolyMouseEvent) => {
               let tooltipContent = polygon.options.tooltip
                 ? polygon.options.tooltip(polygon)
                 : null;
@@ -552,20 +548,19 @@ function Map(props: {
                 polygon.options.tooltipMode === "hover" ||
                 !polygon.options.tooltipMode
               ) {
-                calculateTooltipCoordinates({
+                updateTooltipCoordinates({
                   lat: e.latLng?.lat(),
                   lng: e.latLng?.lng(),
                 });
+
                 setTooltipMode("hover");
-                updatePolygonTooltipDebounced.current(
+                updatePolygonTooltip(
                   tooltipContent,
                   polygon.options.tooltipPixelOffset
                 );
               }
             }}
             onMouseOut={(e: google.maps.PolyMouseEvent, polygon: IPolygon) => {
-              updatePolygonTooltipDebounced.current(null);
-
               if (props.onPolygonMouseOut) {
                 props.onPolygonMouseOut(e, polygon);
               }
@@ -573,7 +568,7 @@ function Map(props: {
                 polygon.options.tooltipMode === "hover" ||
                 !polygon.options.tooltipMode
               ) {
-                updatePolygonTooltipDebounced.current(null);
+                updatePolygonTooltip(null);
               }
             }}
             onPolygonUpdated={(polygon: IPolygon) => {
@@ -638,9 +633,9 @@ function Map(props: {
                     markerGroup.length === 1 ? "single" : "multiple"
                   )
                 : null;
-              calculateTooltipCoordinates(markerGroup[0].coordinates);
+              updateTooltipCoordinates(markerGroup[0].coordinates);
               setTooltipMode("click");
-              updateMarkerTooltipDebounced.current(
+              updateMarkerTooltip(
                 tooltipContent,
                 markerGroup[0].options?.tooltipPixelOffset
               );
@@ -665,10 +660,10 @@ function Map(props: {
                   </div>
                 );
               }
-              calculateTooltipCoordinates({ ...markerGroup[0].coordinates });
+              updateTooltipCoordinates({ ...markerGroup[0].coordinates });
               setTooltipMode("hover");
 
-              updateMarkerTooltipDebounced.current(
+              updateMarkerTooltip(
                 tooltipContent,
                 markerGroup[0].options?.tooltipPixelOffset
               );
@@ -679,7 +674,7 @@ function Map(props: {
               markerGroup[0].options.tooltipMode === "hover" ||
               !markerGroup[0].options.tooltipMode
             ) {
-              updateMarkerTooltipDebounced.current(null);
+              updateMarkerTooltip(null);
             }
           }}
           onDragEnd={(e: google.maps.MapMouseEvent, marker: IMarker) => {
@@ -693,29 +688,26 @@ function Map(props: {
   }
 
   function renderTooltip() {
-    return (
-      tooltipCoordinates &&
-      (markerTooltipContent || polygonTooltipContent) && (
-        <InfoWindow
-          options={{
-            disableAutoPan: tooltipMode !== "click",
-            pixelOffset: tooltipPixelOffset
-              ? new window.google.maps.Size(
-                  tooltipPixelOffset.x,
-                  tooltipPixelOffset.y
-                )
-              : undefined,
-          }}
-          children={
-            <div className="map-tooltip">
-              {markerTooltipContent || polygonTooltipContent}
-            </div>
-          }
-          position={tooltipCoordinates}
-          onCloseClick={hideTooltip}
-        ></InfoWindow>
-      )
-    );
+    return markerTooltipContent || polygonTooltipContent ? (
+      <InfoWindow
+        options={{
+          disableAutoPan: tooltipMode !== "click",
+          pixelOffset: tooltipPixelOffset
+            ? new window.google.maps.Size(
+                tooltipPixelOffset.x,
+                tooltipPixelOffset.y
+              )
+            : undefined,
+        }}
+        children={
+          <div className="map-tooltip">
+            {markerTooltipContent || polygonTooltipContent}
+          </div>
+        }
+        position={tooltipCoordinates}
+        onCloseClick={hideTooltip}
+      />
+    ) : null;
   }
 
   function renderMap() {
@@ -845,9 +837,7 @@ function Map(props: {
         </div>
         {renderMapWithMemo}
       </div>
-    ) : (
-      <></>
-    );
+    ) : null;
   }
 
   return render();
