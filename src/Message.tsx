@@ -1,5 +1,3 @@
-// @ts-ignore
-import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { useState } from "react";
@@ -61,7 +59,7 @@ function BaseMessage(props: IBaseMessageProps) {
   let { children, variant, noPadding, showShadow, showCloseButton } = props;
   const [show, setShow] = useState<boolean>(true);
 
-  let color = "gray";
+  let color = "black";
   let icon: IconProp | undefined;
 
   if (variant === "success") {
@@ -77,14 +75,20 @@ function BaseMessage(props: IBaseMessageProps) {
     color = "blue";
   }
 
+  const border = variant === "info" ? "" : "border border-" + color + "-200";
+  const textStyle =
+    variant === "info" ? "text-black" : "text-" + color + "-700";
+  const iconStyle =
+    variant === "info" ? "text-black" : "text-" + color + "-400";
+
   return (
     <>
       {show && (
         <div
           className={
-            "rounded-md border border-" +
-            color +
-            "-200 bg-" +
+            "rounded-md " +
+            border +
+            " bg-" +
             color +
             "-50 " +
             (noPadding ? "" : " p-4 my-4 ") +
@@ -95,19 +99,19 @@ function BaseMessage(props: IBaseMessageProps) {
             <div className=" flex items-center ">
               {icon && (
                 <FontAwesomeIcon
-                  className={"mr-3 h-5 w-5 text-" + color + "-400"}
+                  className={"mr-3 h-5 w-5 " + iconStyle}
                   aria-hidden="true"
                   icon={icon}
                 />
               )}
               <div>
-                <div className={"text-" + color + "-700"}>{children}</div>
+                <div className={textStyle}>{children}</div>
               </div>
             </div>
             {showCloseButton && (
               <FontAwesomeIcon
-                icon={"times"}
-                className={"text-" + color + "-400 cursor-pointer"}
+                icon="times"
+                className={iconStyle + " cursor-pointer"}
                 onClick={() => setShow(!show)}
               />
             )}
