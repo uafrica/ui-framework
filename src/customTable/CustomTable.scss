@@ -7,6 +7,18 @@
   width: 100%;
   overflow: auto;
   position: relative;
+
+  &::-webkit-scrollbar {
+    -webkit-appearance: none;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+  }
 }
 
 .custom-table {
