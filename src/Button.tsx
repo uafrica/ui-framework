@@ -59,6 +59,7 @@ interface IButtonBaseProps extends IButtonProps {
   buttonTypeClassNames: string;
   iconSize?: SizeProp;
   type?: "button" | "submit" | "reset" | undefined;
+  color?: string;
 }
 
 // Implementation
@@ -210,6 +211,7 @@ function BaseButton(props: IButtonBaseProps) {
     leftRounded,
     rightRounded,
     iconClassName = "mr-3",
+    color,
   } = props;
 
   let disabledOrLoading = isDisabled || isLoading;
@@ -222,6 +224,9 @@ function BaseButton(props: IButtonBaseProps) {
     iconClass = " button-loader-spinning";
   }
 
+  if (color) {
+    iconClass += ` text-${color}`;
+  }
   let textToShow = isLoading && loadingTitle ? loadingTitle + "..." : title;
 
   return (
@@ -253,7 +258,7 @@ function BaseButton(props: IButtonBaseProps) {
           size={iconSize ? iconSize : "sm"}
         />
       )}
-      {textToShow}
+      <div className={color ? `text-${color}` : ""}>{textToShow}</div>
     </button>
   );
 }
