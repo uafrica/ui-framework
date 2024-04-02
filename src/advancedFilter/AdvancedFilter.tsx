@@ -197,7 +197,7 @@ function AdvancedFilter(props: IAdvancedFilter) {
 
     if (store && store.emitter) {
       store.emitter.emit("showToast", {
-        text: "URL copied to keyboard",
+        text: "URL copied to clipboard",
         variant: "success",
         autoHide: 3000,
       });
@@ -259,7 +259,7 @@ function AdvancedFilter(props: IAdvancedFilter) {
 
   function renderHeading() {
     return (
-      <div className="flex flex-row justify-between items-start md:items-center">
+      <div className="flex flex-row justify-between items-start md:items-center ">
         <div className="flex flex-col md:flex-row md:space-x-4 items-center">
           <div className="flex flex-row space-x-4 items-center">
             <FontAwesomeIcon icon="filter" />
@@ -268,22 +268,23 @@ function AdvancedFilter(props: IAdvancedFilter) {
 
           {advancedFiltersChangedCount > 0 && (
             <div className=" text-gray-500">
-              ( {advancedFiltersChangedCount} filter
+              ({advancedFiltersChangedCount} filter
               {advancedFiltersChangedCount === 1 ? "" : "s"} applied)
             </div>
           )}
-        </div>
-        <div className="flex flex-row space-x-4 items-center">
+
           <div
             title="Share filter selection"
             className="flex flex-row space-x-4 text-black items-center cursor-pointer mr-2"
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               buildURLToShare();
             }}
           >
-            <FontAwesomeIcon icon="share-from-square" />
+            <FontAwesomeIcon icon="share-nodes" />
           </div>
-
+        </div>
+        <div className="flex flex-row space-x-4 items-center">
           <FontAwesomeIcon
             title={
               shouldKeepFiltersExpanded
@@ -295,7 +296,8 @@ function AdvancedFilter(props: IAdvancedFilter) {
               "cursor-pointer " +
               (shouldKeepFiltersExpanded ? "text-primary" : "text-gray-400")
             }
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               setShouldKeepFiltersExpanded(!shouldKeepFiltersExpanded);
 
               localStorage.setItem(
@@ -330,8 +332,8 @@ function AdvancedFilter(props: IAdvancedFilter) {
           }`}
         >
           {renderAdvancedFilterSections()}
+          {renderFooter()}
         </div>
-        {isExpanded && renderFooter()}
       </div>
     );
   }
@@ -376,6 +378,14 @@ function AdvancedFilter(props: IAdvancedFilter) {
       case "search": {
         return (
           <SearchInput
+            inputClassName={
+              generalUtils.checkIfObjectsAreEqual(
+                filtersInternal[filterComponent.filterProperty],
+                defaultFilters[filterComponent.filterProperty]
+              )
+                ? undefined
+                : " border-primary "
+            }
             label={filterComponent?.label}
             value={filtersInternal[filterComponent.filterProperty] ?? ""}
             onChange={(e: any) => {
@@ -394,6 +404,14 @@ function AdvancedFilter(props: IAdvancedFilter) {
         }
         return (
           <Select
+            borderClassName={
+              generalUtils.checkIfObjectsAreEqual(
+                filtersInternal[filterComponent.filterProperty],
+                defaultFilters[filterComponent.filterProperty]
+              )
+                ? undefined
+                : " border-primary "
+            }
             buttonWidth={
               getAdvancedFilterProps().includes(filterComponent.filterProperty)
                 ? "w-full"
@@ -548,8 +566,14 @@ function AdvancedFilter(props: IAdvancedFilter) {
             <div
               className={
                 containerClassName ??
-                "border border-gray-200 rounded-md p-4 bg-white my-4"
+                "border border-gray-200 rounded-md p-4 bg-white my-4 " +
+                  (!isExpanded ? "hover:bg-gray-100 cursor-pointer" : "")
               }
+              onClick={() => {
+                if (!isExpanded) {
+                  setIsExpanded(!isExpanded);
+                }
+              }}
             >
               {renderHeading()}
               {renderCollapsableContent()}

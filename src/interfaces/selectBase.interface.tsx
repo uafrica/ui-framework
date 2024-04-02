@@ -29,4 +29,5 @@ export interface ISelectBase {
   showAllSelectedText?: boolean; // Show "All selected" if the options selected is equal to the amount of options in the array
   allSelectedText?: string | undefined; // Custom all selected text
   popoverHeight?: string;
+  borderClassName?: string;
 }
