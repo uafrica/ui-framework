@@ -80,6 +80,7 @@ import { WeekdaySelect } from "./WeekdaySelect";
 import { OrderedList } from "./list/OrderedList";
 import { UnorderedList } from "./list/UnorderedList";
 import { ListItem } from "./list/ListItem";
+import { OTPInput } from "./OTPInput";
 import { withError } from "./errorBoundary/withError";
 import "./index.scss";
 
@@ -174,4 +175,5 @@ export {
   OrderedList,
   UnorderedList,
   ListItem,
+  OTPInput,
 };

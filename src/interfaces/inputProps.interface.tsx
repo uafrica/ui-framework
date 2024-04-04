@@ -18,6 +18,7 @@ export interface IInputProps {
   onBlur?: any;
   onKeyPress?: any;
   onKeyUp?: any;
+  onKeyDown?: any;
   step?: any;
   min?: number;
   max?: number;

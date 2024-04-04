@@ -50,6 +50,7 @@ function Input(props: IInputProps) {
     shouldAutoFocus,
     onKeyPress,
     onKeyUp,
+    onKeyDown,
     step,
     min,
     max,
@@ -118,6 +119,7 @@ function Input(props: IInputProps) {
       placeholder={placeholder}
       onKeyPress={onKeyPress}
       onKeyUp={onKeyUp}
+      onKeyDown={onKeyDown}
       onBlur={(e: any) => {
         setIsFocussed(false);
 
