@@ -1,27 +1,28 @@
 import { useState, useEffect } from "react";
-import { usePrevious } from "./usePrevious";
 import { useHistory } from "react-router-dom";
 
 function useTabs(defaultTab: string, clearParams?: boolean) {
   const history: any = useHistory();
   const [activeTabID, setActiveTabID] = useState<any>();
 
-  const prevLocation = usePrevious(location.search);
-
   useEffect(() => {
     if (!activeTabID || activeTabID === "") {
-      return setActiveTabID(defaultTab);
+      if (activeTabID !== defaultTab) {
+        setActiveTabID(defaultTab);
+      }
+    } else {
+      setActiveTabID(activeTabID);
     }
-    setActiveTabID(activeTabID);
   }, [activeTabID]);
 
   useEffect(() => {
-    if (location.search !== prevLocation) {
-      const urlParams = new URLSearchParams(location.search);
-      let params = urlParams.get("tab");
-      setActiveTabID(params);
+    const urlParams = new URLSearchParams(location.search);
+    let tab = urlParams.get("tab");
+    if (tab === null) {
+      tab = defaultTab;
     }
-  });
+    setActiveTabID(tab);
+  }, [location.search]);
 
   // Pass extra params through as object
   function onTabSelected(tab: any, extraParams?: any, overrideClear?: boolean) {
