@@ -14,6 +14,7 @@ interface ISmallMediumModalProps {
   showCloseButton: boolean;
   disableClickOutsideToClose?: boolean;
   disablePressEscToClose?: boolean;
+  margin?: string;
 }
 
 interface IBaseProps extends ISmallMediumModalProps {
@@ -40,6 +41,7 @@ const Base = ({
   showCloseButton: closeButton,
   disableClickOutsideToClose,
   disablePressEscToClose,
+  margin,
   ...props
 }: IBaseProps) => {
   let elements = document.getElementsByClassName("uafrica-modal-overlay");
@@ -100,7 +102,7 @@ const Base = ({
             )}
 
             <div
-              className={title || closeButton ? "mt-10 pt-6" : "mt-24 md:mt-20"}
+              className={title || closeButton ? "mt-10 pt-6" : margin ? margin : "mt-24 md:mt-20"}
             >
               {children}
             </div>
