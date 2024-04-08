@@ -35,7 +35,11 @@ function OTPInput(props: { length: number; onChange: (otp: string) => void }) {
     e: React.KeyboardEvent<HTMLInputElement>,
     index: number
   ) {
-    if (e.key === "Backspace" && index > 0 && otpArray[index] === "") {
+    if (
+      e.key === "Backspace" &&
+      index > 0 &&
+      (otpArray[index] === "" || otpArray[index] === undefined)
+    ) {
       setFocusedIndex(index - 1);
     }
   }
