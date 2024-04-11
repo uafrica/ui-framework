@@ -53,6 +53,7 @@ function Map(props: {
   defaultZoom?: number;
   onMapClick?: (e: google.maps.MapMouseEvent) => void;
   mapOptions?: google.maps.MapOptions;
+  onEditZonesClicked?: (mode?: "select" | "draw" | null | undefined) => void;
 }) {
   let {
     polygons,
@@ -828,7 +829,11 @@ function Map(props: {
                   id="edit_zones"
                   className="edit-button"
                   onClick={() => {
-                    enterEditMode();
+                    if (props.onEditZonesClicked) {
+                      props.onEditZonesClicked("select");
+                    } else {
+                      enterEditMode();
+                    }
                   }}
                 />
               )
