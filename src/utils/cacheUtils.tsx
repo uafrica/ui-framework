@@ -36,6 +36,19 @@ function getFromStore(store: any, cacheKey: string) {
   return store?.cache[cacheKey] ?? [];
 }
 
+async function getFromStoreOrRefresh(
+  store: any,
+  cacheKey: string,
+  refreshFunction: () => Promise<any>
+) {
+  let value = store?.cache[cacheKey] ?? [];
+  if (value?.length === 0) {
+    value = await refreshFunction();
+    setInStore(store, cacheKey, value);
+  }
+  return value;
+}
+
 function getFromStoreWhereKeyMatchesValues(
   store: any,
   cacheKey: string,
@@ -62,6 +75,7 @@ export {
   upsertItem,
   deleteItems,
   getFromStore,
+  getFromStoreOrRefresh,
   setInStore,
   getFromStoreWhereKeyMatchesValues,
 };
