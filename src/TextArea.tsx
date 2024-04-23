@@ -72,7 +72,7 @@ function TextArea(props: ITextArea) {
       <div className="flex justify-between">
         {label && (
           <div className="mt-1">
-            <Label className={labelClassName}>
+            <Label className={labelClassName} noMargin>
               {label} {info && <InfoButton>{info}</InfoButton>}
             </Label>
           </div>
