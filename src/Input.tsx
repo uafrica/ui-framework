@@ -185,7 +185,7 @@ function Input(props: IInputProps) {
       {label && label.length > 0 && (
         <div className="flex justify-between">
           {!shouldOverlapLabel && renderLabel()}
-          {isOptional && (
+          {isOptional && !shouldOverlapLabel && (
             <span className="text-gray-500">
               {typeof isOptional === "string" ? isOptional : "(Optional)"}
             </span>
@@ -199,13 +199,26 @@ function Input(props: IInputProps) {
       >
         {prependSelectProps && (
           <div className="-mr-2 z-10">
-            <Select {...prependSelectProps} noMargin isDisabled={isDisabled} />
+            <Select
+              {...prependSelectProps}
+              noMargin
+              isDisabled={isDisabled}
+              shouldOverlapLabel={shouldOverlapLabel}
+            />
           </div>
         )}
         <div className={"relative rounded-m w-full"}>
           {shouldOverlapLabel && label && (
             <div className="absolute -top-2 left-2 inline-block px-1 text-xs font-medium text-gray-900">
-              <div className="pl-2">{renderLabel()}</div>
+              <div className="flex flex-row space-x-2 px-2">
+                {renderLabel()}
+                {isOptional && (
+                  <span className="text-gray-500">
+                    {typeof isOptional === "string" ? isOptional : "(Optional)"}
+                  </span>
+                )}
+              </div>
+
               <div
                 className={`bg-white h-2 -mt-4 ${
                   isFocussed ? "ring-1 ring-white" : ""
