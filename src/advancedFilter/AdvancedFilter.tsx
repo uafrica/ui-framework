@@ -61,6 +61,15 @@ function AdvancedFilter(props: IAdvancedFilter) {
       }).length > 0
     ) {
       initFilters = urlFilters;
+
+      Object.keys(defaultFilters).forEach((key) => {
+        if (
+          !initFilters[key] &&
+          (defaultFilters[key] === "" || defaultFilters[key] === null)
+        ) {
+          initFilters[key] = defaultFilters[key];
+        }
+      });
       clearFiltersFromURL();
     } else if (localStorageFilter) {
       initFilters = JSON.parse(localStorageFilter);
