@@ -77,7 +77,7 @@ export default function Switch(props: IProps) {
               ? "bg-gray-400"
               : "bg-primary"
             : isDoublePositive
-            ? "bg-primary-light"
+            ? "bg-primary"
             : "bg-gray-200")
         }
       >
