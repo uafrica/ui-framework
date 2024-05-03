@@ -1,5 +1,5 @@
 // @ts-ignore
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import "leaflet/dist/leaflet.css";
 import L, { Layer, Map } from "leaflet";
 import {
@@ -41,6 +41,7 @@ function OpenStreetMap(props: {
   const [polylineLayer, setPolylineLayer] = useState<Layer>();
   const [circleLayer, setCircleLayer] = useState<Layer>();
   const [antimeridianLayer, setAntimeridianLayer] = useState<Layer>();
+  const mapRef = useRef<any>();
 
   const antimeridian: IPolyline = {
     data: { id: "antimeridian" },
@@ -56,7 +57,7 @@ function OpenStreetMap(props: {
   };
 
   useEffect(() => {
-    if (!map) {
+    if (!mapRef.current) {
       L.Map.addInitHook("addHandler", "gestureHandling", GestureHandling);
       setMap((map) => {
         map = L.map(mapId, {
@@ -73,6 +74,7 @@ function OpenStreetMap(props: {
           attribution:
             '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
         }).addTo(map);
+        mapRef.current = map;
         return map;
       });
     }
