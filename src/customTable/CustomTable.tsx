@@ -53,6 +53,7 @@ function CustomTable(props: ICustomTable) {
   // Loading
   let [isInitialising, setIsInitialising] = useState<boolean>(true);
   let [isLoading, setIsLoading] = useState<boolean>(false);
+  let [isRefreshing, setIsRefreshing] = useState<boolean>(false);
   let [data, setData] = useState<any[]>([]);
   let [error, setError] = useState<any[]>();
   let [orderingArguments, setOrderingArguments] = useState<any>({});
@@ -250,10 +251,18 @@ function CustomTable(props: ICustomTable) {
     if (isInitialising) {
       load(reset, page, pageSize, orderingArguments, shouldLoad);
     } else {
-      debouncedLoad.current(reset, page, pageSize, orderingArguments, shouldLoad);
+      debouncedLoad.current(
+        reset,
+        page,
+        pageSize,
+        orderingArguments,
+        shouldLoad
+      );
     }
   }
-  function refresh(page: number, pageSize: number, shouldLoad?: boolean) {
+
+  async function refresh(page: number, pageSize: number, shouldLoad?: boolean) {
+    setIsRefreshing(true);
     load(false, page, pageSize, orderingArguments, shouldLoad);
   }
 
@@ -839,6 +848,7 @@ function CustomTable(props: ICustomTable) {
       setError(error);
       setIsLoading(false);
       setIsInitialising(false);
+      setIsRefreshing(false);
     }
   }
 
@@ -1107,6 +1117,7 @@ function CustomTable(props: ICustomTable) {
             {!hideRefreshButton && (
               <div className="flex flex-row justify-end items-center">
                 <Button.Link
+                  isLoading={isRefreshing}
                   color="black"
                   title="Refresh"
                   onClick={() => {
