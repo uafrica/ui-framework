@@ -261,7 +261,7 @@ function CustomTable(props: ICustomTable) {
     }
   }
 
-  async function refresh(page: number, pageSize: number, shouldLoad?: boolean) {
+  function refresh(page: number, pageSize: number, shouldLoad?: boolean) {
     setIsRefreshing(true);
     load(false, page, pageSize, orderingArguments, shouldLoad);
   }
