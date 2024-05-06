@@ -79,6 +79,7 @@ import { useLocationState } from "./hooks/useLocationState";
 import { WeekdaySelect } from "./WeekdaySelect";
 import { OrderedList } from "./list/OrderedList";
 import { UnorderedList } from "./list/UnorderedList";
+import { CountdownTimer } from "./CountdownTimer";
 import { ListItem } from "./list/ListItem";
 import { OTPInput } from "./OTPInput";
 import { withError } from "./errorBoundary/withError";
@@ -174,6 +175,7 @@ export {
   WeekdaySelect,
   OrderedList,
   UnorderedList,
+  CountdownTimer,
   ListItem,
   OTPInput,
 };
