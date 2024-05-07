@@ -24,6 +24,7 @@ interface IDatePicker {
   isDisabled?: boolean;
   dataTest?: string | undefined;
   info?: any;
+  shouldOverlapLabel?: boolean;
 }
 
 const daysOfWeekNames = [
@@ -73,6 +74,7 @@ function DatePicker(props: IDatePicker) {
     maxDate,
     dataTest,
     info,
+    shouldOverlapLabel,
   } = props;
 
   if (placeholder === undefined) {
@@ -107,6 +109,7 @@ function DatePicker(props: IDatePicker) {
           {({ ref }) => (
             <div>
               <Input
+                shouldOverlapLabel={shouldOverlapLabel}
                 reference={ref}
                 onKeyPress={(e: any) => {
                   if (e.key === "Enter") {
@@ -127,8 +130,8 @@ function DatePicker(props: IDatePicker) {
                   isDisabled
                     ? undefined
                     : ctxValue.isVisible
-                      ? "caret-up"
-                      : "caret-down"
+                    ? "caret-up"
+                    : "caret-down"
                 }
                 onAppendIconClick={() => {
                   ctxValue.toggleCalendar();
@@ -267,7 +270,6 @@ const TimeSelection: React.FC<{}> = (_) => {
               }
             }}
           />
-
         </div>
         <div className="mt-2 pl-2">
           <Label>:</Label>
@@ -317,7 +319,6 @@ const TimeSelection: React.FC<{}> = (_) => {
               }
             }}
           />
-
         </div>
       </div>
     </div>
