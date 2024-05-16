@@ -19,6 +19,7 @@ interface ITabs {
   children: any;
   activeTabID: string;
   onSelect: any;
+  spacingClass?: string;
 }
 
 interface IGenericTabs extends ITabs {
@@ -98,7 +99,9 @@ function Generic(props: IGenericTabs) {
 
           <nav
             id={tabNavId}
-            className="-mb-px flex space-x-0 max-md:space-x-4 md:space-x-8 overflow-x-auto"
+            className={`-mb-px flex ${
+              props.spacingClass ?? "space-x-0 max-md:space-x-4 md:space-x-8"
+            } overflow-x-auto`}
             onScroll={() => {
               setOverflowing(evaluateScroll(tabNavId, props.children));
             }}
@@ -130,9 +133,9 @@ function Generic(props: IGenericTabs) {
                 <div
                   key={child.props.tabID}
                   id={child.props.id ?? child.props.tabID}
-                  onClick={() => {
+                  onClick={(e) => {
                     if (child.props.isClickable !== false) {
-                      props.onSelect(child.props.tabID);
+                      props.onSelect(child.props.tabID, e);
                     }
                   }}
                   className={tabClassName}
