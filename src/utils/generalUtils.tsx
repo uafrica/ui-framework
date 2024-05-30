@@ -700,6 +700,19 @@ function checkIfObjectsAreEqual(value1: any, value2: any) {
     return false;
   }
 
+  // Check if moment date
+  if (
+    (value1?.getYear && value1?.getYear()) ||
+    (value2?.getYear && value2?.getYear())
+  ) {
+    const date1 = moment(value1);
+    const date2 = moment(value2);
+    if (!date1.isSame(date2)) {
+      return false;
+    }
+    return true;
+  }
+
   // For arrays, recursively compare each element
   if (Array.isArray(value1) && Array.isArray(value2)) {
     if (value1.length !== value2.length) {
