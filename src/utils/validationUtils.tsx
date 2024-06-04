@@ -7,7 +7,11 @@ const emailRegex =
   /^((([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})),?;? ?)+$/;
 
 // Regex to check for valid URL
-const URLRegex = /^(?=.*[a-z])[a-zA-Z0-9()\s.'-]+$/i;
+const URLRegex =
+  /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[a-zA-Z0-9()\/._~-]*)*(\?[a-zA-Z0-9()\/._~=%&-]*)?(#[a-zA-Z0-9()\/._~-]*)?$/i;
+
+const URLHttpsRegex =
+  /^https:\/\/[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[a-zA-Z0-9()\/._~-]*)*(\?[a-zA-Z0-9()\/._~=%&-]*)?(#[a-zA-Z0-9()\/._~-]*)?$/i;
 
 const contactNumberRegex =
   /^((([+]{1}[0-9]{10,12})|([0-9]{10}))|[+]?1?\(?\d{3}[\-\)\.\s]?\d{3}[\-\.\s]?\d{4}|[+]?1?\(?\d{4}[\-\)\.\s]?\d{3}[\-\.\s]?\d{4})[-\s\.]*?$/;
@@ -59,5 +63,6 @@ export {
   emailRegex,
   contactNumberRegex,
   URLRegex,
+  URLHttpsRegex,
   withValidation,
 };
