@@ -13,7 +13,7 @@ import {
 } from "@react-google-maps/api";
 import { IMarker, IPolygon, IPolyline } from "../interfaces";
 import { defaultMapStyles } from "../utils/constantsAndDefaults";
-import { ICircle } from "../interfaces/circle.interface";
+import { ICircle } from "../interfaces/map/circle.interface";
 // @ts-ignore
 import React, { useEffect, useMemo, useState } from "react";
 import groupBy from "lodash/groupBy";

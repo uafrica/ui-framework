@@ -164,7 +164,7 @@ function GroupedSelect(props: IGroupedSelect) {
 
     return (
       optionsLimited.length > 0 && (
-        <div key={optionGroup.label} className="mb-4">
+        <div key={optionGroup.label?.toString()} className="mb-4">
           {optionGroup.label && (
             <div className="text-gray-600 uppercase text-xs p-2 mt-4">
               {optionGroup.label}

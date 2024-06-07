@@ -1,32 +1,9 @@
 // @ts-ignore
 import React from "react";
 import { Label } from "./Label";
+import { IRadioButton, IRadioGroup } from "./interfaces/radioButton.interface";
 
-interface IRadioButtonProps {
-  label: string;
-  onChange?: any;
-  isChecked?: boolean;
-  isDisabled?: boolean;
-  labelClassName?: string;
-  className?: string;
-  labelLeft?: boolean;
-  labelRight?: boolean;
-  name: string;
-}
-
-interface IRadioGroupProps {
-  title?: any;
-  options: string[];
-  onChange?: any;
-  isDisabled?: boolean;
-  labelClassName?: string;
-  className?: string;
-  labelLeft?: boolean;
-  labelRight?: boolean;
-  name: string;
-}
-
-function Button(props: IRadioButtonProps) {
+function Button(props: IRadioButton) {
   let {
     label,
     onChange,
@@ -44,7 +21,9 @@ function Button(props: IRadioButtonProps) {
     list.forEach((item: any) => {
       if (item.value === label) {
         item.checked = true;
-        onChange(item.value);
+        if (onChange) {
+          onChange(item.value);
+        }
       } else {
         item.checked = false;
       }
@@ -91,7 +70,9 @@ function Button(props: IRadioButtonProps) {
           value={label}
           checked={isChecked}
           onChange={(e) => {
-            onChange(e.target.value);
+            if (onChange) {
+              onChange(e.target.value);
+            }
           }}
         />
         {label && labelRight && renderLabel(label)}
@@ -100,7 +81,7 @@ function Button(props: IRadioButtonProps) {
   );
 }
 
-function Group(props: IRadioGroupProps) {
+function Group(props: IRadioGroup) {
   let {
     title,
     options,

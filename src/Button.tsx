@@ -1,66 +1,14 @@
 // @ts-ignore
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IconProp, SizeProp } from "@fortawesome/fontawesome-svg-core";
 import { Link as RouterLink } from "react-router-dom";
-
-// Interfaces
-interface IButtonProps {
-  id?: string;
-  title?: string;
-  loadingTitle?: string;
-  isLoading?: boolean;
-  icon?: IconProp;
-  iconSize?: SizeProp;
-  tabIndex?: number | undefined;
-  onClick?: any;
-  isCenter?: boolean;
-  className?: string;
-  isDisabled?: boolean;
-  hoverTitle?: string;
-  leftRounded?: boolean;
-  rightRounded?: boolean;
-  bgColor?: string; // Overrides icon bg
-  iconClassName?: string;
-}
-
-interface ILinkProps {
-  id?: string;
-  title?: string;
-  small?: boolean;
-  icon?: IconProp;
-  color?: string;
-  onClick?: any;
-  isCenter?: boolean;
-  className?: string;
-  isDisabled?: boolean;
-  loadingTitle?: string;
-  hoverTitle?: string;
-  isLoading?: boolean;
-  to?: string;
-  target?: string;
-  noPadding?: boolean;
-  tabIndex?: number | undefined;
-  iconClassName?: string;
-}
-
-interface ILinkBaseProps extends ILinkProps {
-  color: string;
-}
-
-interface IButtonsPanelProps {
-  children: any;
-  isCenter?: boolean;
-  isLeft?: boolean;
-  noMargin?: boolean;
-}
-
-interface IButtonBaseProps extends IButtonProps {
-  buttonTypeClassNames: string;
-  iconSize?: SizeProp;
-  type?: "button" | "submit" | "reset" | undefined;
-  color?: string;
-}
+import {
+  IButtonBaseProps,
+  IButtonProps,
+  IButtonsPanelProps,
+  ILinkBaseProps,
+  ILinkProps,
+} from "./interfaces/button.interface";
 
 // Implementation
 function Primary(props: IButtonProps) {
@@ -233,7 +181,11 @@ function BaseButton(props: IButtonBaseProps) {
     <button
       id={id}
       disabled={disabledOrLoading}
-      onClick={props.onClick}
+      onClick={(e) => {
+        if (props.onClick) {
+          props.onClick(e);
+        }
+      }}
       tabIndex={props.tabIndex ?? 0}
       type={type ? type : "button"}
       title={hoverTitle}
@@ -323,6 +275,7 @@ function Download(props: {
 
 function Close(props: IButtonProps) {
   return (
+    // @ts-ignore
     <div className="text-lg leading-6 font-bold  text-gray-900" {...props}>
       <FontAwesomeIcon
         icon="times"

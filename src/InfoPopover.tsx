@@ -5,25 +5,9 @@ import ReactDOM from "react-dom";
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { Manager, Popper, Reference } from "react-popper";
+import { IInfoPopover } from "./interfaces/infoPopover.interface";
 
-interface IInfoPopover {
-  placement?:
-    | "auto"
-    | "bottom-start"
-    | "bottom-end"
-    | "top-start"
-    | "top-end"
-    | "top"
-    | "bottom"
-    | "left"
-    | "right";
-  children: any;
-  popoverContent: any;
-  showPopover: boolean;
-  onPopoverDismiss: Function;
-  width?: string;
-  dataTest?: string | undefined;
-}
+
 
 function InfoPopover(props: IInfoPopover) {
   function Portal(props: { children: ReactNode }) {

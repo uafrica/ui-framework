@@ -4,7 +4,7 @@ import React, { useRef } from "react";
 
 interface IProps {
   value: { month: string; year: string };
-  onChange: Function;
+  onChange: (value: { month: string; year: string }) => void;
 }
 function ExpiryDateInput(props: IProps) {
   let { value } = props;

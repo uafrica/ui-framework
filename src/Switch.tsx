@@ -2,18 +2,9 @@
 import React from "react";
 import { InfoButton } from "./InfoButton";
 import { Switch as HeadlessSwitch } from "@headlessui/react";
+import { ISwitch } from "./interfaces/switch.interface";
 
-interface IProps {
-  isChecked: boolean;
-  isDisabled?: boolean;
-  isDoublePositive?: boolean;
-  onChange: any;
-  label?: string;
-  info?: string;
-  containerClassName?: string;
-}
-
-export default function Switch(props: IProps) {
+export default function Switch(props: ISwitch) {
   let {
     isChecked,
     label,

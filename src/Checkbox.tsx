@@ -1,29 +1,9 @@
 // @ts-ignore
 import React from "react";
 import { InfoButton } from "./InfoButton";
+import { ICheckbox } from "./interfaces/checkbox.interface";
 
-interface IProps {
-  key?: any;
-  fieldId?: string;
-  onClick?: any;
-  label?: any;
-  labelClassName?: string;
-  htmlFor?: string;
-  hoverTitle?: string;
-  info?: string;
-  className?: string;
-  id?: string;
-  isChecked?: boolean;
-  isCenter?: boolean;
-  isDisabled?: boolean;
-  noPadding?: boolean;
-  labelLeft?: boolean;
-  labelRight?: boolean;
-  textColor?: string;
-  dataTest?: string | undefined;
-}
-
-function Checkbox(props: IProps) {
+function Checkbox(props: ICheckbox) {
   let {
     onClick,
     label,
@@ -66,7 +46,11 @@ function Checkbox(props: IProps) {
     <div className="flex items-start">
       <div
         id={id}
-        onClick={isDisabled ? null : onClick ?? null}
+        onClick={(e) => {
+          if (!isDisabled && onClick) {
+            onClick(e);
+          }
+        }}
         key={key}
         className={
           (noPadding ? "" : "py-2 px-1 ") +

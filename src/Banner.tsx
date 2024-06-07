@@ -1,16 +1,9 @@
 // @ts-ignore
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IBanner } from "./interfaces/banner.interface";
 
-interface IProps {
-  backgroundColorClass: string;
-  textColorClass?: string;
-  icon?: string;
-  children: any;
-  iconClassName?: any;
-}
-
-function Banner(props: IProps) {
+function Banner(props: IBanner) {
   let { backgroundColorClass, textColorClass, icon, children, iconClassName } =
     props;
 

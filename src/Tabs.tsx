@@ -1,32 +1,12 @@
 // @ts-ignore
-import React, { useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { InfoButton } from "./InfoButton";
+import { IGenericTabs, ITab, ITabs } from "./interfaces/tab.interface";
 
 // Interface
-interface ITab {
-  children?: any;
-  tabID: string;
-  id?: string;
-  title?: string;
-  titleHTML?: any;
-  info?: string;
-  className?: string;
-  isClickable?: boolean;
-}
 
-interface ITabs {
-  children: any;
-  activeTabID: string;
-  onSelect: any;
-  spacingClass?: string;
-}
-
-interface IGenericTabs extends ITabs {
-  isPrimary?: boolean;
-}
-
-function evaluateScroll(tabNavId: any, children: any) {
+function evaluateScroll(tabNavId: any, children: ReactNode[]) {
   let res = { left: false, right: false };
   if (children.length > 0) {
     let navElement = document.getElementById(tabNavId);

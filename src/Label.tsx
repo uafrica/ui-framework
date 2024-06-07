@@ -1,25 +1,10 @@
 // @ts-ignore
 import React from "react";
 import { InfoButton } from "./InfoButton";
+import { ILabel, ILabelWithValue } from "./interfaces/label.interface";
 
-// Interface
-interface ILabel {
-  children?: any;
-  className?: string;
-  htmlFor?: any;
-  noMargin?: boolean;
-  labelColor?: string;
-}
 
-interface ILabelWithValue {
-  label: string;
-  value: any;
-  noMargin?: boolean;
-  info?: string;
-  labelColor?: string;
-  doNotShowEnDash?: boolean;
-  dataTest?: string | undefined;
-}
+
 
 // Implementation
 function Label(props: ILabel) {

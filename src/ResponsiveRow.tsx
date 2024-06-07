@@ -1,8 +1,8 @@
 // @ts-ignore
-import React from "react";
+import React, { ReactNode } from "react";
 // Interface
 interface IResponsiveRow {
-  children: any;
+  children: ReactNode;
   isCenteredVertically?: boolean;
 }
 

@@ -11,7 +11,7 @@ function Marker(props: {
   onMouseOver: Function;
   onMouseOut: Function;
   onDragEnd: Function;
-  hideTooltip: Function;
+  hideTooltip: () => void;
 }) {
   let { markerGroup } = props;
 

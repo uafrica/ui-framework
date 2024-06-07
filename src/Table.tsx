@@ -1,5 +1,5 @@
 // @ts-ignore
-import React from "react";
+import React, { ReactNode } from "react";
 
 const tableBaseClass = "min-w-full divide-y divide-gray-200";
 const tableHeadClass = "bg-gray-50";
@@ -12,7 +12,7 @@ const tableColClass = "px-2 py-2 whitespace-nowrap text-gray-900";
 interface IProps {
   className?: string;
   disableScroll?: boolean;
-  children: any;
+  children: ReactNode;
 }
 
 function TableContainer(props: IProps) {
@@ -41,7 +41,7 @@ function TableContainer(props: IProps) {
 interface IHeadProps {
   tableHeadColor?: string;
   restProps?: any;
-  children: any;
+  children: ReactNode;
 }
 
 function Head(props: IHeadProps) {

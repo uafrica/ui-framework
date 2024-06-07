@@ -3,24 +3,8 @@ import React, { useRef } from "react";
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IconName } from "@fortawesome/free-solid-svg-icons";
 import { Manager, Popper, Reference } from "react-popper";
-
-interface IInfoButton {
-  placement?:
-    | "auto"
-    | "bottom-start"
-    | "bottom-end"
-    | "top-start"
-    | "top-end"
-    | "top"
-    | "bottom"
-    | "left"
-    | "right";
-  children: any;
-  className?: string;
-  icon?: IconName;
-}
+import { IInfoButton } from "./interfaces/infoButton.interface";
 
 function InfoButton(props: IInfoButton) {
   let { placement, children, className, icon } = props;

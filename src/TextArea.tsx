@@ -3,37 +3,9 @@ import React from "react";
 import { InfoButton } from "./InfoButton";
 import { Label } from "./Label";
 import { Message } from "./Message";
+import { ITextArea } from "./interfaces/textArea.interface";
 
 const defaultContainerClass = "mt-3";
-
-// Interface
-interface ITextArea {
-  label?: any;
-  labelClassName?: string;
-  htmlFor?: string;
-  containerClassName?: string;
-  fieldID?: string;
-  className?: string;
-  info?: string;
-  id?: string;
-  value?: any;
-  defaultValue?: string;
-  name?: string;
-  isDisabled?: boolean;
-  isOptional?: boolean;
-  onChange?: any;
-  onFocus?: any;
-  onBlur?: any;
-  placeholder?: string;
-  infoButton?: any;
-  register?: any;
-  validationError?: any;
-  errorMessage?: any;
-  isFixed?: boolean;
-  rows?: any;
-  maxLength?: number;
-  dataTest?: string | undefined;
-}
 
 function TextArea(props: ITextArea) {
   let {

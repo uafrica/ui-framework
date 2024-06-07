@@ -6,24 +6,9 @@ import { ICountry } from "./interfaces/country.interface";
 import { Input } from "./Input";
 import { Label } from "./Label";
 import { Message } from "./Message";
+import { IMobileNumberSelect } from "./interfaces/mobileNumberSelect.interface";
 
-function MobileNumberSelect(props: {
-  allowedCountryCodes?: string[];
-  allowOtherCountries?: boolean;
-  defaultCountryCode?: string;
-  label?: any;
-  shouldOverlapLabel?: boolean;
-  onChange?: Function;
-  value?: any;
-  isReadOnly?: boolean;
-  validationError?: any;
-  errorMessage?: any;
-  name?: string;
-  validation?: any;
-  isRequired?: boolean;
-  mobileNumberRegex?: boolean;
-  showAsterisk?: boolean;
-}) {
+function MobileNumberSelect(props: IMobileNumberSelect) {
   let {
     allowedCountryCodes,
     allowOtherCountries,

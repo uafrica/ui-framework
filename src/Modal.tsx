@@ -4,22 +4,10 @@ import React, { createContext, useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import { Button } from "./Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
-
-interface ISmallMediumModalProps {
-  children: any;
-  onHide?: any;
-  title?: any;
-  icon?: IconProp;
-  showCloseButton: boolean;
-  disableClickOutsideToClose?: boolean;
-  disablePressEscToClose?: boolean;
-  margin?: string;
-}
-
-interface IBaseProps extends ISmallMediumModalProps {
-  className?: string;
-}
+import {
+  IBaseProps,
+  ISmallMediumModalProps,
+} from "./interfaces/modal.interface";
 
 export const ModalContext = createContext({});
 
@@ -76,7 +64,11 @@ const Base = ({
       <div
         id={modalId}
         className="uafrica-modal-overlay fixed inset-0 bg-black bg-opacity-60 transition-opacity"
-        onClick={!disableClickOutsideToClose && onHide ? onHide : () => {}}
+        onClick={(e) => {
+          if (!disableClickOutsideToClose && onHide) {
+            onHide(e);
+          }
+        }}
       />
       <div
         className={
@@ -97,12 +89,26 @@ const Base = ({
               <div className="ua-modal-actions-panel  flex items-center  justify-between z-30 text-lg font-bold text-gray-900 text-left pb-4">
                 {title && title}
 
-                {closeButton && <Button.Close onClick={onHide} />}
+                {closeButton && (
+                  <Button.Close
+                    onClick={(e) => {
+                      if (onHide) {
+                        onHide(e);
+                      }
+                    }}
+                  />
+                )}
               </div>
             )}
 
             <div
-              className={title || closeButton ? "mt-10 pt-6" : margin ? margin : "mt-24 md:mt-20"}
+              className={
+                title || closeButton
+                  ? "mt-10 pt-6"
+                  : margin
+                  ? margin
+                  : "mt-24 md:mt-20"
+              }
             >
               {children}
             </div>

@@ -1,44 +1,17 @@
 // @ts-ignore
 import React from "react";
 import { Button } from "./Button";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { PageHeading } from "./PageHeading";
 import { SectionHeading } from "./SectionHeading";
-
-// Interface
-interface IProps {
-  children?: any;
-  title?: any;
-  className?: string;
-  onClose?: any;
-}
-
-interface IPageActionsPanelProps {
-  children?: any;
-  title?: any;
-  className?: string;
-  onClose?: any;
-  icon?: IconProp;
-  shouldNotUppercase?: boolean;
-}
-
-interface ISectionActionsPanel {
-  children?: any;
-  title?: any;
-  className?: string;
-  toggleEditMode?: any;
-  hideEditMode?: boolean;
-  icon?: IconProp;
-  iconColor?: string;
-}
-
-interface IFiltersPanel {
-  children?: any;
-  className?: string;
-}
+import {
+  IFiltersPanel,
+  IPageActionsPanelProps,
+  IPanel,
+  ISectionActionsPanel,
+} from "./interfaces/panel.interface";
 
 // Implementation
-function TableActionsPanel(props: IProps) {
+function TableActionsPanel(props: IPanel) {
   let { title, className } = props;
 
   return (
@@ -101,7 +74,7 @@ function PageActionsPanel(props: IPageActionsPanelProps) {
   );
 }
 
-function ModalActionsPanel(props: IProps) {
+function ModalActionsPanel(props: IPanel) {
   let { title, onClose } = props;
 
   return (
@@ -110,7 +83,14 @@ function ModalActionsPanel(props: IProps) {
         <div>{title && <PageHeading>{title}</PageHeading>}</div>
         <div>
           {onClose && (
-            <div className="block md:hidden" onClick={onClose}>
+            <div
+              className="block md:hidden"
+              onClick={(e) => {
+                if (onClose) {
+                  onClose(e);
+                }
+              }}
+            >
               <Button.Close onClick={onClose} />
             </div>
           )}
@@ -119,7 +99,14 @@ function ModalActionsPanel(props: IProps) {
       <div className=" flex justify-center  flex-row space-x-4 items-center w-full md:w-auto flex-wrap pt-2">
         {props.children}
         {onClose && (
-          <div className="hidden md:block" onClick={onClose}>
+          <div
+            className="hidden md:block"
+            onClick={(e) => {
+              if (onClose) {
+                onClose(e);
+              }
+            }}
+          >
             <Button.Close onClick={onClose} />
           </div>
         )}

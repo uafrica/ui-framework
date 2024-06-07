@@ -4,28 +4,10 @@ import { Button } from "./Button";
 import { Modal } from "./Modal";
 import { useEffect } from "react";
 import { useState } from "react";
-
-// Interface
-interface IProps {
-  isVisible?: boolean;
-  isDisabled?: boolean;
-  onConfirm?: any;
-  onCancel?: any;
-  onClose?: any;
-  onShow?: any;
-  children: any;
-  title: string;
-  body?: any;
-  confirmText?: string;
-  cancelText?: string;
-  confirmButtonVariant?: string;
-  showCancelButton?: boolean;
-  disableClickOutsideToClose?: boolean;
-  disablePressEscToClose?: boolean;
-}
+import { IConfirm } from "./interfaces/confirm.interface";
 
 // Implementation
-function Confirm(props: IProps) {
+function Confirm(props: IConfirm) {
   let {
     confirmButtonVariant,
     showCancelButton,
@@ -50,7 +32,7 @@ function Confirm(props: IProps) {
 
   function onCancel(event: any) {
     onClose(event);
-    if (typeof props.onCancel === "function") {
+    if (props.onCancel) {
       props.onCancel();
     }
   }
@@ -74,9 +56,11 @@ function Confirm(props: IProps) {
     }
   }
 
-  async function onConfirm(event: any) {
+  function onConfirm(event: any) {
     event.stopPropagation();
-    await props.onConfirm();
+    if (props.onConfirm) {
+      props.onConfirm(event);
+    }
 
     setOpen(false);
   }

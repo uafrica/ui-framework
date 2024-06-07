@@ -1,6 +1,6 @@
 import moment from "moment";
 // @ts-ignore
-import React, { useContext, useRef } from "react";
+import React, { ReactNode, useContext, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Input } from "../Input";
 import { Manager, Popper, Reference } from "react-popper";
@@ -8,7 +8,7 @@ import { MonthPickerCtx, useMonthPickerCtx } from "./MonthPickerContext";
 
 interface IMonthPicker {
   dateFrom: Date;
-  label?: string;
+  label?: ReactNode;
   isLabelInline?: boolean;
   placeholder?: string;
   containerClassName?: string;
@@ -17,7 +17,7 @@ interface IMonthPicker {
   onChange: (date: Date) => void;
   onMonthPickerClose?: Function;
   isDisabled?: boolean;
-  dataTest?: string | undefined;
+  dataTest?: string;
 }
 
 const monthNames = [
@@ -149,6 +149,7 @@ interface CalendarProps {
   ref: React.Ref<HTMLDivElement>;
 }
 
+// @ts-ignore
 const Calendar: React.FC<CalendarProps> = React.forwardRef<
   HTMLDivElement,
   CalendarProps

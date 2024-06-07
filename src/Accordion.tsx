@@ -4,20 +4,9 @@ import { Confirm } from "./Confirm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Transition } from "@headlessui/react";
 import { useState } from "react";
+import { IAccordion } from "./interfaces/accordion.interface";
 
 // Interface
-interface IAccordion {
-  className?: string;
-  title: any;
-  overrideOpen?: boolean;
-  children: any;
-  onDelete?: any;
-  backgroundColor?: string;
-  textColor?: string;
-  hideCaret?: boolean;
-  caretColor?: string;
-  endComponent?: any;
-}
 
 function Accordion(props: IAccordion) {
   let {
@@ -52,7 +41,9 @@ function Accordion(props: IAccordion) {
             {onDelete && (
               <Confirm
                 onConfirm={() => {
-                  onDelete();
+                  if (onDelete) {
+                    onDelete();
+                  }
                 }}
                 title="Delete item?"
                 body="Are you sure you want to delete the item?"

@@ -3,22 +3,10 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { useState } from "react";
-
-// Interfaces
-interface IMessageProps {
-  heading?: string;
-  children: any;
-  noPadding?: boolean;
-  showShadow?: boolean;
-  showCloseButton?: boolean;
-}
-
-interface IInstructionProps {
-  isCenter?: boolean;
-  className?: string;
-  noPadding?: boolean;
-  children: any;
-}
+import {
+  IInstructionProps,
+  IMessageProps,
+} from "./interfaces/message.interface";
 
 interface IBaseMessageProps extends IMessageProps {
   variant: string;
@@ -97,7 +85,7 @@ function BaseMessage(props: IBaseMessageProps) {
             (showShadow ? " shadow-lg " : "")
           }
         >
-          <div className={"flex justify-between items-center"}>
+          <div className="flex justify-between items-center">
             <div className=" flex items-center ">
               {icon && (
                 <FontAwesomeIcon

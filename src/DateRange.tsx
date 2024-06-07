@@ -4,28 +4,9 @@ import React, { useEffect } from "react";
 import { DatePicker } from "./datePicker/DatePicker";
 import { MonthPicker } from "./monthPicker/MonthPicker";
 import { Select } from "./Select";
+import { IDateRange } from "./interfaces/dateRange.interface";
 
-function DateRange(props: {
-  isLabelInline?: boolean;
-  showRange?: boolean;
-  showMonth?: boolean;
-  period?: string;
-  defaultPeriod?: string;
-  dateFrom?: any; // Used for range and/or month selection
-  defaultDateFrom?: any; // Used for range and/or month selection
-  dateTo?: any; // Used for range and/or month selection
-  defaultDateTo?: any; // Used for range and/or month selection
-  onPeriodChange?: Function;
-  onRangeChange?: Function;
-  onMonthChange?: Function;
-  periodOptions?: { label: string; value: string }[];
-  containerClassName?: string;
-  label?: string;
-  isDisabled?: boolean;
-  showTimeSelect?: boolean;
-  dateFormat?: string;
-  buttonWidth?: string;
-}) {
+function DateRange(props: IDateRange) {
   let {
     isLabelInline,
     showRange,
@@ -83,7 +64,7 @@ function DateRange(props: {
             onPeriodChange(val);
           }
         }}
-        placeholder={"Select period"}
+        placeholder="Select period"
         value={period ?? defaultPeriod}
         label={label}
         isDisabled={isDisabled}

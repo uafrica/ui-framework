@@ -1,14 +1,14 @@
 // @ts-ignore
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IInputProps } from "./interfaces/inputProps.interface";
+import { IInput } from "./interfaces/input.interface";
 import { InfoButton } from "./InfoButton";
 import { Label } from "./Label";
 import { Message } from "./Message";
 import { Select } from "./Select";
 import { useState } from "react";
 
-function Input(props: IInputProps) {
+function Input(props: IInput) {
   let {
     label,
     htmlFor,
@@ -108,7 +108,11 @@ function Input(props: IInputProps) {
       id={inputID}
       readOnly={isDisabled || isReadOnly} // If we make the input isDisabled then react-hooks-form doesn't submit the defaultValue https://twitter.com/bluebill1049/status/1300231640392716288
       onChange={onChange}
-      onClick={onClick}
+      onClick={(e) => {
+        if (onClick) {
+          onClick(e);
+        }
+      }}
       onFocus={(e: any) => {
         if (!isDisabled) {
           setIsFocussed(true);
@@ -182,7 +186,7 @@ function Input(props: IInputProps) {
           : "mt-4 max-w-sm")
       }
     >
-      {label && label.length > 0 && (
+      {label && (
         <div className="flex justify-between">
           {!shouldOverlapLabel && renderLabel()}
           {isOptional && !shouldOverlapLabel && (
@@ -207,7 +211,7 @@ function Input(props: IInputProps) {
             />
           </div>
         )}
-        <div className={"relative rounded-m w-full"}>
+        <div className="relative rounded-m w-full">
           {shouldOverlapLabel && label && (
             <div className="absolute -top-2 left-2 inline-block px-1 text-xs font-medium text-gray-900">
               <div className="flex flex-row space-x-2 px-2">
@@ -251,9 +255,7 @@ function Input(props: IInputProps) {
           {InputElement}
           {/* @ts-ignore */}
           {(appendIcon || onClearSearch) && (
-            <div
-              className={"absolute inset-y-0 right-0 mr-3 flex items-center"}
-            >
+            <div className="absolute inset-y-0 right-0 mr-3 flex items-center">
               {appendIcon && (
                 <div
                   className={
@@ -262,7 +264,11 @@ function Input(props: IInputProps) {
                       : " pointer-events-none text-gray-400"
                   }
                   id={appendIconId}
-                  onClick={onAppendIconClick ? onAppendIconClick : undefined}
+                  onClick={(e) => {
+                    if (onAppendIconClick) {
+                      onAppendIconClick(e);
+                    }
+                  }}
                 >
                   <FontAwesomeIcon icon={appendIcon} size="sm" />
                 </div>
@@ -280,7 +286,7 @@ function Input(props: IInputProps) {
                     }
                   }}
                 >
-                  <FontAwesomeIcon icon={"times"} size="sm" />
+                  <FontAwesomeIcon icon="times" size="sm" />
                 </div>
               )}
             </div>

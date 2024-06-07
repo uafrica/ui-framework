@@ -257,7 +257,7 @@ function clickableTableRow(
 
       if (typeof onClickEvent === "function") {
         return (
-          <div className={"flex items-center"}>
+          <div className="flex items-center">
             {firstChild}
             <div
               className={componentClass}

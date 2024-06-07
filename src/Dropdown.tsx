@@ -7,73 +7,17 @@ import React, {
   useState,
 } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { Manager, Popper, Reference } from "react-popper";
 import { Menu, Transition } from "@headlessui/react";
+import {
+  IDropdown,
+  IDropdownMenuContextType,
+  IMenuHeading,
+  IMenuItem,
+  IMenuItemContainer,
+} from "./interfaces/dropdown.interface";
 
-// Interface
-interface IDropdown {
-  onClick?: any;
-  containerRef?: any;
-  children: any;
-  title?: string;
-  square?: boolean;
-  icon?: IconProp;
-  appendHTML?: IconProp;
-  noBackground?: boolean;
-  color?: string;
-  id?: string;
-  style?: string;
-  widthClass?: string; // Tailwind w-X class e.g. w-56
-  buttonWidth?: string;
-  borderColor?: string;
-  leftRounded?: boolean;
-  rightRounded?: boolean;
-  buttonStyle?: any;
-  between?: boolean;
-  padding?: string;
-  placement?:
-    | "auto"
-    | "auto-start"
-    | "auto-end"
-    | "top-start"
-    | "top-end"
-    | "bottom-start"
-    | "bottom-end"
-    | "right-start"
-    | "right-end"
-    | "left-start"
-    | "left-end";
-}
-
-interface IMenuItem {
-  title: string;
-  icon?: IconProp;
-  appendHTML?: any;
-  onClick: any;
-  id?: string;
-  isDisabled?: boolean;
-  isLoading?: boolean;
-  closeOnClick?: boolean;
-}
-
-interface IMenuHeading {
-  title: string;
-  icon?: IconProp;
-  id?: string;
-}
-
-interface IMenuItemContainer {
-  children: any;
-}
-
-interface DropdownMenuContextType {
-  isVisible: boolean;
-  showDropdownMenu: () => void;
-  hideDropdownMenu: () => void;
-}
-
-const DropdownMenuCtx = createContext<DropdownMenuContextType>({
+const DropdownMenuCtx = createContext<IDropdownMenuContextType>({
   isVisible: false,
   showDropdownMenu: () => {},
   hideDropdownMenu: () => {},
@@ -81,7 +25,7 @@ const DropdownMenuCtx = createContext<DropdownMenuContextType>({
 
 function useDropdownMenuCtx(
   ref: React.MutableRefObject<HTMLElement | undefined>
-): DropdownMenuContextType {
+): IDropdownMenuContextType {
   const [isVisible, setVisible] = useState<boolean>(false);
 
   useEffect(() => {
@@ -374,7 +318,7 @@ function MenuHeading(props: IMenuHeading) {
         {() => (
           <div
             className={
-              "group flex  flex items-center  px-4 py-2 cursor-pointer font-semibold text-gray-700"
+              "group flex items-center  px-4 py-2 cursor-pointer font-semibold text-gray-700"
             }
           >
             {icon && (

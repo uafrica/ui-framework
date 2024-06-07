@@ -1,26 +1,7 @@
 // @ts-ignore
-import React from "react";
+import React, { ReactNode } from "react";
 import { Button } from "./Button";
-
-// Interface
-interface ISavePanel {
-  hasSomethingChanged: boolean;
-  saveError?: any;
-  isSavingChanges: boolean;
-  isSaved?: boolean;
-  saveDisabledText?: string;
-  saveText?: string;
-  cancelText?: string;
-  className?: string;
-  cancelChanges?: any;
-  saveChanges: any;
-  callToActionAtBottom?: boolean;
-}
-
-interface ISavePanelContainer {
-  children: any;
-  inModal?: boolean;
-}
+import { ISavePanel, ISavePanelContainer } from "./interfaces/savePanel.interface";
 
 function SavePanel(props: ISavePanel) {
   const {

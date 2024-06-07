@@ -1,8 +1,9 @@
+import { ReactNode } from "react";
 import { ISelectBase } from "../selectBase.interface";
 
 export interface ISelectFilterComponent {
   type: "select";
-  label?: string;
+  label?: ReactNode;
   filterProperty: string;
   options: {
     [key: string]: any;

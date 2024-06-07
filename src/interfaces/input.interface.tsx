@@ -1,44 +1,53 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import {
+  ChangeEventHandler,
+  CSSProperties,
+  FocusEventHandler,
+  HTMLInputTypeAttribute,
+  KeyboardEventHandler,
+  MouseEventHandler,
+  ReactNode,
+} from "react";
 
-export interface IInputProps {
-  label?: string;
+export interface IInput {
+  label?: ReactNode;
   isLabelInline?: boolean;
   shouldOverlapLabel?: boolean;
   labelClassName?: string;
   htmlFor?: string;
   register?: any;
   name?: string;
-  defaultValue?: any;
-  value?: any;
+  defaultValue?: string | number | ReadonlyArray<string>;
+  value?: string | ReadonlyArray<string> | number;
   validationError?: any;
-  type?: string;
-  onChange?: any;
-  onClick?: any;
-  onFocus?: any;
-  onBlur?: any;
-  onKeyPress?: any;
-  onKeyUp?: any;
-  onKeyDown?: any;
-  step?: any;
+  type?: HTMLInputTypeAttribute;
+  onChange?: ChangeEventHandler;
+  onClick?: MouseEventHandler | (() => void) | Function;
+  onFocus?: FocusEventHandler;
+  onBlur?: FocusEventHandler;
+  onKeyPress?: KeyboardEventHandler;
+  onKeyUp?: KeyboardEventHandler;
+  onKeyDown?: KeyboardEventHandler;
+  step?: number | string;
   min?: number;
   max?: number;
   maxLength?: number;
-  autoComplete?: any;
+  autoComplete?: string;
   isDisabled?: boolean;
   reference?: any;
   placeholder?: string;
   id?: string;
   containerClassName?: string;
   errorMessage?: string;
-  shouldAutoFocus?: any;
-  isOptional?: any; // When boolean displays the text "optional" next to the label, when string displays string value
+  shouldAutoFocus?: boolean;
+  isOptional?: boolean; // When boolean displays the text "optional" next to the label, when string displays string value
   isReadOnly?: boolean;
   inputClassName?: string;
-  info?: any;
+  info?: ReactNode;
   inputFieldID?: string;
   appendIcon?: IconProp;
   appendIconId?: string;
-  onAppendIconClick?: any;
+  onAppendIconClick?: MouseEventHandler | (() => void) | Function;
   appendIconColor?: string;
   appendText?: string;
   appendPadding?: string;
@@ -49,16 +58,16 @@ export interface IInputProps {
   appendTextContainerClassName?: string;
   prependTextHasBackground?: boolean;
   appendTextHasBackground?: boolean;
-  inputFieldStyle?: any;
+  inputFieldStyle?: CSSProperties;
   inputID?: string;
-  onClearSearch?: Function;
+  onClearSearch?: () => void;
   prependSelectProps?: any;
   prependTextSize?: string;
   showAsterisk?: boolean;
   hideArrows?: boolean;
   disableNumericInputScroll?: boolean; // Scrolling over a numeric input causes the input value to change
-  dataTest?: string | undefined;
-  pointer?: any;
+  dataTest?: string;
+  pointer?: string;
   inputMode?:
     | "none"
     | "text"

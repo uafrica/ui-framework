@@ -2,7 +2,10 @@
 import React from "react";
 import { useState } from "react";
 
-function WeekdaySelect(props: { value?: number[]; onChange?: Function }) {
+function WeekdaySelect(props: {
+  value?: number[];
+  onChange?: (selectedDays: number[]) => void;
+}) {
   let { value } = props;
 
   let [selectedDays, setSelectedDays] = useState<number[]>(value ?? []);

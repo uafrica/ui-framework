@@ -1,20 +1,7 @@
 // @ts-ignore
-import React from "react";
+import React, { ReactNode } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
-
-interface ISectionHeading {
-  children: any;
-  icon?: IconProp;
-  iconColor?: string;
-  editIconClassName?: string;
-  toggleEditMode?: any;
-  hideEditMode?: boolean;
-  isCenter?: boolean;
-  marginTop?: boolean; // Used if two sections are below each other
-  noMarginBottom?: boolean;
-  options?: any;
-}
+import { ISectionHeading } from "./interfaces/sectionHeading.interface";
 
 function SectionHeading(props: ISectionHeading) {
   let {
@@ -68,7 +55,11 @@ function SectionHeading(props: ISectionHeading) {
               ? editIconClassName
               : "mt-1 text-primary cursor-pointer"
           }
-          onClick={() => toggleEditMode()}
+          onClick={() => {
+            if (toggleEditMode) {
+              toggleEditMode();
+            }
+          }}
         />
       )}
       {options && options}

@@ -1,5 +1,7 @@
+import { ReactNode } from "react";
+
 export interface ISelectBase {
-  label?: any;
+  label?: ReactNode;
   isLabelInline?: boolean;
   shouldOverlapLabel?: boolean;
   labelClassName?: string;
@@ -10,9 +12,9 @@ export interface ISelectBase {
   buttonWidth?: string;
   id?: string;
   value?: any;
-  info?: any;
+  info?: ReactNode;
   onChange?: (value: any) => void;
-  onClick?: () => void;
+  onClick?: () => void | Function;
   onSearchBlur?: () => void;
   onSearchFocus?: () => void;
   isDisabled?: boolean;
@@ -24,7 +26,7 @@ export interface ISelectBase {
   onDelete?: (label: any, value: any) => void; // Renders a delete button next to each option
   allowDeselect?: boolean; // Single select mode does not allow for the deselection of an option by default, only switching to another option. override by setting this to true
   showAsterisk?: boolean;
-  dataTest?: string | undefined;
+  dataTest?: string;
   showAllButton?: boolean; // Conditionally display a button to show all available options
   showAllSelectedText?: boolean; // Show "All selected" if the options selected is equal to the amount of options in the array
   allSelectedText?: string | undefined; // Custom all selected text

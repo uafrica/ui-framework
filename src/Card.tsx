@@ -1,15 +1,8 @@
 // @ts-ignore
 import React from "react";
+import { ICard } from "./interfaces/card.interface";
 
-interface IProps {
-  children: any;
-  className?: string;
-  width?: string;
-  mediumWidth?: string;
-  padding?: string;
-}
-
-function Card(props: IProps) {
+function Card(props: ICard) {
   let { mediumWidth, width, children, padding } = props;
   let className = props.className ? props.className : "";
 

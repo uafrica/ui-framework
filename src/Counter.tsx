@@ -4,31 +4,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Input } from "./Input";
 import { Label } from "./Label";
 import { useState } from "react";
+import { ICounter } from "./interfaces/counter.interface";
 
-interface ICounterProps {
-  label?: string;
-  isLabelInline?: boolean;
-  labelClassName?: string;
-  value?: any;
-  onChange?: any;
-  step?: any;
-  min?: number;
-  max?: number;
-  isDisabled?: boolean;
-  placeholder?: string;
-  id?: string;
-  shouldAutoFocus?: any;
-  inputID?: string;
-  containerClassName?: string;
-  htmlFor?: string;
-  shouldOverlapLabel?: boolean;
-}
-
-function Counter(props: ICounterProps) {
+function Counter(props: ICounter) {
   let {
     min,
     max,
-    step,
+    step = 1,
     inputID: inputID,
     value,
     isDisabled,
@@ -42,10 +24,6 @@ function Counter(props: ICounterProps) {
     labelClassName,
     shouldOverlapLabel,
   } = props;
-
-  if (step === undefined) {
-    step = 1;
-  }
 
   const [inputValue, setInputValue] = useState(value ? value : 0);
 
@@ -64,7 +42,7 @@ function Counter(props: ICounterProps) {
           : "mt-4 max-w-sm"
       }
     >
-      {label && label.length > 0 && (
+      {label && (
         <div className="flex justify-between">
           <Label
             htmlFor={htmlFor}
@@ -87,12 +65,14 @@ function Counter(props: ICounterProps) {
           onClick={() => {
             if (!decreaseDisabled) {
               setInputValue(Number(inputValue) - step);
-              onChange(Number(inputValue) - step);
+              if (onChange) {
+                onChange(Number(inputValue) - step);
+              }
             }
           }}
         >
           <FontAwesomeIcon
-            icon={"minus"}
+            icon="minus"
             className={decreaseDisabled ? "text-gray-500" : "text-primary"}
           />
         </div>
@@ -114,35 +94,39 @@ function Counter(props: ICounterProps) {
           onChange={(e: any) => {
             // Only change value if within any specified limits
             setInputValue(e.target.value);
-            if (min !== undefined && max !== undefined) {
-              if (e.target.value >= min && e.target.value <= max) {
+            if (onChange) {
+              if (min !== undefined && max !== undefined) {
+                if (e.target.value >= min && e.target.value <= max) {
+                  onChange(e.target.value);
+                }
+              } else if (min !== undefined) {
+                if (e.target.value >= min) {
+                  onChange(e.target.value);
+                }
+              } else if (max !== undefined) {
+                if (e.target.value <= max) {
+                  onChange(e.target.value);
+                }
+              } else {
                 onChange(e.target.value);
               }
-            } else if (min !== undefined) {
-              if (e.target.value >= min) {
-                onChange(e.target.value);
-              }
-            } else if (max !== undefined) {
-              if (e.target.value <= max) {
-                onChange(e.target.value);
-              }
-            } else {
-              onChange(e.target.value);
             }
           }}
           onBlur={() => {
-            // Ensures the user did not manually enter a value exceeding the limits
-            if (min !== undefined || max !== undefined) {
-              if (min && inputValue < min) {
-                setInputValue(min);
-                onChange(min);
+            if (onChange) {
+              // Ensures the user did not manually enter a value exceeding the limits
+              if (min !== undefined || max !== undefined) {
+                if (min && inputValue < min) {
+                  setInputValue(min);
+                  onChange(min);
+                }
+                if (max && inputValue > max) {
+                  setInputValue(max);
+                  onChange(max);
+                }
+              } else {
+                onChange(inputValue);
               }
-              if (max && inputValue > max) {
-                setInputValue(max);
-                onChange(max);
-              }
-            } else {
-              onChange(inputValue);
             }
           }}
         />
@@ -157,12 +141,14 @@ function Counter(props: ICounterProps) {
           onClick={() => {
             if (!increaseDisabled) {
               setInputValue(Number(inputValue) + step);
-              onChange(Number(inputValue) + step);
+              if (onChange) {
+                onChange(Number(inputValue) + step);
+              }
             }
           }}
         >
           <FontAwesomeIcon
-            icon={"plus"}
+            icon="plus"
             className={increaseDisabled ? "text-gray-500" : "text-primary"}
           />
         </div>

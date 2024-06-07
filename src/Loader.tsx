@@ -1,16 +1,6 @@
 // @ts-ignore
 import React from "react";
-
-// Interface
-interface ILoader {
-  title?: string;
-}
-
-interface IBaseLoader extends ILoader {
-  containerClassName?: string;
-  spinnerClassName?: string;
-  viewBox?: string;
-}
+import { IBaseLoader, ILoader } from "./interfaces/loader.interface";
 
 // Implementation
 function Page(props: ILoader) {
