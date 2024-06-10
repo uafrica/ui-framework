@@ -132,7 +132,6 @@ function BaseButton(props: IButtonBaseProps) {
     loadingTitle,
     icon,
     title,
-    isCenter,
     buttonTypeClassNames,
     className,
     isDisabled,
@@ -181,7 +180,6 @@ function BaseButton(props: IButtonBaseProps) {
         ${roundedClass} 
         ${buttonTypeClassNames} 
         items-center 
-        ${isCenter ? " block mx-auto " : ""} 
         ${className ?? ""} 
         ${disabledOrLoading ? " opacity-50 pointer-events-none" : ""}`}
     >
@@ -198,7 +196,7 @@ function BaseButton(props: IButtonBaseProps) {
 }
 
 function ButtonsPanel(props: IButtonsPanelProps) {
-  const { noMargin, children, isCenter, isLeft } = props;
+  const { noMargin, children, shouldAlignCenter, shouldAlignLeft } = props;
   let align = "justify-between";
 
   let nonEmptyChildren = [];
@@ -213,11 +211,11 @@ function ButtonsPanel(props: IButtonsPanelProps) {
     align = "justify-end";
   }
 
-  if (isCenter) {
+  if (shouldAlignCenter) {
     align = "justify-center";
   }
 
-  if (isLeft) {
+  if (shouldAlignLeft) {
     align = "justify-start";
   }
 

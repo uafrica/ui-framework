@@ -10,7 +10,6 @@ export interface IButtonProps {
   iconSize?: SizeProp;
   tabIndex?: number | undefined;
   onClick?: MouseEventHandler | (() => void) | Function;
-  isCenter?: boolean;
   className?: string;
   isDisabled?: boolean;
   hoverTitle?: string;
@@ -27,7 +26,6 @@ export interface ILinkProps {
   icon?: IconProp;
   color?: string;
   onClick?: MouseEventHandler | (() => void) | Function;
-  isCenter?: boolean;
   className?: string;
   isDisabled?: boolean;
   loadingTitle?: string;
@@ -46,8 +44,8 @@ export interface ILinkBaseProps extends ILinkProps {
 
 export interface IButtonsPanelProps {
   children: ReactNode;
-  isCenter?: boolean;
-  isLeft?: boolean;
+  shouldAlignCenter?: boolean;
+  shouldAlignLeft?: boolean;
   noMargin?: boolean;
 }
 
