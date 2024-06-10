@@ -9,7 +9,7 @@ import * as FlagIcons from "country-flag-icons/react/3x2";
 import { ICountrySelect } from "./interfaces/countrySelect.interface";
 
 function CountrySelect(props: ICountrySelect) {
-  let {
+  const {
     label,
     allowedCountryCodes,
     allowOtherCountries,

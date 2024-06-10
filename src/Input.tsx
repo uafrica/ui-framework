@@ -325,6 +325,7 @@ function Input(props: IInput) {
           {prependText && renderPrependText()}
 
           {InputElement}
+          {/* @ts-ignore */}
           {(appendIcon || onClearSearch) && (
             <div className="absolute inset-y-0 right-0 mr-3 flex items-center">
               {appendIcon && renderAppendIcon()}

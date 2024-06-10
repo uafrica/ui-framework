@@ -47,40 +47,45 @@ function Checkbox(props: ICheckbox) {
   const inputDisabledClass = isDisabled
     ? "text-gray-500 "
     : `text-${textDisplayColor} hover:border-primary cursor-pointer `;
-  return (
-    <div className="flex items-start">
-      <div
-        id={id}
-        onClick={(e) => {
-          if (!isDisabled && onClick) {
-            onClick(e);
-          }
-        }}
-        key={key}
-        className={` ${paddingClass} flex items-center  space-x-4 ${centerClass} ${disabledClass} `}
-      >
-        {label && (labelLeft || (!labelLeft && !labelRight)) && labelEl}
-        <input
-          onKeyPress={(e: any) => {
-            if (e.key === "Enter") {
-              if (!isDisabled && onClick) {
-                onClick(e);
-              }
+
+  function render() {
+    return (
+      <div className="flex items-start">
+        <div
+          id={id}
+          onClick={(e) => {
+            if (!isDisabled && onClick) {
+              onClick(e);
             }
           }}
-          title={hoverTitle}
-          type="checkbox"
-          data-test={dataTest}
-          className={` focus:outline-none focus:ring-1 focus:ring-primary ${inputDisabledClass} border-gray-300 rounded ${className} `}
-          checked={checked}
-          id={fieldId}
-          onChange={() => {}}
-        />
+          key={key}
+          className={`${paddingClass} flex items-center space-x-4 ${centerClass} ${disabledClass} `}
+        >
+          {label && (labelLeft || (!labelLeft && !labelRight)) && labelEl}
+          <input
+            onKeyPress={(e: any) => {
+              if (e.key === "Enter") {
+                if (!isDisabled && onClick) {
+                  onClick(e);
+                }
+              }
+            }}
+            title={hoverTitle}
+            type="checkbox"
+            data-test={dataTest}
+            className={`focus:outline-none focus:ring-1 focus:ring-primary ${inputDisabledClass} border-gray-300 rounded ${className} `}
+            checked={checked}
+            id={fieldId}
+            onChange={() => {}}
+          />
 
-        {label && labelRight && labelEl}
+          {label && labelRight && labelEl}
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
+
+  return render();
 }
 
 export { Checkbox };

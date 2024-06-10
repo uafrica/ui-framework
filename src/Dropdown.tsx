@@ -55,16 +55,16 @@ function useDropdownMenuCtx(
 }
 
 function DropdownMenu(props: IDropdown) {
-  let {
+  const {
     title,
     icon,
     noBackground,
     id,
-    widthClass,
-    color,
-    placement,
+    widthClass = "w-72",
+    color = "gray",
+    placement = "bottom-start",
     square,
-    buttonWidth,
+    buttonWidth = "",
     between,
     padding,
     borderColor = "gray-300",
@@ -77,18 +77,12 @@ function DropdownMenu(props: IDropdown) {
 
   const popupNode = useRef<HTMLElement>();
   const ctxValue = useDropdownMenuCtx(popupNode);
-  if (!placement) {
-    placement = "bottom-start";
-  }
+
   let componentPadding = "px-4";
 
   if (padding) {
     componentPadding = padding;
   }
-
-  widthClass = widthClass ? widthClass : "w-72";
-
-  color = color ? color : "gray";
 
   const roundedClass = ` ${leftRounded ? "rounded-r" : ""} 
   ${rightRounded ? "rounded-l" : ""} 
@@ -106,9 +100,7 @@ function DropdownMenu(props: IDropdown) {
       <Manager>
         <div
           ref={containerRef}
-          className={`inline-block text-left cursor-pointer ${
-            buttonWidth ?? ""
-          }`}
+          className={`inline-block text-left cursor-pointer ${buttonWidth}`}
         >
           <Reference>
             {({ ref }) => (
@@ -177,10 +169,7 @@ function DropdownMenu(props: IDropdown) {
                   ref={ref}
                   // @ts-ignore
                   style={{ margin: 0, ...style }}
-                  className={
-                    "z-50 origin-top-right absolute right-0 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5  focus:outline-none m-1 " +
-                    widthClass
-                  }
+                  className={`z-50 origin-top-right absolute right-0 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5  focus:outline-none m-1 ${widthClass}`}
                 >
                   <Menu>{props.children}</Menu>
                 </div>
@@ -233,7 +222,7 @@ function MenuItem(props: IMenuItem) {
     <div
       id={id}
       tabIndex={0}
-      className=" focus:outline-none focus:ring-1 focus:ring-primary  rounded-md mx-1"
+      className="focus:outline-none focus:ring-1 focus:ring-primary rounded-md mx-1"
       onKeyPress={(e: any) => {
         if (e.key === "Enter" && !isDisabled) {
           document.body.click();
@@ -251,7 +240,7 @@ function MenuItem(props: IMenuItem) {
             : activeClass;
           return (
             <div
-              className={` group flex items-center  px-4 py-2 cursor-pointer font-semibold ${disabledClass}`}
+              className={`group flex items-center px-4 py-2 cursor-pointer font-semibold ${disabledClass}`}
               onClick={(e: any) => {
                 if (!isDisabled) {
                   if (closeOnClick) {
@@ -300,7 +289,7 @@ function MenuHeading(props: IMenuHeading) {
     <div id={id}>
       <Menu.Item>
         {() => (
-          <div className="group flex items-center  px-4 py-2 cursor-pointer font-semibold text-gray-700">
+          <div className="group flex items-center px-4 py-2 cursor-pointer font-semibold text-gray-700">
             {icon && (
               <div className="h-5 w-5 mr-3 flex items-center">
                 <FontAwesomeIcon

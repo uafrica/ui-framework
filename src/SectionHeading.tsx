@@ -17,44 +17,62 @@ function SectionHeading(props: ISectionHeading) {
     options,
   } = props;
 
-  return (
-    <div
-      className={`flex items-center  flex-row space-x-4 
-        ${center ? "justify-center" : ""} 
-        ${marginTop ? " mt-8" : ""} 
-        ${noMarginBottom ? "" : " mb-4 "}}`}
-    >
-      {icon && (
-        <div className="w-8">
-          <div
-            className={`rounded-full  flex items-center justify-center  h-8 w-8 bg-${iconColor}-100`}
-          >
+  function renderIcon() {
+    return (
+      <div className="w-8">
+        <div
+          className={`rounded-full flex items-center justify-center h-8 w-8 bg-${iconColor}-100`}
+        >
+          {icon && (
             <FontAwesomeIcon
               size="sm"
               icon={icon}
               className={`text-${iconColor}-500`}
             />
-          </div>
+          )}
         </div>
-      )}
+      </div>
+    );
+  }
 
+  function renderChildren() {
+    return (
       <h2 className="text-lg font-bold text-gray-900 mt-1  flex items-center  ">
         {children}
       </h2>
-      {toggleEditMode && !hideEditMode && (
-        <FontAwesomeIcon
-          icon="pencil-alt"
-          className={editIconClassName ?? "mt-1 text-primary cursor-pointer"}
-          onClick={() => {
-            if (toggleEditMode) {
-              toggleEditMode();
-            }
-          }}
-        />
-      )}
-      {options && options}
-    </div>
-  );
+    );
+  }
+
+  function renderEditButton() {
+    return (
+      <FontAwesomeIcon
+        icon="pencil-alt"
+        className={editIconClassName ?? "mt-1 text-primary cursor-pointer"}
+        onClick={() => {
+          if (toggleEditMode) {
+            toggleEditMode();
+          }
+        }}
+      />
+    );
+  }
+
+  function render() {
+    return (
+      <div
+        className={`flex items-center flex-row space-x-4 
+      ${center ? "justify-center" : ""} 
+      ${marginTop ? " mt-8" : ""} 
+      ${noMarginBottom ? "" : " mb-4 "}}`}
+      >
+        {icon && renderIcon()}
+        {renderChildren()}
+        {toggleEditMode && !hideEditMode && renderEditButton()}
+        {options && options}
+      </div>
+    );
+  }
+  return render();
 }
 
 export { SectionHeading };

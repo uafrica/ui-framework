@@ -75,36 +75,47 @@ function Confirm(props: IConfirm) {
     }
   }
 
-  var cancelButton = showCancelButton ? (
-    <Button.Cancel title={cancelText} onClick={onCancel} />
-  ) : null;
+  function renderCancelButton() {
+    return showCancelButton ? (
+      <Button.Cancel title={cancelText} onClick={onCancel} />
+    ) : null;
+  }
 
-  return (
-    <div onClick={onButtonClick} className="flex items-center">
-      {children}
-      {isOpen && (
-        <Modal.Small
-          onHide={onClose}
-          title={title}
-          showCloseButton
-          disableClickOutsideToClose={disableClickOutsideToClose}
-          disablePressEscToClose={disablePressEscToClose}
-        >
-          {body}
-          <Modal.ButtonsPanel>
-            {cancelButton}
-            {(!confirmButtonVariant || confirmButtonVariant === "danger") && (
-              <Button.Danger onClick={onConfirm} title={confirmText} />
-            )}
+  function renderConfirmButton() {
+    if (!confirmButtonVariant || confirmButtonVariant === "danger") {
+      return <Button.Danger onClick={onConfirm} title={confirmText} />;
+    }
 
-            {confirmButtonVariant && confirmButtonVariant !== "danger" && (
-              <Button.Primary onClick={onConfirm} title={confirmText} />
-            )}
-          </Modal.ButtonsPanel>
-        </Modal.Small>
-      )}
-    </div>
-  );
+    if (confirmButtonVariant && confirmButtonVariant !== "danger") {
+      return <Button.Primary onClick={onConfirm} title={confirmText} />;
+    }
+
+    return null;
+  }
+
+  function render() {
+    return (
+      <div onClick={onButtonClick} className="flex items-center">
+        {children}
+        {isOpen && (
+          <Modal.Small
+            onHide={onClose}
+            title={title}
+            showCloseButton
+            disableClickOutsideToClose={disableClickOutsideToClose}
+            disablePressEscToClose={disablePressEscToClose}
+          >
+            {body}
+            <Modal.ButtonsPanel>
+              {renderCancelButton()}
+              {renderConfirmButton()}
+            </Modal.ButtonsPanel>
+          </Modal.Small>
+        )}
+      </div>
+    );
+  }
+  return render();
 }
 
 export { Confirm };

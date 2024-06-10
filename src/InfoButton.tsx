@@ -43,7 +43,7 @@ function InfoButton(props: IInfoButton) {
               {({ ref, style }) =>
                 ctxValue.isVisible ? (
                   <div
-                    className="info-popover z-50 origin-top-right absolute font-normal p-4 w-80 rounded-md shadow-md bg-white divide-y  ring-1 ring-black ring-opacity-5  divide-gray-100 focus:outline-none"
+                    className="info-popover z-50 origin-top-right absolute font-normal p-4 w-80 rounded-md shadow-md bg-white divide-y ring-1 ring-black ring-opacity-5  divide-gray-100 focus:outline-none"
                     // @ts-ignore
                     style={style}
                     ref={ref}

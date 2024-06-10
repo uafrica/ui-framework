@@ -65,6 +65,28 @@ function Generic(props: IGenericTabs) {
     (child: any) => activeTabID === child.props.tabID
   );
 
+  function getTabClass(child: any) {
+    return isPrimary
+      ? (activeTabID === child.props.tabID
+          ? "border-primary-500 text-primary-600 "
+          : "border-transparent text-gray-700  " +
+            (child.props.isClickable !== false
+              ? " hover:text-gray-900 hover:border-gray-300"
+              : "")) +
+          (child.props.isClickable !== false
+            ? " cursor-pointer "
+            : " cursor-default ") +
+          " group inline-flex items-center py-3 px-1 border-b-2 font-bold"
+      : (activeTabID === child.props.tabID
+          ? "bg-primary-100 text-primary-700 font-bold"
+          : "text-black " +
+            (child.props.isClickable !== false ? " hover:bg-gray-200 " : "")) +
+          (child.props.isClickable !== false
+            ? " cursor-pointer "
+            : " cursor-default ") +
+          " px-3 py-2 rounded-md";
+  }
+
   return (
     <div>
       <div>
@@ -87,27 +109,7 @@ function Generic(props: IGenericTabs) {
             aria-label="Tabs"
           >
             {children.map((child: any) => {
-              let tabClassName = isPrimary
-                ? (activeTabID === child.props.tabID
-                    ? "border-primary-500 text-primary-600 "
-                    : "border-transparent text-gray-700  " +
-                      (child.props.isClickable !== false
-                        ? " hover:text-gray-900 hover:border-gray-300"
-                        : "")) +
-                  (child.props.isClickable !== false
-                    ? " cursor-pointer "
-                    : " cursor-default ") +
-                  "  group inline-flex items-center py-3 px-1 border-b-2 font-bold"
-                : (activeTabID === child.props.tabID
-                    ? "bg-primary-100 text-primary-700 font-bold"
-                    : "text-black " +
-                      (child.props.isClickable !== false
-                        ? " hover:bg-gray-200 "
-                        : "")) +
-                  (child.props.isClickable !== false
-                    ? " cursor-pointer "
-                    : " cursor-default ") +
-                  "  px-3 py-2 rounded-md";
+              let tabClassName = getTabClass(child);
               return (
                 <div
                   key={child.props.tabID}

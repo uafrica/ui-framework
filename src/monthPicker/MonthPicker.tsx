@@ -168,7 +168,7 @@ const Calendar: React.FC<CalendarProps> = React.forwardRef<
 
   return (
     <div
-      className=" focus:outline-none focus:ring-1 focus:ring-primary  bg-white z-40 relative shadow-lg max-w-xs w-64 p-2 rounded-lg  ring-1 ring-black ring-opacity-5 "
+      className=" focus:outline-none focus:ring-1 focus:ring-primary bg-white z-40 relative shadow-lg max-w-xs w-64 p-2 rounded-lg  ring-1 ring-black ring-opacity-5 "
       ref={ref}
       data-placement={props.placement}
       // @ts-ignore

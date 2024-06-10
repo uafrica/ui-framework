@@ -46,7 +46,7 @@ function CustomTable(props: ICustomTable) {
     loadDebounceTime,
     rowUniqueIdentifier = "id",
   } = props;
-  const topRef: any = useRef();
+  const topRef: any = useRef(null);
   const defaultPageSize = 20;
   let interval: any;
 

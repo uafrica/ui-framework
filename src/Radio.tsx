@@ -58,7 +58,7 @@ function Button(props: IRadioButton) {
           renderLabel(label)}
         <input
           type="radio"
-          className={`${marginClass} cursor-pointer form-radio  focus:outline-none focus:ring-1 focus:ring-primary  ${disabledClass} border-gray-300 ${className} `}
+          className={`${marginClass} cursor-pointer form-radio focus:outline-none focus:ring-1 focus:ring-primary  ${disabledClass} border-gray-300 ${className} `}
           disabled={isDisabled}
           id={label}
           name={name}
@@ -77,7 +77,7 @@ function Button(props: IRadioButton) {
 }
 
 function Group(props: IRadioGroup) {
-  let {
+  const {
     title,
     options,
     onChange,

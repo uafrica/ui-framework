@@ -51,7 +51,7 @@ function GroupedSelect(props: IGroupedSelect) {
   const ctxValue = useGroupedSelectCtx(popupNode, onSearchBlur);
 
   // State for searching
-  let [searchTerm, setSearchTerm] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   // State for the show all button
   const [showAllClicked, setShowAllClicked] = useState<boolean>(false);
@@ -114,12 +114,13 @@ function GroupedSelect(props: IGroupedSelect) {
     let limit = 100;
 
     // Search
-    searchTerm = searchTerm.toLowerCase();
     let optionsLimited = [];
     try {
       optionsLimited = optionGroup.options.filter((option: any) => {
         if (typeof option.label === "string" && searchTerm) {
-          return option.label.toLowerCase().indexOf(searchTerm) >= 0;
+          return (
+            option.label.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0
+          );
         }
         return true;
       });
@@ -206,7 +207,7 @@ function GroupedSelect(props: IGroupedSelect) {
                   {selected ? (
                     <span
                       className={
-                        "absolute inset-y-0 right-0  flex items-center  pr-4 " +
+                        "absolute inset-y-0 right-0  flex items-center pr-4 " +
                         (option.disabled === true
                           ? " text-gray-500 "
                           : " text-primary-600 ")

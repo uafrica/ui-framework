@@ -86,7 +86,7 @@ const Base = ({
           )}
           <div className="mt-4 text-center sm:mt-0 sm:text-left w-full">
             {(title || closeButton) && (
-              <div className="ua-modal-actions-panel  flex items-center  justify-between z-30 text-lg font-bold text-gray-900 text-left pb-4">
+              <div className="ua-modal-actions-panel flex items-center justify-between z-30 text-lg font-bold text-gray-900 text-left pb-4">
                 {title && title}
 
                 {closeButton && (

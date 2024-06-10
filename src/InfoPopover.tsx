@@ -88,7 +88,7 @@ function InfoPopover(props: IInfoPopover) {
             >
               {({ ref, style }) => (
                 <div
-                  className={`info-popover z-50 origin-top-right absolute font-normal p-4 rounded-md shadow-md bg-white divide-y  ring-1 ring-black ring-opacity-5  divide-gray-100 focus:outline-none ${width}`}
+                  className={`info-popover z-50 origin-top-right absolute font-normal p-4 rounded-md shadow-md bg-white divide-y ring-1 ring-black ring-opacity-5  divide-gray-100 focus:outline-none ${width}`}
                   style={style}
                   ref={ref}
                   data-test={props.dataTest}

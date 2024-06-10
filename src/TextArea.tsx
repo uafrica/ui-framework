@@ -33,44 +33,49 @@ function TextArea(props: ITextArea) {
     dataTest,
   } = props;
 
-  return (
-    <div className={containerClassName ?? defaultContainerClass} id={fieldID}>
-      <div className="flex justify-between">
-        {label && (
-          <div className="mt-1">
-            <Label className={labelClassName} noMargin>
-              {label} {info && <InfoButton>{info}</InfoButton>}
-            </Label>
-          </div>
-        )}
-        {isOptional && <span className="text-gray-500">(Optional)</span>}
-      </div>
-      <textarea
-        className={`focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent mt-2 shadow-sm block w-full border border-gray-300 rounded-md 
+  function render() {
+    return (
+      // @ts-ignore
+      <div className={containerClassName ?? defaultContainerClass} id={fieldID}>
+        <div className="flex justify-between">
+          {label && (
+            <div className="mt-1">
+              <Label className={labelClassName} noMargin>
+                {label} {info && <InfoButton>{info}</InfoButton>}
+              </Label>
+            </div>
+          )}
+          {isOptional && <span className="text-gray-500">(Optional)</span>}
+        </div>
+        <textarea
+          className={`focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent mt-2 shadow-sm block w-full border border-gray-300 rounded-md 
           ${isDisabled ? " bg-gray-100" : ""}`}
-        id={id}
-        value={value}
-        rows={rows ? rows : 4}
-        name={name}
-        defaultValue={defaultValue}
-        placeholder={placeholder}
-        onChange={onChange}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        disabled={isDisabled}
-        ref={register}
-        maxLength={maxLength}
-        data-test={dataTest}
-      />
-      {validationError &&
-        (errorMessage && validationError.type === "required" ? (
-          <Message.Error>{errorMessage}</Message.Error>
-        ) : (
-          <Message.Error>{validationError.message}</Message.Error>
-        ))}
-      {infoButton && { infoButton }}
-    </div>
-  );
+          id={id}
+          value={value}
+          rows={rows ? rows : 4}
+          name={name}
+          defaultValue={defaultValue}
+          placeholder={placeholder}
+          onChange={onChange}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          disabled={isDisabled}
+          ref={register}
+          maxLength={maxLength}
+          data-test={dataTest}
+        />
+        {validationError &&
+          (errorMessage && validationError.type === "required" ? (
+            <Message.Error>{errorMessage}</Message.Error>
+          ) : (
+            <Message.Error>{validationError.message}</Message.Error>
+          ))}
+        {infoButton && { infoButton }}
+      </div>
+    );
+  }
+
+  return render();
 }
 
 export { TextArea };

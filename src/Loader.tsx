@@ -36,7 +36,7 @@ function Inline(props: ILoader) {
 function BaseLoader(props: IBaseLoader) {
   const { containerClassName = "", spinnerClassName = "h-8 w-8" } = props;
   return (
-    <div className={`flex items-center justify-center  ${containerClassName}`}>
+    <div className={`flex items-center justify-center ${containerClassName}`}>
       <div
         className={`loader border-t-primary ease-linear rounded-full border-6 border-t-6 border-primary-100 ${spinnerClassName}`}
       />

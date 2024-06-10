@@ -50,7 +50,7 @@ function SectionActionsPanel(props: ISectionActionsPanel) {
           {title}
         </SectionHeading>
       )}
-      <div className="ml-auto  flex items-center  flex-wrap flex-row space-x-0 sm:space-x-4 space-y-4 sm:space-y-0 flex-grow-0 w-full md:w-auto justify-end">
+      <div className="ml-auto flex items-center flex-wrap flex-row space-x-0 sm:space-x-4 space-y-4 sm:space-y-0 flex-grow-0 w-full md:w-auto justify-end">
         {props.children}
       </div>
     </div>

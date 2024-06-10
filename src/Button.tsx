@@ -255,7 +255,7 @@ function Download(props: {
 function Close(props: IButtonProps) {
   return (
     // @ts-ignore
-    <div className="text-lg leading-6 font-bold  text-gray-900" {...props}>
+    <div className="text-lg leading-6 font-bold text-gray-900" {...props}>
       <FontAwesomeIcon
         icon="times"
         size="sm"

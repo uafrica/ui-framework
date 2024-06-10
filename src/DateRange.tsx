@@ -53,68 +53,72 @@ function DateRange(props: IDateRange) {
     }
   }, [showRange, showMonth]);
 
-  return (
-    <div className={containerClassName ?? "flex flex-row space-x-4"}>
-      <Select
-        isLabelInline={isLabelInline}
-        buttonWidth={buttonWidth}
-        options={periodOptions ?? []}
-        onChange={(val: string) => {
-          if (onPeriodChange) {
-            onPeriodChange(val);
-          }
-        }}
-        placeholder="Select period"
-        value={period ?? defaultPeriod}
-        label={label}
-        isDisabled={isDisabled}
-      />
-      {showRange && (
-        <>
-          <DatePicker
-            isLabelInline={isLabelInline}
-            showTimeSelect={showTimeSelect}
-            label="From"
-            selectedDate={dateFrom ?? defaultDateFrom}
-            onChange={(val: any) => {
-              if (onRangeChange) {
-                onRangeChange(val, dateTo);
-              }
-            }}
-            dateFormat={dateFormat ?? "yyyy-MM-DD"}
-          />
-          <DatePicker
-            isLabelInline={isLabelInline}
-            showTimeSelect={showTimeSelect}
-            label="To"
-            selectedDate={dateTo ?? defaultDateTo}
-            onChange={(val: any) => {
-              if (onRangeChange) {
-                onRangeChange(dateFrom, val);
-              }
-            }}
-            dateFormat={dateFormat ?? "yyyy-MM-DD"}
-          />
-        </>
-      )}
-      {showMonth && (
-        <div>
-          <MonthPicker
-            isLabelInline={isLabelInline}
-            label="Select month"
-            dateFrom={dateFrom ?? defaultDateFrom}
-            onChange={(dateFrom: any) => {
-              if (onMonthChange) {
-                // @ts-ignore
-                let dateTo = new Date(moment(dateFrom).endOf("month"));
-                onMonthChange(dateFrom, dateTo);
-              }
-            }}
-          />
-        </div>
-      )}
-    </div>
-  );
+  function render() {
+    return (
+      <div className={containerClassName ?? "flex flex-row space-x-4"}>
+        <Select
+          isLabelInline={isLabelInline}
+          buttonWidth={buttonWidth}
+          options={periodOptions ?? []}
+          onChange={(val: string) => {
+            if (onPeriodChange) {
+              onPeriodChange(val);
+            }
+          }}
+          placeholder="Select period"
+          value={period ?? defaultPeriod}
+          label={label}
+          isDisabled={isDisabled}
+        />
+        {showRange && (
+          <>
+            <DatePicker
+              isLabelInline={isLabelInline}
+              showTimeSelect={showTimeSelect}
+              label="From"
+              selectedDate={dateFrom ?? defaultDateFrom}
+              onChange={(val: any) => {
+                if (onRangeChange) {
+                  onRangeChange(val, dateTo);
+                }
+              }}
+              dateFormat={dateFormat ?? "yyyy-MM-DD"}
+            />
+            <DatePicker
+              isLabelInline={isLabelInline}
+              showTimeSelect={showTimeSelect}
+              label="To"
+              selectedDate={dateTo ?? defaultDateTo}
+              onChange={(val: any) => {
+                if (onRangeChange) {
+                  onRangeChange(dateFrom, val);
+                }
+              }}
+              dateFormat={dateFormat ?? "yyyy-MM-DD"}
+            />
+          </>
+        )}
+        {showMonth && (
+          <div>
+            <MonthPicker
+              isLabelInline={isLabelInline}
+              label="Select month"
+              dateFrom={dateFrom ?? defaultDateFrom}
+              onChange={(dateFrom: any) => {
+                if (onMonthChange) {
+                  // @ts-ignore
+                  let dateTo = new Date(moment(dateFrom).endOf("month"));
+                  onMonthChange(dateFrom, dateTo);
+                }
+              }}
+            />
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  return render();
 }
 
 export { DateRange };
