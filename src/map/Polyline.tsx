@@ -4,7 +4,7 @@ import React, { memo } from "react";
 import { IPolyline } from "../interfaces/map/polyline.interface";
 
 function Polyline(props: { polyline: IPolyline; onClick?: Function }) {
-  let { polyline } = props;
+  const { polyline } = props;
 
   function render() {
     return (

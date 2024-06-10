@@ -6,11 +6,11 @@ function WeekdaySelect(props: {
   value?: number[];
   onChange?: (selectedDays: number[]) => void;
 }) {
-  let { value } = props;
+  const { value } = props;
 
-  let [selectedDays, setSelectedDays] = useState<number[]>(value ?? []);
+  const [selectedDays, setSelectedDays] = useState<number[]>(value ?? []);
 
-  let days: { letter: string; value: number }[] = [
+  const days: { letter: string; value: number }[] = [
     {
       letter: "S",
       value: 0,

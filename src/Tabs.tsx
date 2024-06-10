@@ -33,7 +33,7 @@ function evaluateScroll(tabNavId: any, children: ReactNode[]) {
 
 // Implementation
 function Tab(props: ITab) {
-  let { children } = props;
+  const { children } = props;
   return <div key={props.tabID}>{children}</div>;
 }
 
@@ -46,9 +46,10 @@ function Secondary(props: ITabs) {
 }
 
 function Generic(props: IGenericTabs) {
-  let [overflowing, setOverflowing] = useState({ left: false, right: false });
+  const { isPrimary, spacingClass, activeTabID } = props;
+  const [overflowing, setOverflowing] = useState({ left: false, right: false });
 
-  let tabNavId = "tab_nav" + Math.random();
+  const tabNavId = "tab_nav" + Math.random();
   useEffect(() => {
     setOverflowing(evaluateScroll(tabNavId, props.children));
   }, [props.children]);
@@ -61,17 +62,15 @@ function Generic(props: IGenericTabs) {
   children = children.filter((child: any) => child && child.props);
 
   let activeTab = children.filter(
-    (child: any) => props.activeTabID === child.props.tabID
+    (child: any) => activeTabID === child.props.tabID
   );
 
   return (
     <div>
       <div>
         <div
-          className={
-            "flex items-center border-b border-gray-200 w-full " +
-            (props.isPrimary ? "" : "mt-8 pb-2")
-          }
+          className={`flex items-center border-b border-gray-200 w-full 
+          ${isPrimary ? "" : "mt-8 pb-2"}`}
         >
           {overflowing.left && (
             <FontAwesomeIcon icon="chevron-left" color="gray" className="m-1" />
@@ -79,17 +78,17 @@ function Generic(props: IGenericTabs) {
 
           <nav
             id={tabNavId}
-            className={`-mb-px flex ${
-              props.spacingClass ?? "space-x-0 max-md:space-x-4 md:space-x-8"
-            } overflow-x-auto`}
+            className={`-mb-px flex 
+              ${spacingClass ?? "space-x-0 max-md:space-x-4 md:space-x-8"} 
+              overflow-x-auto`}
             onScroll={() => {
               setOverflowing(evaluateScroll(tabNavId, props.children));
             }}
             aria-label="Tabs"
           >
             {children.map((child: any) => {
-              let tabClassName = props.isPrimary
-                ? (props.activeTabID === child.props.tabID
+              let tabClassName = isPrimary
+                ? (activeTabID === child.props.tabID
                     ? "border-primary-500 text-primary-600 "
                     : "border-transparent text-gray-700  " +
                       (child.props.isClickable !== false
@@ -99,7 +98,7 @@ function Generic(props: IGenericTabs) {
                     ? " cursor-pointer "
                     : " cursor-default ") +
                   "  group inline-flex items-center py-3 px-1 border-b-2 font-bold"
-                : (props.activeTabID === child.props.tabID
+                : (activeTabID === child.props.tabID
                     ? "bg-primary-100 text-primary-700 font-bold"
                     : "text-black " +
                       (child.props.isClickable !== false
@@ -144,7 +143,7 @@ function Generic(props: IGenericTabs) {
             />
           )}
         </div>
-        <React.Fragment key={props.activeTabID}>{activeTab}</React.Fragment>
+        <React.Fragment key={activeTabID}>{activeTab}</React.Fragment>
       </div>
     </div>
   );

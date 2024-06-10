@@ -6,15 +6,9 @@ interface IListItemProps {
 }
 
 function ListItem(props: IListItemProps) {
-  const { children, className } = props;
+  const { children, className = "my-2" } = props;
 
-  const defaultClassName = "my-2";
-
-  return (
-    <li className={`${className ? className : defaultClassName}`}>
-      {children}
-    </li>
-  );
+  return <li className={`${className}`}>{children}</li>;
 }
 
 export { ListItem };

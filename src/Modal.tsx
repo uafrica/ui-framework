@@ -32,7 +32,7 @@ const Base = ({
   margin,
   ...props
 }: IBaseProps) => {
-  let elements = document.getElementsByClassName("uafrica-modal-overlay");
+  const elements = document.getElementsByClassName("uafrica-modal-overlay");
 
   const [modalId] = useState(`modal_${elements.length}`);
   useEffect(() => {

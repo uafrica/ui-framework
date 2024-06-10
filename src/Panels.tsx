@@ -12,14 +12,11 @@ import {
 
 // Implementation
 function TableActionsPanel(props: IPanel) {
-  let { title, className } = props;
+  const { title, className = "" } = props;
 
   return (
     <div
-      className={
-        "flex flex-col-reverse md:flex-row md:justify-between mt-2 md:items-center py-2" +
-        (className ? className : "")
-      }
+      className={`flex flex-col-reverse md:flex-row md:justify-between mt-2 md:items-center py-2 ${className}`}
     >
       <div className="text-sm">{title}</div>
       <div className="flex flex-col md:flex-row justify-end md:items-center">
@@ -30,14 +27,17 @@ function TableActionsPanel(props: IPanel) {
 }
 
 function SectionActionsPanel(props: ISectionActionsPanel) {
-  let { title, className, toggleEditMode, hideEditMode, icon, iconColor } =
-    props;
+  const {
+    title,
+    className = "",
+    toggleEditMode,
+    hideEditMode,
+    icon,
+    iconColor,
+  } = props;
   return (
     <div
-      className={
-        " flex justify-between flex-col md:flex-row items-start md:items-center z-30  " +
-        (className ? className : "")
-      }
+      className={`flex justify-between flex-col md:flex-row items-start md:items-center z-30 ${className}`}
     >
       {title && (
         <SectionHeading
@@ -58,7 +58,7 @@ function SectionActionsPanel(props: ISectionActionsPanel) {
 }
 
 function PageActionsPanel(props: IPageActionsPanelProps) {
-  let { title, icon, shouldNotUppercase } = props;
+  const { title, icon, shouldNotUppercase } = props;
 
   return (
     <div className="ua-page-actions-panel flex justify-between flex-col md:flex-row items-start md:items-center z-30  xs:pb-4">
@@ -75,7 +75,7 @@ function PageActionsPanel(props: IPageActionsPanelProps) {
 }
 
 function ModalActionsPanel(props: IPanel) {
-  let { title, onClose } = props;
+  const { title, onClose = () => {} } = props;
 
   return (
     <div className="ua-modal-actions-panel  flex justify-between flex-col md:flex-row items-start md:items-center z-30  pb-4">
@@ -86,9 +86,7 @@ function ModalActionsPanel(props: IPanel) {
             <div
               className="block md:hidden"
               onClick={(e) => {
-                if (onClose) {
-                  onClose(e);
-                }
+                onClose(e);
               }}
             >
               <Button.Close onClick={onClose} />
@@ -116,14 +114,11 @@ function ModalActionsPanel(props: IPanel) {
 }
 
 function FiltersPanel(props: IFiltersPanel) {
-  let { className, children } = props;
+  const { className = "", children } = props;
 
   return (
     <div
-      className={
-        "ua-filters-panel  flex items-center  flex-wrap flex-row " +
-        (className ? className : "")
-      }
+      className={`ua-filters-panel  flex items-center  flex-wrap flex-row ${className}`}
     >
       {children}
     </div>

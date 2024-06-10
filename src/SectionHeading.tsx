@@ -4,10 +4,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ISectionHeading } from "./interfaces/sectionHeading.interface";
 
 function SectionHeading(props: ISectionHeading) {
-  let {
+  const {
     children,
     icon,
-    iconColor,
+    iconColor = "black",
     editIconClassName,
     toggleEditMode,
     hideEditMode,
@@ -19,26 +19,20 @@ function SectionHeading(props: ISectionHeading) {
 
   return (
     <div
-      className={
-        " flex items-center  flex-row space-x-4 " +
-        (center ? "justify-center" : "") +
-        (marginTop ? " mt-8" : "") +
-        (noMarginBottom ? "" : " mb-4 ")
-      }
+      className={`flex items-center  flex-row space-x-4 
+        ${center ? "justify-center" : ""} 
+        ${marginTop ? " mt-8" : ""} 
+        ${noMarginBottom ? "" : " mb-4 "}}`}
     >
       {icon && (
         <div className="w-8">
           <div
-            className={
-              "rounded-full  flex items-center justify-center  h-8 w-8 bg-" +
-              (iconColor ? iconColor : "black") +
-              "-100"
-            }
+            className={`rounded-full  flex items-center justify-center  h-8 w-8 bg-${iconColor}-100`}
           >
             <FontAwesomeIcon
               size="sm"
               icon={icon}
-              className={"text-" + (iconColor ? iconColor : "black") + "-500"}
+              className={`text-${iconColor}-500`}
             />
           </div>
         </div>
@@ -50,11 +44,7 @@ function SectionHeading(props: ISectionHeading) {
       {toggleEditMode && !hideEditMode && (
         <FontAwesomeIcon
           icon="pencil-alt"
-          className={
-            editIconClassName
-              ? editIconClassName
-              : "mt-1 text-primary cursor-pointer"
-          }
+          className={editIconClassName ?? "mt-1 text-primary cursor-pointer"}
           onClick={() => {
             if (toggleEditMode) {
               toggleEditMode();

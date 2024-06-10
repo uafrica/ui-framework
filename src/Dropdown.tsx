@@ -67,7 +67,7 @@ function DropdownMenu(props: IDropdown) {
     buttonWidth,
     between,
     padding,
-    borderColor,
+    borderColor = "gray-300",
     leftRounded,
     rightRounded,
     buttonStyle,
@@ -90,13 +90,24 @@ function DropdownMenu(props: IDropdown) {
 
   color = color ? color : "gray";
 
+  const roundedClass = ` ${leftRounded ? "rounded-r" : ""} 
+  ${rightRounded ? "rounded-l" : ""} 
+  ${square ? "rounded" : "rounded-full"}`;
+
+  const justifyClass = between ? "justify-between" : "justify-center";
+  const textColorClass = "text-" + color;
+  const backgroundClass = noBackground
+    ? `my-1 py-1 hover:text-${color}-700 font-bold`
+    : ` py-2 hover:bg-gray-50 border-${borderColor} shadow-sm ${
+        square ? "rounded" : "rounded-full"
+      } border bg-white`;
   return (
     <DropdownMenuCtx.Provider value={ctxValue}>
       <Manager>
         <div
           ref={containerRef}
           className={`inline-block text-left cursor-pointer ${
-            buttonWidth ? buttonWidth : ""
+            buttonWidth ?? ""
           }`}
         >
           <Reference>
@@ -122,25 +133,7 @@ function DropdownMenu(props: IDropdown) {
                   }}
                   id={id}
                   style={buttonStyle && buttonStyle}
-                  className={
-                    `items-center  focus:outline-none focus:ring-1 focus:ring-primary  ${
-                      leftRounded
-                        ? "rounded-r"
-                        : rightRounded
-                        ? "rounded-l"
-                        : square
-                        ? "rounded"
-                        : "rounded-full"
-                    } inline-flex ${
-                      between ? "justify-between" : "justify-center"
-                    } w-full ${componentPadding} font-bold  focus:outline-none ` +
-                    ("text-" + color + " ") +
-                    (noBackground
-                      ? "my-1 py-1 hover:text-" + color + "-700 font-bold"
-                      : ` py-2 hover:bg-gray-50 border-${borderColor} shadow-sm ${
-                          square ? "rounded" : "rounded-full"
-                        } border bg-white`)
-                  }
+                  className={`items-center focus:outline-none focus:ring-1 focus:ring-primary ${roundedClass} inline-flex ${justifyClass} w-full ${componentPadding} font-bold  focus:outline-none ${textColorClass} ${backgroundClass}`}
                 >
                   {icon && (
                     <div className="h-5 w-5 flex items-center">
@@ -185,7 +178,7 @@ function DropdownMenu(props: IDropdown) {
                   // @ts-ignore
                   style={{ margin: 0, ...style }}
                   className={
-                    "z-50 origin-top-right absolute right-0 rounded-md shadow-lg bg-white  ring-1 ring-black ring-opacity-5  focus:outline-none m-1 " +
+                    "z-50 origin-top-right absolute right-0 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5  focus:outline-none m-1 " +
                     widthClass
                   }
                 >
@@ -201,16 +194,10 @@ function DropdownMenu(props: IDropdown) {
 }
 
 function ContextMenu(props: IDropdown) {
-  let { id, widthClass } = props;
-
-  widthClass = widthClass ? widthClass : "w-72";
+  let { id = "context_menu", widthClass = "w-72" } = props;
 
   return (
-    <Menu
-      as="div"
-      id={id ? id : "context_menu"}
-      className="relative inline-block text-left"
-    >
+    <Menu as="div" id={id} className="relative inline-block text-left">
       <Transition
         show={true}
         as={Fragment}
@@ -223,10 +210,7 @@ function ContextMenu(props: IDropdown) {
       >
         <Menu.Items
           static
-          className={
-            "z-10 origin-top-right absolute py-3 right-0 mt-2 rounded-md shadow-lg bg-white  ring-1 ring-black ring-opacity-5  focus:outline-none " +
-            widthClass
-          }
+          className={`z-10 origin-top-right absolute py-3 right-0 mt-2 rounded-md shadow-lg bg-white  ring-1 ring-black ring-opacity-5  focus:outline-none ${widthClass}`}
         >
           {props.children}
         </Menu.Items>
@@ -258,48 +242,48 @@ function MenuItem(props: IMenuItem) {
       }}
     >
       <Menu.Item>
-        {({ active }) => (
-          <div
-            className={
-              " group  flex items-center  px-4 py-2 cursor-pointer font-semibold " +
-              (isDisabled
-                ? "bg-gray-100 text-gray-500"
-                : active
-                ? "bg-gray-100 text-gray-900"
-                : "text-black")
-            }
-            onClick={(e: any) => {
-              if (!isDisabled) {
-                if (closeOnClick) {
-                  document.body.click();
-                  props.onClick();
-                } else {
-                  e.stopPropagation();
-                  document.body.click();
-                  props.onClick();
-                }
-              }
-            }}
-          >
-            {iconToShow && (
-              <div className="h-5 w-5 mr-3 flex items-center">
-                <FontAwesomeIcon
-                  icon={iconToShow}
-                  spin={isLoading}
-                  className={
-                    "  " +
-                    (isDisabled
-                      ? "text-gray-500"
-                      : "text-black group-hover:text-gray-900")
+        {({ active }) => {
+          const activeClass = active
+            ? "bg-gray-100 text-gray-900"
+            : "text-black";
+          const disabledClass = isDisabled
+            ? "bg-gray-100 text-gray-500"
+            : activeClass;
+          return (
+            <div
+              className={` group flex items-center  px-4 py-2 cursor-pointer font-semibold ${disabledClass}`}
+              onClick={(e: any) => {
+                if (!isDisabled) {
+                  if (closeOnClick) {
+                    document.body.click();
+                    props.onClick();
+                  } else {
+                    e.stopPropagation();
+                    document.body.click();
+                    props.onClick();
                   }
-                  aria-hidden="true"
-                />
-              </div>
-            )}
-            {title}
-            <div className="ml-auto">{appendHTML}</div>
-          </div>
-        )}
+                }
+              }}
+            >
+              {iconToShow && (
+                <div className="h-5 w-5 mr-3 flex items-center">
+                  <FontAwesomeIcon
+                    icon={iconToShow}
+                    spin={isLoading}
+                    className={`${
+                      isDisabled
+                        ? "text-gray-500"
+                        : "text-black group-hover:text-gray-900"
+                    }`}
+                    aria-hidden="true"
+                  />
+                </div>
+              )}
+              {title}
+              <div className="ml-auto">{appendHTML}</div>
+            </div>
+          );
+        }}
       </Menu.Item>
     </div>
   );
@@ -316,11 +300,7 @@ function MenuHeading(props: IMenuHeading) {
     <div id={id}>
       <Menu.Item>
         {() => (
-          <div
-            className={
-              "group flex items-center  px-4 py-2 cursor-pointer font-semibold text-gray-700"
-            }
-          >
+          <div className="group flex items-center  px-4 py-2 cursor-pointer font-semibold text-gray-700">
             {icon && (
               <div className="h-5 w-5 mr-3 flex items-center">
                 <FontAwesomeIcon
@@ -337,10 +317,6 @@ function MenuHeading(props: IMenuHeading) {
     </div>
   );
 }
-
-DropdownMenu.defaultProps = {
-  borderColor: "gray-300",
-};
 
 const Dropdown = {
   MenuItemContainer,

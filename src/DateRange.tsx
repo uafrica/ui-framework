@@ -117,8 +117,4 @@ function DateRange(props: IDateRange) {
   );
 }
 
-DateRange.defaultProps = {
-  label: "Filter by period",
-};
-
 export { DateRange };

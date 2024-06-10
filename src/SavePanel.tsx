@@ -1,7 +1,10 @@
 // @ts-ignore
 import React, { ReactNode } from "react";
 import { Button } from "./Button";
-import { ISavePanel, ISavePanelContainer } from "./interfaces/savePanel.interface";
+import {
+  ISavePanel,
+  ISavePanelContainer,
+} from "./interfaces/savePanel.interface";
 
 function SavePanel(props: ISavePanel) {
   const {
@@ -12,25 +15,23 @@ function SavePanel(props: ISavePanel) {
     saveDisabledText,
     saveText,
     cancelText,
-    className,
+    className = "",
+    callToActionAtBottom,
   } = props;
+
+  const justifyClass = !(!isSavingChanges && props.cancelChanges)
+    ? "justify-end"
+    : "justify-between";
 
   return (
     <div
-      className={
-        "save-panel z-20 py-4 px-4 shadow-inner fixed bottom-0 bg-white justify-between  flex items-center  " +
-        (className ? className : "")
-      }
+      className={`save-panel z-20 py-4 px-4 shadow-inner fixed bottom-0 bg-white justify-between  flex items-center  ${className}`}
     >
       <div
-        className={
-          `flex ${
-            props.callToActionAtBottom ? "flex-col" : "flex-col-reverse "
-          } sm:flex-row my-1 w-full ` +
-          (!(!isSavingChanges && props.cancelChanges)
-            ? "justify-end"
-            : "justify-between")
-        }
+        className={`flex 
+          ${callToActionAtBottom ? "flex-col" : "flex-col-reverse "} 
+          sm:flex-row my-1 w-full 
+          ${justifyClass}`}
       >
         {!isSavingChanges && props.cancelChanges && (
           <div className="ml-2 mr-2 sm:mr-0 mt-4 sm:mt-0">

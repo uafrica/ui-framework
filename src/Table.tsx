@@ -16,19 +16,17 @@ interface IProps {
 }
 
 function TableContainer(props: IProps) {
-  let { children, className, disableScroll } = props;
+  const { children, className = "", disableScroll } = props;
 
   return (
     <div className="flex flex-col">
       <div className="py-2 align-middle inline-block min-w-full">
         <div
-          className={
-            "shadow-lg border-gray-200 sm:rounded-lg " +
-            (disableScroll ? "" : "overflow-x-hidden")
-          }
+          className={`shadow-lg border-gray-200 sm:rounded-lg 
+            ${disableScroll ? "" : "overflow-x-hidden"}`}
         >
           <div className={disableScroll ? "" : "overflow-x-auto"}>
-            <table className={tableBaseClass + (className ? className : "")}>
+            <table className={`${tableBaseClass} ${className}`}>
               {children}
             </table>
           </div>
@@ -46,10 +44,7 @@ interface IHeadProps {
 
 function Head(props: IHeadProps) {
   return (
-    <thead
-      className={props.tableHeadColor ? props.tableHeadColor : tableHeadClass}
-      {...props}
-    >
+    <thead className={props.tableHeadColor ?? tableHeadClass} {...props}>
       {props.children}
     </thead>
   );
@@ -64,17 +59,16 @@ function Row(props: any) {
 }
 
 function HeadCol(props: any) {
+  const { className = "", center, children } = props;
   return (
     <th
-      className={
-        tableHeadColClass +
-        (props.className ? props.className + " " : "") +
-        (props.center ? " text-center " : " text-left ")
-      }
+      className={`${tableHeadColClass} 
+        ${className} 
+        ${center ? " text-center " : " text-left "}`}
       scope="col"
       {...props}
     >
-      {props.children}
+      {children}
     </th>
   );
 }
@@ -84,16 +78,15 @@ function Body(props: any) {
 }
 
 function Col(props: any) {
+  const { className = "", center, children } = props;
   return (
     <td
-      className={
-        tableColClass +
-        (props.className ? props.className + " " : "") +
-        (props.center ? " text-center " : " text-left ")
-      }
+      className={`${tableColClass} 
+      ${className} 
+      ${center ? " text-center " : " text-left "}`}
       {...props}
     >
-      {props.children}
+      {children}
     </td>
   );
 }

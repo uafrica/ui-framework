@@ -4,12 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IPageHeading } from "./interfaces/pageHeading.interface";
 
 function PageHeading(props: IPageHeading) {
-  let { id, children, isCenter, icon, shouldNotUppercase } = props;
-  let uppercaseText = "uppercase";
-
-  if (shouldNotUppercase) {
-    uppercaseText = "";
-  }
+  const { id, children, isCenter, icon, shouldNotUppercase } = props;
+  const uppercaseText = shouldNotUppercase ? "" : "uppercase";
 
   return (
     <div

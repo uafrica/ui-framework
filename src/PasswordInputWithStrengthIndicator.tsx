@@ -27,7 +27,7 @@ import {
 function PasswordInputWithStrengthIndicator(
   props: IPassowrdInputWithStrengthIndicator
 ) {
-  let {
+  const {
     requiredPasswordLength,
     shouldContainUppercase = true,
     shouldContainLowercase = true,
@@ -39,7 +39,7 @@ function PasswordInputWithStrengthIndicator(
     shouldAutoFocus,
   } = props;
   const [password, setPassword] = useState<string>(passwordValue ?? "");
-  let [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   function calculateScore() {
     let criteriaMet = 0;

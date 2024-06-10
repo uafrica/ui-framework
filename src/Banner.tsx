@@ -4,10 +4,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IBanner } from "./interfaces/banner.interface";
 
 function Banner(props: IBanner) {
-  let { backgroundColorClass, textColorClass, icon, children, iconClassName } =
-    props;
+  const {
+    backgroundColorClass = "",
+    textColorClass = "",
+    icon,
+    children,
+    iconClassName = "",
+  } = props;
 
-  let elements = document.getElementsByClassName("uafrica-banner");
+  const elements = document.getElementsByClassName("uafrica-banner");
   const [bannerId] = useState(`banner_${elements.length}`);
   const [isMultiline, setIsMultiline] = useState<boolean>(false);
   const [showMore, setShowMore] = useState(true);

@@ -141,7 +141,7 @@ function CountrySelect(props: ICountrySelect) {
               let Flag: any = FlagIcons[country.code.toUpperCase()];
               return (
                 <div className="text-sm pt-4" key={index}>
-                  <div className="flex flex-row items-center space-x-2  bg-gray-200 rounded-full mr-4 px-3 py-1 text-sm">
+                  <div className="flex flex-row items-center space-x-2 bg-gray-200 rounded-full mr-4 px-3 py-1 text-sm">
                     <div>{Flag ? <Flag className="h-4" /> : country.flag}</div>
                     <div>{country.name}</div>
                     <FontAwesomeIcon

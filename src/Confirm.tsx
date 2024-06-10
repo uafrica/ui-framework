@@ -8,7 +8,7 @@ import { IConfirm } from "./interfaces/confirm.interface";
 
 // Implementation
 function Confirm(props: IConfirm) {
-  let {
+  const {
     confirmButtonVariant,
     showCancelButton,
     cancelText,
@@ -20,7 +20,7 @@ function Confirm(props: IConfirm) {
     disablePressEscToClose,
   } = props;
 
-  let [isOpen, setOpen] = useState<boolean>(Boolean(props.isVisible));
+  const [isOpen, setOpen] = useState<boolean>(Boolean(props.isVisible));
 
   useEffect(() => {
     if (props.isVisible) {

@@ -9,7 +9,7 @@ import { IAccordion } from "./interfaces/accordion.interface";
 // Interface
 
 function Accordion(props: IAccordion) {
-  let {
+  const {
     className,
     overrideOpen,
     title,
@@ -26,7 +26,7 @@ function Accordion(props: IAccordion) {
     setOpen(Boolean(overrideOpen));
   }, [overrideOpen]);
 
-  let [open, setOpen] = useState<boolean>(Boolean(overrideOpen));
+  const [open, setOpen] = useState<boolean>(Boolean(overrideOpen));
 
   return (
     <div className={className}>
@@ -82,12 +82,5 @@ function Accordion(props: IAccordion) {
     </div>
   );
 }
-
-Accordion.defaultProps = {
-  backgroundColor: "primary",
-  textColor: "primary",
-  caretColor: "primary",
-  endComponent: null,
-};
 
 export default Accordion;

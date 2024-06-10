@@ -12,12 +12,12 @@ import { ISelectOptionGroup } from "./interfaces/selectOptionGroup.interface";
 import { ISelect } from "./interfaces/select.interface";
 
 function GroupedSelect(props: IGroupedSelect) {
-  let {
+  const {
     label,
     labelClassName,
     isDisabled,
     id,
-    placeholder,
+    placeholder = "Select",
     customSelectionValue,
     popoverWidth,
     value,
@@ -46,10 +46,6 @@ function GroupedSelect(props: IGroupedSelect) {
     popoverHeight,
     borderClassName,
   } = props;
-
-  if (placeholder === undefined) {
-    placeholder = "Select";
-  }
 
   const popupNode = useRef<HTMLElement>();
   const ctxValue = useGroupedSelectCtx(popupNode, onSearchBlur);
@@ -178,6 +174,11 @@ function GroupedSelect(props: IGroupedSelect) {
               selected = value === option.value;
             }
 
+            const selectedClass = selected ? "bg-gray-100" : "text-gray-900";
+            const disabledCursorClass =
+              option.disabled === true
+                ? " cursor-not-allowed "
+                : " cursor-pointer ";
             return (
               <div key={option.value} className="flex flex-row items-center">
                 <div
@@ -190,20 +191,14 @@ function GroupedSelect(props: IGroupedSelect) {
                   onClick={() => {
                     clickOption(option);
                   }}
-                  className={
-                    "flex-1 select-none relative py-2 pl-2 pr-9 hover:bg-gray-100 focus:bg-gray-100  focus:outline-none focus:ring-1 focus:ring-primary  rounded-md mt-1 mx-1  " +
-                    (selected ? "bg-gray-100" : "text-gray-900") +
-                    (option.disabled === true
-                      ? " cursor-not-allowed "
-                      : " cursor-pointer ")
-                  }
+                  className={`flex-1 select-none relative py-2 pl-2 pr-9 hover:bg-gray-100 focus:bg-gray-100  focus:outline-none focus:ring-1 focus:ring-primary  rounded-md mt-1 mx-1 
+                    ${selectedClass} 
+                    ${disabledCursorClass}`}
                 >
                   <span
-                    className={
-                      "flex flex-wrap " +
-                      (selected ? "font-semibold" : "font-normal") +
-                      (option.disabled === true ? " text-gray-500 " : "")
-                    }
+                    className={`flex flex-wrap 
+                      ${selected ? "font-semibold" : "font-normal"} 
+                      ${option.disabled === true ? " text-gray-500 " : ""}`}
                   >
                     {option.labelCustomHTML ?? option.label}
                   </span>
@@ -225,17 +220,19 @@ function GroupedSelect(props: IGroupedSelect) {
                     </span>
                   ) : null}
                 </div>
-                {onDelete && !option.disableDelete && option.disabled !== true && (
-                  <span className=" flex items-center  p-2 text-red hover:text-red-700 cursor-pointer">
-                    <FontAwesomeIcon
-                      icon="trash"
-                      title="Delete"
-                      onClick={() =>
-                        onDelete && onDelete(option.label, option.value)
-                      }
-                    />
-                  </span>
-                )}
+                {onDelete &&
+                  !option.disableDelete &&
+                  option.disabled !== true && (
+                    <span className=" flex items-center  p-2 text-red hover:text-red-700 cursor-pointer">
+                      <FontAwesomeIcon
+                        icon="trash"
+                        title="Delete"
+                        onClick={() =>
+                          onDelete && onDelete(option.label, option.value)
+                        }
+                      />
+                    </span>
+                  )}
               </div>
             );
           })}

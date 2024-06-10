@@ -8,7 +8,7 @@ import { ITextArea } from "./interfaces/textArea.interface";
 const defaultContainerClass = "mt-3";
 
 function TextArea(props: ITextArea) {
-  let {
+  const {
     containerClassName,
     fieldID,
     label,
@@ -34,13 +34,7 @@ function TextArea(props: ITextArea) {
   } = props;
 
   return (
-    //  @ts-ignore
-    <div
-      className={
-        containerClassName ? containerClassName : defaultContainerClass
-      }
-      id={fieldID}
-    >
+    <div className={containerClassName ?? defaultContainerClass} id={fieldID}>
       <div className="flex justify-between">
         {label && (
           <div className="mt-1">
@@ -52,10 +46,8 @@ function TextArea(props: ITextArea) {
         {isOptional && <span className="text-gray-500">(Optional)</span>}
       </div>
       <textarea
-        className={
-          "focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent mt-2 shadow-sm block w-full border border-gray-300 rounded-md" +
-          (isDisabled ? " bg-gray-100" : "")
-        }
+        className={`focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent mt-2 shadow-sm block w-full border border-gray-300 rounded-md 
+          ${isDisabled ? " bg-gray-100" : ""}`}
         id={id}
         value={value}
         rows={rows ? rows : 4}

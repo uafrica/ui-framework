@@ -26,7 +26,7 @@ export interface ILinkProps {
   small?: boolean;
   icon?: IconProp;
   color?: string;
-  onClick?: MouseEventHandler | (() => void)| Function;
+  onClick?: MouseEventHandler | (() => void) | Function;
   isCenter?: boolean;
   className?: string;
   isDisabled?: boolean;

@@ -15,24 +15,18 @@ interface IProps {
 }
 
 function NavItem(props: IProps) {
-  let { item } = props;
+  const { item } = props;
 
-  let isLinkActive = window.location.pathname.indexOf(item.path) >= 0;
-  let bgClass = "";
-  if (isLinkActive) {
-    bgClass = "bg-gray-100 font-semibold";
-  }
+  const isLinkActive = window.location.pathname.indexOf(item.path) >= 0;
+  let bgClass = isLinkActive ? "bg-gray-100 font-semibold" : "";
 
   return (
     <div
       id={"nav_" + item.displayName.replaceAll(" ", "_").toLowerCase()}
-      className={
-        "nav-item text-gray-700 hover:bg-gray-100 hover:text-gray-900 group  flex items-center  px-2 py-1.5 rounded-md mb-1 " +
-        bgClass
-      }
+      className={`nav-item text-gray-700 hover:bg-gray-100 hover:text-gray-900 group  flex items-center  px-2 py-1.5 rounded-md mb-1 ${bgClass}`}
     >
       <div className="w-4 mr-2 text-center">
-        <FontAwesomeIcon icon={item.icon} size="xs" />{" "}
+        <FontAwesomeIcon icon={item.icon} size="xs" />
       </div>
       {props.isNavbarCollapsed ? " " : item.displayName}
 

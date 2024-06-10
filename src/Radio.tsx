@@ -4,12 +4,12 @@ import { Label } from "./Label";
 import { IRadioButton, IRadioGroup } from "./interfaces/radioButton.interface";
 
 function Button(props: IRadioButton) {
-  let {
+  const {
     label,
     onChange,
     isDisabled,
-    labelClassName,
-    className,
+    labelClassName = "",
+    className = "",
     labelLeft,
     labelRight,
     name,
@@ -31,22 +31,25 @@ function Button(props: IRadioButton) {
   }
 
   function renderLabel(option: string) {
+    const disabledClass = isDisabled
+      ? "text-gray-500 "
+      : "text-base cursor-pointer ";
     return (
       <label
         onClick={() => {
           selectOption();
         }}
-        className={
-          (isDisabled ? "text-gray-500 " : "text-base cursor-pointer ") +
-          "  flex items-center  " +
-          (labelClassName ? labelClassName : "")
-        }
+        className={`${disabledClass} flex items-center ${labelClassName}`}
       >
         {option}
       </label>
     );
   }
 
+  const marginClass = labelLeft ? "ml-2 " : "mr-2 ";
+  const disabledClass = isDisabled
+    ? "text-gray-500 "
+    : "text-primary hover:border-primary ";
   return (
     <div className="flex items-start">
       <label className="inline-flex items-center">
@@ -55,15 +58,7 @@ function Button(props: IRadioButton) {
           renderLabel(label)}
         <input
           type="radio"
-          className={
-            (labelLeft ? "ml-2 " : "mr-2 ") +
-            "cursor-pointer form-radio  focus:outline-none focus:ring-1 focus:ring-primary  " +
-            (isDisabled
-              ? "text-gray-500 "
-              : "text-primary hover:border-primary ") +
-            " border-gray-300  " +
-            (className ? className : "")
-          }
+          className={`${marginClass} cursor-pointer form-radio  focus:outline-none focus:ring-1 focus:ring-primary  ${disabledClass} border-gray-300 ${className} `}
           disabled={isDisabled}
           id={label}
           name={name}

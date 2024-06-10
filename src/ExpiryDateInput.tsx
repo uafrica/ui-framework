@@ -7,7 +7,7 @@ interface IProps {
   onChange: (value: { month: string; year: string }) => void;
 }
 function ExpiryDateInput(props: IProps) {
-  let { value } = props;
+  const { value } = props;
 
   const yearInputRef = useRef<HTMLInputElement>(null);
 

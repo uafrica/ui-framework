@@ -24,7 +24,7 @@ function OpenStreetMap(props: {
   bounds?: google.maps.LatLngBounds | L.LatLngBounds;
   defaultZoom?: number;
 }) {
-  let {
+  const {
     defaultCenter,
     defaultZoom,
     polygons,

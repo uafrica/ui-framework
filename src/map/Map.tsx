@@ -55,7 +55,7 @@ function Map(props: {
   mapOptions?: google.maps.MapOptions;
   onEditZonesClicked?: (mode?: "select" | "draw" | null | undefined) => void;
 }) {
-  let {
+  const {
     polygons,
     polylines,
     circles,
@@ -77,17 +77,17 @@ function Map(props: {
 
   const snapDistanceThreshold = 30;
 
-  let [map, setMap] = useState<any>();
-  let [mapId, setMapId] = useState<string>("");
-  let [doSnap, setDoSnap] = useState<boolean>(false);
-  let [center, setCenter] = useState({ ...defaultCenter });
-  let [isMapLoaded, setIsMapLoaded] = useState(false);
-  let [options, setOptions] = useState({});
-  let [markerTooltipContent, setMarkerTooltipContent] = useState<any>(null);
-  let [polygonTooltipContent, setPolygonTooltipContent] = useState<any>(null);
-  let [tooltipMode, setTooltipMode] = useState<"click" | "hover">("click");
-  let [tooltipCoordinates, setTooltipCoordinates] = useState<any>();
-  let [tooltipPixelOffset, setTooltipPixelOffset] = useState<{
+  const [map, setMap] = useState<any>();
+  const [mapId, setMapId] = useState<string>("");
+  const [doSnap, setDoSnap] = useState<boolean>(false);
+  const [center, setCenter] = useState({ ...defaultCenter });
+  const [isMapLoaded, setIsMapLoaded] = useState(false);
+  const [options, setOptions] = useState({});
+  const [markerTooltipContent, setMarkerTooltipContent] = useState<any>(null);
+  const [polygonTooltipContent, setPolygonTooltipContent] = useState<any>(null);
+  const [tooltipMode, setTooltipMode] = useState<"click" | "hover">("click");
+  const [tooltipCoordinates, setTooltipCoordinates] = useState<any>();
+  const [tooltipPixelOffset, setTooltipPixelOffset] = useState<{
     x: number;
     y: number;
   } | null>(null);

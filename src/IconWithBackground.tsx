@@ -10,21 +10,13 @@ interface IIconWithBackground {
 }
 
 function IconWithBackground(props: IIconWithBackground) {
-  let { icon, color } = props;
+  let { icon, color = "black" } = props;
 
   return (
     <div
-      className={
-        "rounded-full  flex items-center justify-center  h-8 w-8 bg-" +
-        (color ? color : "black") +
-        "-100"
-      }
+      className={`rounded-full  flex items-center justify-center  h-8 w-8 bg-${color}-100`}
     >
-      <FontAwesomeIcon
-        size="sm"
-        icon={icon}
-        className={"text-" + (color ? color : "black") + "-500"}
-      />
+      <FontAwesomeIcon size="sm" icon={icon} className={`text-${color}-500`} />
     </div>
   );
 }

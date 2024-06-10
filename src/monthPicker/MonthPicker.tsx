@@ -41,7 +41,7 @@ export const inputStyle = {
 };
 
 function MonthPicker(props: IMonthPicker) {
-  let {
+  const {
     dateFrom,
     label,
     isLabelInline,

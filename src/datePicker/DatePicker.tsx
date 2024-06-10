@@ -59,11 +59,11 @@ export const inputStyle = {
 
 // Implementation
 function DatePicker(props: IDatePicker) {
-  let {
+  const {
     selectedDate,
     label,
     isLabelInline,
-    placeholder,
+    placeholder = "Select",
     dateFormat,
     containerClassName,
     onChange,
@@ -76,10 +76,6 @@ function DatePicker(props: IDatePicker) {
     info,
     shouldOverlapLabel,
   } = props;
-
-  if (placeholder === undefined) {
-    placeholder = "Select";
-  }
 
   let date = new Date();
   if (selectedDate) {

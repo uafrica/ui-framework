@@ -17,7 +17,7 @@ import { ICustomTable } from "./customTable.interface";
 import debounce from "lodash/debounce";
 
 function CustomTable(props: ICustomTable) {
-  let {
+  const {
     id,
     fetchFunction,
     fetchFunctionArguments,
@@ -44,27 +44,27 @@ function CustomTable(props: ICustomTable) {
     checkIfRowIsDraggable,
     style,
     loadDebounceTime,
+    rowUniqueIdentifier = "id",
   } = props;
-  let topRef: any = useRef();
-  let rowUniqueIdentifier = props.rowUniqueIdentifier ?? "id";
-  let defaultPageSize = 20;
+  const topRef: any = useRef();
+  const defaultPageSize = 20;
   let interval: any;
 
   // Loading
-  let [isInitialising, setIsInitialising] = useState<boolean>(true);
-  let [isLoading, setIsLoading] = useState<boolean>(false);
-  let [isRefreshing, setIsRefreshing] = useState<boolean>(false);
-  let [data, setData] = useState<any[]>([]);
-  let [error, setError] = useState<any[]>();
-  let [orderingArguments, setOrderingArguments] = useState<any>({});
+  const [isInitialising, setIsInitialising] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
+  const [data, setData] = useState<any[]>([]);
+  const [error, setError] = useState<any[]>();
+  const [orderingArguments, setOrderingArguments] = useState<any>({});
 
   // Table render
-  let [columns, setColumns] = useState<IColumn[]>(props.columns);
-  let [columnOrder, setColumnOrder] = useState<string[]>(
+  const [columns, setColumns] = useState<IColumn[]>(props.columns);
+  const [columnOrder, setColumnOrder] = useState<string[]>(
     customTableUtils.initialiseColumnOrder(props.columns, props.columnOrder)
   );
-  let [rowOrder, setRowOrder] = useState<any[]>([]);
-  let [columnWidths, setColumnWidths] = useState<
+  const [rowOrder, setRowOrder] = useState<any[]>([]);
+  const [columnWidths, setColumnWidths] = useState<
     { id: string; value?: number }[]
   >(
     props.columnWidths && props.columnWidths.length > 0
@@ -75,24 +75,24 @@ function CustomTable(props: ICustomTable) {
   );
 
   // Row selection
-  let [selectedRowIdentifiers, setSelectedRowIdentifiers] = useState<string[]>(
-    []
-  );
-  let [allRowsSelected, setAllRowsSelected] = useState<boolean>(false);
+  const [selectedRowIdentifiers, setSelectedRowIdentifiers] = useState<
+    string[]
+  >([]);
+  const [allRowsSelected, setAllRowsSelected] = useState<boolean>(false);
 
   // Pagination
-  let [count, setCount] = useState<number>(1);
-  let [page, setPage] = useState<number>(1);
-  let [totalPages, setTotalPages] = useState<number>(0);
-  let [pageSize, setPageSize] = useState<number>(
+  const [count, setCount] = useState<number>(1);
+  const [page, setPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(0);
+  const [pageSize, setPageSize] = useState<number>(
     props.pageSize ?? defaultPageSize
   );
 
   // Menu
-  let [showMenu, setShowMenu] = useState<boolean>(false);
-  let [contextMenuMaxHeight, setContextMenuMaxHeight] = useState<any>();
-  let [clickPosition, setClickPosition] = useState<any>({ x: 0, y: 0 });
-  let [activeRow, setActiveRow] = useState<any>({
+  const [showMenu, setShowMenu] = useState<boolean>(false);
+  const [contextMenuMaxHeight, setContextMenuMaxHeight] = useState<any>();
+  const [clickPosition, setClickPosition] = useState<any>({ x: 0, y: 0 });
+  const [activeRow, setActiveRow] = useState<any>({
     rowData: null,
     dataIndex: null,
   });
@@ -110,14 +110,15 @@ function CustomTable(props: ICustomTable) {
     useState<boolean>(false);
 
   // Column resize
-  let [resizeColumnId, setResizeColumnId] = useState<string>("");
-  let [resizeColumnStartWidth, setResizeColumnStartWidth] = useState<number>(0);
-  let [resizeColumnStartX, setResizeColumnStartX] = useState<number>(0);
-  let insertRowRef = useRef(insertRow);
-  let refreshRef = useRef(refresh);
-  let fetchFunctionArgumentsRef = useRef(fetchFunctionArguments);
+  const [resizeColumnId, setResizeColumnId] = useState<string>("");
+  const [resizeColumnStartWidth, setResizeColumnStartWidth] =
+    useState<number>(0);
+  const [resizeColumnStartX, setResizeColumnStartX] = useState<number>(0);
+  const insertRowRef = useRef(insertRow);
+  const refreshRef = useRef(refresh);
+  const fetchFunctionArgumentsRef = useRef(fetchFunctionArguments);
 
-  let debouncedLoad = useRef(
+  const debouncedLoad = useRef(
     debounce(load, loadDebounceTime !== undefined ? loadDebounceTime : 0)
   );
 

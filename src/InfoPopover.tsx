@@ -1,18 +1,15 @@
 // @ts-ignore
 import React, { useRef } from "react";
-// @ts-ignore
 import ReactDOM from "react-dom";
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { Manager, Popper, Reference } from "react-popper";
 import { IInfoPopover } from "./interfaces/infoPopover.interface";
 
-
-
 function InfoPopover(props: IInfoPopover) {
   function Portal(props: { children: ReactNode }) {
-    let { children } = props;
-    let [mounted, setMounted] = useState(false);
+    const { children } = props;
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => setMounted(true), []);
 
@@ -27,7 +24,7 @@ function InfoPopover(props: IInfoPopover) {
   ): any {
     useEffect(() => {
       function mouseDownListener(e: MouseEvent) {
-        let targetAsNode = e.target;
+        const targetAsNode = e.target;
         // @ts-ignore
         if (ref.current && !ref.current.contains(targetAsNode)) {
           props.onPopoverDismiss();
@@ -44,11 +41,14 @@ function InfoPopover(props: IInfoPopover) {
     }, [props.showPopover]);
   }
 
-  let { placement, children, popoverContent, showPopover, width } = props;
+  const {
+    placement = "auto",
+    children,
+    popoverContent,
+    showPopover,
+    width = "w-80",
+  } = props;
 
-  if (!placement) {
-    placement = "auto";
-  }
   const popupNode = useRef<HTMLElement>();
   const ctxValue = useInfoPopoverCtx(popupNode);
 
@@ -88,11 +88,7 @@ function InfoPopover(props: IInfoPopover) {
             >
               {({ ref, style }) => (
                 <div
-                  className={
-                    "info-popover z-50 origin-top-right absolute font-normal p-4 rounded-md shadow-md bg-white divide-y  ring-1 ring-black ring-opacity-5  divide-gray-100 focus:outline-none " +
-                    (width ? width : "w-80")
-                  }
-                  // @ts-ignore
+                  className={`info-popover z-50 origin-top-right absolute font-normal p-4 rounded-md shadow-md bg-white divide-y  ring-1 ring-black ring-opacity-5  divide-gray-100 focus:outline-none ${width}`}
                   style={style}
                   ref={ref}
                   data-test={props.dataTest}

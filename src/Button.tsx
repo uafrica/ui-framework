@@ -12,38 +12,28 @@ import {
 
 // Implementation
 function Primary(props: IButtonProps) {
-  let bgColor = props.bgColor ? props.bgColor : "primary";
-
+  const bgColor = props.bgColor ? props.bgColor : "primary";
+  const bgColorClass = "bg-" + bgColor;
+  const bgColorHoverClass = "hover:bg-" + bgColor + "-dark";
   return (
     <BaseButton
       {...props}
-      buttonTypeClassNames={
-        "focus:outline-none focus:ring-1 focus:ring-primary  inline-flex justify-center items-center px-5 py-2 border leading-4 font-medium rounded-full shadow-sm focus: outline-none border-transparent text-white bg-" +
-        bgColor +
-        " hover:bg-" +
-        bgColor +
-        "-dark"
-      }
+      buttonTypeClassNames={` focus:outline-none focus:ring-1 focus:ring-primary inline-flex justify-center items-center px-5 py-2 border leading-4 font-medium rounded-full shadow-sm focus: outline-none border-transparent text-white ${bgColorClass} ${bgColorHoverClass} `}
       type="submit"
     />
   );
 }
 
 function Secondary(props: IButtonProps) {
-  let bgColor = props.bgColor ? props.bgColor : "primary";
+  const bgColor = props.bgColor ? props.bgColor : "primary";
 
+  const borderClass = "border-" + bgColor;
+  const textClass = "text-" + bgColor;
+  const hoverClass = "hover:bg-" + bgColor;
   return (
     <BaseButton
       {...props}
-      buttonTypeClassNames={
-        " focus:outline-none focus:ring-1 focus:ring-primary   inline-flex justify-center items-center px-5 py-2 border leading-4 font-medium rounded-full shadow-sm focus: outline-none  border-" +
-        bgColor +
-        " text-" +
-        bgColor +
-        " bg-white hover:bg-" +
-        bgColor +
-        " hover:text-white "
-      }
+      buttonTypeClassNames={` focus:outline-none focus:ring-1 focus:ring-primary inline-flex justify-center items-center px-5 py-2 border leading-4 font-medium rounded-full shadow-sm focus:outline-none ${borderClass} ${textClass} ${hoverClass} bg-white hover:text-white `}
     />
   );
 }
@@ -53,7 +43,7 @@ function Tertiary(props: IButtonProps) {
     <BaseButton
       {...props}
       buttonTypeClassNames={
-        " focus:outline-none focus:ring-1 focus:ring-primary   inline-flex justify-center items-center px-5 py-2 border leading-4 font-medium rounded-full shadow-sm focus: outline-none  border-gray-900 text-gray-99 bg-white hover:text-primary hover:border-primary "
+        " focus:outline-none focus:ring-1 focus:ring-primary inline-flex justify-center items-center px-5 py-2 border leading-4 font-medium rounded-full shadow-sm focus:outline-none border-gray-900 text-gray-99 bg-white hover:text-primary hover:border-primary "
       }
     />
   );
@@ -64,50 +54,45 @@ function Danger(props: IButtonProps) {
     <BaseButton
       {...props}
       buttonTypeClassNames={
-        "focus:outline-none focus:ring-1 focus:ring-red  inline-flex justify-center items-center px-5 py-2 border leading-4 font-medium rounded-full shadow-sm focus: outline-none  border-transparent text-white bg-red hover:bg-red-dark "
+        " focus:outline-none focus:ring-1 focus:ring-red inline-flex justify-center items-center px-5 py-2 border leading-4 font-medium rounded-full shadow-sm focus: outline-none border-transparent text-white bg-red hover:bg-red-dark "
       }
     />
   );
 }
 
 function Icon(props: IButtonProps) {
-  let bgColor = props.bgColor ? props.bgColor : "transparent";
-  let color = props.bgColor ? "white" : "gray";
+  const { bgColor = "transparent" } = props;
+  const color = props.bgColor ? "white" : "gray";
+  const textColorClass = "text-" + color;
+  const textHoverColorClass = "hover:text-" + color + "-700";
+  const backgroundClass = "bg-" + bgColor;
+  const backgroundHoverClass = "hover:bg-" + bgColor + "-dark";
 
   return (
     <BaseButton
       {...props}
       iconSize={props.iconSize ? props.iconSize : "lg"}
-      buttonTypeClassNames={
-        " focus:outline-none focus:ring-1 focus:ring-primary   inline-flex justify-center items-center px-5 py-2 border leading-4 font-medium rounded-full shadow-sm focus: outline-none  border-transparent text-" +
-        color +
-        " bg-" +
-        bgColor +
-        " hover:bg-" +
-        bgColor +
-        "-dark hover:text-" +
-        color +
-        "-700"
-      }
+      buttonTypeClassNames={` focus:outline-none focus:ring-1 focus:ring-primary inline-flex justify-center items-center px-5 py-2 border leading-4 font-medium rounded-full shadow-sm focus: outline-none border-transparent ${textColorClass} ${backgroundClass} ${backgroundHoverClass} ${textHoverColorClass}} `}
     />
   );
 }
 
 function Cancel(props: IButtonProps) {
-  let title = props.title ? props.title : "Cancel";
+  const { title = "Cancel" } = props;
   return (
     <BaseButton
       {...props}
       title={title}
       buttonTypeClassNames={
-        " focus:outline-none focus:ring-1 focus:ring-primary   inline-flex justify-center items-center px-5 py-2 border leading-4 font-medium rounded-full shadow-sm focus: outline-none  justify-center border-gray-300 text-gray-700 bg-white hover:bg-gray-50 "
+        " focus:outline-none focus:ring-1 focus:ring-primary inline-flex justify-center items-center px-5 py-2 border leading-4 font-medium rounded-full shadow-sm focus: outline-none justify-center border-gray-300 text-gray-700 bg-white hover:bg-gray-50 "
       }
     />
   );
 }
 
 function Link(props: ILinkProps) {
-  return <BaseLink {...props} color={props.color ? props.color : "primary"} />;
+  const { color = "primary" } = props;
+  return <BaseLink {...props} color={color} />;
 }
 
 function LinkDanger(props: ILinkProps) {
@@ -115,25 +100,24 @@ function LinkDanger(props: ILinkProps) {
 }
 
 function BaseLink(props: ILinkBaseProps) {
-  const linkClassNames =
-    "inline-flex items-center text-" +
-    props.color +
-    " font-bold hover:text-" +
-    props.color +
-    "-dark focus:outline-none justify-center focus:underline " +
-    (props.small ? " text-xs " : " ") +
-    (props.noPadding ? "" : " px-3 py-1 ");
+  const { color, noPadding, to, target, tabIndex } = props;
+  const textColorClass = "text-" + color;
+  const textHoverColorClass = "hover:text-" + color + "-dark";
 
-  if (props.to) {
-    if (props.target === "_blank") {
+  const linkClassNames = `inline-flex items-center ${textColorClass} font-bold ${textHoverColorClass} focus:outline-none justify-center focus:underline ${
+    props.small ? " text-xs " : " "
+  } ${noPadding ? "" : " px-3 py-1 "}`;
+
+  if (to) {
+    if (target === "_blank") {
       return (
-        <a href={props.to} target="_blank" rel="noopener noreferrer">
+        <a href={to} target="_blank" rel="noopener noreferrer">
           <BaseButton {...props} buttonTypeClassNames={linkClassNames} />
         </a>
       );
     }
     return (
-      <RouterLink to={props.to} tabIndex={props.tabIndex}>
+      <RouterLink to={to} tabIndex={tabIndex}>
         <BaseButton {...props} buttonTypeClassNames={linkClassNames} />
       </RouterLink>
     );
@@ -143,7 +127,7 @@ function BaseLink(props: ILinkBaseProps) {
 }
 
 function BaseButton(props: IButtonBaseProps) {
-  let {
+  const {
     isLoading,
     loadingTitle,
     icon,
@@ -162,7 +146,7 @@ function BaseButton(props: IButtonBaseProps) {
     color,
   } = props;
 
-  let disabledOrLoading = isDisabled || isLoading;
+  const disabledOrLoading = isDisabled || isLoading;
 
   let iconToShow = icon;
   let iconClass = "";
@@ -175,7 +159,11 @@ function BaseButton(props: IButtonBaseProps) {
   if (color) {
     iconClass += ` text-${color}`;
   }
-  let textToShow = isLoading && loadingTitle ? loadingTitle + "..." : title;
+  const textToShow = isLoading && loadingTitle ? loadingTitle + "..." : title;
+
+  const roundedClass = `${leftRounded ? "rounded-r h-12 md:h-9 " : ""} ${
+    rightRounded ? "rounded-l h-12 md:h-9 " : "rounded-full h-12 md:h-9 "
+  }`;
 
   return (
     <button
@@ -189,19 +177,13 @@ function BaseButton(props: IButtonBaseProps) {
       tabIndex={props.tabIndex ?? 0}
       type={type ? type : "button"}
       title={hoverTitle}
-      className={
-        "button " +
-        (leftRounded
-          ? "rounded-r h-12 md:h-9 "
-          : rightRounded
-          ? "rounded-l h-12 md:h-9 "
-          : "rounded-full h-12 md:h-9 ") +
-        buttonTypeClassNames +
-        " items-center " +
-        (isCenter ? " block mx-auto " : "") +
-        (className ? className : "") +
-        (disabledOrLoading ? " opacity-50 pointer-events-none" : "")
-      }
+      className={`button 
+        ${roundedClass} 
+        ${buttonTypeClassNames} 
+        items-center 
+        ${isCenter ? " block mx-auto " : ""} 
+        ${className ?? ""} 
+        ${disabledOrLoading ? " opacity-50 pointer-events-none" : ""}`}
     >
       {iconToShow && (
         <FontAwesomeIcon
@@ -216,7 +198,7 @@ function BaseButton(props: IButtonBaseProps) {
 }
 
 function ButtonsPanel(props: IButtonsPanelProps) {
-  let { noMargin, children, isCenter, isLeft } = props;
+  const { noMargin, children, isCenter, isLeft } = props;
   let align = "justify-between";
 
   let nonEmptyChildren = [];
@@ -241,11 +223,9 @@ function ButtonsPanel(props: IButtonsPanelProps) {
 
   return (
     <div
-      className={
-        " w-full  flex flex-col-reverse sm:flex-row space-y-4 sm:space-y-0 space-y-reverse space-x-0 sm:space-x-4  " +
-        align +
-        (noMargin ? "" : " mt-6 mb-1")
-      }
+      className={` w-full flex flex-col-reverse sm:flex-row space-y-4 sm:space-y-0 space-y-reverse space-x-0 sm:space-x-4 
+        ${align} 
+        ${noMargin ? "" : " mt-6 mb-1"}`}
     >
       {children}
     </div>
@@ -259,16 +239,15 @@ function Download(props: {
   isDisabled?: boolean;
   shouldHideTitle?: boolean;
 }) {
+  const { isDisabled, isDownloading, shouldHideTitle, downloadType } = props;
   return (
     <Button.Link
-      isDisabled={props.isDisabled}
+      isDisabled={isDisabled}
       onClick={() => props.download()}
       icon="download"
-      isLoading={props.isDownloading}
-      title={props.shouldHideTitle ? "" : "Download " + props.downloadType}
-      loadingTitle={
-        props.shouldHideTitle ? "" : "Download " + props.downloadType
-      }
+      isLoading={isDownloading}
+      title={shouldHideTitle ? "" : "Download " + downloadType}
+      loadingTitle={shouldHideTitle ? "" : "Download " + downloadType}
     />
   );
 }

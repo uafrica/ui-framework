@@ -4,14 +4,14 @@ import { InfoButton } from "./InfoButton";
 import { ICheckbox } from "./interfaces/checkbox.interface";
 
 function Checkbox(props: ICheckbox) {
-  let {
+  const {
     onClick,
     label,
     labelClassName,
     htmlFor,
     fieldId,
     info,
-    className,
+    className = "",
     id,
     isCenter: center,
     isChecked: checked,
@@ -39,9 +39,14 @@ function Checkbox(props: ICheckbox) {
     </label>
   );
 
-  let textDisplayColor =
+  const textDisplayColor =
     textColor && textColor.length > 0 ? textColor : "primary";
-
+  const paddingClass = noPadding ? "" : "py-2 px-1 ";
+  const centerClass = center ? " justify-center " : "";
+  const disabledClass = isDisabled ? "" : " cursor-pointer ";
+  const inputDisabledClass = isDisabled
+    ? "text-gray-500 "
+    : `text-${textDisplayColor} hover:border-primary cursor-pointer `;
   return (
     <div className="flex items-start">
       <div
@@ -52,31 +57,21 @@ function Checkbox(props: ICheckbox) {
           }
         }}
         key={key}
-        className={
-          (noPadding ? "" : "py-2 px-1 ") +
-          "  flex items-center  space-x-4 " +
-          (center ? " justify-center " : "") +
-          (isDisabled ? "" : " cursor-pointer ")
-        }
+        className={` ${paddingClass} flex items-center  space-x-4 ${centerClass} ${disabledClass} `}
       >
         {label && (labelLeft || (!labelLeft && !labelRight)) && labelEl}
         <input
           onKeyPress={(e: any) => {
             if (e.key === "Enter") {
-              isDisabled ? null : onClick ? onClick(e) : null;
+              if (!isDisabled && onClick) {
+                onClick(e);
+              }
             }
           }}
           title={hoverTitle}
           type="checkbox"
           data-test={dataTest}
-          className={
-            " focus:outline-none focus:ring-1 focus:ring-primary  " +
-            (isDisabled
-              ? "text-gray-500 "
-              : `text-${textDisplayColor} hover:border-primary cursor-pointer `) +
-            " border-gray-300 rounded " +
-            (className ? className : "")
-          }
+          className={` focus:outline-none focus:ring-1 focus:ring-primary ${inputDisabledClass} border-gray-300 rounded ${className} `}
           checked={checked}
           id={fieldId}
           onChange={() => {}}

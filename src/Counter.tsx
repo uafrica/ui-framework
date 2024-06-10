@@ -7,7 +7,7 @@ import { useState } from "react";
 import { ICounter } from "./interfaces/counter.interface";
 
 function Counter(props: ICounter) {
-  let {
+  const {
     min,
     max,
     step = 1,
@@ -27,9 +27,9 @@ function Counter(props: ICounter) {
 
   const [inputValue, setInputValue] = useState(value ? value : 0);
 
-  let decreaseDisabled =
+  const isDecreaseDisabled =
     (min !== undefined && inputValue - step < min) || isDisabled;
-  let increaseDisabled =
+  const isIncreaseDisabled =
     (max !== undefined && inputValue + step > max) || isDisabled;
 
   return (
@@ -38,8 +38,8 @@ function Counter(props: ICounter) {
         containerClassName
           ? containerClassName
           : isLabelInline
-          ? " flex items-center  flex-row space-x-4"
-          : "mt-4 max-w-sm"
+          ? " flex items-center flex-row space-x-4"
+          : " mt-4 max-w-sm"
       }
     >
       {label && (
@@ -53,17 +53,17 @@ function Counter(props: ICounter) {
           </Label>
         </div>
       )}
-      <div className=" flex items-center  flex-row w-full">
+      <div className=" flex items-center flex-row w-full">
         <div
           style={{ height: shouldOverlapLabel ? "49px" : "37px" }}
           className={
             "flex justify-center items-center w-12 shadow-sm border rounded-l-md " +
-            (decreaseDisabled
+            (isDecreaseDisabled
               ? "bg-gray-100 border-gray-100 cursor-not-allowed"
               : "bg-primary-100 hover:bg-primary-200 border-primary-100 cursor-pointer")
           }
           onClick={() => {
-            if (!decreaseDisabled) {
+            if (!isDecreaseDisabled) {
               setInputValue(Number(inputValue) - step);
               if (onChange) {
                 onChange(Number(inputValue) - step);
@@ -73,7 +73,7 @@ function Counter(props: ICounter) {
         >
           <FontAwesomeIcon
             icon="minus"
-            className={decreaseDisabled ? "text-gray-500" : "text-primary"}
+            className={isDecreaseDisabled ? "text-gray-500" : "text-primary"}
           />
         </div>
 
@@ -82,7 +82,7 @@ function Counter(props: ICounter) {
           isLabelInline
           inputID={inputID}
           containerClassName="w-full "
-          inputClassName="input-counter  border-primary-100 "
+          inputClassName="input-counter border-primary-100 "
           step={step}
           min={min}
           max={max}
@@ -134,12 +134,12 @@ function Counter(props: ICounter) {
           style={{ height: shouldOverlapLabel ? "49px" : "37px" }}
           className={
             "flex justify-center items-center w-12 shadow-sm border rounded-r-md " +
-            (increaseDisabled
+            (isIncreaseDisabled
               ? "bg-gray-100 border-gray-100 cursor-not-allowed"
               : "bg-primary-100 hover:bg-primary-200 border-primary-100 cursor-pointer")
           }
           onClick={() => {
-            if (!increaseDisabled) {
+            if (!isIncreaseDisabled) {
               setInputValue(Number(inputValue) + step);
               if (onChange) {
                 onChange(Number(inputValue) + step);
@@ -149,7 +149,7 @@ function Counter(props: ICounter) {
         >
           <FontAwesomeIcon
             icon="plus"
-            className={increaseDisabled ? "text-gray-500" : "text-primary"}
+            className={isIncreaseDisabled ? "text-gray-500" : "text-primary"}
           />
         </div>
       </div>
