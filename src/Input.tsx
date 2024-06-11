@@ -73,6 +73,7 @@ function Input(props: IInput) {
   const [isFocussed, setIsFocussed] = useState<boolean>(false);
 
   // @ts-ignore
+
   let inputClasses = `${prependPadding ?? prependText ? " pl-7 " : ""}`;
 
   if (inputClassName) {
@@ -164,14 +165,6 @@ function Input(props: IInput) {
     );
   }
 
-  function renderIsOptional() {
-    return (
-      <span className="text-gray-500">
-        {typeof isOptional === "string" ? isOptional : "(Optional)"}
-      </span>
-    );
-  }
-
   function renderPrependSelect() {
     return (
       <div className="-mr-2 z-10">
@@ -226,36 +219,40 @@ function Input(props: IInput) {
 
   function renderAppendIcon() {
     return (
-      <div
-        className={
-          onAppendIconClick
-            ? " cursor-pointer " + appendIconColor
-            : " pointer-events-none text-gray-400"
-        }
-        id={appendIconId}
-        onClick={(e) => {
-          if (onAppendIconClick) {
-            onAppendIconClick(e);
-          }
-        }}
-      >
-        {appendIcon && <FontAwesomeIcon icon={appendIcon} size="sm" />}
-      </div>
-    );
-  }
-
-  function renderClearSearch() {
-    return (
-      <div
-        title="Clear search"
-        className="cursor-pointer text-gray-400 "
-        onClick={() => {
-          if (onClearSearch) {
-            onClearSearch();
-          }
-        }}
-      >
-        <FontAwesomeIcon icon="times" size="sm" />
+      <div className={"absolute inset-y-0 right-0 mr-3 flex items-center"}>
+        {appendIcon && (
+          <div
+            className={
+              onAppendIconClick
+                ? " cursor-pointer " + appendIconColor
+                : " pointer-events-none text-gray-400"
+            }
+            id={appendIconId}
+            onClick={(e) => {
+              if (onAppendIconClick) {
+                onAppendIconClick(e);
+              }
+            }}
+          >
+            <FontAwesomeIcon icon={appendIcon} size="sm" />
+          </div>
+        )}
+        {appendIcon && onClearSearch && (
+          <div className="mx-2 pointer-events-none text-gray-200">|</div>
+        )}
+        {onClearSearch && (
+          <div
+            title="Clear search"
+            className="cursor-pointer text-gray-400 "
+            onClick={() => {
+              if (onClearSearch) {
+                onClearSearch();
+              }
+            }}
+          >
+            <FontAwesomeIcon icon={"times"} size="sm" />
+          </div>
+        )}
       </div>
     );
   }
@@ -298,50 +295,51 @@ function Input(props: IInput) {
     );
   }
 
-  return (
-    <div
-      className={`${hideArrows ? " no-arrows " : ""} 
-      ${
-        containerClassName ?? isLabelInline
-          ? "flex items-center flex-row space-x-4"
-          : "mt-4 max-w-sm"
-      }}
-        `}
-    >
-      {label && (
-        <div className="flex justify-between">
-          {!shouldOverlapLabel && renderLabel()}
-          {isOptional && !shouldOverlapLabel && renderIsOptional()}
-        </div>
-      )}
+  function render() {
+    return (
       <div
-        className="flex items-center flex-row w-full"
-        id={inputFieldID}
-        style={inputFieldStyle}
+        className={
+          (hideArrows ? " no-arrows " : "") +
+          (containerClassName
+            ? containerClassName
+            : isLabelInline
+            ? "flex items-center flex-row space-x-4"
+            : "mt-4 max-w-sm")
+        }
       >
-        {prependSelectProps && renderPrependSelect()}
-        <div className="relative rounded-m w-full">
-          {shouldOverlapLabel && label && renderOverlappingLabel()}
-          {prependText && renderPrependText()}
+        {label && label !== "" && (
+          <div className="flex justify-between">
+            {!shouldOverlapLabel && renderLabel()}
+            {isOptional && !shouldOverlapLabel && (
+              <span className="text-gray-500">
+                {typeof isOptional === "string" ? isOptional : "(Optional)"}
+              </span>
+            )}
+          </div>
+        )}
+        <div
+          className="flex items-center flex-row w-full"
+          id={inputFieldID}
+          style={inputFieldStyle}
+        >
+          {prependSelectProps && renderPrependSelect()}
+          <div className={"relative rounded-m w-full"}>
+            {shouldOverlapLabel && label && renderOverlappingLabel()}
+            {prependText && renderPrependText()}
 
-          {InputElement}
-          {/* @ts-ignore */}
-          {(appendIcon || onClearSearch) && (
-            <div className="absolute inset-y-0 right-0 mr-3 flex items-center">
-              {appendIcon && renderAppendIcon()}
-              {appendIcon && onClearSearch && (
-                <div className="mx-2 pointer-events-none text-gray-200">|</div>
-              )}
-              {onClearSearch && renderClearSearch()}
-            </div>
-          )}
-          {appendText && renderAppendText()}
+            {InputElement}
+            {/* @ts-ignore */}
+            {(appendIcon || onClearSearch) && renderAppendIcon()}
+            {appendText && renderAppendText()}
+          </div>
+          {appendSelectProps && renderAppendSelect()}
         </div>
-        {appendSelectProps && renderAppendSelect()}
+        {renderValidationError()}
       </div>
-      {renderValidationError()}
-    </div>
-  );
+    );
+  }
+
+  return render();
 }
 
 export { Input };
