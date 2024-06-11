@@ -73,7 +73,7 @@ export default function Switch(props: ISwitch) {
           <span className="sr-only">Use setting</span>
           <span
             className={`pointer-events-none relative inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200 
-          ${isChecked ? "translate-x-5" : "translate-x-0"}}`}
+            ${isChecked ? "translate-x-5" : "translate-x-0"}`}
           >
             <span
               className={`absolute inset-0 h-full w-full  flex items-center justify-center  transition-opacity 
