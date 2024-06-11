@@ -14,7 +14,7 @@ export interface ISelectBase {
   value?: any;
   info?: ReactNode;
   onChange?: (value: any) => void;
-  onClick?: () => void | Function;
+  onClick?: (() => void )| (() => Promise<void>) | Function;
   onSearchBlur?: () => void;
   onSearchFocus?: () => void;
   isDisabled?: boolean;

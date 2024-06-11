@@ -3,7 +3,7 @@ import { Key, MouseEventHandler, ReactNode } from "react";
 export interface ICheckbox {
   key?: Key;
   fieldId?: string;
-  onClick?: MouseEventHandler | (() => void) | Function;
+  onClick?: MouseEventHandler | (() => void) | (() => Promise<void>) | Function;
   label?: ReactNode;
   labelClassName?: string;
   htmlFor?: string;

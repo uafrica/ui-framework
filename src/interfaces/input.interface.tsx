@@ -22,7 +22,7 @@ export interface IInput {
   validationError?: any;
   type?: HTMLInputTypeAttribute;
   onChange?: ChangeEventHandler;
-  onClick?: MouseEventHandler | (() => void) | Function;
+  onClick?: MouseEventHandler | (() => void) | (() => Promise<void>) | Function;
   onFocus?: FocusEventHandler;
   onBlur?: FocusEventHandler;
   onKeyPress?: KeyboardEventHandler;
@@ -47,7 +47,7 @@ export interface IInput {
   inputFieldID?: string;
   appendIcon?: IconProp;
   appendIconId?: string;
-  onAppendIconClick?: MouseEventHandler | (() => void) | Function;
+  onAppendIconClick?: MouseEventHandler | (() => void) | (() => Promise<void>) | Function;
   appendIconColor?: string;
   appendText?: string;
   appendPadding?: string;

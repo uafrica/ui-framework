@@ -9,7 +9,7 @@ export interface IButtonProps {
   icon?: IconProp;
   iconSize?: SizeProp;
   tabIndex?: number | undefined;
-  onClick?: MouseEventHandler | (() => void) | Function;
+  onClick?: MouseEventHandler | (() => void) | (() => Promise<void>) | Function;
   className?: string;
   isDisabled?: boolean;
   hoverTitle?: string;
@@ -25,7 +25,7 @@ export interface ILinkProps {
   small?: boolean;
   icon?: IconProp;
   color?: string;
-  onClick?: MouseEventHandler | (() => void) | Function;
+  onClick?: MouseEventHandler | (() => void) | (() => Promise<void>) | Function;
   className?: string;
   isDisabled?: boolean;
   loadingTitle?: string;

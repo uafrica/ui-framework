@@ -5,7 +5,7 @@ export interface IPanel {
   children?: ReactNode;
   title?: ReactNode;
   className?: string;
-  onClose?: MouseEventHandler | Function;
+  onClose?: MouseEventHandler | (() => Promise<void>) | Function;
 }
 
 export interface IPageActionsPanelProps {

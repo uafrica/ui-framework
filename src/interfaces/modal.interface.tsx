@@ -3,7 +3,7 @@ import { MouseEventHandler, ReactNode } from "react";
 
 export interface ISmallMediumModalProps {
   children: ReactNode;
-  onHide?: MouseEventHandler | (() => void) | Function;
+  onHide?: MouseEventHandler | (() => void) | (() => Promise<void>) | Function;
   title?: ReactNode;
   icon?: IconProp;
   showCloseButton: boolean;

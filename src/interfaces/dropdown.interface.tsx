@@ -2,7 +2,7 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { ReactNode } from "react";
 
 export interface IDropdown {
-  onClick?: () => void | Function;
+  onClick?: (() => void) | (() => Promise<void>) | Function;
   containerRef?: any;
   children: ReactNode;
   title?: ReactNode;
@@ -39,7 +39,7 @@ export interface IMenuItem {
   title: string;
   icon?: IconProp;
   appendHTML?: ReactNode;
-  onClick: () => void | Function;
+  onClick: (() => void) | (() => Promise<void>) | Function;
   id?: string;
   isDisabled?: boolean;
   isLoading?: boolean;
