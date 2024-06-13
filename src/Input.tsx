@@ -74,7 +74,9 @@ function Input(props: IInput) {
 
   // @ts-ignore
 
-  let inputClasses = `${prependPadding ?? prependText ? " pl-7 " : ""}`;
+  let inputClasses = `${
+    prependPadding ? prependPadding : prependText ? " pl-7 " : ""
+  }`;
 
   if (inputClassName) {
     inputClasses = inputClasses + inputClassName;
