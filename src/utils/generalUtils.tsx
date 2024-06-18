@@ -753,6 +753,15 @@ function checkIfObjectsAreEqual(value1: any, value2: any) {
   return value1 === value2;
 }
 
+function joinClassNames(...params: any[]): string {
+  // Filter out non-string parameters
+  const stringParams = params
+    .filter((param) => typeof param === "string")
+    .map((className) => className.trim());
+
+  return stringParams.join(" ");
+}
+
 export {
   capitalize,
   getError,
@@ -797,4 +806,5 @@ export {
   addFiltersToArgsCheck,
   generateRandomString,
   checkIfObjectsAreEqual,
+  joinClassNames,
 };

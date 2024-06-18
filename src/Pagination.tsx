@@ -5,17 +5,7 @@ import { Card } from "./Card";
 import { Select } from "./Select";
 import * as generalUtils from "./utils/generalUtils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-interface IProps {
-  handler: Function;
-  active: number;
-  pages: number;
-  setActive: Function;
-  isLoading?: boolean;
-  setRows?: Function;
-  rows?: number;
-  scrollRef?: any;
-}
+import { IPagination } from "./interfaces/pagination.interface";
 
 function Pagination({
   handler,
@@ -26,7 +16,7 @@ function Pagination({
   setRows,
   rows: amountOfRows,
   scrollRef,
-}: IProps) {
+}: IPagination) {
   const [pageVal, setPageVal] = useState<number>(activePageNumber);
 
   useEffect(() => {
@@ -77,13 +67,13 @@ function Pagination({
             onClick={goToPreviousPage}
           />
         </div>
-        <div className={"flex items-center"}>
+        <div className="flex items-center">
           <div>
             <div className="page-info">Page</div>
             <div className="page-jump">
               <input
-                className={"-pageJump"}
-                id={"-pageJump"}
+                className="-pageJump"
+                id="-pageJump"
                 value={pageVal}
                 type="number"
                 onChange={(e: any) => {
@@ -123,7 +113,7 @@ function Pagination({
                 )}
                 value={amountOfRows}
                 onChange={(val: any) => setRows(val)}
-                buttonWidth={"w-20 -mt-4 ml-8"}
+                buttonWidth="w-20 -mt-4 ml-8"
               />
             </div>
           )}

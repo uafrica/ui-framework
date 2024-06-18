@@ -20,7 +20,7 @@ import { ICustomFilterComponent } from "../interfaces/advancedFilter/customFilte
 import { IAdvancedFilter } from "../interfaces/advancedFilter/advancedFilter.interface";
 
 function AdvancedFilter(props: IAdvancedFilter) {
-  let {
+  const {
     id,
     advancedFilterSections,
     filterSection,
@@ -301,10 +301,8 @@ function AdvancedFilter(props: IAdvancedFilter) {
                 : "Advanced filters collapse after being applied"
             }
             icon="thumbtack"
-            className={
-              "cursor-pointer " +
-              (shouldKeepFiltersExpanded ? "text-primary" : "text-gray-400")
-            }
+            className={`cursor-pointer 
+              ${shouldKeepFiltersExpanded ? "text-primary" : "text-gray-400"}`}
             onClick={(e) => {
               e.stopPropagation();
               setShouldKeepFiltersExpanded(!shouldKeepFiltersExpanded);
@@ -336,9 +334,8 @@ function AdvancedFilter(props: IAdvancedFilter) {
     return (
       <div>
         <div
-          className={`advanced-filter-content ${
-            isExpanded ? "expanded" : "collapsed"
-          }`}
+          className={`advanced-filter-content 
+            ${isExpanded ? "expanded" : "collapsed"}`}
         >
           {renderAdvancedFilterSections()}
           {renderFooter()}

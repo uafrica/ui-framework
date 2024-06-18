@@ -4,28 +4,9 @@ import React, { useEffect } from "react";
 import { DatePicker } from "./datePicker/DatePicker";
 import { MonthPicker } from "./monthPicker/MonthPicker";
 import { Select } from "./Select";
+import { IDateRange } from "./interfaces/dateRange.interface";
 
-function DateRange(props: {
-  isLabelInline?: boolean;
-  showRange?: boolean;
-  showMonth?: boolean;
-  period?: string;
-  defaultPeriod?: string;
-  dateFrom?: any; // Used for range and/or month selection
-  defaultDateFrom?: any; // Used for range and/or month selection
-  dateTo?: any; // Used for range and/or month selection
-  defaultDateTo?: any; // Used for range and/or month selection
-  onPeriodChange?: Function;
-  onRangeChange?: Function;
-  onMonthChange?: Function;
-  periodOptions?: { label: string; value: string }[];
-  containerClassName?: string;
-  label?: string;
-  isDisabled?: boolean;
-  showTimeSelect?: boolean;
-  dateFormat?: string;
-  buttonWidth?: string;
-}) {
+function DateRange(props: IDateRange) {
   let {
     isLabelInline,
     showRange,
@@ -41,7 +22,7 @@ function DateRange(props: {
     onMonthChange,
     periodOptions,
     containerClassName,
-    label,
+    label = "Filter by period",
     isDisabled,
     showTimeSelect,
     dateFormat,
@@ -72,72 +53,72 @@ function DateRange(props: {
     }
   }, [showRange, showMonth]);
 
-  return (
-    <div className={containerClassName ?? "flex flex-row space-x-4"}>
-      <Select
-        isLabelInline={isLabelInline}
-        buttonWidth={buttonWidth}
-        options={periodOptions ?? []}
-        onChange={(val: string) => {
-          if (onPeriodChange) {
-            onPeriodChange(val);
-          }
-        }}
-        placeholder={"Select period"}
-        value={period ?? defaultPeriod}
-        label={label}
-        isDisabled={isDisabled}
-      />
-      {showRange && (
-        <>
-          <DatePicker
-            isLabelInline={isLabelInline}
-            showTimeSelect={showTimeSelect}
-            label="From"
-            selectedDate={dateFrom ?? defaultDateFrom}
-            onChange={(val: any) => {
-              if (onRangeChange) {
-                onRangeChange(val, dateTo);
-              }
-            }}
-            dateFormat={dateFormat ?? "yyyy-MM-DD"}
-          />
-          <DatePicker
-            isLabelInline={isLabelInline}
-            showTimeSelect={showTimeSelect}
-            label="To"
-            selectedDate={dateTo ?? defaultDateTo}
-            onChange={(val: any) => {
-              if (onRangeChange) {
-                onRangeChange(dateFrom, val);
-              }
-            }}
-            dateFormat={dateFormat ?? "yyyy-MM-DD"}
-          />
-        </>
-      )}
-      {showMonth && (
-        <div>
-          <MonthPicker
-            isLabelInline={isLabelInline}
-            label="Select month"
-            dateFrom={dateFrom ?? defaultDateFrom}
-            onChange={(dateFrom: any) => {
-              if (onMonthChange) {
-                // @ts-ignore
-                let dateTo = new Date(moment(dateFrom).endOf("month"));
-                onMonthChange(dateFrom, dateTo);
-              }
-            }}
-          />
-        </div>
-      )}
-    </div>
-  );
-}
+  function render() {
+    return (
+      <div className={containerClassName ?? "flex flex-row space-x-4"}>
+        <Select
+          isLabelInline={isLabelInline}
+          buttonWidth={buttonWidth}
+          options={periodOptions ?? []}
+          onChange={(val: string) => {
+            if (onPeriodChange) {
+              onPeriodChange(val);
+            }
+          }}
+          placeholder="Select period"
+          value={period ?? defaultPeriod}
+          label={label}
+          isDisabled={isDisabled}
+        />
+        {showRange && (
+          <>
+            <DatePicker
+              isLabelInline={isLabelInline}
+              showTimeSelect={showTimeSelect}
+              label="From"
+              selectedDate={dateFrom ?? defaultDateFrom}
+              onChange={(val: any) => {
+                if (onRangeChange) {
+                  onRangeChange(val, dateTo);
+                }
+              }}
+              dateFormat={dateFormat ?? "yyyy-MM-DD"}
+            />
+            <DatePicker
+              isLabelInline={isLabelInline}
+              showTimeSelect={showTimeSelect}
+              label="To"
+              selectedDate={dateTo ?? defaultDateTo}
+              onChange={(val: any) => {
+                if (onRangeChange) {
+                  onRangeChange(dateFrom, val);
+                }
+              }}
+              dateFormat={dateFormat ?? "yyyy-MM-DD"}
+            />
+          </>
+        )}
+        {showMonth && (
+          <div>
+            <MonthPicker
+              isLabelInline={isLabelInline}
+              label="Select month"
+              dateFrom={dateFrom ?? defaultDateFrom}
+              onChange={(dateFrom: any) => {
+                if (onMonthChange) {
+                  // @ts-ignore
+                  let dateTo = new Date(moment(dateFrom).endOf("month"));
+                  onMonthChange(dateFrom, dateTo);
+                }
+              }}
+            />
+          </div>
+        )}
+      </div>
+    );
+  }
 
-DateRange.defaultProps = {
-  label: "Filter by period",
-};
+  return render();
+}
 
 export { DateRange };

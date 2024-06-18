@@ -1,6 +1,8 @@
+import { ReactNode } from "react";
+
 export interface IDateRangeFilterComponent {
   type: "dateRange";
-  label?: string;
+  label?: ReactNode;
   fromFilterProperty: string;
   toFilterProperty: string;
   periodFilterProperty: string;

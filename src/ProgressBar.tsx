@@ -2,7 +2,7 @@
 import React from "react";
 
 function ProgressBar(props: { percentage: number }) {
-  let { percentage } = props;
+  const { percentage } = props;
   function render() {
     return (
       <div className="relative overflow-hidden rounded-full h-6 w-full bg-gray-300">

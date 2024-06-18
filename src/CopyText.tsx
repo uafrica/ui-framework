@@ -2,15 +2,16 @@
 import React from "react";
 
 function CopyText(props: { text: string }) {
+  const { text } = props;
   return (
     <span
       title="Copy to clipboard"
       className="pointer"
       onClick={() => {
-        navigator.clipboard.writeText(props.text);
+        navigator.clipboard.writeText(text);
       }}
     >
-      {props.text}
+      {text}
     </span>
   );
 }

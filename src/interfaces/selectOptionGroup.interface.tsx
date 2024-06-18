@@ -1,4 +1,6 @@
+import { ReactNode } from "react";
+
 export interface ISelectOptionGroup {
-  label?: string;
+  label?: ReactNode;
   options: any[];
 }

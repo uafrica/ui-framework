@@ -1,20 +1,18 @@
 // @ts-ignore
-import React from "react";
+import React, { ReactNode } from "react";
 // Interface
 interface IResponsiveRow {
-  children: any;
+  children: ReactNode;
   isCenteredVertically?: boolean;
 }
 
 function ResponsiveRow(props: IResponsiveRow) {
-  let { children, isCenteredVertically } = props;
+  const { children, isCenteredVertically } = props;
 
   return (
     <div
-      className={
-        "flex sm:space-x-4 flex-wrap sm:flex-nowrap " +
-        (isCenteredVertically ? "items-center" : "")
-      }
+      className={`flex sm:space-x-4 flex-wrap sm:flex-nowrap 
+        ${isCenteredVertically ? "items-center" : ""}`}
     >
       {children}
     </div>

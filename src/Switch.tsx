@@ -2,33 +2,34 @@
 import React from "react";
 import { InfoButton } from "./InfoButton";
 import { Switch as HeadlessSwitch } from "@headlessui/react";
+import { ISwitch } from "./interfaces/switch.interface";
 
-interface IProps {
-  isChecked: boolean;
-  isDisabled?: boolean;
-  isDoublePositive?: boolean;
-  onChange: any;
-  label?: string;
-  info?: string;
-  containerClassName?: string;
-}
-
-export default function Switch(props: IProps) {
-  let {
+export default function Switch(props: ISwitch) {
+  const {
     isChecked,
     label,
     info,
     isDisabled,
-    containerClassName,
+    containerClassName = "",
     isDoublePositive,
   } = props;
+
+  const disabledClass = isDisabled
+    ? "pointer-events-none "
+    : " hover:border-primary cursor-pointer ";
+  const isCheckedClass = isChecked
+    ? isDisabled
+      ? "bg-gray-400"
+      : "bg-primary"
+    : isDoublePositive
+    ? "bg-primary"
+    : "bg-gray-200";
 
   function renderCheck() {
     return (
       <svg
-        className={`h-3 w-3 ${
-          isDisabled ? "text-gray-600" : "text-primary-600"
-        } `}
+        className={`h-3 w-3 
+          ${isDisabled ? "text-gray-600" : "text-primary-600"} `}
         fill="currentColor"
         viewBox="0 0 12 12"
       >
@@ -51,73 +52,61 @@ export default function Switch(props: IProps) {
     );
   }
 
-  return (
-    <div
-      className={
-        " flex items-center  flex-row space-x-4 " +
-        (containerClassName ? containerClassName : "")
-      }
-      onClick={() => {
-        if (!isDisabled) {
-          props.onChange();
-        }
-      }}
-    >
-      <HeadlessSwitch
-        checked={isChecked}
-        onChange={() => {}}
-        disabled={isDisabled}
-        className={
-          " relative inline-flex flex-shrink-0 h-6.5 w-11 border-2 border-transparent rounded-full transition-colors ease-in-out duration-200  " +
-          (isDisabled
-            ? "pointer-events-none "
-            : " hover:border-primary cursor-pointer ") +
-          (isChecked
-            ? isDisabled
-              ? "bg-gray-400"
-              : "bg-primary"
-            : isDoublePositive
-            ? "bg-primary"
-            : "bg-gray-200")
-        }
-      >
-        <span className="sr-only">Use setting</span>
-        <span
-          className={
-            "pointer-events-none relative inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200 " +
-            (isChecked ? "translate-x-5" : "translate-x-0")
+  function render() {
+    return (
+      <div
+        className={` flex items-center flex-row space-x-4 ${containerClassName}`}
+        onClick={() => {
+          if (!isDisabled) {
+            props.onChange();
           }
+        }}
+      >
+        <HeadlessSwitch
+          checked={isChecked}
+          onChange={() => {}}
+          disabled={isDisabled}
+          className={`relative inline-flex flex-shrink-0 h-6.5 w-11 border-2 border-transparent rounded-full transition-colors ease-in-out duration-200 
+          ${disabledClass} 
+          ${isCheckedClass}`}
         >
+          <span className="sr-only">Use setting</span>
           <span
-            className={
-              "absolute inset-0 h-full w-full  flex items-center justify-center  transition-opacity " +
-              (isChecked
-                ? "opacity-0 ease-out duration-100"
-                : "opacity-100 ease-in duration-200")
-            }
-            aria-hidden="true"
+            className={`pointer-events-none relative inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200 
+            ${isChecked ? "translate-x-5" : "translate-x-0"}`}
           >
-            {isDoublePositive ? renderCheck() : renderX()}
+            <span
+              className={`absolute inset-0 h-full w-full  flex items-center justify-center  transition-opacity 
+              ${
+                isChecked
+                  ? "opacity-0 ease-out duration-100"
+                  : "opacity-100 ease-in duration-200"
+              }`}
+              aria-hidden="true"
+            >
+              {isDoublePositive ? renderCheck() : renderX()}
+            </span>
+            <span
+              className={`absolute inset-0 h-full w-full  flex items-center justify-center  transition-opacity 
+              ${
+                isChecked
+                  ? "opacity-100 ease-in duration-200"
+                  : "opacity-0 ease-out duration-100"
+              }`}
+              aria-hidden="true"
+            >
+              {renderCheck()}
+            </span>
           </span>
-          <span
-            className={
-              "absolute inset-0 h-full w-full  flex items-center justify-center  transition-opacity " +
-              (isChecked
-                ? "opacity-100 ease-in duration-200"
-                : "opacity-0 ease-out duration-100")
-            }
-            aria-hidden="true"
-          >
-            {renderCheck()}
-          </span>
-        </span>
-      </HeadlessSwitch>
-      {label && (
-        <div className={isDisabled ? "text-gray-500" : "cursor-pointer"}>
-          {label}
-        </div>
-      )}
-      {info && <InfoButton>{info}</InfoButton>}
-    </div>
-  );
+        </HeadlessSwitch>
+        {label && (
+          <div className={isDisabled ? "text-gray-500" : "cursor-pointer"}>
+            {label}
+          </div>
+        )}
+        {info && <InfoButton>{info}</InfoButton>}
+      </div>
+    );
+  }
+  return render();
 }

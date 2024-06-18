@@ -1,5 +1,5 @@
 // @ts-ignore
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "leaflet/dist/leaflet.css";
 import L, { Layer, Map } from "leaflet";
 import {
@@ -24,7 +24,7 @@ function OpenStreetMap(props: {
   bounds?: google.maps.LatLngBounds | L.LatLngBounds;
   defaultZoom?: number;
 }) {
-  let {
+  const {
     defaultCenter,
     defaultZoom,
     polygons,

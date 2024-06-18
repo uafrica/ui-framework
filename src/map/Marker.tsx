@@ -11,11 +11,11 @@ function Marker(props: {
   onMouseOver: Function;
   onMouseOut: Function;
   onDragEnd: Function;
-  hideTooltip: Function;
+  hideTooltip: () => void;
 }) {
-  let { markerGroup } = props;
+  const { markerGroup } = props;
 
-  let [showMultipleMarkersModal, setShowMultipleMarkersModal] =
+  const [showMultipleMarkersModal, setShowMultipleMarkersModal] =
     useState<boolean>(false);
 
   function onMarkerClicked(e: any, marker: IMarker) {

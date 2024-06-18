@@ -1,9 +1,9 @@
 // @ts-ignore
 import React from "react";
-import { IInputProps } from "./interfaces/inputProps.interface";
+import { IInput } from "./interfaces/input.interface";
 import { Input } from "./Input";
 
-function SearchInput(props: IInputProps) {
+function SearchInput(props: IInput) {
   return <Input appendIcon="search" {...props} />;
 }
 

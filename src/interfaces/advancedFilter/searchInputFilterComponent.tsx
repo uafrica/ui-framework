@@ -1,9 +1,10 @@
-import { IInputProps } from "../inputProps.interface";
+import { ReactNode } from "react";
+import { IInput } from "../input.interface";
 
 export interface ISearchInputFilterComponent {
   type: "search";
-  label?: string;
+  label?: ReactNode;
   filterProperty: string;
-  inputProps?: IInputProps;
+  inputProps?: IInput;
   shouldShow?: boolean;
 }

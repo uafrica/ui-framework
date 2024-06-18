@@ -1,5 +1,5 @@
 // @ts-ignore
-import React from "react";
+import React, { ReactNode } from "react";
 
 const tableBaseClass = "min-w-full divide-y divide-gray-200";
 const tableHeadClass = "bg-gray-50";
@@ -12,23 +12,21 @@ const tableColClass = "px-2 py-2 whitespace-nowrap text-gray-900";
 interface IProps {
   className?: string;
   disableScroll?: boolean;
-  children: any;
+  children: ReactNode;
 }
 
 function TableContainer(props: IProps) {
-  let { children, className, disableScroll } = props;
+  const { children, className = "", disableScroll } = props;
 
   return (
     <div className="flex flex-col">
       <div className="py-2 align-middle inline-block min-w-full">
         <div
-          className={
-            "shadow-lg border-gray-200 sm:rounded-lg " +
-            (disableScroll ? "" : "overflow-x-hidden")
-          }
+          className={`shadow-lg border-gray-200 sm:rounded-lg 
+            ${disableScroll ? "" : "overflow-x-hidden"}`}
         >
           <div className={disableScroll ? "" : "overflow-x-auto"}>
-            <table className={tableBaseClass + (className ? className : "")}>
+            <table className={`${tableBaseClass} ${className}`}>
               {children}
             </table>
           </div>
@@ -41,15 +39,12 @@ function TableContainer(props: IProps) {
 interface IHeadProps {
   tableHeadColor?: string;
   restProps?: any;
-  children: any;
+  children: ReactNode;
 }
 
 function Head(props: IHeadProps) {
   return (
-    <thead
-      className={props.tableHeadColor ? props.tableHeadColor : tableHeadClass}
-      {...props}
-    >
+    <thead className={props.tableHeadColor ?? tableHeadClass} {...props}>
       {props.children}
     </thead>
   );
@@ -64,17 +59,16 @@ function Row(props: any) {
 }
 
 function HeadCol(props: any) {
+  const { className = "", center, children } = props;
   return (
     <th
-      className={
-        tableHeadColClass +
-        (props.className ? props.className + " " : "") +
-        (props.center ? " text-center " : " text-left ")
-      }
+      className={`${tableHeadColClass} 
+        ${className} 
+        ${center ? " text-center " : " text-left "}`}
       scope="col"
       {...props}
     >
-      {props.children}
+      {children}
     </th>
   );
 }
@@ -84,16 +78,15 @@ function Body(props: any) {
 }
 
 function Col(props: any) {
+  const { className = "", center, children } = props;
   return (
     <td
-      className={
-        tableColClass +
-        (props.className ? props.className + " " : "") +
-        (props.center ? " text-center " : " text-left ")
-      }
+      className={`${tableColClass} 
+      ${className} 
+      ${center ? " text-center " : " text-left "}`}
       {...props}
     >
-      {props.children}
+      {children}
     </td>
   );
 }

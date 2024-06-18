@@ -8,7 +8,7 @@ export interface IMarker {
     iconHeight?: number;
     tooltip?: (
       marker: IMarker,
-      hideTooltip: Function,
+      hideTooltip: () => void,
       markerGroupMode?: "single" | "multiple" | "modal"
     ) => JSX.Element | null;
     tooltipPixelOffset?: { x: number; y: number };

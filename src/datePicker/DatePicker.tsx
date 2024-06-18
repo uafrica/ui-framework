@@ -1,6 +1,6 @@
 import moment from "moment";
 // @ts-ignore
-import React, { useContext, useRef, useState } from "react";
+import React, { ReactNode, useContext, useRef, useState } from "react";
 import { DatePickerCtx, useDatePickerCtx } from "./DatePickerContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Input } from "../Input";
@@ -11,7 +11,7 @@ import { Manager, Popper, Reference } from "react-popper";
 // Interface
 interface IDatePicker {
   selectedDate: Date;
-  label?: string;
+  label?: ReactNode;
   isLabelInline?: boolean;
   placeholder?: string;
   dateFormat?: string;
@@ -20,10 +20,10 @@ interface IDatePicker {
   maxDate?: Date;
   showTimeSelect?: boolean;
   onChange: (date: Date) => void;
-  onDatePickerClose?: Function;
+  onDatePickerClose?: () => void;
   isDisabled?: boolean;
-  dataTest?: string | undefined;
-  info?: any;
+  dataTest?: string;
+  info?: ReactNode;
   shouldOverlapLabel?: boolean;
 }
 
@@ -59,11 +59,11 @@ export const inputStyle = {
 
 // Implementation
 function DatePicker(props: IDatePicker) {
-  let {
+  const {
     selectedDate,
     label,
     isLabelInline,
-    placeholder,
+    placeholder = "Select",
     dateFormat,
     containerClassName,
     onChange,
@@ -76,10 +76,6 @@ function DatePicker(props: IDatePicker) {
     info,
     shouldOverlapLabel,
   } = props;
-
-  if (placeholder === undefined) {
-    placeholder = "Select";
-  }
 
   let date = new Date();
   if (selectedDate) {
@@ -178,6 +174,7 @@ interface CalendarProps {
   ref: React.Ref<HTMLDivElement>;
 }
 
+// @ts-ignore
 const Calendar: React.FC<CalendarProps> = React.forwardRef<
   HTMLDivElement,
   CalendarProps
@@ -199,7 +196,7 @@ const Calendar: React.FC<CalendarProps> = React.forwardRef<
 
   return (
     <div
-      className="bg-white z-40 relative shadow-lg max-w-xs w-64 p-2 rounded-lg  ring-1 ring-black ring-opacity-5 "
+      className="bg-white z-40 relative shadow-lg max-w-xs w-64 p-2 rounded-lg ring-1 ring-black ring-opacity-5 "
       ref={ref}
       data-placement={props.placement}
       // @ts-ignore
@@ -382,7 +379,7 @@ const DateSelection: React.FC<{}> = (_) => {
       >
         <button
           tabIndex={0}
-          className=" focus:outline-none focus:ring-1 focus:ring-primary  hover:bg-gray-200 rounded p-1  flex justify-center  align-center focus:outline-none items-center"
+          className=" focus:outline-none focus:ring-1 focus:ring-primary  hover:bg-gray-200 rounded p-1  flex justify-center  align-center items-center"
           onClick={(e: any) => {
             e.preventDefault();
             prevMonth();
@@ -393,7 +390,7 @@ const DateSelection: React.FC<{}> = (_) => {
 
         <button
           tabIndex={0}
-          className={` focus:outline-none focus:ring-1 focus:ring-primary  hover:bg-gray-200 rounded p-1  flex justify-center  align-center  focus:outline-none items-center font-semibold`}
+          className={` focus:outline-none focus:ring-1 focus:ring-primary  hover:bg-gray-200 rounded p-1  flex justify-center  align-center items-center font-semibold`}
           style={{ gridColumn: "2/5" }}
           onClick={() => viewMonths()}
         >
@@ -402,7 +399,7 @@ const DateSelection: React.FC<{}> = (_) => {
 
         <button
           tabIndex={0}
-          className={` focus:outline-none focus:ring-1 focus:ring-primary  hover:bg-gray-200 rounded p-1  flex justify-center  align-center focus:outline-none items-center font-semibold`}
+          className={` focus:outline-none focus:ring-1 focus:ring-primary  hover:bg-gray-200 rounded p-1  flex justify-center  align-center items-center font-semibold`}
           style={{ gridColumn: "5/7" }}
           onClick={() => viewYears()}
         >
@@ -411,7 +408,7 @@ const DateSelection: React.FC<{}> = (_) => {
 
         <button
           tabIndex={0}
-          className=" focus:outline-none focus:ring-1 focus:ring-primary  hover:bg-gray-200 rounded p-1  flex justify-center  align-center focus:outline-none items-center"
+          className=" focus:outline-none focus:ring-1 focus:ring-primary  hover:bg-gray-200 rounded p-1  flex justify-center  align-center items-center"
           onClick={(e: any) => {
             e.preventDefault();
             nextMonth();

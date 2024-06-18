@@ -6,7 +6,7 @@ import "./CustomTable.scss";
 import { ICustomTableRow } from "./customTableRow.interface";
 
 function CustomTableRow(props: ICustomTableRow) {
-  let {
+  const {
     rowId,
     columnOrder,
     onRowClicked,

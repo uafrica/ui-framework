@@ -1,7 +1,7 @@
 import * as mapUtils from "../utils/mapUtils";
 // @ts-ignore
 import React, { memo, useEffect, useState } from "react";
-import { IPolygon } from "../interfaces/polygon.interface";
+import { IPolygon } from "../interfaces/map/polygon.interface";
 import { Polygon as GoogleMapsPolygon } from "@react-google-maps/api";
 import { useStore } from "../store";
 
@@ -17,13 +17,13 @@ function Polygon(props: {
   snapPointToPolygon: Function;
   doSnap: boolean;
 }) {
-  let [polygonRef, setPolygonRef] = useState<any>();
+  const [polygonRef, setPolygonRef] = useState<any>();
 
-  let store = useStore();
+  const store = useStore();
 
-  let { polygon, zIndex, editable, doSnap } = props;
+  const { polygon, zIndex, editable, doSnap } = props;
 
-  let [options, setOptions] = useState<any>({ ...polygon.options } ?? {});
+  const [options, setOptions] = useState<any>({ ...polygon.options } ?? {});
 
   useEffect(() => {
     setOptions({ ...polygon.options });

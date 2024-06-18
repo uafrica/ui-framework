@@ -1,20 +1,18 @@
 // @ts-ignore
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IBanner } from "./interfaces/banner.interface";
 
-interface IProps {
-  backgroundColorClass: string;
-  textColorClass?: string;
-  icon?: string;
-  children: any;
-  iconClassName?: any;
-}
+function Banner(props: IBanner) {
+  const {
+    backgroundColorClass = "",
+    textColorClass = "",
+    icon,
+    children,
+    iconClassName = "",
+  } = props;
 
-function Banner(props: IProps) {
-  let { backgroundColorClass, textColorClass, icon, children, iconClassName } =
-    props;
-
-  let elements = document.getElementsByClassName("uafrica-banner");
+  const elements = document.getElementsByClassName("uafrica-banner");
   const [bannerId] = useState(`banner_${elements.length}`);
   const [isMultiline, setIsMultiline] = useState<boolean>(false);
   const [showMore, setShowMore] = useState(true);
@@ -52,45 +50,49 @@ function Banner(props: IProps) {
     );
   }
 
-  return (
-    <div
-      className={`${backgroundColorClass} p-4 flex justify-between items-center ${textColorClass} font-bold md:sticky top-0 z-20 -mt-6 mb-4 -mx-4`}
-    >
-      {typeof children === "string" ? (
-        <div className="flex flex-row justify-between space-x-4 items-center w-full">
-          <div className="flex items-center ">
-            {icon && (
-              <FontAwesomeIcon
-                // @ts-ignore
-                icon={icon}
-                className={iconClassName ?? ""}
-              />
-            )}
-
-            <div
-              className={
-                "link-container flex " +
-                (showMore ? "flex-row space-x-4" : "flex-col space-y-4")
-              }
-            >
-              <>
-                <div
-                  id={bannerId}
-                  dangerouslySetInnerHTML={{ __html: children }}
-                  className={
-                    "uafrica-banner " + (showMore ? "line-clamp-1" : "")
-                  }
+  function render() {
+    return (
+      <div
+        className={`${backgroundColorClass} p-4 flex justify-between items-center ${textColorClass} font-bold md:sticky top-0 z-20 -mt-6 mb-4 -mx-4`}
+      >
+        {typeof children === "string" ? (
+          <div className="flex flex-row justify-between space-x-4 items-center w-full">
+            <div className="flex items-center ">
+              {icon && (
+                <FontAwesomeIcon
+                  // @ts-ignore
+                  icon={icon}
+                  className={iconClassName ?? ""}
                 />
-              </>
+              )}
+
+              <div
+                className={
+                  "link-container flex " +
+                  (showMore ? "flex-row space-x-4" : "flex-col space-y-4")
+                }
+              >
+                <>
+                  <div
+                    id={bannerId}
+                    dangerouslySetInnerHTML={{ __html: children }}
+                    className={
+                      "uafrica-banner " + (showMore ? "line-clamp-1" : "")
+                    }
+                  />
+                </>
+              </div>
             </div>
+            {renderShowMore()}
           </div>
-          {renderShowMore()}
-        </div>
-      ) : (
-        children
-      )}
-    </div>
-  );
+        ) : (
+          children
+        )}
+      </div>
+    );
+  }
+
+  return render();
 }
 
 export { Banner };

@@ -7,15 +7,9 @@ interface IUnorderedListProps {
 }
 
 function UnorderedList(props: IUnorderedListProps) {
-  const { children, className } = props;
+  const { children, className = "mx-6" } = props;
 
-  const defaultClassName = "mx-6";
-
-  return (
-    <ul className={`list-disc ${className ? className : defaultClassName}`}>
-      {children}
-    </ul>
-  );
+  return <ul className={`list-disc ${className}`}>{children}</ul>;
 }
 
 export { UnorderedList };

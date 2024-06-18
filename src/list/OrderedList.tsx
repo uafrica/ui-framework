@@ -7,14 +7,9 @@ interface IOrderedListProps {
 }
 
 function OrderedList(props: IOrderedListProps) {
-  const { children, className } = props;
-  const defaultClassName = "mx-6";
+  const { children, className = "mx-6" } = props;
 
-  return (
-    <ol className={`list-decimal ${className ? className : defaultClassName}`}>
-      {children}
-    </ol>
-  );
+  return <ol className={`list-decimal ${className}`}>{children}</ol>;
 }
 
 export { OrderedList };

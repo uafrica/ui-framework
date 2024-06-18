@@ -6,25 +6,10 @@ import { ICountry } from "./interfaces/country.interface";
 import { Input } from "./Input";
 import { Label } from "./Label";
 import { Message } from "./Message";
+import { IMobileNumberSelect } from "./interfaces/mobileNumberSelect.interface";
 
-function MobileNumberSelect(props: {
-  allowedCountryCodes?: string[];
-  allowOtherCountries?: boolean;
-  defaultCountryCode?: string;
-  label?: any;
-  shouldOverlapLabel?: boolean;
-  onChange?: Function;
-  value?: any;
-  isReadOnly?: boolean;
-  validationError?: any;
-  errorMessage?: any;
-  name?: string;
-  validation?: any;
-  isRequired?: boolean;
-  mobileNumberRegex?: boolean;
-  showAsterisk?: boolean;
-}) {
-  let {
+function MobileNumberSelect(props: IMobileNumberSelect) {
+  const {
     allowedCountryCodes,
     allowOtherCountries,
     value,
@@ -67,12 +52,12 @@ function MobileNumberSelect(props: {
       )
     : countryUtils.getAllCountries(allowOtherCountries);
 
-  let [selectedCountry, setSelectedCountry] = useState<any>();
-  let [mobileNumber, setMobileNumber] = useState<string>();
-  let [isInputFocussed, setIsInputFocussed] = useState<boolean>(false);
+  const [selectedCountry, setSelectedCountry] = useState<any>();
+  const [mobileNumber, setMobileNumber] = useState<string>();
+  const [isInputFocussed, setIsInputFocussed] = useState<boolean>(false);
 
   useEffect(() => {
-    let { number, country } = cleanReceivedMobileNumber(value);
+    const { number, country } = cleanReceivedMobileNumber(value);
 
     if (mobileNumber !== number) {
       setMobileNumber(number);
@@ -104,7 +89,7 @@ function MobileNumberSelect(props: {
   }
 
   function cleanReceivedMobileNumber(value: any) {
-    let defaultCountry = countryUtils.getCountryByCode(
+    const defaultCountry = countryUtils.getCountryByCode(
       defaultCountryCode ?? "ZA",
       allowOtherCountries
     );
@@ -174,79 +159,96 @@ function MobileNumberSelect(props: {
     );
   }
 
+  function renderCountrySelect() {
+    return (
+      <CountrySelect
+        shouldOverlapLabel={shouldOverlapLabel}
+        allowOtherCountries={allowOtherCountries}
+        isReadOnly={isReadOnly}
+        containerClassName={selectedCountry ? "w-20" : "w-24"}
+        allowedCountryCodes={allowedCountryCodes}
+        value={selectedCountry?.code}
+        onChange={onCountryChanged}
+      />
+    );
+  }
+
+  function renderInput() {
+    return (
+      <Input
+        onFocus={() => {
+          setIsInputFocussed(true);
+        }}
+        onBlur={() => {
+          setIsInputFocussed(false);
+        }}
+        shouldOverlapLabel={shouldOverlapLabel}
+        inputMode="numeric"
+        hideArrows
+        name={name}
+        isReadOnly={isReadOnly}
+        containerClassName="w-full"
+        prependPadding="pl-14"
+        prependTextSize="text-base"
+        isLabelInline
+        prependText={selectedCountry?.dialCode}
+        value={shouldValidate ? undefined : mobileNumber ?? ""}
+        defaultValue={shouldValidate ? value : undefined}
+        onChange={(e: any) => {
+          let value = e.target.value.replace("+", "");
+          setMobileNumber(value);
+          onChange(value, selectedCountry);
+        }}
+        register={
+          validation &&
+          validation.register({
+            required: {
+              value: isRequired,
+              message: "This field is required",
+            },
+            pattern: {
+              value: mobileNumberRegex ?? validationRegex,
+              message: "Invalid mobile number",
+            },
+          })
+        }
+      />
+    );
+  }
+
+  function renderError() {
+    return (
+      <>
+        {validationError &&
+          (errorMessage ? (
+            <Message.Error>{errorMessage}</Message.Error>
+          ) : (
+            <Message.Error>{validationError.message}</Message.Error>
+          ))}
+      </>
+    );
+  }
+
   function render() {
     return (
       <div className="mt-4">
         {label && !shouldOverlapLabel && renderLabel()}
         <div className="flex flex-row space-x-4">
-          <CountrySelect
-            shouldOverlapLabel={shouldOverlapLabel}
-            allowOtherCountries={allowOtherCountries}
-            isReadOnly={isReadOnly}
-            containerClassName={selectedCountry ? "w-20" : "w-24"}
-            allowedCountryCodes={allowedCountryCodes}
-            value={selectedCountry?.code}
-            onChange={onCountryChanged}
-          />
+          {renderCountrySelect()}
           <div className="relative w-full">
-            <Input
-              onFocus={() => {
-                setIsInputFocussed(true);
-              }}
-              onBlur={() => {
-                setIsInputFocussed(false);
-              }}
-              shouldOverlapLabel={shouldOverlapLabel}
-              inputMode="numeric"
-              hideArrows
-              name={name}
-              isReadOnly={isReadOnly}
-              containerClassName="w-full"
-              prependPadding="pl-14"
-              prependTextSize="text-base"
-              isLabelInline
-              prependText={selectedCountry?.dialCode}
-              value={shouldValidate ? undefined : mobileNumber ?? ""}
-              defaultValue={shouldValidate ? value : undefined}
-              onChange={(e: any) => {
-                let value = e.target.value.replace("+", "");
-                setMobileNumber(value);
-                onChange(value, selectedCountry);
-              }}
-              register={
-                validation &&
-                validation.register({
-                  required: {
-                    value: isRequired,
-                    message: "This field is required",
-                  },
-                  pattern: {
-                    value: mobileNumberRegex ?? validationRegex,
-                    message: "Invalid mobile number",
-                  },
-                })
-              }
-            />
+            {renderInput()}
             {shouldOverlapLabel && label && (
               <div className="absolute -top-2 left-2 inline-block px-1 text-xs font-medium text-gray-900 ">
                 <div className="pl-2">{renderLabel()}</div>
                 <div
-                  className={`bg-white h-2 -mt-4 ${
-                    isInputFocussed ? "ring-1 ring-white" : ""
-                  }`}
+                  className={`bg-white h-2 -mt-4 
+                    ${isInputFocussed ? "ring-1 ring-white" : ""}`}
                 ></div>
               </div>
             )}
           </div>
         </div>
-        <div>
-          {validationError &&
-            (errorMessage ? (
-              <Message.Error>{errorMessage}</Message.Error>
-            ) : (
-              <Message.Error>{validationError.message}</Message.Error>
-            ))}
-        </div>
+        <div>{renderError()}</div>
       </div>
     );
   }

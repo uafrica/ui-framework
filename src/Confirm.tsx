@@ -4,29 +4,11 @@ import { Button } from "./Button";
 import { Modal } from "./Modal";
 import { useEffect } from "react";
 import { useState } from "react";
-
-// Interface
-interface IProps {
-  isVisible?: boolean;
-  isDisabled?: boolean;
-  onConfirm?: any;
-  onCancel?: any;
-  onClose?: any;
-  onShow?: any;
-  children: any;
-  title: string;
-  body?: any;
-  confirmText?: string;
-  cancelText?: string;
-  confirmButtonVariant?: string;
-  showCancelButton?: boolean;
-  disableClickOutsideToClose?: boolean;
-  disablePressEscToClose?: boolean;
-}
+import { IConfirm } from "./interfaces/confirm.interface";
 
 // Implementation
-function Confirm(props: IProps) {
-  let {
+function Confirm(props: IConfirm) {
+  const {
     confirmButtonVariant,
     showCancelButton,
     cancelText,
@@ -38,7 +20,7 @@ function Confirm(props: IProps) {
     disablePressEscToClose,
   } = props;
 
-  let [isOpen, setOpen] = useState<boolean>(Boolean(props.isVisible));
+  const [isOpen, setOpen] = useState<boolean>(Boolean(props.isVisible));
 
   useEffect(() => {
     if (props.isVisible) {
@@ -50,7 +32,7 @@ function Confirm(props: IProps) {
 
   function onCancel(event: any) {
     onClose(event);
-    if (typeof props.onCancel === "function") {
+    if (props.onCancel) {
       props.onCancel();
     }
   }
@@ -74,9 +56,11 @@ function Confirm(props: IProps) {
     }
   }
 
-  async function onConfirm(event: any) {
+  function onConfirm(event: any) {
     event.stopPropagation();
-    await props.onConfirm();
+    if (props.onConfirm) {
+      props.onConfirm(event);
+    }
 
     setOpen(false);
   }
@@ -91,36 +75,47 @@ function Confirm(props: IProps) {
     }
   }
 
-  var cancelButton = showCancelButton ? (
-    <Button.Cancel title={cancelText} onClick={onCancel} />
-  ) : null;
+  function renderCancelButton() {
+    return showCancelButton ? (
+      <Button.Cancel title={cancelText} onClick={onCancel} />
+    ) : null;
+  }
 
-  return (
-    <div onClick={onButtonClick} className="flex items-center">
-      {children}
-      {isOpen && (
-        <Modal.Small
-          onHide={onClose}
-          title={title}
-          showCloseButton
-          disableClickOutsideToClose={disableClickOutsideToClose}
-          disablePressEscToClose={disablePressEscToClose}
-        >
-          {body}
-          <Modal.ButtonsPanel>
-            {cancelButton}
-            {(!confirmButtonVariant || confirmButtonVariant === "danger") && (
-              <Button.Danger onClick={onConfirm} title={confirmText} />
-            )}
+  function renderConfirmButton() {
+    if (!confirmButtonVariant || confirmButtonVariant === "danger") {
+      return <Button.Danger onClick={onConfirm} title={confirmText} />;
+    }
 
-            {confirmButtonVariant && confirmButtonVariant !== "danger" && (
-              <Button.Primary onClick={onConfirm} title={confirmText} />
-            )}
-          </Modal.ButtonsPanel>
-        </Modal.Small>
-      )}
-    </div>
-  );
+    if (confirmButtonVariant && confirmButtonVariant !== "danger") {
+      return <Button.Primary onClick={onConfirm} title={confirmText} />;
+    }
+
+    return null;
+  }
+
+  function render() {
+    return (
+      <div onClick={onButtonClick} className="flex items-center">
+        {children}
+        {isOpen && (
+          <Modal.Small
+            onHide={onClose}
+            title={title}
+            showCloseButton
+            disableClickOutsideToClose={disableClickOutsideToClose}
+            disablePressEscToClose={disablePressEscToClose}
+          >
+            {body}
+            <Modal.ButtonsPanel>
+              {renderCancelButton()}
+              {renderConfirmButton()}
+            </Modal.ButtonsPanel>
+          </Modal.Small>
+        )}
+      </div>
+    );
+  }
+  return render();
 }
 
 export { Confirm };

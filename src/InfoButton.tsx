@@ -3,30 +3,17 @@ import React, { useRef } from "react";
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IconName } from "@fortawesome/free-solid-svg-icons";
 import { Manager, Popper, Reference } from "react-popper";
-
-interface IInfoButton {
-  placement?:
-    | "auto"
-    | "bottom-start"
-    | "bottom-end"
-    | "top-start"
-    | "top-end"
-    | "top"
-    | "bottom"
-    | "left"
-    | "right";
-  children: any;
-  className?: string;
-  icon?: IconName;
-}
+import { IInfoButton } from "./interfaces/infoButton.interface";
 
 function InfoButton(props: IInfoButton) {
-  let { placement, children, className, icon } = props;
-  if (!placement) {
-    placement = "auto";
-  }
+  const {
+    placement = "auto",
+    children,
+    className = "",
+    icon = "info-circle",
+  } = props;
+
   const popupNode = useRef<HTMLElement>();
   const ctxValue = useInfoButtonCtx(popupNode);
 
@@ -37,17 +24,14 @@ function InfoButton(props: IInfoButton) {
           <Reference>
             {({ ref }) => (
               <div
-                className=" flex items-center justify-center  w-full bg-white font-medium text-primary hover:bg-primary-50 focus:outline-none rounded-full cursor-pointer"
+                className=" flex items-center justify-center w-full bg-white font-medium text-primary hover:bg-primary-50 focus:outline-none rounded-full cursor-pointer"
                 ref={ref}
                 onClick={(e: any) => {
                   e.stopPropagation();
                   ctxValue.showInfo();
                 }}
               >
-                <FontAwesomeIcon
-                  icon={icon ?? "info-circle"}
-                  className={className ? className : ""}
-                />
+                <FontAwesomeIcon icon={icon} className={className} />
               </div>
             )}
           </Reference>
@@ -59,9 +43,7 @@ function InfoButton(props: IInfoButton) {
               {({ ref, style }) =>
                 ctxValue.isVisible ? (
                   <div
-                    className={
-                      "info-popover z-50 origin-top-right absolute font-normal p-4 w-80 rounded-md shadow-md bg-white divide-y  ring-1 ring-black ring-opacity-5  divide-gray-100 focus:outline-none"
-                    }
+                    className="info-popover z-50 origin-top-right absolute font-normal p-4 w-80 rounded-md shadow-md bg-white divide-y ring-1 ring-black ring-opacity-5  divide-gray-100 focus:outline-none"
                     // @ts-ignore
                     style={style}
                     ref={ref}
@@ -81,8 +63,8 @@ function InfoButton(props: IInfoButton) {
 export { InfoButton };
 
 function Portal(props: { children: ReactNode }) {
-  let { children } = props;
-  let [mounted, setMounted] = useState(false);
+  const { children } = props;
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
 

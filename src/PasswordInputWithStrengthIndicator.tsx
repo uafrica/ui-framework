@@ -1,24 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // @ts-ignore
-import React, { useState } from "react";
-
-interface IProps {
-  requiredPasswordLength: number;
-  shouldContainUppercase?: boolean;
-  shouldContainLowercase?: boolean;
-  shouldContainNumbers?: boolean;
-  shouldContainSpecialCharacters?: boolean;
-  inputLabel?: string;
-  extraCriteria?: ICriteria[];
-  onChange: Function;
-  passwordValue?: string;
-  shouldAutoFocus?: boolean;
-}
-
-interface ICriteria {
-  description: string;
-  check: Function;
-}
+import React, { ChangeEventHandler, useState } from "react";
+import {
+  ICriteria,
+  IPassowrdInputWithStrengthIndicator,
+} from "./interfaces/passwordInputWithStrengthIndicator";
 
 /* -------------------------------- */
 /* Example of extraCriteria prop */
@@ -38,8 +24,10 @@ interface ICriteria {
   */
 /* -------------------------------- */
 
-function PasswordInputWithStrengthIndicator(props: IProps) {
-  let {
+function PasswordInputWithStrengthIndicator(
+  props: IPassowrdInputWithStrengthIndicator
+) {
+  const {
     requiredPasswordLength,
     shouldContainUppercase = true,
     shouldContainLowercase = true,
@@ -51,7 +39,7 @@ function PasswordInputWithStrengthIndicator(props: IProps) {
     shouldAutoFocus,
   } = props;
   const [password, setPassword] = useState<string>(passwordValue ?? "");
-  let [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   function calculateScore() {
     let criteriaMet = 0;
@@ -151,10 +139,10 @@ function PasswordInputWithStrengthIndicator(props: IProps) {
     return "";
   }
 
-  function handlePasswordChange(e: any) {
+  function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>) {
     const newPassword = e.target.value;
     setPassword(newPassword);
-    props.onChange({ target: { value: newPassword } });
+    props.onChange(e);
   }
 
   /* -------------------------------- */

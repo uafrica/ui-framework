@@ -10,11 +10,11 @@ function MapToolbar(props: {
   onSnapToggle: Function;
   customToolbarButtons?: any[];
 }) {
-  let { editMode, doSnap, customToolbarButtons } = props;
+  const { editMode, doSnap, customToolbarButtons } = props;
 
   if (!editMode) return null;
 
-  let snapIcon: any = doSnap ? "compress-arrows-alt" : "location-crosshairs";
+  const snapIcon: any = doSnap ? "compress-arrows-alt" : "location-crosshairs";
 
   return (
     <div className="flex flex-row space-x-4">

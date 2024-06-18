@@ -3,22 +3,10 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { useState } from "react";
-
-// Interfaces
-interface IMessageProps {
-  heading?: string;
-  children: any;
-  noPadding?: boolean;
-  showShadow?: boolean;
-  showCloseButton?: boolean;
-}
-
-interface IInstructionProps {
-  isCenter?: boolean;
-  className?: string;
-  noPadding?: boolean;
-  children: any;
-}
+import {
+  IInstructionProps,
+  IMessageProps,
+} from "./interfaces/message.interface";
 
 interface IBaseMessageProps extends IMessageProps {
   variant: string;
@@ -42,15 +30,13 @@ function Info(props: IMessageProps) {
 }
 
 function Instruction(props: IInstructionProps) {
-  let className = props.className ? props.className : "";
+  const { className = "", noPadding, isCenter } = props;
 
   return (
     <p
-      className={
-        (props.noPadding ? "" : " py-3 ") +
-        (props.isCenter ? " text-center " : "") +
-        className
-      }
+      className={`${noPadding ? "" : " py-3 "} 
+      ${isCenter ? " text-center " : ""} 
+      ${className}`}
     >
       {props.children}
     </p>
@@ -58,50 +44,51 @@ function Instruction(props: IInstructionProps) {
 }
 
 function BaseMessage(props: IBaseMessageProps) {
-  let { children, variant, noPadding, showShadow, showCloseButton } = props;
+  const { children, variant, noPadding, showShadow, showCloseButton } = props;
   const [show, setShow] = useState<boolean>(true);
 
   let color = "black";
   let icon: IconProp | undefined;
 
-  if (variant === "success") {
-    color = "green";
-    icon = "check-circle";
-  } else if (variant === "error") {
-    color = "red";
-    icon = "times-circle";
-  } else if (variant === "warning") {
-    color = "yellow";
-    icon = "exclamation-circle";
-  } else if (variant === "info") {
-    color = "blue";
+  switch (variant) {
+    case "success":
+      color = "green";
+      icon = "check-circle";
+      break;
+    case "error":
+      color = "red";
+      icon = "times-circle";
+      break;
+    case "warning":
+      color = "yellow";
+      icon = "exclamation-circle";
+      break;
+    case "info":
+      color = "blue";
+      break;
+    default:
+      break;
   }
 
-  const border = variant === "info" ? "" : "border border-" + color + "-200";
-  const textStyle =
-    variant === "info" ? "text-black" : "text-" + color + "-700";
-  const iconStyle =
-    variant === "info" ? "text-black" : "text-" + color + "-400";
+  const border = variant === "info" ? "" : `border border-${color}-200`;
+  const textStyle = variant === "info" ? "text-black" : `text-${color}-700`;
+  const iconStyle = variant === "info" ? "text-black" : `text-${color}-400`;
 
   return (
     <>
       {show && (
         <div
-          className={
-            "rounded-md " +
-            border +
-            " bg-" +
-            color +
-            "-50 " +
-            (noPadding ? "" : " p-4 my-4 ") +
-            (showShadow ? " shadow-lg " : "")
-          }
+          className={`rounded-md 
+            ${border} 
+            bg-${color}-50 
+            ${noPadding ? "" : " p-4 my-4 "} 
+            ${showShadow ? " shadow-lg " : ""}`}
         >
-          <div className={"flex justify-between items-center"}>
+          <div className="flex justify-between items-center">
             <div className=" flex items-center ">
               {icon && (
                 <FontAwesomeIcon
-                  className={"mr-3 h-5 w-5 " + iconStyle}
+                  className={`mr-3 h-5 w-5 ${iconStyle}`}
                   aria-hidden="true"
                   icon={icon}
                 />
@@ -113,7 +100,7 @@ function BaseMessage(props: IBaseMessageProps) {
             {showCloseButton && (
               <FontAwesomeIcon
                 icon="times"
-                className={iconStyle + " cursor-pointer"}
+                className={`${iconStyle} cursor-pointer`}
                 onClick={() => setShow(!show)}
               />
             )}

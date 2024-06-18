@@ -1,26 +1,13 @@
 // @ts-ignore
-import React from "react";
+import React, { ReactNode } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
-
-interface ISectionHeading {
-  children: any;
-  icon?: IconProp;
-  iconColor?: string;
-  editIconClassName?: string;
-  toggleEditMode?: any;
-  hideEditMode?: boolean;
-  isCenter?: boolean;
-  marginTop?: boolean; // Used if two sections are below each other
-  noMarginBottom?: boolean;
-  options?: any;
-}
+import { ISectionHeading } from "./interfaces/sectionHeading.interface";
 
 function SectionHeading(props: ISectionHeading) {
-  let {
+  const {
     children,
     icon,
-    iconColor,
+    iconColor = "black",
     editIconClassName,
     toggleEditMode,
     hideEditMode,
@@ -30,50 +17,62 @@ function SectionHeading(props: ISectionHeading) {
     options,
   } = props;
 
-  return (
-    <div
-      className={
-        " flex items-center  flex-row space-x-4 " +
-        (center ? "justify-center" : "") +
-        (marginTop ? " mt-8" : "") +
-        (noMarginBottom ? "" : " mb-4 ")
-      }
-    >
-      {icon && (
-        <div className="w-8">
-          <div
-            className={
-              "rounded-full  flex items-center justify-center  h-8 w-8 bg-" +
-              (iconColor ? iconColor : "black") +
-              "-100"
-            }
-          >
+  function renderIcon() {
+    return (
+      <div className="w-8">
+        <div
+          className={`rounded-full flex items-center justify-center h-8 w-8 bg-${iconColor}-100`}
+        >
+          {icon && (
             <FontAwesomeIcon
               size="sm"
               icon={icon}
-              className={"text-" + (iconColor ? iconColor : "black") + "-500"}
+              className={`text-${iconColor}-500`}
             />
-          </div>
+          )}
         </div>
-      )}
+      </div>
+    );
+  }
 
+  function renderChildren() {
+    return (
       <h2 className="text-lg font-bold text-gray-900 mt-1  flex items-center  ">
         {children}
       </h2>
-      {toggleEditMode && !hideEditMode && (
-        <FontAwesomeIcon
-          icon="pencil-alt"
-          className={
-            editIconClassName
-              ? editIconClassName
-              : "mt-1 text-primary cursor-pointer"
+    );
+  }
+
+  function renderEditButton() {
+    return (
+      <FontAwesomeIcon
+        icon="pencil-alt"
+        className={editIconClassName ?? "mt-1 text-primary cursor-pointer"}
+        onClick={() => {
+          if (toggleEditMode) {
+            toggleEditMode();
           }
-          onClick={() => toggleEditMode()}
-        />
-      )}
-      {options && options}
-    </div>
-  );
+        }}
+      />
+    );
+  }
+
+  function render() {
+    return (
+      <div
+        className={`flex items-center flex-row space-x-4 
+      ${center ? "justify-center" : ""} 
+      ${marginTop ? " mt-8" : ""} 
+      ${noMarginBottom ? "" : " mb-4 "}}`}
+      >
+        {icon && renderIcon()}
+        {renderChildren()}
+        {toggleEditMode && !hideEditMode && renderEditButton()}
+        {options && options}
+      </div>
+    );
+  }
+  return render();
 }
 
 export { SectionHeading };

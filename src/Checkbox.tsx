@@ -1,37 +1,17 @@
 // @ts-ignore
 import React from "react";
 import { InfoButton } from "./InfoButton";
+import { ICheckbox } from "./interfaces/checkbox.interface";
 
-interface IProps {
-  key?: any;
-  fieldId?: string;
-  onClick?: any;
-  label?: any;
-  labelClassName?: string;
-  htmlFor?: string;
-  hoverTitle?: string;
-  info?: string;
-  className?: string;
-  id?: string;
-  isChecked?: boolean;
-  isCenter?: boolean;
-  isDisabled?: boolean;
-  noPadding?: boolean;
-  labelLeft?: boolean;
-  labelRight?: boolean;
-  textColor?: string;
-  dataTest?: string | undefined;
-}
-
-function Checkbox(props: IProps) {
-  let {
+function Checkbox(props: ICheckbox) {
+  const {
     onClick,
     label,
     labelClassName,
     htmlFor,
     fieldId,
     info,
-    className,
+    className = "",
     id,
     isCenter: center,
     isChecked: checked,
@@ -59,49 +39,53 @@ function Checkbox(props: IProps) {
     </label>
   );
 
-  let textDisplayColor =
+  const textDisplayColor =
     textColor && textColor.length > 0 ? textColor : "primary";
+  const paddingClass = noPadding ? "" : "py-2 px-1 ";
+  const centerClass = center ? " justify-center " : "";
+  const disabledClass = isDisabled ? "" : " cursor-pointer ";
+  const inputDisabledClass = isDisabled
+    ? "text-gray-500 "
+    : `text-${textDisplayColor} hover:border-primary cursor-pointer `;
 
-  return (
-    <div className="flex items-start">
-      <div
-        id={id}
-        onClick={isDisabled ? null : onClick ?? null}
-        key={key}
-        className={
-          (noPadding ? "" : "py-2 px-1 ") +
-          "  flex items-center  space-x-4 " +
-          (center ? " justify-center " : "") +
-          (isDisabled ? "" : " cursor-pointer ")
-        }
-      >
-        {label && (labelLeft || (!labelLeft && !labelRight)) && labelEl}
-        <input
-          onKeyPress={(e: any) => {
-            if (e.key === "Enter") {
-              isDisabled ? null : onClick ? onClick(e) : null;
+  function render() {
+    return (
+      <div className="flex items-start">
+        <div
+          id={id}
+          onClick={(e) => {
+            if (!isDisabled && onClick) {
+              onClick(e);
             }
           }}
-          title={hoverTitle}
-          type="checkbox"
-          data-test={dataTest}
-          className={
-            " focus:outline-none focus:ring-1 focus:ring-primary  " +
-            (isDisabled
-              ? "text-gray-500 "
-              : `text-${textDisplayColor} hover:border-primary cursor-pointer `) +
-            " border-gray-300 rounded " +
-            (className ? className : "")
-          }
-          checked={checked}
-          id={fieldId}
-          onChange={() => {}}
-        />
+          key={key}
+          className={`${paddingClass} flex items-center space-x-4 ${centerClass} ${disabledClass} `}
+        >
+          {label && (labelLeft || (!labelLeft && !labelRight)) && labelEl}
+          <input
+            onKeyPress={(e: any) => {
+              if (e.key === "Enter") {
+                if (!isDisabled && onClick) {
+                  onClick(e);
+                }
+              }
+            }}
+            title={hoverTitle}
+            type="checkbox"
+            data-test={dataTest}
+            className={`focus:outline-none focus:ring-1 focus:ring-primary ${inputDisabledClass} border-gray-300 rounded ${className} `}
+            checked={checked}
+            id={fieldId}
+            onChange={() => {}}
+          />
 
-        {label && labelRight && labelEl}
+          {label && labelRight && labelEl}
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
+
+  return render();
 }
 
 export { Checkbox };
