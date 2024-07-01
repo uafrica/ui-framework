@@ -207,7 +207,7 @@ function GroupedSelect(props: IGroupedSelect) {
                   {selected ? (
                     <span
                       className={
-                        "absolute inset-y-0 right-0  flex items-center pr-4 " +
+                        "absolute inset-y-0 right-0 flex items-center pr-4 " +
                         (option.disabled === true
                           ? " text-gray-500 "
                           : " text-primary-600 ")
@@ -221,19 +221,17 @@ function GroupedSelect(props: IGroupedSelect) {
                     </span>
                   ) : null}
                 </div>
-                {onDelete &&
-                  !option.disableDelete &&
-                  option.disabled !== true && (
-                    <span className=" flex items-center  p-2 text-red hover:text-red-700 cursor-pointer">
-                      <FontAwesomeIcon
-                        icon="trash"
-                        title="Delete"
-                        onClick={() =>
-                          onDelete && onDelete(option.label, option.value)
-                        }
-                      />
-                    </span>
-                  )}
+                {onDelete && !option.disableDelete && option.disabled !== true && (
+                  <span className=" flex items-center p-2 text-red hover:text-red-700 cursor-pointer">
+                    <FontAwesomeIcon
+                      icon="trash"
+                      title="Delete"
+                      onClick={() =>
+                        onDelete && onDelete(option.label, option.value)
+                      }
+                    />
+                  </span>
+                )}
               </div>
             );
           })}
@@ -245,10 +243,8 @@ function GroupedSelect(props: IGroupedSelect) {
     );
   }
 
-  let flattenedOptions: any[] = [].concat.apply(
-    [],
-    // @ts-ignore
-    optionGroups.map((optionGroup: IOptionGroup) => optionGroup.options)
+  let flattenedOptions: any[] = optionGroups.flatMap(
+    (optionGroup) => optionGroup.options
   );
 
   let labelWithValue: string = "";
@@ -469,7 +465,7 @@ function GroupedSelect(props: IGroupedSelect) {
                             {customSelectionValue ??
                               (labelWithValue ? labelWithValue : placeholder)}
                           </span>
-                          <span className="absolute inset-y-0 right-0  flex items-center  pr-2 pointer-events-none">
+                          <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                             <FontAwesomeIcon
                               icon={
                                 ctxValue.isVisible ? "caret-up" : "caret-down"
@@ -518,7 +514,7 @@ function GroupedSelect(props: IGroupedSelect) {
                       style={style}
                       ref={ref}
                       className={
-                        "overflow-hidden z-50 rounded-lg shadow-lg  ring-1 ring-black ring-opacity-5  px-4 pb-2 bg-white " +
+                        " overflow-hidden z-50 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 pl-4 pr-1 pb-2 bg-white " +
                         (popoverWidth ? popoverWidth : "w-72")
                       }
                     >
@@ -541,7 +537,7 @@ function GroupedSelect(props: IGroupedSelect) {
                         </div>
                       )}
                       <div
-                        className={`mt-2 mb-2 ${
+                        className={`mt-2 mb-2 pr-3 ${
                           popoverHeight ? popoverHeight : "max-h-52 "
                         } overflow-y-auto`}
                       >
@@ -629,21 +625,11 @@ function useGroupedSelectCtx(
       }
     }
 
-    // @ts-ignore
-    function keyDownListener(e: KeyboardEvent) {
-      // Does not play well with modal esc
-      // If (e.key === "Escape") {
-      //   SetVisible(false);
-      // }
-    }
-
     if (isVisible) {
-      window.addEventListener("keydown", keyDownListener);
       document.addEventListener("mousedown", mouseDownListener);
     }
 
     return () => {
-      window.removeEventListener("keydown", keyDownListener);
       document.removeEventListener("mousedown", mouseDownListener);
       if (onSearchBlur) {
         onSearchBlur(); // Fires on search blur whenever the dropdown is closed
