@@ -55,12 +55,12 @@ function useDropdownMenuCtx(
 }
 
 function DropdownMenu(props: IDropdown) {
-  const {
+  let {
     title,
     icon,
     noBackground,
     id,
-    widthClass = "w-72",
+    widthClass,
     color = "gray",
     placement = "bottom-start",
     square,
@@ -87,6 +87,9 @@ function DropdownMenu(props: IDropdown) {
   const roundedClass = ` ${leftRounded ? "rounded-r" : ""} 
   ${rightRounded ? "rounded-l" : ""} 
   ${square ? "rounded" : "rounded-full"}`;
+  widthClass = widthClass ? widthClass : "w-72";
+
+  color = color ? color : "gray";
 
   const justifyClass = between ? "justify-between" : "justify-center";
   const textColorClass = "text-" + color;
