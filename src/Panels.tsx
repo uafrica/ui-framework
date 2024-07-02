@@ -75,7 +75,7 @@ function PageActionsPanel(props: IPageActionsPanelProps) {
 }
 
 function ModalActionsPanel(props: IPanel) {
-  const { title, onClose = () => {} } = props;
+  const { title, onClose } = props;
 
   return (
     <div className="ua-modal-actions-panel  flex justify-between flex-col md:flex-row items-start md:items-center z-30  pb-4">
