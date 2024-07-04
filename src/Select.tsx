@@ -514,7 +514,7 @@ function GroupedSelect(props: IGroupedSelect) {
                       style={style}
                       ref={ref}
                       className={
-                        " overflow-hidden z-50 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 pl-4 pr-1 pb-2 bg-white " +
+                        " overflow-hidden z-50 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 pl-4 pr-4 pb-2 bg-white " +
                         (popoverWidth ? popoverWidth : "w-72")
                       }
                     >
