@@ -188,7 +188,7 @@ function CustomTable(props: ICustomTable) {
 
   useEffect(() => {
     manageStaticColumns(columns);
-  }, [data, selectedRowIdentifiers, props.columns]);
+  }, [data, selectedRowIdentifiers, props.columns, props.draggableRows]);
 
   useEffect(() => {
     fetchFunctionArgumentsRef.current = fetchFunctionArguments;
@@ -794,6 +794,13 @@ function CustomTable(props: ICustomTable) {
       } else {
         newColumns.splice(rowDragColumnIndex, 1, rowDragColumn);
         newColumnOrder.splice(rowDragColumnIndex, 1, "rowDrag");
+      }
+    } else {
+      // Remove row drag column if it exists
+      let rowDragColumnIndex = newColumnOrder.indexOf("rowDrag");
+      if (rowDragColumnIndex > -1) {
+        newColumns.splice(rowDragColumnIndex, 1);
+        newColumnOrder.splice(rowDragColumnIndex, 1);
       }
     }
 
