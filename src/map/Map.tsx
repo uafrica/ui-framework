@@ -54,6 +54,7 @@ function Map(props: {
   onMapClick?: (e: google.maps.MapMouseEvent) => void;
   mapOptions?: google.maps.MapOptions;
   onEditZonesClicked?: (mode?: "select" | "draw" | null | undefined) => void;
+  onBoundsChanged?: (bounds: google.maps.LatLngBounds) => void;
 }) {
   const {
     polygons,
@@ -725,6 +726,11 @@ function Map(props: {
         onClick={(e: google.maps.MapMouseEvent) => {
           if (props.onMapClick) {
             props.onMapClick(e);
+          }
+        }}
+        onBoundsChanged={() => {
+          if (props.onBoundsChanged) {
+            props.onBoundsChanged(map.getBounds());
           }
         }}
       >
