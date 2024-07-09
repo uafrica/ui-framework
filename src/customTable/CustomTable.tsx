@@ -738,6 +738,13 @@ function CustomTable(props: ICustomTable) {
         newColumns.splice(selectColumnIndex, 1, selectAllColumn);
         newColumnOrder.splice(selectColumnIndex, 1, "select");
       }
+    } else {
+      // Remove select column if it exists
+      let rowDragColumnIndex = newColumnOrder.indexOf("select");
+      if (rowDragColumnIndex > -1) {
+        newColumns.splice(rowDragColumnIndex, 1);
+        newColumnOrder.splice(rowDragColumnIndex, 1);
+      }
     }
 
     if (draggableRows) {
