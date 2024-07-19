@@ -27,6 +27,8 @@ function DateRange(props: IDateRange) {
     showTimeSelect,
     dateFormat,
     buttonWidth,
+    maxDate,
+    minDate,
   } = props;
   useEffect(() => {
     if (showMonth && onMonthChange) {
@@ -73,6 +75,8 @@ function DateRange(props: IDateRange) {
         {showRange && (
           <>
             <DatePicker
+              maxDate={maxDate}
+              minDate={minDate}
               isLabelInline={isLabelInline}
               showTimeSelect={showTimeSelect}
               label="From"
@@ -85,6 +89,8 @@ function DateRange(props: IDateRange) {
               dateFormat={dateFormat ?? "yyyy-MM-DD"}
             />
             <DatePicker
+              maxDate={maxDate}
+              minDate={minDate}
               isLabelInline={isLabelInline}
               showTimeSelect={showTimeSelect}
               label="To"
@@ -101,6 +107,8 @@ function DateRange(props: IDateRange) {
         {showMonth && (
           <div>
             <MonthPicker
+              maxDate={maxDate}
+              minDate={minDate}
               isLabelInline={isLabelInline}
               label="Select month"
               dateFrom={dateFrom ?? defaultDateFrom}

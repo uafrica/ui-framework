@@ -86,19 +86,17 @@ export function useMonthPickerCtx(
     }
   }, [isVisible]);
 
-  const isWithinRange = (d: number) => {
+  const isWithinRange = (month: number) => {
     let inRange = true;
     let date: Date;
-
-    date = new Date(monthYear.year, monthYear.month, d);
-
+    date = new Date(`${monthYear.year}-${month + 1}-01`);
     if (minDate) {
       if (moment(date).isBefore(minDate)) {
         inRange = false;
       }
     }
     if (maxDate) {
-      if (moment(date).isAfter(maxDate)) {
+      if (moment(date).isSameOrAfter(maxDate)) {
         inRange = false;
       }
     }

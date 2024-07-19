@@ -20,4 +20,6 @@ export interface IDateRange {
   showTimeSelect?: boolean;
   dateFormat?: string;
   buttonWidth?: string;
+  maxDate?: Date;
+  minDate?: Date;
 }
