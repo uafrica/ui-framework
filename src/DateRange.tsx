@@ -22,7 +22,7 @@ function DateRange(props: IDateRange) {
     onMonthChange,
     periodOptions,
     containerClassName,
-    label = "Filter by period",
+    label = "Period",
     isDisabled,
     showTimeSelect,
     dateFormat,
