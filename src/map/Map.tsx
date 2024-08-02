@@ -702,7 +702,14 @@ function Map(props: {
             : undefined,
         }}
         children={
-          <div className="map-tooltip">
+          <div
+            className="map-tooltip"
+            onMouseOver={() => {
+              if (tooltipMode === "hover") {
+                hideTooltip();
+              }
+            }}
+          >
             {markerTooltipContent || polygonTooltipContent}
           </div>
         }

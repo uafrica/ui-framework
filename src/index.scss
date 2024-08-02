@@ -63,8 +63,16 @@
 }
 
 button.gm-ui-hover-effect {
-  top: 0 !important;
-  right: 0 !important;
+  top: 4px !important;
+  right: 4px !important;
+  height: 16px !important;
+  width: 16px !important;
+  span {
+    padding: 0 !important;
+    margin: 0px !important;
+    height: 16px !important;
+    width: 16px !important;
+  }
 }
 
 /* BANNER */
