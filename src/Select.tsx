@@ -470,8 +470,9 @@ function GroupedSelect(props: IGroupedSelect) {
                               icon={
                                 ctxValue.isVisible ? "caret-up" : "caret-down"
                               }
-                              className="h-5 w-5 text-gray-400"
+                              className="text-gray-400"
                               aria-hidden="true"
+                              size="sm"
                             />
                           </span>
                         </div>
