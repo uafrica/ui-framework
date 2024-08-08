@@ -10,7 +10,7 @@ import { Manager, Popper, Reference } from "react-popper";
 
 // Interface
 interface IDatePicker {
-  selectedDate: Date;
+  selectedDate: Date | null;
   label?: ReactNode;
   isLabelInline?: boolean;
   placeholder?: string;
